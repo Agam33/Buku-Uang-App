@@ -10,11 +10,11 @@ import com.ra.budgetplan.domain.entity.BudgetEntity
 interface BudgetDao {
 
   @Insert
-  fun save(budget: BudgetEntity)
+  suspend fun save(budget: BudgetEntity)
 
   @Delete
-  fun delete(budget: BudgetEntity)
+  suspend fun delete(budget: BudgetEntity)
 
   @Update
-  fun update(budget: BudgetEntity)
+  suspend fun update(budget: BudgetEntity)
 }

@@ -4,15 +4,16 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Update
+import com.ra.budgetplan.domain.entity.TransferEntity
 
 @Dao
 interface TransferDao {
   @Insert
-  fun save()
+  suspend fun save(transferEntity: TransferEntity)
 
   @Delete
-  fun delete()
+  suspend fun delete(transferEntity: TransferEntity)
 
   @Update
-  fun update()
+  suspend fun update(transferEntity: TransferEntity)
 }

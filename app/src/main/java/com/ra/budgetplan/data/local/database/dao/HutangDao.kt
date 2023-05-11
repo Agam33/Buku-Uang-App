@@ -6,15 +6,15 @@ import androidx.room.Insert
 import androidx.room.Update
 import com.ra.budgetplan.domain.entity.HutangEntity
 
+
 @Dao
 interface HutangDao {
-
   @Insert
-  fun save(hutang: HutangEntity)
+  suspend fun save(hutang: HutangEntity)
 
   @Delete
-  fun delete(hutang: HutangEntity)
+  suspend fun delete(hutang: HutangEntity)
 
   @Update
-  fun update(hutang: HutangEntity)
+  suspend fun update(hutang: HutangEntity)
 }

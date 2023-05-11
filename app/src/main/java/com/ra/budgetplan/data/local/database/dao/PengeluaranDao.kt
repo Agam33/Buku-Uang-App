@@ -9,11 +9,11 @@ import com.ra.budgetplan.domain.entity.PengeluaranEntity
 @Dao
 interface PengeluaranDao {
   @Insert
-  fun save(pengeluaran: PengeluaranEntity)
+  suspend fun save(pengeluaran: PengeluaranEntity)
 
   @Delete
-  fun delete(pengeluaran: PengeluaranEntity)
+  suspend fun delete(pengeluaran: PengeluaranEntity)
 
   @Update
-  fun update(pengeluaran: PengeluaranEntity)
+  suspend fun update(pengeluaran: PengeluaranEntity)
 }

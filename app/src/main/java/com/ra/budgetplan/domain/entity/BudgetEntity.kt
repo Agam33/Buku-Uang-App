@@ -19,7 +19,7 @@ import java.util.UUID
 )
 data class BudgetEntity(
   @PrimaryKey val uuid: UUID,
-  @ColumnInfo(name = "id_kategori") val idKategori: UUID,
+  @ColumnInfo(name = "id_kategori", index = true) val idKategori: UUID,
   @ColumnInfo(name = "deskripsi") val deskripsi: String,
   @ColumnInfo(name = "pengeluaran") val pengeluaran: Int,
   @ColumnInfo(name = "max_pengeluaran") val maxPengeluaran: Int,

@@ -8,8 +8,8 @@ import java.util.*
 @Parcelize
 data class TransferModel(
   var uuid: UUID,
-  var idFromTabungan: UUID,
-  var idToTabungan: UUID,
+  var idFromAkun: UUID,
+  var idToAkun: UUID,
   var deskripsi: String,
   var jumlah: Int,
   var createdAt: LocalDateTime,

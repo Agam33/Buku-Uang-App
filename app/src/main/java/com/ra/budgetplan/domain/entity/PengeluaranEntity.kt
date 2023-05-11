@@ -17,18 +17,18 @@ import java.util.UUID
       childColumns = ["id_kategori"]
     ),
     ForeignKey(
-      entity = TabunganEntity::class,
+      entity = AkunEntity::class,
       parentColumns = ["uuid"],
-      childColumns = ["id_tabungan"]
+      childColumns = ["id_akun"]
     )
   ]
 )
 data class PengeluaranEntity(
   @PrimaryKey val uuid: UUID,
-  @ColumnInfo(name = "id_kategori") val idKategori: UUID,
-  @ColumnInfo(name = "id_tabungan") val idTabungan: UUID,
+  @ColumnInfo(name = "id_kategori", index = true) val idKategori: UUID,
+  @ColumnInfo(name = "id_akun", index = true) val idAkun: UUID,
   @ColumnInfo(name = "deskripsi") val deskripsi: String,
   @ColumnInfo(name = "jumlah") val jumlah: Int,
   @ColumnInfo(name = "created_at") val createdAt: LocalDateTime,
-  @ColumnInfo(name = "created_at") val updatedAt: LocalDateTime
+  @ColumnInfo(name = "updated_at") val updatedAt: LocalDateTime
 )

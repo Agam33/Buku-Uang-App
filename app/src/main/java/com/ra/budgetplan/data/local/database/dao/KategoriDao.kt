@@ -1,20 +1,26 @@
 package com.ra.budgetplan.data.local.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Update
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.ra.budgetplan.domain.entity.KategoriEntity
+import kotlinx.coroutines.flow.Flow
+import java.util.UUID
 
 @Dao
 interface KategoriDao {
 
   @Insert
-  fun save(kategori: KategoriEntity)
+  suspend fun save(kategori: KategoriEntity)
 
   @Delete
-  fun delete(kategori: KategoriEntity)
+  suspend fun delete(kategori: KategoriEntity)
 
   @Update
-  fun update(kategori: KategoriEntity)
+  suspend fun update(kategori: KategoriEntity)
+
+  @Query("SELECT * FROM kategorientity ORDER BY created_at")
+  fun findAll(): Flow<List<KategoriEntity>>
+
+  @Query("SELECT * FROM kategorientity AS kt WHERE kt.uuid = :id")
+  fun findById(id: UUID): Flow<KategoriEntity>
 }
