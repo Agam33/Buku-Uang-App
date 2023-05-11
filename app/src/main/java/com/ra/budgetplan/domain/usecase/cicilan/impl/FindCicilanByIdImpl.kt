@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 import javax.inject.Inject
 
-class FindCicilanById @Inject constructor(
+class FindCicilanByIdImpl @Inject constructor(
   private val repository: CicilanRepository
 ): FindCicilanById {
   override fun invoke(id: UUID): Flow<CicilanModel> {
