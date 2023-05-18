@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        app:cardElevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:background="@color/indigo_60"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/iv_item"
+                android:layout_width="24dp"
+                android:layout_height="120dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/title_item"
+                android:layout_toEndOf="@id/iv_item"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="@string/txt_title_transfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_marginStart="8dp"
+                android:id="@+id/iv_from_account"
+                android:layout_below="@id/title_item"
+                android:layout_toEndOf="@id/iv_item"
+                android:src="@drawable/baseline_money_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_from_account"
+                android:layout_below="@id/title_item"
+                android:layout_toEndOf="@id/iv_from_account"
+                android:layout_marginStart="4dp"
+                android:textSize="16sp"
+                android:text="@string/txt_sample_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:textStyle="bold"
+                android:id="@+id/tv_money"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/indigo_60"
+                android:text="@string/txt_sample_money_in_rupiah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_swap"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_toEndOf="@id/iv_item"
+                android:layout_below="@id/iv_from_account"
+                android:src="@drawable/round_swap_horiz_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:layout_marginStart="8dp"
+                android:id="@+id/iv_to_account"
+                android:layout_below="@id/iv_swap"
+                android:layout_toEndOf="@id/iv_item"
+                android:src="@drawable/baseline_money_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_to_account"
+                android:layout_below="@id/iv_swap"
+                android:layout_toEndOf="@id/iv_to_account"
+                android:layout_marginStart="4dp"
+                android:textSize="16sp"
+                android:text="@string/txt_sample_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

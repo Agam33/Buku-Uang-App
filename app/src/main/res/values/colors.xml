@@ -7,4 +7,43 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="grey">#979393</color>
+
+    <color name="red_400">#FF4C46</color>
+    <color name="red_600">#F62B27</color>
+
+    <color name="indigo_10">#1A237E</color>
+    <color name="indigo_20">#283593</color>
+    <color name="indigo_30">#303F9F</color>
+    <color name="indigo_40">#3949AB</color>
+    <color name="indigo_50">#3F51B5</color>
+    <color name="indigo_60">#5C6BC0</color>
+    <color name="indigo_70">#7986CB</color>
+    <color name="indigo_80">#9FA8DA</color>
+    <color name="indigo_90">#C5CAE9</color>
+    <color name="indigo_100">#E8EAF6</color>
+
+    <color name="plum_purple_10">#45295d</color>
+    <color name="plum_purple_20">#5e3272</color>
+    <color name="plum_purple_30">#6c377d</color>
+
+    <color name="dark_blue_grey_10">#29415d</color>
+    <color name="dark_blue_grey_20">#375c7d</color>
+    <color name="dark_blue_grey_30">#3f6c8f</color>
+
+    <color name="army_green_10">#5c5d29</color>
+    <color name="army_green_20">#807d36</color>
+    <color name="army_green_30">#96903e</color>
+
+    <color name="green_10">#1B5E20</color>
+    <color name="green_20">#2E7D32</color>
+    <color name="green_30">#388E3C</color>
+    <color name="green_40">#43A047</color>
+    <color name="green_50">#4CAF50</color>
+    <color name="green_60">#66BB6A</color>
+    <color name="green_70">#81C784</color>
+    <color name="green_80">#A5D6A7</color>
+    <color name="green_90">#C8E6C9</color>
+    <color name="green_100">#E8F5E9</color>
 </resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!-- FAB Custom -->
+    <style name="Widget.App.Global.FAB" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Global.FAB</item>
+    </style>
+
+    <style name="ThemeOverlay.Global.FAB" parent="">
+        <item name="colorSecondary">@color/army_green_20</item>
+        <item name="colorOnSecondary">@color/white</item>
+    </style>
+<!-- End FAB custom-->
+
+<!--Tab layout-->
+    <style name="Widget.App.Transaction.TabLayout" parent="Widget.Material3.TabLayout">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Transaction.TabLayout</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Transaction.TabLayout" parent="">
+        <item name="colorPrimary">@color/indigo_50</item>
+    </style>
+<!-- End Tab layout-->
+
+<!-- Card Overall Income Expense Total -->
+    <style name="Widget.App.Overall.IET.Card" parent="Widget.MaterialComponents.CardView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Overall.IET.Card</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Overall.IET.Card" parent="">
+
+    </style>
+<!-- End Overall Income Expense Total -->
+
+<!-- Collapsing Toolbar  -->
+    <style name="Widget.App.CollapsingToolbar" parent="Widget.Design.CollapsingToolbar">
+        <item name="android:background">@color/white</item>
+    </style>
+<!-- End Collapsing Toolbar -->
+
+<!--Spinner Drop Down-->
+
+<!--End Spinner Drop Down-->
+</resources>
