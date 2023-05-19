@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/ib_close_dialog"
+            android:src="@drawable/baseline_close_24"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/ib_edit_dialog"
+            android:id="@+id/ib_delete_dialog"
+            android:background="@null"
+            android:src="@drawable/baseline_delete_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:layout_alignParentEnd="true"
+            android:id="@+id/ib_edit_dialog"
+            android:background="@null"
+            android:src="@drawable/outline_edit_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ib_edit_dialog"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="36dp"
+
+            android:text="@string/txt_empty"
+            android:textSize="24sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/tv_money"
+            android:textSize="16sp"
+            android:id="@+id/tv_current_date"
+            android:text="@string/txt_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/tv_current_date"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:text="@string/txt_empty"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/divider"
+            android:id="@+id/tv_category_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textStyle="bold|italic"
+            android:text="@string/txt_empty"
+            android:id="@+id/tv_name_category"
+            android:layout_below="@id/divider"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_marginTop="8dp"
+            android:text="@string/txt_empty"
+            android:id="@+id/tv_description_category"
+            android:layout_below="@id/tv_name_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+</layout>
