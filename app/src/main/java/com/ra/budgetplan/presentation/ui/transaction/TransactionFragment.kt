@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ra.budgetplan.R
+import com.ra.budgetplan.customview.dialog.icon.IconListDialog
 import com.ra.budgetplan.databinding.FragmentTransactionBinding
 import com.ra.budgetplan.presentation.ui.transaction.adapter.TransactionPagerAdapter
 import com.ra.budgetplan.presentation.ui.transaction.fragment.ExpenseFragment
@@ -34,6 +35,7 @@ class TransactionFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setupViewPager()
+
   }
 
   private fun setupViewPager() {
