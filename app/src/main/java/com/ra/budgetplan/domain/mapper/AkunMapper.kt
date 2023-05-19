@@ -9,6 +9,7 @@ object AkunMapper {
   ): AkunModel = AkunModel(
     akunEntity.uuid,
     akunEntity.icUrl,
+    akunEntity.icon,
     akunEntity.nama,
     akunEntity.total,
     akunEntity.createdAt,
@@ -20,6 +21,7 @@ object AkunMapper {
   ): AkunEntity = AkunEntity(
     akunModel.uuid,
     akunModel.icUrl,
+    akunModel.icon,
     akunModel.nama,
     akunModel.total,
     akunModel.createdAt,

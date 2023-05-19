@@ -8,6 +8,7 @@ import com.ra.budgetplan.domain.usecase.cicilan.UpdateCicilan
 import com.ra.budgetplan.domain.usecase.cicilan.impl.DeleteCicilanImpl
 import com.ra.budgetplan.domain.usecase.cicilan.impl.FindAllCicilanImpl
 import com.ra.budgetplan.domain.usecase.cicilan.impl.FindCicilanByIdImpl
+import com.ra.budgetplan.domain.usecase.cicilan.impl.SaveCicilanImpl
 import com.ra.budgetplan.domain.usecase.cicilan.impl.UpdateCicilanImpl
 import com.ra.budgetplan.domain.usecase.hutang.impl.SaveHutangImpl
 import dagger.Binds
@@ -22,7 +23,7 @@ interface UseCaseCicilanModule {
 
   @Binds
   @Singleton
-  fun bindSaveCicilan(saveHutangImpl: SaveHutangImpl): SaveCicilan
+  fun bindSaveCicilan(saveHutangImpl: SaveCicilanImpl): SaveCicilan
 
   @Binds
   @Singleton

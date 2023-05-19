@@ -12,6 +12,7 @@ object BudgetMapper {
     budgetEntity.deskripsi,
     budgetEntity.pengeluaran,
     budgetEntity.maxPengeluaran,
+    budgetEntity.bulanTahun,
     budgetEntity.createdAt,
     budgetEntity.updatedAt
   )
@@ -24,6 +25,7 @@ object BudgetMapper {
     budgetModel.deskripsi,
     budgetModel.pengeluaran,
     budgetModel.maxPengeluaran,
+    budgetModel.bulanTahun,
     budgetModel.createdAt,
     budgetModel.updatedAt
   )

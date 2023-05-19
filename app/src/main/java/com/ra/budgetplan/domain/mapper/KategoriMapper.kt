@@ -9,6 +9,7 @@ object KategoriMapper {
   ): KategoriModel = KategoriModel(
     kategoriEntity.uuid,
     kategoriEntity.icUrl,
+    kategoriEntity.icon,
     kategoriEntity.nama,
     kategoriEntity.tipeKategori,
     kategoriEntity.createdAt,
@@ -20,6 +21,7 @@ object KategoriMapper {
   ): KategoriEntity = KategoriEntity(
     kategoriModel.uuid,
     kategoriModel.icUrl,
+    kategoriModel.icon,
     kategoriModel.nama,
     kategoriModel.tipeKategori,
     kategoriModel.createdAt,

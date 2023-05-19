@@ -10,6 +10,7 @@ import java.util.*
 data class KategoriEntity(
   @PrimaryKey val uuid: UUID,
   @ColumnInfo(name = "ic_url") val icUrl: String,
+  @ColumnInfo(name = "icon") val icon: Int,
   @ColumnInfo(name = "nama") val nama: String,
   @ColumnInfo(name = "tipe_kategori") val tipeKategori: TipeKategori,
   @ColumnInfo(name = "created_at") val createdAt: LocalDateTime,

@@ -10,6 +10,7 @@ import java.util.UUID
 data class AkunEntity(
   @PrimaryKey val uuid: UUID,
   @ColumnInfo(name = "ic_url") val icUrl: String,
+  @ColumnInfo(name = "icon") val icon: Int,
   @ColumnInfo(name = "nama") val nama: String,
   @ColumnInfo(name = "total") val total: Int,
   @ColumnInfo(name = "created_at") val createdAt: LocalDateTime,
