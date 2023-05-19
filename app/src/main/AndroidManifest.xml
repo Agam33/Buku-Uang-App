@@ -17,6 +17,7 @@
             android:name=".presentation.ui.MainActivity"
             android:theme="@style/Theme.BudgetPlan.NoActionBar"
             android:exported="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
