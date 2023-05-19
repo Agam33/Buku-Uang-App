@@ -1,3 +1,34 @@
 <resources>
-    <string name="app_name">Budget Plan</string>
+    <string name="app_name">Budget Ku</string>
+    <string name="title_menu_transaction">Transaksi</string>
+    <string name="title_menu_budget">Budget</string>
+    <string name="title_menu_analytics">Analisis</string>
+    <string name="title_menu_account">Akun</string>
+    <string name="title_menu_category">Kategori</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="txt_open">Open</string>
+    <string name="txt_close">Close</string>
+    <string name="title_income">Pendapatan</string>
+    <string name="example_income_in_rupiah">Rp81.000,00</string>
+    <string name="title_expense">Pengeluaran</string>
+    <string name="title_transfer">Transfer</string>
+    <string name="example_expense_in_rupiah">-Rp81.000,00</string>
+    <string name="title_total">Total</string>
+    <string name="example_total_in_rupiah">Rp81.000,00</string>
+    <string name="example_month_year">Apr, 2023</string>
+    <string name="fab_transaction_desc">untuk menambahkan data transaksi</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_rv_title_header">May 15, Monday</string>
+    <string name="txt_sample_income_reward">Hadiah</string>
+    <string name="txt_sample_account">Cash</string>
+    <string name="txt_sample_money_in_rupiah">Rp200000</string>
+    <string name="txt_expense_money_in_rupiah">-Rp200000</string>
+    <string name="txt_title_transfer">Transfer</string>
+    <string name="txt_empty">-</string>
+    <string name="txt_account_saving">Tabungan</string>
+    <string name="title_category_income">Kategori Pendapatan</string>
+    <string name="txt_category_reward">Reward</string>
+    <string name="txt_category_name">Hadiah</string>
+    <string name="txt_description_lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</string>
 </resources>

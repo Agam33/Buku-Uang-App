@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/main_item"
+        android:title="">
+        <menu>
+            <item
+                android:icon="@drawable/baseline_transaction_24"
+                android:id="@+id/menu_transaction"
+                android:checkable="true"
+                android:title="@string/title_menu_transaction"/>
+            <item
+                android:icon="@drawable/baseline_budget_24"
+                android:id="@+id/menu_budget"
+                android:checkable="true"
+                android:title="@string/title_menu_budget"/>
+            <item
+                android:id="@+id/menu_analytics"
+                android:icon="@drawable/baseline_analytics_24"
+                android:checkable="true"
+                android:title="@string/title_menu_analytics"/>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/account"
+        android:title="">
+        <menu>
+            <item
+                android:checkable="true"
+                android:id="@+id/menu_account"
+                android:icon="@drawable/baseline_account_balance_24"
+                android:title="@string/title_menu_account"/>
+            <item
+                android:checkable="true"
+                android:id="@+id/menu_category"
+                android:icon="@drawable/baseline_category_24"
+                android:title="@string/title_menu_category"/>
+        </menu>
+    </item>
+</menu>
