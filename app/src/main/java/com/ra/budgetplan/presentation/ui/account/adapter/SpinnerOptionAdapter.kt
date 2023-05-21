@@ -10,8 +10,7 @@ import com.ra.budgetplan.R
 
 class SpinnerOptionAdapter(
   context: Context,
-  private val options: MutableList<String> = mutableListOf("Edit", "Delete") // Default Option
-): ArrayAdapter<String>(context, 0, options) {
+): ArrayAdapter<SpinnerItemOptions>(context, 0, SpinnerItemOptions.values()) {
 
   private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -24,7 +23,7 @@ class SpinnerOptionAdapter(
       0 -> View(context)
       else -> {
         val view = layoutInflater.inflate(R.layout.item_spinner_option_adapter, parent, false)
-        getItem(position)?.let { setView(view, it) }
+        setView(view, getItem(position))
         view
       }
     }
@@ -38,12 +37,11 @@ class SpinnerOptionAdapter(
     return position != 0
   }
 
-  override fun getItem(position: Int): String? {
-    return options[position]
-  }
+  override fun getItem(position: Int): SpinnerItemOptions =
+    SpinnerItemOptions.values()[position - 1]
 
-  private fun setView(view: View, text: String) {
+  private fun setView(view: View, text: SpinnerItemOptions) {
     val tvOption = view.findViewById<TextView>(R.id.tv_option)
-    tvOption.text = text
+    tvOption.text = text.toString()
   }
 }

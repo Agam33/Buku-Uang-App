@@ -47,19 +47,23 @@ class IconListDialog: DialogFragment(), IconAdapter.OnClickItemCallBack {
   private fun setupListIcon() {
     val icAdapter = IconAdapter()
     icAdapter.onClickItemCallBack = this@IconListDialog
+
     val iconList = when(category) {
+      IconCategory.ACCOUNT -> IconData.setIconAccount(requireContext())
       IconCategory.EXPENSE -> IconData.setExpensesIcon(requireContext())
-      IconCategory.INCOME -> IconData.setIncomeIcon(requireContext())
+      else -> IconData.setIncomeIcon(requireContext())
     }
+
     icAdapter.submitList(iconList)
     rvIcon.apply {
       adapter = icAdapter
-      layoutManager = GridLayoutManager(requireContext(), 5, LinearLayoutManager.HORIZONTAL, false)
+      layoutManager = GridLayoutManager(requireContext(), 3, LinearLayoutManager.HORIZONTAL, false)
       setHasFixedSize(true)
     }
   }
 
   override fun getIcon(icon: Icon) {
     onClickItemListener?.getIcon(icon)
+    dismiss()
   }
 }

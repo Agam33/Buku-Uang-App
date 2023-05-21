@@ -36,8 +36,12 @@
         <item name="android:background">@color/white</item>
     </style>
 <!-- End Collapsing Toolbar -->
+    
+<!-- Custom Toolbar -->
 
-<!--Spinner Drop Down-->
+<!-- End Custom Toolbar-->
 
-<!--End Spinner Drop Down-->
+<!--Input Layout-->
+
+<!--End Input Layout-->
 </resources>

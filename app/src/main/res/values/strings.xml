@@ -31,4 +31,10 @@
     <string name="txt_category_reward">Reward</string>
     <string name="txt_category_name">Hadiah</string>
     <string name="txt_description_lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</string>
+    <string name="txt_create_new_account">Tambah Akun</string>
+    <string name="txt_name">Nama</string>
+    <string name="txt_icon">icon</string>
+
+    <string name="msg_empty">Tidak Boleh Kosong</string>
+    <string name="txt_empty_list">Belum ada catatan.</string>
 </resources>

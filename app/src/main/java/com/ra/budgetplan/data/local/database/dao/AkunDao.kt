@@ -17,7 +17,7 @@ interface AkunDao {
   @Delete
   suspend fun delete(akunEntity: AkunEntity)
 
-  @Query("SELECT * FROM akunentity ORDER BY updated_at ASC")
+  @Query("SELECT * FROM akunentity ORDER BY updated_at DESC")
   fun findAll(): Flow<List<AkunEntity>>
 
   @Query("SELECT * FROM akunentity AS akun WHERE akun.uuid = :id")

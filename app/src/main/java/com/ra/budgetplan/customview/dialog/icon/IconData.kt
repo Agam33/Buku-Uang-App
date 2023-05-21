@@ -7,6 +7,34 @@ import com.ra.budgetplan.R
 object IconData {
 
   @SuppressLint("DiscouragedApi")
+  fun setIconAccount(context: Context): MutableList<Icon> {
+    val resource = context.resources
+    return mutableListOf(
+      Icon(
+        IconCategory.ACCOUNT,
+        resource.getIdentifier(
+          resource.getResourceEntryName(
+            R.drawable.account_credit_card_36),
+          "drawable", context.packageName)
+      ),
+      Icon(
+        IconCategory.ACCOUNT,
+        resource.getIdentifier(
+          resource.getResourceEntryName(
+            R.drawable.account_cash_round_money_36),
+          "drawable", context.packageName)
+      ),
+      Icon(
+        IconCategory.ACCOUNT,
+        resource.getIdentifier(
+          resource.getResourceEntryName(
+            R.drawable.account_savings_36),
+          "drawable", context.packageName)
+      )
+    )
+  }
+
+  @SuppressLint("DiscouragedApi")
   fun setExpensesIcon(context: Context): MutableList<Icon> {
     val expenseIcon = mutableListOf<Icon>()
     val resource = context.resources
@@ -14,8 +42,7 @@ object IconData {
       Icon(
         IconCategory.EXPENSE,
         resource.getIdentifier(
-          resource.getResourceEntryName(
-            R.drawable.expense__cake_36),
+          resource.getResourceEntryName(R.drawable.expense__cake_36),
           "drawable", context.packageName)
       )
     )

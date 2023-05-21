@@ -9,6 +9,7 @@
   </data>
 
   <androidx.drawerlayout.widget.DrawerLayout
+
       android:id="@+id/drawer_layout"
       tools:openDrawer="start"
       android:fitsSystemWindows="true"
@@ -23,6 +24,7 @@
 
 <!-- Start Toolbar -->
       <com.google.android.material.appbar.MaterialToolbar
+          android:background="@color/white"
           android:id="@+id/toolbar"
           android:layout_width="match_parent"
           android:layout_height="?attr/actionBarSize">
@@ -78,7 +80,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_navigation_drawer"
         app:menu="@menu/main_menu_drawer"
-        app:itemIconTint="@color/dark_blue_grey_10"
+        app:itemIconTint="@color/indigo_60"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
   </androidx.drawerlayout.widget.DrawerLayout>

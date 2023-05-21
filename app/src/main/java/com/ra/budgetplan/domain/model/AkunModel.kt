@@ -1,5 +1,6 @@
 package com.ra.budgetplan.domain.model
 
+
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
