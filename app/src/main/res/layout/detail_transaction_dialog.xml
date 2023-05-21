@@ -15,7 +15,8 @@
             android:src="@drawable/baseline_close_24"
             android:background="@null"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:contentDescription="@null" />
 
         <ImageButton
             android:layout_marginEnd="8dp"
@@ -23,6 +24,7 @@
             android:id="@+id/ib_delete_dialog"
             android:background="@null"
             android:src="@drawable/baseline_delete_24"
+            android:contentDescription="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -31,6 +33,7 @@
             android:id="@+id/ib_edit_dialog"
             android:background="@null"
             android:src="@drawable/outline_edit_24"
+            android:contentDescription="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -43,7 +46,6 @@
             android:layout_centerInParent="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="36dp"
-
             android:text="@string/txt_empty"
             android:textSize="24sp" />
 

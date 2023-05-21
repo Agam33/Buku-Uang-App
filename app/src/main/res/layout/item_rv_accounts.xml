@@ -7,8 +7,7 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-
-        android:layout_margin="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -19,20 +18,26 @@
             
             <ImageView
                 android:id="@+id/iv_account"
-                android:src="@drawable/outline_savings_36"
+                android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:contentDescription="@null" />
             
             <com.google.android.material.textview.MaterialTextView
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:id="@+id/tv_account"
-                android:text="@string/txt_account_saving"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/txt_empty"
                 android:layout_toEndOf="@id/iv_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:id="@+id/tv_money"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:layout_below="@id/iv_account"
                 android:text="@string/txt_empty"
                 android:layout_width="wrap_content"
@@ -46,8 +51,8 @@
                 android:background="@drawable/more_dots_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            
         </RelativeLayout>
+
 
     </com.google.android.material.card.MaterialCardView>
 </layout>

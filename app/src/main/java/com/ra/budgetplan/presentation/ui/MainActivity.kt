@@ -11,7 +11,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
   private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -76,14 +78,14 @@ class MainActivity : AppCompatActivity() {
 
   private fun setupOnBackPressedDispatcher() {
     val callback = object: OnBackPressedCallback(true) {
-
       override fun handleOnBackPressed() {
         if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
           binding.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+          finish()
         }
       }
     }
     onBackPressedDispatcher.addCallback(this, callback)
-
   }
 }
