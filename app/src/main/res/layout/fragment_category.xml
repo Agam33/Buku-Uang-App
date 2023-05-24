@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.ra.budgetplan.presentation.viewmodel.CategoryViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -17,11 +19,31 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
+                app:layout_scrollFlags="scroll|enterAlways"
+                android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="?attr/actionBarSize">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:text="@string/txt_category"
+                        android:layout_marginTop="8dp"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+            <com.google.android.material.divider.MaterialDivider
+                app:tabMode="fixed"
+                android:background="@color/indigo_70"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -39,7 +61,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_categories"
             tools:itemCount="4"
-            tools:listitem="@layout/item_rv_categories_header"
+            tools:listitem="@layout/group_rv_categories"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

@@ -1,4 +1,4 @@
-package com.ra.budgetplan.presentation.ui.account.adapter
+package com.ra.budgetplan.customview.spinner
 
 import android.content.Context
 import android.view.LayoutInflater

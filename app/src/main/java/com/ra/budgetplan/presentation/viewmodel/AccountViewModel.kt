@@ -31,7 +31,11 @@ class AccountViewModel @Inject constructor(
   private var _accounts = MutableLiveData<List<AkunModel>>()
   val accounts: LiveData<List<AkunModel>> = _accounts
 
-  fun getAllAccount() {
+  init {
+    getAllAccount()
+  }
+
+  private fun getAllAccount() {
     viewModelScope.launch {
       findAllAkun.invoke().collect { resource ->
         when (resource) {

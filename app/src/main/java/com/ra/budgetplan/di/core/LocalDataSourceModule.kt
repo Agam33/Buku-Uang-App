@@ -60,4 +60,10 @@ interface LocalDataSourceModule {
   fun bindHutangLocalDataSource(
     hutangLocalDataSourceImpl: HutangLocalDataSourceImpl
   ): HutangLocalDataSource
+
+  @Binds
+  @Singleton
+  fun bindIconLocalDataSource(
+    iconLocalDataSource: IconLocalDataSourceImpl
+  ): IconLocalDataSource
 }

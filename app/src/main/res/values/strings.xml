@@ -36,5 +36,8 @@
     <string name="txt_icon">icon</string>
 
     <string name="msg_empty">Tidak Boleh Kosong</string>
+    <string name="msg_success">Berhasil</string>
     <string name="txt_empty_list">Belum ada catatan.</string>
+    <string name="txt_category">Kategori</string>
+    <string name="txt_create_category">Tambah Kategori</string>
 </resources>

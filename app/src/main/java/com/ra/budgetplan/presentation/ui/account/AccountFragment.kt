@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.budgetplan.databinding.FragmentAccountBinding
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.presentation.ui.account.adapter.RvAccountAdapter
-import com.ra.budgetplan.presentation.ui.account.adapter.SpinnerItemOptions
+import com.ra.budgetplan.customview.spinner.SpinnerItemOptions
 import com.ra.budgetplan.presentation.viewmodel.AccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -59,8 +59,6 @@ class AccountFragment : Fragment(), RvAccountAdapter.OnOptionAccountClickCallBac
   private fun observer() {
     binding?.lifecycleOwner = viewLifecycleOwner
     binding?.vm = viewModel
-
-    viewModel.getAllAccount()
 
     viewModel.emptyMessageState.observe(viewLifecycleOwner) {
       binding?.emptyLayout?.state = it

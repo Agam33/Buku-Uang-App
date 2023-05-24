@@ -1,13 +1,15 @@
 package com.ra.budgetplan.domain.repository
 
-import com.ra.budgetplan.domain.model.KategoriModel
+import com.ra.budgetplan.domain.entity.KategoriEntity
+import com.ra.budgetplan.domain.entity.TipeKategori
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface KategoriRepository {
-  suspend fun save(kategori: KategoriModel)
-  suspend fun delete(kategori: KategoriModel)
-  suspend fun update(kategori: KategoriModel)
-  fun findAll(): Flow<List<KategoriModel>>
-  fun findById(id: UUID): Flow<KategoriModel>
+  suspend fun findByType(type: TipeKategori): Flow<List<KategoriEntity>>
+  suspend fun save(kategori: KategoriEntity)
+  suspend fun delete(kategori: KategoriEntity)
+  suspend fun update(kategori: KategoriEntity)
+  fun findAll(): Flow<List<KategoriEntity>>
+  suspend fun findById(id: UUID): KategoriEntity
 }
