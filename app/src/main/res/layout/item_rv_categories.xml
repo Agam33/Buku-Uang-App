@@ -12,7 +12,6 @@
 
         <ImageView
             android:id="@+id/iv_category"
-            android:src="@drawable/baseline_card_giftcard_36"
             android:layout_marginStart="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -20,16 +19,18 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_toEndOf="@id/iv_category"
             android:id="@+id/tv_category"
-            android:paddingTop="2dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:paddingTop="8dp"
             android:textSize="16sp"
-            android:layout_marginStart="4dp"
-            android:text="@string/txt_category_reward"
+            android:layout_marginStart="16dp"
+            android:text="@string/txt_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <ImageButton
-            android:src="@drawable/baseline_more_horiz_24"
-            android:background="@null"
+        <Spinner
+            android:id="@+id/sp_option_category"
+            android:background="@drawable/baseline_more_horiz_24"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="8dp"
             android:layout_width="wrap_content"

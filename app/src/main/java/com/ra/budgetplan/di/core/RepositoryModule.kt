@@ -43,4 +43,8 @@ interface RepositoryModule {
   @Binds
   @Singleton
   fun bindHutangRepository(hutangRepositoryImpl: HutangRepositoryImpl): HutangRepository
+
+  @Binds
+  @Singleton
+  fun bindIconRepository(iconRepositoryImpl: IconRepositoryImpl): IconRepository
 }

@@ -36,12 +36,22 @@
         <item name="android:background">@color/white</item>
     </style>
 <!-- End Collapsing Toolbar -->
-    
-<!-- Custom Toolbar -->
 
-<!-- End Custom Toolbar-->
 
-<!--Input Layout-->
+<!-- Toggle Button -->
+    <style name="Widget.Budget.App.Category.Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.Budget.App.Category.SmallComponent</item>
+        <item name="android:textAppearance">@style/TextAppearance.Budget.App.Category</item>
+    </style>
 
-<!--End Input Layout-->
+    <style name="TextAppearance.Budget.App.Category" parent="TextAppearance.AppCompat.Medium">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="ShapeAppearance.Budget.App.Category.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+<!-- End Toggle Button -->
 </resources>

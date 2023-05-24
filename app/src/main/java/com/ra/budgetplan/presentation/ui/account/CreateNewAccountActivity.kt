@@ -19,6 +19,7 @@ import com.ra.budgetplan.presentation.ui.account.AccountFragment.Companion.EDIT_
 import com.ra.budgetplan.presentation.ui.account.AccountFragment.Companion.EXTRA_TEXT
 import com.ra.budgetplan.presentation.viewmodel.AccountViewModel
 import com.ra.budgetplan.util.parcelable
+import com.ra.budgetplan.util.setupNoActionbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.util.UUID
@@ -40,7 +41,7 @@ class CreateNewAccountActivity : AppCompatActivity(), IconListDialog.OnClickItem
       setupDetailAccount()
     }
 
-    setupToolbar()
+    setupNoActionbar(binding.toolbar)
     chooseIcon()
   }
 
@@ -108,11 +109,6 @@ class CreateNewAccountActivity : AppCompatActivity(), IconListDialog.OnClickItem
       }
     }
     onBackPressedDispatcher.onBackPressed()
-  }
-
-  private fun setupToolbar() {
-    setSupportActionBar(binding.toolbar)
-    supportActionBar?.setDisplayHomeAsUpEnabled(true)
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {

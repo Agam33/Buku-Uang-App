@@ -14,10 +14,15 @@
         android:theme="@style/Theme.BudgetPlan"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ui.category.CreateCategoryActivity"
             android:theme="@style/Theme.BudgetPlan.M3"
-            android:name=".presentation.ui.account.CreateNewAccountActivity"
             android:parentActivityName=".presentation.ui.MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".presentation.ui.account.CreateNewAccountActivity"
+            android:exported="false"
+            android:parentActivityName=".presentation.ui.MainActivity"
+            android:theme="@style/Theme.BudgetPlan.M3" />
         <activity
             android:name=".presentation.ui.MainActivity"
             android:exported="true"

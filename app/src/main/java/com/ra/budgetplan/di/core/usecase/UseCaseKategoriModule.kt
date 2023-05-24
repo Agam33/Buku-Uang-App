@@ -1,5 +1,7 @@
 package com.ra.budgetplan.di.core.usecase
 
+import com.ra.budgetplan.domain.usecase.akun.FindCategoryByType
+import com.ra.budgetplan.domain.usecase.akun.impl.FindCategoryByTypeImpl
 import com.ra.budgetplan.domain.usecase.kategori.DeleteKategori
 import com.ra.budgetplan.domain.usecase.kategori.FindAllKategori
 import com.ra.budgetplan.domain.usecase.kategori.FindKategoriById
@@ -19,6 +21,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 interface UseCaseKategoriModule {
+
+  @Binds
+  @Singleton
+  fun bindFindCategoryByType(findCategoryByTypeImpl: FindCategoryByTypeImpl): FindCategoryByType
 
   @Binds
   @Singleton

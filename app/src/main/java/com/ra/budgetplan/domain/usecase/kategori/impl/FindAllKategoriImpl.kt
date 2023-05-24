@@ -1,5 +1,6 @@
 package com.ra.budgetplan.domain.usecase.kategori.impl
 
+import com.ra.budgetplan.domain.mapper.KategoriMapper
 import com.ra.budgetplan.domain.model.KategoriModel
 import com.ra.budgetplan.domain.repository.KategoriRepository
 import com.ra.budgetplan.domain.usecase.kategori.FindAllKategori
@@ -15,8 +16,14 @@ class FindAllKategoriImpl @Inject constructor(
   override fun invoke(): Flow<Resource<List<KategoriModel>>> {
     return flow {
       repository.findAll().collect { list ->
-        if(list.isEmpty()) emit(Resource.Empty(""))
-        else emit(Resource.Success(list))
+        if(list.isEmpty()) {
+          emit(Resource.Empty(""))
+        } else {
+          val categories = list.map {category ->
+            KategoriMapper.kategoriToModel(category)
+          }
+          emit(Resource.Success(categories))
+        }
       }
     }
   }

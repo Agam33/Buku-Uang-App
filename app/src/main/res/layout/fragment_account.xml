@@ -32,7 +32,7 @@
 
             <com.google.android.material.divider.MaterialDivider
                 app:tabMode="fixed"
-                android:background="@color/indigo_60"
+                android:background="@color/indigo_70"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"/>
         </com.google.android.material.appbar.AppBarLayout>
