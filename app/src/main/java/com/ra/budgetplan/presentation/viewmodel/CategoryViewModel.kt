@@ -49,7 +49,6 @@ class CategoryViewModel @Inject constructor(
     }
   }
 
-
   fun setCategories() = viewModelScope.launch {
     findCategoryByType.invoke().collect {
       _mapCategory.postValue(it)
