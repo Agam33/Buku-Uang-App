@@ -1,6 +1,6 @@
 package com.ra.budgetplan.data.repositoryimpl
 
-import com.ra.budgetplan.data.local.TabunganLocalDataSource
+import com.ra.budgetplan.data.local.AkunLocalDataSource
 import com.ra.budgetplan.domain.entity.AkunEntity
 import com.ra.budgetplan.domain.repository.AkunRepository
 import kotlinx.coroutines.flow.Flow
@@ -8,7 +8,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 class AkunRepositoryImpl @Inject constructor(
-  private val localDataSource: TabunganLocalDataSource
+  private val localDataSource: AkunLocalDataSource
 ): AkunRepository {
   override suspend fun save(akun: AkunEntity) {
     return localDataSource.save(akun)

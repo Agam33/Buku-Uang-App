@@ -35,9 +35,23 @@
     <string name="txt_name">Nama</string>
     <string name="txt_icon">icon</string>
 
+    <string name="txt_hour_and_minute">%1s:%2s</string>
+    <string name="msg_date_picker">Pilih Tanggal</string>
+    <string name="msg_time_picker">Pilih Waktu</string>
     <string name="msg_empty">Tidak Boleh Kosong</string>
     <string name="msg_success">Berhasil</string>
+    <string name="msg_choose_icon">Pilih Icon!!</string>
     <string name="txt_empty_list">Belum ada catatan.</string>
     <string name="txt_category">Kategori</string>
     <string name="txt_create_category">Tambah Kategori</string>
+    <string name="txt_transaction">Transaksi</string>
+    <string name="title_note">Catatan</string>
+    <string name="txt_edt_hint_note">Catatan..</string>
+    <string name="txt_date">Tanggal</string>
+    <string name="txt_amount">Jumlah</string>
+    <string name="txt_save">Simpan</string>
+    <string name="txt_from_account">Dari Akun</string>
+    <string name="txt_to_account">Ke Akun</string>
+    <string name="txt_time">Waktu</string>
+
 </resources>

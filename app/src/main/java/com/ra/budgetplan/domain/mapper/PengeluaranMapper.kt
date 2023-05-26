@@ -22,7 +22,7 @@ object PengeluaranMapper {
   ): PengeluaranEntity = PengeluaranEntity(
     pengeluaranModel.uuid,
     pengeluaranModel.idKategori,
-    pengeluaranModel.idTabungan,
+    pengeluaranModel.idAkun,
     pengeluaranModel.deskripsi,
     pengeluaranModel.jumlah,
     pengeluaranModel.createdAt,

@@ -3,7 +3,6 @@ package com.ra.budgetplan.presentation.ui.category
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,7 +15,7 @@ import com.ra.budgetplan.domain.model.KategoriModel
 import com.ra.budgetplan.presentation.ui.category.adapter.RvIconCategoryAdapter
 import com.ra.budgetplan.presentation.viewmodel.CategoryViewModel
 import com.ra.budgetplan.util.setupNoActionbar
-import com.ra.budgetplan.util.shortToast
+import com.ra.budgetplan.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.util.UUID
@@ -95,7 +94,7 @@ class CreateCategoryActivity : AppCompatActivity(), RvIconCategoryAdapter.OnItem
       createdAt = LocalDateTime.now()
     )
 
-    shortToast(getString(R.string.msg_success))
+    showShortToast(getString(R.string.msg_success))
 
     viewModel.saveKategori(category)
     onBackPressedDispatcher.onBackPressed()

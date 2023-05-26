@@ -1,27 +1,58 @@
 package com.ra.budgetplan.util
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import java.text.NumberFormat
+import java.util.Date
 import java.util.Locale
 
-fun Activity.shortToast(message: String) {
+
+fun Int.checkTimeFormat(): String {
+  return if(this < 9) "0$this" else "$this"
+}
+
+fun Context.getStringResource(resId: Int, vararg formatArgs: Any?): String {
+  return resources.getString(resId, *formatArgs)
+}
+
+fun Activity.showShortToast(message: String) {
   Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
-fun Activity.longToast(message: String) {
+fun Activity.showLongToast(message: String) {
   Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
 
-fun AppCompatActivity.setupNoActionbar(toolbar: androidx.appcompat.widget.Toolbar?) {
+fun Fragment.showShortToast(message: String) {
+  Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+}
+
+fun Fragment.showLongToast(message: String) {
+  Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+}
+
+fun AppCompatActivity.setupNoActionbar(
+  toolbar: androidx.appcompat.widget.Toolbar?,
+  title: String = "",
+) {
   setSupportActionBar(toolbar)
+  if(title.isNotEmpty()) supportActionBar?.title = title
   supportActionBar?.setDisplayHomeAsUpEnabled(true)
 }
+
+fun SimpleDateFormat.millisToString(timeMillis: Long): String {
+  val date = Date(timeMillis)
+  return this.format(date)
+}
+
 fun String.firstCharUppercase(): String {
   if (isEmpty())
     throw NoSuchElementException("Char sequence is empty.")

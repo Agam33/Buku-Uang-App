@@ -1,6 +1,6 @@
 package com.ra.budgetplan.domain.usecase.akun.impl
 
-import com.ra.budgetplan.domain.mapper.AkunMapper
+import com.ra.budgetplan.domain.mapper.toEntity
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.usecase.akun.DeleteAkun
@@ -10,6 +10,6 @@ class DeleteAkunImpl @Inject constructor(
   private val repository: AkunRepository
 ): DeleteAkun {
   override suspend fun invoke(akun: AkunModel) {
-    repository.delete(AkunMapper.akunToEntity(akun))
+    repository.delete(akun.toEntity())
   }
 }

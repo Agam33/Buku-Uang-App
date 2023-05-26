@@ -1,6 +1,6 @@
 package com.ra.budgetplan.data.local.datasourceimpl
 
-import com.ra.budgetplan.data.local.TabunganLocalDataSource
+import com.ra.budgetplan.data.local.AkunLocalDataSource
 import com.ra.budgetplan.data.local.database.dao.AkunDao
 import com.ra.budgetplan.domain.entity.AkunEntity
 import kotlinx.coroutines.flow.Flow
@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class AkunLocalDataSourceImpl @Inject constructor(
   private val akunDao: AkunDao
-): TabunganLocalDataSource {
+): AkunLocalDataSource {
   override suspend fun save(tabungan: AkunEntity) {
     return akunDao.save(tabungan)
   }
