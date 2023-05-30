@@ -7,10 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.ra.budgetplan.domain.entity.TipeKategori
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.domain.model.KategoriModel
+import com.ra.budgetplan.domain.model.PendapatanModel
+import com.ra.budgetplan.domain.model.PengeluaranModel
 import com.ra.budgetplan.domain.model.TransferModel
 import com.ra.budgetplan.domain.usecase.akun.FindAllAkun
 import com.ra.budgetplan.domain.usecase.akun.FindCategoryByType
 import com.ra.budgetplan.domain.usecase.kategori.FindAllKategori
+import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.SavePendapatan
+import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.SavePengeluaran
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.SaveTransfer
 import com.ra.budgetplan.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TransactionViewModel @Inject constructor(
   private val saveTransfer: SaveTransfer,
+  private val savePengeluaran: SavePengeluaran,
+  private val savePendapatan: SavePendapatan,
   private val findAllAkun: FindAllAkun,
   private val findAllKategori: FindAllKategori,
   private val findKategoriByType: FindCategoryByType
@@ -56,6 +62,14 @@ class TransactionViewModel @Inject constructor(
         else -> {}
       }
     }
+  }
+
+  fun savePengeluaran(pengeluaranModel: PengeluaranModel) = viewModelScope.launch {
+    savePengeluaran.invoke(pengeluaranModel)
+  }
+
+  fun savePendapatan(pendapatanModel: PendapatanModel) = viewModelScope.launch {
+    savePendapatan.invoke(pendapatanModel)
   }
 
   fun saveTransfer(transferModel: TransferModel) = viewModelScope.launch {

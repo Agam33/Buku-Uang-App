@@ -11,5 +11,5 @@ interface KategoriRepository {
   suspend fun delete(kategori: KategoriEntity)
   suspend fun update(kategori: KategoriEntity)
   fun findAll(): Flow<List<KategoriEntity>>
-  suspend fun findById(id: UUID): KategoriEntity
+  suspend fun findById(id: UUID): Flow<KategoriEntity>
 }

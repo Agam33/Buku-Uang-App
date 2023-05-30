@@ -3,28 +3,22 @@ package com.ra.budgetplan.domain.mapper
 import com.ra.budgetplan.domain.entity.PendapatanEntity
 import com.ra.budgetplan.domain.model.PendapatanModel
 
-object PendapatanMapper {
-  fun pendapatanToModel(
-    pendapatanEntity: PendapatanEntity
-  ): PendapatanModel = PendapatanModel(
-    pendapatanEntity.uuid,
-    pendapatanEntity. idKategori,
-    pendapatanEntity. idTabungan,
-    pendapatanEntity. deskripsi,
-    pendapatanEntity. jumlah,
-    pendapatanEntity. createdAt,
-    pendapatanEntity. updatedAt
-  )
+fun PendapatanModel.toEntity(): PendapatanEntity = PendapatanEntity(
+  uuid,
+  idKategori,
+  idAkun,
+  deskripsi,
+  jumlah,
+  createdAt,
+  updatedAt
+)
 
-  fun pendapatanToEntity(
-    pendapatanModel: PendapatanModel
-  ): PendapatanEntity = PendapatanEntity(
-    pendapatanModel.uuid,
-    pendapatanModel. idKategori,
-    pendapatanModel. idAkun,
-    pendapatanModel. deskripsi,
-    pendapatanModel. jumlah,
-    pendapatanModel. createdAt,
-    pendapatanModel. updatedAt
-  )
-}
+fun PendapatanEntity.toModel(): PendapatanModel = PendapatanModel(
+  uuid,
+  idKategori,
+  idTabungan,
+  deskripsi,
+  jumlah,
+  createdAt,
+  updatedAt
+)

@@ -73,7 +73,7 @@ class CreateExpenseFragment : Fragment() {
       spCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
         override fun onItemSelected(adapter: AdapterView<*>?, view: View?, position: Int, p3: Long) {
           val model = adapter?.getItemAtPosition(position) as KategoriModel
-          accountId = model.uuid
+          categoryId = model.uuid
         }
 
         override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -82,7 +82,7 @@ class CreateExpenseFragment : Fragment() {
       spAccount.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
         override fun onItemSelected(adapter: AdapterView<*>?, view: View?, position: Int, p3: Long) {
           val model = adapter?.getItemAtPosition(position) as AkunModel
-          categoryId = model.uuid
+          accountId = model.uuid
         }
 
         override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -175,12 +175,11 @@ class CreateExpenseFragment : Fragment() {
         updatedAt = LocalDateTime.now()
       )
 
-      // TODO: save income -> viewModel.save()
+      viewModel.savePendapatan(pendapatanModel)
 
-      showShortToast("" +
-              "categoryID: $categoryId, " +
-              "AccountID: $accountId " +
-              "CreatedAt: $createdAt")
+      showShortToast(getString(R.string.msg_success))
+
+      activity?.onBackPressedDispatcher?.onBackPressed()
     }
   }
 

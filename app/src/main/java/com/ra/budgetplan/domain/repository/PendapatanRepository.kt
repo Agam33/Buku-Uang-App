@@ -1,9 +1,9 @@
 package com.ra.budgetplan.domain.repository
 
-import com.ra.budgetplan.domain.model.PendapatanModel
+import com.ra.budgetplan.domain.entity.PendapatanEntity
 
 interface PendapatanRepository {
-  suspend fun save(pendapatan: PendapatanModel)
-  suspend fun delete(pendapatan: PendapatanModel)
-  suspend fun update(pendapatan: PendapatanModel)
+  suspend fun save(pendapatan: PendapatanEntity)
+  suspend fun delete(pendapatan: PendapatanEntity)
+  suspend fun update(pendapatan: PendapatanEntity)
 }

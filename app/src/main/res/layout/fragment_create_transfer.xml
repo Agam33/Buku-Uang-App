@@ -170,6 +170,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
+            app:cornerRadius="4dp"
             android:backgroundTint="@color/indigo_50"
             android:id="@+id/btn_save"
             android:layout_marginTop="16dp"

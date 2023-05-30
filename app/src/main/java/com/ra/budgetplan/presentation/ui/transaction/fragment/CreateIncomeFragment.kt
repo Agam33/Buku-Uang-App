@@ -17,7 +17,7 @@ import com.ra.budgetplan.databinding.FragmentCreateIncomeBinding
 import com.ra.budgetplan.domain.entity.TipeKategori
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.domain.model.KategoriModel
-import com.ra.budgetplan.domain.model.PengeluaranModel
+import com.ra.budgetplan.domain.model.PendapatanModel
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
 import com.ra.budgetplan.util.DATE_PATTERN
 import com.ra.budgetplan.util.DATE_TIME_FORMATTER
@@ -93,7 +93,7 @@ class CreateIncomeFragment : Fragment() {
       val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
       val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
 
-      val pengeluaranModel = PengeluaranModel(
+      val pendepatanModel = PendapatanModel(
         uuid = UUID.randomUUID(),
         idKategori = categoryId ?: return@run,
         idAkun = accountId ?: return@run,
@@ -103,11 +103,11 @@ class CreateIncomeFragment : Fragment() {
         updatedAt = LocalDateTime.now()
       )
 
-      // TODO: save expense -> viewModel.save()
+      viewModel.savePendapatan(pendepatanModel)
 
-      showShortToast("categoryID: $categoryId, " +
-              "AccountID: $accountId " +
-              "CreatedAt: $createdAt")
+      showShortToast(getString(R.string.msg_success))
+
+      activity?.onBackPressedDispatcher?.onBackPressed()
     }
   }
 
@@ -116,7 +116,7 @@ class CreateIncomeFragment : Fragment() {
       spCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
         override fun onItemSelected(adapter: AdapterView<*>?, view: View?, position: Int, p3: Long) {
           val model = adapter?.getItemAtPosition(position) as KategoriModel
-          accountId = model.uuid
+          categoryId = model.uuid
         }
 
         override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -125,7 +125,7 @@ class CreateIncomeFragment : Fragment() {
       spAccount.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
         override fun onItemSelected(adapter: AdapterView<*>?, view: View?, position: Int, p3: Long) {
           val model = adapter?.getItemAtPosition(position) as AkunModel
-          categoryId = model.uuid
+          accountId = model.uuid
         }
 
         override fun onNothingSelected(p0: AdapterView<*>?) {}
