@@ -23,4 +23,7 @@ interface AkunDao {
   @Query("SELECT * FROM akunentity AS akun WHERE akun.uuid = :id")
   fun findById(id: UUID): Flow<AkunEntity>
 
+  @Query("SELECT SUM(total) FROM akunentity")
+  fun getTotalMoney(): Flow<Long?>
+
 }

@@ -78,6 +78,11 @@ fun Int.toFormatRupiah(): String {
   return formatRupiah.format(this).replace("Rp", "Rp ")
 }
 
+fun Long.toFormatRupiah(): String {
+  val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+  return formatRupiah.format(this).replace("Rp", "Rp ")
+}
+
 inline fun <reified T: Parcelable> Intent.parcelable(key: String): T? = when {
   SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)
   else -> @Suppress("DEPRECATION") getParcelableExtra(key) as? T

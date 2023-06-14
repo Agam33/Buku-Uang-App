@@ -24,9 +24,96 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content">
 
-            <include
-                android:id="@+id/overall_income_expense_total"
-                layout="@layout/overall_income_expense_total"/>
+               <com.google.android.material.card.MaterialCardView
+                   style="@style/Widget.App.Overall.IET.Card"
+                   app:cardElevation="0dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <RelativeLayout
+                       android:paddingStart="8dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       tools:ignore="RtlSymmetry">
+
+                       <com.google.android.material.textview.MaterialTextView
+                           android:id="@+id/tv_title_expense"
+                           android:text="@string/title_expense"
+                           android:textSize="14sp"
+                           android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                           android:layout_marginStart="4dp"
+                           android:layout_marginTop="8dp"
+                           android:layout_marginBottom="8dp"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+
+                       <com.google.android.material.textview.MaterialTextView
+                           android:textSize="14sp"
+                           android:layout_toEndOf="@id/tv_title_expense"
+                           android:id="@+id/tv_expense"
+                           android:text="@{vm.totalExpense}"
+                           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                           android:textColor="@color/red_400"
+                           android:layout_marginStart="8dp"
+                           android:layout_marginTop="8dp"
+                           android:layout_marginBottom="8dp"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+
+                       <com.google.android.material.textview.MaterialTextView
+                           android:textSize="14sp"
+                           android:layout_below="@id/tv_title_expense"
+                           android:id="@+id/tv_title_income"
+                           android:text="@string/title_income"
+                           android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                           android:layout_marginStart="4dp"
+                           android:layout_marginTop="8dp"
+                           android:layout_marginBottom="8dp"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+
+                       <com.google.android.material.textview.MaterialTextView
+                           android:textSize="14sp"
+                           android:layout_toEndOf="@id/tv_title_expense"
+                           android:layout_below="@id/tv_title_expense"
+                           android:id="@+id/tv_income"
+                           android:text="@{vm.totalIncome}"
+                           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                           android:textColor="@color/green_40"
+                           android:layout_marginStart="8dp"
+                           android:layout_marginTop="8dp"
+                           android:layout_marginBottom="8dp"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+
+                       <com.google.android.material.textview.MaterialTextView
+                           android:textSize="14sp"
+                           android:layout_below="@id/tv_title_income"
+                           android:id="@+id/tv_title_total"
+                           android:text="@string/title_total"
+                           android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                           android:layout_marginStart="4dp"
+                           android:layout_marginTop="8dp"
+                           android:layout_marginBottom="8dp"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+
+                       <com.google.android.material.textview.MaterialTextView
+                           android:textSize="14sp"
+                           android:layout_toEndOf="@id/tv_title_expense"
+                           android:layout_below="@id/tv_income"
+                           android:id="@+id/tv_total"
+                           android:text="@{vm.totalAccountMoney}"
+                           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                           android:textColor="@color/green_40"
+                           android:layout_marginStart="8dp"
+                           android:layout_marginTop="8dp"
+                           android:layout_marginBottom="8dp"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+
+                   </RelativeLayout>
+               </com.google.android.material.card.MaterialCardView>
 
            </com.google.android.material.appbar.CollapsingToolbarLayout>
 

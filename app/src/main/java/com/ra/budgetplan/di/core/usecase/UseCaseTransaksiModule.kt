@@ -1,14 +1,18 @@
 package com.ra.budgetplan.di.core.usecase
 
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetPendapatanByDate
+import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetTotalPendapatan
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.SavePendapatan
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.impl.GetPendapatanByDateImpl
+import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.impl.GetTotalPendapatanImpl
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.impl.SavePendapatanImpl
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetMonthlyPengeluaran
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetPengeluaranByDate
+import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetTotalPengeluaran
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.SavePengeluaran
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.impl.GetMonthlyPengeluaranImpl
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.impl.GetPengeluaranByDateImpl
+import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.impl.GetTotalPengeluaranImpl
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.impl.SavePengeluaranImpl
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.DeleteTransfer
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.GetTransferByDate
@@ -26,6 +30,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 interface UseCaseTransaksiModule {
+
+  @Binds
+  @Singleton
+  fun bindGetTotalPendapatan(getTotalPendapatanImpl: GetTotalPendapatanImpl): GetTotalPendapatan
+
+  @Binds
+  @Singleton
+  fun bindGetTotalPengeluaran(getTotalPengeluaranImpl: GetTotalPengeluaranImpl): GetTotalPengeluaran
 
   @Binds
   @Singleton

@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 import java.util.Date
 
 interface PengeluaranLocalDataSource {
+  fun getTotalPengeluaran(): Flow<Long?>
   fun getMonthlyPengeluaran(startOfDay: LocalDateTime, endOfDay: LocalDateTime): Flow<List<DetailPengeluaran>>
   fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<List<DetailPengeluaran>>
   suspend fun savePengeluaran(pengeluaran: PengeluaranEntity)

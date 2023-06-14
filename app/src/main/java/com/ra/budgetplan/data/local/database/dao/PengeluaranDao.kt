@@ -10,7 +10,6 @@ import com.ra.budgetplan.domain.entity.DetailPengeluaran
 import com.ra.budgetplan.domain.entity.PengeluaranEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
-import java.util.Date
 
 @Dao
 interface PengeluaranDao {
@@ -27,6 +26,9 @@ interface PengeluaranDao {
           "pengeluaran_tbl.updated_at BETWEEN :startOfDay AND :endOfDay " +
           "ORDER BY pengeluaran_tbl.updated_at DESC")
   fun getMonthlyPengeluaran(startOfDay: LocalDateTime, endOfDay: LocalDateTime): Flow<List<DetailPengeluaran>>
+
+  @Query("SELECT SUM(jumlah) FROM pengeluaran_tbl")
+  fun getTotalPengeluaran(): Flow<Long?>
 
   @Insert
   suspend fun save(pengeluaran: PengeluaranEntity)
