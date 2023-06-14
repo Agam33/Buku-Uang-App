@@ -54,4 +54,15 @@
         <item name="cornerSize">4dp</item>
     </style>
 <!-- End Toggle Button -->
+
+<!-- Dialog -->
+    <style name="Widget.App.Dialog.Rounded" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MyApp.Dialog.Rounded</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MyApp.Dialog.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+<!-- End Dialog-->
 </resources>

@@ -100,7 +100,7 @@ class CreateIncomeFragment : Fragment() {
         deskripsi = note,
         jumlah = amount.toInt(),
         createdAt = createdAt,
-        updatedAt = LocalDateTime.now()
+        updatedAt = createdAt
       )
 
       viewModel.savePendapatan(pendepatanModel)

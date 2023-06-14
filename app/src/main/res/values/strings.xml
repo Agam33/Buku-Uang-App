@@ -53,5 +53,8 @@
     <string name="txt_from_account">Dari Akun</string>
     <string name="txt_to_account">Ke Akun</string>
     <string name="txt_time">Waktu</string>
+    <string name="txt_monthly">Bulanan</string>
+    <string name="txt_daily">Harian</string>
+    <string name="txt_title_dialog_date_type">Tampilan tanggal</string>
 
 </resources>

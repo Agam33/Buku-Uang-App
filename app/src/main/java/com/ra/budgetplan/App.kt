@@ -1,7 +1,6 @@
 package com.ra.budgetplan
 
 import android.app.Application
-import androidx.databinding.ktx.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 

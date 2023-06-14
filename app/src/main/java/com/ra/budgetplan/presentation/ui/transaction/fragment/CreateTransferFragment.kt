@@ -117,7 +117,7 @@ class CreateTransferFragment : Fragment() {
         uuid = UUID.randomUUID(),
         jumlah = amount.toInt(),
         createdAt = createdAt,
-        updatedAt = LocalDateTime.now(),
+        updatedAt = createdAt,
         deskripsi = note,
         idFromAkun = fromAccountId ?: return@run,
         idToAkun = toAccountId ?: return@run

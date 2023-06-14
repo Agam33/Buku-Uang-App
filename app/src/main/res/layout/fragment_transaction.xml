@@ -22,9 +22,57 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <include
-                    android:id="@+id/overview_income_expense_total"
-                    layout="@layout/overview_income_expense_total"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/btn_view_type"
+                            android:layout_marginEnd="8dp"
+                            android:background="@null"
+                            android:src="@drawable/baseline_view_list_24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <ImageButton
+                            android:layout_marginStart="32dp"
+                            android:layout_gravity="center"
+                            android:id="@+id/img_btn_prev_date"
+                            android:background="@null"
+                            android:src="@drawable/outline_keyboard_arrow_left_24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tv_current_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/example_month_year"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                            android:textSize="16sp" />
+
+                        <ImageButton
+                            android:id="@+id/img_btn_next_date"
+                            android:background="@null"
+                            android:src="@drawable/baseline_keyboard_arrow_right_24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                    <include
+                        android:id="@+id/overview_income_expense_total"
+                        layout="@layout/overview_income_expense_total"/>
+                </LinearLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 

@@ -10,10 +10,18 @@ import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.ra.budgetplan.presentation.ui.transaction.adapter.DateViewType
+import com.ra.budgetplan.presentation.ui.transaction.adapter.getDateViewType
 import java.text.NumberFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
+fun LocalDate.toStringFormat(format: String, locale: Locale = Locale.ENGLISH): String {
+  val formatter = DateTimeFormatter.ofPattern(format, locale)
+  return format(formatter)
+}
 
 fun Int.checkTimeFormat(): String {
   return if(this < 9) "0$this" else "$this"

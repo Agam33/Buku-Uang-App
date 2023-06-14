@@ -8,8 +8,9 @@
 
     <com.google.android.material.card.MaterialCardView
         app:cardElevation="0dp"
+        app:cardCornerRadius="0dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="140dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -17,7 +18,6 @@
 
             <ImageView
                 android:background="@color/indigo_60"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:id="@+id/iv_item"
@@ -96,6 +96,12 @@
                 android:text="@string/txt_sample_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_marginBottom="4dp"
+                android:layout_below="@id/iv_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
 

@@ -17,7 +17,7 @@ import com.ra.budgetplan.databinding.FragmentCreateExpenseBinding
 import com.ra.budgetplan.domain.entity.TipeKategori
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.domain.model.KategoriModel
-import com.ra.budgetplan.domain.model.PendapatanModel
+import com.ra.budgetplan.domain.model.PengeluaranModel
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
 import com.ra.budgetplan.util.DATE_PATTERN
 import com.ra.budgetplan.util.DATE_TIME_FORMATTER
@@ -165,21 +165,21 @@ class CreateExpenseFragment : Fragment() {
       val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
       val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
 
-      val pendapatanModel = PendapatanModel(
+      val pengeluaranModel = PengeluaranModel(
         uuid = UUID.randomUUID(),
         idKategori = categoryId ?: return@run,
         idAkun = accountId ?: return@run,
         deskripsi = note,
         jumlah = amount.toInt(),
         createdAt = createdAt,
-        updatedAt = LocalDateTime.now()
+        updatedAt = createdAt
       )
 
-      viewModel.savePendapatan(pendapatanModel)
+      viewModel.savePengeluaran(pengeluaranModel)
 
+      currentTime.clear()
       showShortToast(getString(R.string.msg_success))
-
-      activity?.onBackPressedDispatcher?.onBackPressed()
+      activity?.finish()
     }
   }
 

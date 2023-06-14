@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.ra.budgetplan.presentation.viewmodel.TransactionViewModel" />
     </data>
 
     <FrameLayout
@@ -12,11 +15,16 @@
         tools:context=".presentation.ui.transaction.fragment.IncomeFragment">
 
         <androidx.recyclerview.widget.RecyclerView
+            app:hide="@{vm.rvIncomeState}"
             android:id="@+id/rv_income"
             tools:itemCount="10"
-            tools:listitem="@layout/item_rv_income_header"
+            tools:listitem="@layout/item_rv_income_month"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+        <include
+            android:id="@+id/empty_layout"
+            layout="@layout/empty_layout"/>
 
     </FrameLayout>
 </layout>

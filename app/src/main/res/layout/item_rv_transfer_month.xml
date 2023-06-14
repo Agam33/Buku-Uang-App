@@ -18,7 +18,9 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
-                android:layout_margin="4dp"
+                android:textAlignment="center"
+                android:padding="2dp"
+                android:background="#EAE7E7"
                 android:text="@string/txt_rv_title_header"
                 android:textSize="16sp"
                 app:fontFamily="@font/roboto_bold"
@@ -26,7 +28,7 @@
                 android:id="@+id/tv_title_rv_days"
                 android:layout_marginBottom="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="26dp" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
