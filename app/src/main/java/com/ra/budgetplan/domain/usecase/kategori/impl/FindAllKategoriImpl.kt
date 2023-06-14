@@ -1,6 +1,6 @@
 package com.ra.budgetplan.domain.usecase.kategori.impl
 
-import com.ra.budgetplan.domain.mapper.KategoriMapper
+import com.ra.budgetplan.domain.mapper.toModel
 import com.ra.budgetplan.domain.model.KategoriModel
 import com.ra.budgetplan.domain.repository.KategoriRepository
 import com.ra.budgetplan.domain.usecase.kategori.FindAllKategori
@@ -20,7 +20,7 @@ class FindAllKategoriImpl @Inject constructor(
           emit(Resource.Empty(""))
         } else {
           val categories = list.map {category ->
-            KategoriMapper.kategoriToModel(category)
+            category.toModel()
           }
           emit(Resource.Success(categories))
         }

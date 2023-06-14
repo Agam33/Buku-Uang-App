@@ -1,23 +1,36 @@
 package com.ra.budgetplan.data.repositoryimpl
 
 import com.ra.budgetplan.data.local.PengeluaranLocalDataSource
-import com.ra.budgetplan.domain.mapper.PengeluaranMapper
-import com.ra.budgetplan.domain.model.PengeluaranModel
+import com.ra.budgetplan.domain.entity.DetailPengeluaran
+import com.ra.budgetplan.domain.entity.PengeluaranEntity
 import com.ra.budgetplan.domain.repository.PengeluaranRepository
+import kotlinx.coroutines.flow.Flow
+import java.time.LocalDateTime
+import java.util.Date
 import javax.inject.Inject
 
 class PengeluaranRepositoryImpl @Inject constructor(
   private val localDataSource: PengeluaranLocalDataSource
 ): PengeluaranRepository {
-  override suspend fun save(pengeluaran: PengeluaranModel) {
-    return localDataSource.savePengeluaran(PengeluaranMapper.pengeluaranToEntity(pengeluaran))
+  override fun getMonthlyPengeluaran(startOfDay: LocalDateTime, endOfDay: LocalDateTime): Flow<List<DetailPengeluaran>> {
+    return localDataSource.getMonthlyPengeluaran(startOfDay, endOfDay)
   }
 
-  override suspend fun delete(pengeluaran: PengeluaranModel) {
-    return localDataSource.deletePengeluaran(PengeluaranMapper.pengeluaranToEntity(pengeluaran))
+  override fun getPengeluaranByDate(
+    fromDate: LocalDateTime, toDate: LocalDateTime
+  ): Flow<List<DetailPengeluaran>> {
+    return localDataSource.getPengeluaranByDate(fromDate, toDate)
   }
 
-  override suspend fun update(pengeluaran: PengeluaranModel) {
-    return localDataSource.updatePengeluaran(PengeluaranMapper.pengeluaranToEntity(pengeluaran))
+  override suspend fun save(pengeluaran: PengeluaranEntity) {
+    return localDataSource.savePengeluaran(pengeluaran)
+  }
+
+  override suspend fun delete(pengeluaran: PengeluaranEntity) {
+    return localDataSource.deletePengeluaran(pengeluaran)
+  }
+
+  override suspend fun update(pengeluaran: PengeluaranEntity) {
+    return localDataSource.updatePengeluaran(pengeluaran)
   }
 }

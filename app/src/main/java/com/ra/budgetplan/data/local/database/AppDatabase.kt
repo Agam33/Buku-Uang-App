@@ -8,6 +8,7 @@ import androidx.room.TypeConverters
 import com.ra.budgetplan.R
 import com.ra.budgetplan.data.local.database.dao.*
 import com.ra.budgetplan.domain.entity.*
+import com.ra.budgetplan.util.DbDateTypeConverter
 import com.ra.budgetplan.util.DbLocalDateConverter
 import com.ra.budgetplan.util.DbLocalDateTimeConverter
 import java.time.LocalDateTime

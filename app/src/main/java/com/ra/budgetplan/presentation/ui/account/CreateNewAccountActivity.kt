@@ -20,6 +20,7 @@ import com.ra.budgetplan.presentation.ui.account.AccountFragment.Companion.EXTRA
 import com.ra.budgetplan.presentation.viewmodel.AccountViewModel
 import com.ra.budgetplan.util.parcelable
 import com.ra.budgetplan.util.setupNoActionbar
+import com.ra.budgetplan.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.util.UUID
@@ -53,6 +54,7 @@ class CreateNewAccountActivity : AppCompatActivity(), IconListDialog.OnClickItem
       binding.edtInputLayoutName.editText?.setText(account.nama)
       binding.edtInputInitialAmount.text = Editable.Factory.getInstance().newEditable(account.total.toString())
       binding.ivIcon.setImageResource(account.icon)
+      binding.ivIcon.tag = account.icon
     }
   }
 
@@ -80,7 +82,7 @@ class CreateNewAccountActivity : AppCompatActivity(), IconListDialog.OnClickItem
     }
 
     if(binding.ivIcon.tag == null) {
-      Toast.makeText(this@CreateNewAccountActivity, "Pilih Icon!!", Toast.LENGTH_SHORT).show()
+      showShortToast(getString(R.string.msg_choose_icon))
       return
     }
 

@@ -289,7 +289,7 @@ class DatabaseSeeder(
         IconCategory.ACCOUNT,
         resource.getIdentifier(
           resource.getResourceEntryName(
-            R.drawable.account_credit_card_36),
+            R.drawable.account_master_card),
           "drawable", context.packageName)
       ),
       IconEntity(

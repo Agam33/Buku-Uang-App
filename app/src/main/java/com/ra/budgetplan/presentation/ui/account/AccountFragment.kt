@@ -84,7 +84,8 @@ class AccountFragment : Fragment(), RvAccountAdapter.OnOptionAccountClickCallBac
   override fun option(options: SpinnerItemOptions, akun: AkunModel) {
     when(options) {
       SpinnerItemOptions.DELETE -> {
-        viewModel.deleteAccount(akun)
+        // TODO: dialog message
+//        viewModel.deleteAccount(akun)
       }
       SpinnerItemOptions.EDIT -> {
         val i = Intent(requireActivity(), CreateNewAccountActivity::class.java).apply {

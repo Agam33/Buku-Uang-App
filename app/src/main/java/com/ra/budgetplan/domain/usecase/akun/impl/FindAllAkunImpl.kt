@@ -1,6 +1,6 @@
 package com.ra.budgetplan.domain.usecase.akun.impl
 
-import com.ra.budgetplan.domain.mapper.AkunMapper
+import com.ra.budgetplan.domain.mapper.toModel
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.usecase.akun.FindAllAkun
@@ -19,7 +19,7 @@ class FindAllAkunImpl @Inject constructor(
           emit(Resource.Empty(""))
         } else {
           val akun = akunList.map { acc ->
-            AkunMapper.akunToModel(acc)
+            acc.toModel()
           }
           emit(Resource.Success(akun))
         }

@@ -4,7 +4,7 @@ import com.ra.budgetplan.domain.entity.AkunEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
-interface TabunganLocalDataSource {
+interface AkunLocalDataSource {
   suspend fun save(tabungan: AkunEntity)
   suspend fun delete(tabungan: AkunEntity)
   suspend fun update(tabungan: AkunEntity)

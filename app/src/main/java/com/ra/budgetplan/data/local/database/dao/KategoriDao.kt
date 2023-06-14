@@ -28,5 +28,5 @@ interface KategoriDao {
   fun findAll(): Flow<List<KategoriEntity>>
 
   @Query("SELECT * FROM kategorientity AS kt WHERE kt.uuid = :id")
-  suspend fun findById(id: UUID): KategoriEntity
+  fun findById(id: UUID): Flow<KategoriEntity>
 }

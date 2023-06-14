@@ -9,7 +9,7 @@ import java.util.*
 data class PengeluaranModel(
   var uuid: UUID,
   var idKategori: UUID,
-  var idTabungan: UUID,
+  var idAkun: UUID,
   var deskripsi: String,
   var jumlah: Int,
   var createdAt: LocalDateTime,
