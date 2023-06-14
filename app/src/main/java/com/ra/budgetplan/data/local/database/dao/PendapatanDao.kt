@@ -21,6 +21,10 @@ interface PendapatanDao {
           "ORDER BY pendapatan_tbl.updated_at DESC")
   fun getPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<List<DetailPendapatan>>
 
+
+  @Query("SELECT SUM(jumlah) FROM pendapatan_tbl")
+  fun getTotalPendapatan(): Flow<Long?>
+
   @Insert
   suspend fun save(pendapatan: PendapatanEntity)
 

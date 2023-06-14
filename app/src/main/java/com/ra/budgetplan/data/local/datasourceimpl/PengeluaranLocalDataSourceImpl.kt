@@ -12,6 +12,10 @@ import javax.inject.Inject
 class PengeluaranLocalDataSourceImpl @Inject constructor(
   private val pengeluaranDao: PengeluaranDao
 ): PengeluaranLocalDataSource {
+  override fun getTotalPengeluaran(): Flow<Long?> {
+    return pengeluaranDao.getTotalPengeluaran()
+  }
+
   override fun getMonthlyPengeluaran(startOfDay: LocalDateTime, endOfDay: LocalDateTime): Flow<List<DetailPengeluaran>> {
     return pengeluaranDao.getMonthlyPengeluaran(startOfDay, endOfDay)
   }

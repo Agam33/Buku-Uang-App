@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 
 interface PendapatanLocalDataSource {
+  fun getTotalPendapatan(): Flow<Long?>
   fun getPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<List<DetailPendapatan>>
   suspend fun savePendapatan(pendapatan: PendapatanEntity)
   suspend fun deletePendapatan(pendapatan: PendapatanEntity)

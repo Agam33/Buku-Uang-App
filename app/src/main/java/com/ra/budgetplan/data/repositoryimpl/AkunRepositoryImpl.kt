@@ -10,6 +10,10 @@ import javax.inject.Inject
 class AkunRepositoryImpl @Inject constructor(
   private val localDataSource: AkunLocalDataSource
 ): AkunRepository {
+  override fun getTotalMoney(): Flow<Long?> {
+    return localDataSource.getTotalMoney()
+  }
+
   override suspend fun save(akun: AkunEntity) {
     return localDataSource.save(akun)
   }
