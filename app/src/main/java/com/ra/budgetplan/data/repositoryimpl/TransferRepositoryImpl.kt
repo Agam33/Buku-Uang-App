@@ -11,9 +11,9 @@ import javax.inject.Inject
 class TransferRepositoryImpl @Inject constructor(
   private val localDataSource: TransferLocalDataSource
 ): TransferRepository {
-  override fun getTransferByDate(
+  override suspend fun getTransferByDate(
     fromDate: LocalDateTime, toDate: LocalDateTime
-  ): Flow<List<DetailTransfer>> {
+  ): List<DetailTransfer> {
     return localDataSource.getTransferByDate(fromDate, toDate)
   }
 

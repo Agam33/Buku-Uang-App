@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 
 interface GetPengeluaranByDate {
-  fun invoke(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Resource<List<DetailPengeluaran>>>
+  suspend fun invoke(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailPengeluaran>
 }

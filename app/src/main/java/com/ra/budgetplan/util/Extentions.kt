@@ -24,7 +24,7 @@ fun LocalDate.toStringFormat(format: String, locale: Locale = Locale.ENGLISH): S
 }
 
 fun Int.checkTimeFormat(): String {
-  return if(this < 9) "0$this" else "$this"
+  return if(this <= 9) "0$this" else "$this"
 }
 
 fun Context.getStringResource(resId: Int, vararg formatArgs: Any?): String {

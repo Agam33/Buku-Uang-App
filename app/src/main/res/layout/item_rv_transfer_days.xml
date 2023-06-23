@@ -21,7 +21,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:id="@+id/iv_item"
-                android:layout_width="24dp"
+                android:layout_width="8dp"
                 android:layout_height="120dp" />
 
             <com.google.android.material.textview.MaterialTextView

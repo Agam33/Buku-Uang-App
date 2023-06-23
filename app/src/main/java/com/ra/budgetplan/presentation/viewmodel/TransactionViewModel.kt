@@ -17,17 +17,24 @@ import com.ra.budgetplan.domain.model.PengeluaranModel
 import com.ra.budgetplan.domain.model.TransferModel
 import com.ra.budgetplan.domain.usecase.akun.FindAllAkun
 import com.ra.budgetplan.domain.usecase.akun.FindCategoryByType
+import com.ra.budgetplan.domain.usecase.transaksi.GetTotalTransactionByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetPendapatanByDate
+import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetTotalPendapatanByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.SavePendapatan
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetPengeluaranByDate
+import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetTotalPengeluaranByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.SavePengeluaran
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.GetTransferByDate
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.SaveTransfer
 import com.ra.budgetplan.util.Resource
-import com.ra.budgetplan.util.RvGroup
+import com.ra.budgetplan.util.toFormatRupiah
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -41,7 +48,10 @@ class TransactionViewModel @Inject constructor(
   private val getPengeluaranByDate: GetPengeluaranByDate,
   private val getPendapatanByDate: GetPendapatanByDate,
   private val getTransferByDate: GetTransferByDate,
-  private val userSettingPref: UserSettingPref
+  private val userSettingPref: UserSettingPref,
+  private val getTotalPendapatanByDate: GetTotalPendapatanByDate,
+  private val getTotalPengeluaranByDate: GetTotalPengeluaranByDate,
+  private val getTotalTransactionByDate: GetTotalTransactionByDate
 ): ViewModel() {
 
   private var _listCategory = MutableLiveData<List<KategoriModel>>()
@@ -53,11 +63,8 @@ class TransactionViewModel @Inject constructor(
   private var _listCategoryByType = MutableLiveData<List<KategoriModel>>()
   val listCategoryByType: LiveData<List<KategoriModel>> get() = _listCategoryByType
 
-  private var _listPengeluaran = MutableLiveData<RvGroup<String, ArrayList<DetailPengeluaran>>>()
-  val listPengeluaran: LiveData<RvGroup<String, ArrayList<DetailPengeluaran>>> get() = _listPengeluaran
-
-  private val _listPendapatan = MutableLiveData<RvGroup<String, ArrayList<DetailPendapatan>>>()
-  val listPendapatan: LiveData<RvGroup<String, ArrayList<DetailPendapatan>>> get() = _listPendapatan
+  private var _listPengeluaran = MutableLiveData<Resource<List<DetailPengeluaran>>>()
+  val listPengeluaran: LiveData<Resource<List<DetailPengeluaran>>> get() = _listPengeluaran
 
   private val _rvIncomeState = MutableLiveData<Boolean>()
   val rvIncomeState: LiveData<Boolean> get() = _rvIncomeState
@@ -71,8 +78,8 @@ class TransactionViewModel @Inject constructor(
   private val _rvTransferState = MutableLiveData<Boolean>()
   val rvTransferState: LiveData<Boolean> get() = _rvTransferState
 
-  private val _listTransfer = MutableLiveData<RvGroup<String, ArrayList<DetailTransfer>>>()
-  val listTransfer: LiveData<RvGroup<String, ArrayList<DetailTransfer>>> get() = _listTransfer
+  private var _listTransfer = MutableLiveData<Resource<List<DetailTransfer>>>()
+  val listTransfer: LiveData<Resource<List<DetailTransfer>>> get() = _listTransfer
 
   private val _rvExpenseState = MutableLiveData<Boolean>()
   val rvExpenseState: LiveData<Boolean> get() = _rvExpenseState
@@ -80,104 +87,90 @@ class TransactionViewModel @Inject constructor(
   private val _emptyExpenseLayoutState = MutableLiveData<Boolean>()
   val emptyExpenseLayoutState: LiveData<Boolean> get() = _emptyExpenseLayoutState
 
-  private var _currentDate = MutableLiveData<LocalDate>()
-  val currentDate: LiveData<LocalDate> get() = _currentDate
+  private val _textPengeluaran = MutableSharedFlow<String>()
+  val textPengeluaran: SharedFlow<String> = _textPengeluaran.asSharedFlow()
 
-  fun setCurrentDate(localDate: LocalDate) {
+  private val _textPendapatan = MutableSharedFlow<String>()
+  val textPendapatan: SharedFlow<String> = _textPendapatan.asSharedFlow()
+
+  private val _textTotal = MutableSharedFlow<String>()
+  val textTotal: SharedFlow<String> = _textTotal.asSharedFlow()
+
+  private var _currentDate = MutableLiveData<Pair<LocalDateTime, LocalDateTime>>()
+  val currentDate: LiveData<Pair<LocalDateTime, LocalDateTime>> get() = _currentDate
+
+  private var _incomes = MutableLiveData<Resource<List<DetailPendapatan>>>()
+  val incomes: LiveData<Resource<List<DetailPendapatan>>> = _incomes
+
+
+  fun setCurrentDate(localDate: Pair<LocalDateTime, LocalDateTime>) {
     _currentDate.postValue(localDate)
   }
 
   fun getDateViewType(): LiveData<String> =
     userSettingPref.getDateViewType().asLiveData()
 
-  fun setTransactionDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
-    /*
-        Make the coroutines run separately.
-        If not do this, the coroutine will wait for each other.
-     */
+  fun setStateIncomeListUi(rvState: Boolean, emptyState: Boolean) {
+    _rvIncomeState.postValue(rvState)
+    _emptyIncomeLayoutState.postValue(emptyState)
+  }
+
+  fun setStateExpenseListUi(rvState: Boolean, emptyState: Boolean) {
+    _rvExpenseState.postValue(rvState)
+    _emptyExpenseLayoutState.postValue(emptyState)
+  }
+
+  fun setStateTransferListUi(rvState: Boolean, emptyState: Boolean) {
+    _rvTransferState.postValue(rvState)
+    _emptyTransferLayoutState.postValue(emptyState)
+  }
+
+  fun getTotalPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
     viewModelScope.launch {
-      getAllTransfer(fromDate, toDate)
-    }
-    viewModelScope.launch {
-      getAllPendapatan(fromDate, toDate)
-    }
-    viewModelScope.launch {
-      getPengeluaranByDate(fromDate, toDate)
+      getTotalPendapatanByDate.invoke(fromDate, toDate)
+        .onEach { _textPendapatan.emit(it.toFormatRupiah()) }
+        .collect()
     }
   }
 
-  private suspend fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
-    getPengeluaranByDate.invoke(fromDate, toDate).collect {
-      when(it) {
-        is Resource.Success -> {
-          val monthly = RvGroup<String, ArrayList<DetailPengeluaran>>()
-          for (data in it.data ?: ArrayList()) {
-            val updatedAt = data.pengeluaran.createdAt
-            val key = updatedAt.toLocalDate().toString()
-            monthly.addIf(key, ArrayList())?.add(data)
-          }
-          _listPengeluaran.postValue(monthly)
-          _emptyExpenseLayoutState.postValue(true)
-          _rvExpenseState.postValue(false)
-        }
-
-        is Resource.Empty -> {
-          _rvExpenseState.postValue(true)
-          _emptyExpenseLayoutState.postValue(false)
-        }
-
-        else -> {}
-      }
+  fun getTotalPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
+    viewModelScope.launch {
+      getTotalPengeluaranByDate.invoke(fromDate, toDate)
+        .onEach {  _textPengeluaran.emit(it.toFormatRupiah()) }
+        .collect()
     }
   }
 
-  private suspend fun getAllPendapatan(fromDate: LocalDateTime, toDate: LocalDateTime)  {
-    getPendapatanByDate.invoke(fromDate, toDate).collect {
-      when (it) {
-        is Resource.Success -> {
-          val monthly = RvGroup<String, ArrayList<DetailPendapatan>>()
-          for (data in it.data ?: ArrayList()) {
-            val updatedAt = data.pendapatan.createdAt
-            val key = updatedAt.toLocalDate().toString()
-            monthly.addIf(key, ArrayList())?.add(data)
-          }
-          _listPendapatan.postValue(monthly)
-          _rvIncomeState.postValue(false)
-          _emptyIncomeLayoutState.postValue(true)
-        }
-
-        is Resource.Empty -> {
-          _rvIncomeState.postValue(true)
-          _emptyIncomeLayoutState.postValue(false)
-        }
-
-        else -> {}
-      }
+  fun getTotalByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
+    viewModelScope.launch {
+      getTotalTransactionByDate.invoke(fromDate, toDate)
+        .onEach {  _textTotal.emit(it.toFormatRupiah()) }
+        .collect()
     }
   }
 
-  private suspend fun getAllTransfer(fromDate: LocalDateTime, toDate: LocalDateTime) {
-    getTransferByDate.invoke(fromDate, toDate).collect {
-      when (it) {
-        is Resource.Success -> {
-          val monthly = RvGroup<String, ArrayList<DetailTransfer>>()
-          for (data in it.data ?: ArrayList()) {
-            val updatedAt = data.transfer.createdAt
-            val key = updatedAt.toLocalDate().toString()
-            monthly.addIf(key, ArrayList())?.add(data)
-          }
-          _listTransfer.postValue(monthly)
-          _rvTransferState.postValue(false)
-          _emptyTransferLayoutState.postValue(true)
-        }
+  fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
+    viewModelScope.launch {
+      val list = getPengeluaranByDate.invoke(fromDate, toDate)
+      if(list.isEmpty()) _listPengeluaran.postValue(Resource.Empty(""))
+      else _listPengeluaran.postValue(Resource.Success(list))
+    }
+  }
 
-        is Resource.Empty -> {
-          _rvTransferState.postValue(true)
-          _emptyTransferLayoutState.postValue(false)
-        }
+  fun getPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime)  {
+    viewModelScope.launch {
+      val list = getPendapatanByDate.invoke(fromDate, toDate)
+      if(list.isEmpty()) _incomes.postValue(Resource.Empty(""))
+      else _incomes.postValue(Resource.Success(list))
+    }
+  }
 
-        else -> {}
-      }
+  fun getTransferByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
+    viewModelScope.launch {
+      val list = getTransferByDate.invoke(fromDate, toDate)
+      _listTransfer.postValue(Resource.Loading())
+      if(list.isEmpty()) _listTransfer.postValue(Resource.Empty(""))
+      else _listTransfer.postValue(Resource.Success(list))
     }
   }
 
@@ -188,7 +181,6 @@ class TransactionViewModel @Inject constructor(
         is Resource.Success -> {
           _listAccount.postValue(it.data ?: mutableListOf())
         }
-
         else -> {}
       }
     }
@@ -201,7 +193,6 @@ class TransactionViewModel @Inject constructor(
         is Resource.Success -> {
           _listCategoryByType.postValue(it.data ?: mutableListOf())
         }
-
         else -> {}
       }
     }

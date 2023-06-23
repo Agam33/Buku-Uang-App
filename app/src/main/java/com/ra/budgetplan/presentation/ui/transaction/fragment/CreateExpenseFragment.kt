@@ -56,16 +56,12 @@ class CreateExpenseFragment : Fragment() {
   ): View? {
     // Inflate the layout for this fragment
     _binding = FragmentCreateExpenseBinding.inflate(inflater, container, false)
-    return binding?.root
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
     observer()
     setupDatePicker()
     setupTimePicker()
     setupAccountAndCategoryPicker()
     createExpense()
+    return binding?.root
   }
 
   private fun setupAccountAndCategoryPicker() {
@@ -178,7 +174,9 @@ class CreateExpenseFragment : Fragment() {
       viewModel.savePengeluaran(pengeluaranModel)
 
       currentTime.clear()
+
       showShortToast(getString(R.string.msg_success))
+
       activity?.finish()
     }
   }

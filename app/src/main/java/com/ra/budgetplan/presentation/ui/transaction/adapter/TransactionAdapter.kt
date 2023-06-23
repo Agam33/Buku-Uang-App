@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.budgetplan.databinding.ItemRvExpenseMonthBinding
 import com.ra.budgetplan.databinding.ItemRvIncomeMonthBinding
+import com.ra.budgetplan.databinding.ItemRvTransferMonthBinding
 import com.ra.budgetplan.domain.entity.DetailPendapatan
 import com.ra.budgetplan.domain.entity.DetailPengeluaran
 import com.ra.budgetplan.domain.entity.DetailTransfer
@@ -64,7 +65,7 @@ class TransferRvAdapter(
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
     return TransferMonthViewHolder(
-      ItemRvIncomeMonthBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+      ItemRvTransferMonthBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
   }
 

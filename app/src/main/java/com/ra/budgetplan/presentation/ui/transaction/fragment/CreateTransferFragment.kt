@@ -54,16 +54,12 @@ class CreateTransferFragment : Fragment() {
   ): View? {
     // Inflate the layout for this fragment
     _binding = FragmentCreateTransferBinding.inflate(inflater, container, false)
-    return binding?.root
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
     observer()
     setupDatePicker()
     setupTimePicker()
     setupAccountPicker()
     createAccount()
+    return binding?.root
   }
 
   private fun setupAccountPicker() {
@@ -123,9 +119,13 @@ class CreateTransferFragment : Fragment() {
         idToAkun = toAccountId ?: return@run
       )
 
+      currentTime.clear()
+
       viewModel.saveTransfer(transferModel)
+
       showShortToast(getString(R.string.msg_success))
-      activity?.onBackPressedDispatcher?.onBackPressed()
+
+      activity?.finish()
     }
   }
 

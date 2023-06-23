@@ -19,8 +19,12 @@ interface PendapatanDao {
           "WHERE " +
           "pendapatan_tbl.updated_at BETWEEN :fromDate AND :toDate " +
           "ORDER BY pendapatan_tbl.updated_at DESC")
-  fun getPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<List<DetailPendapatan>>
+  suspend fun getPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailPendapatan>
 
+  @Query("SELECT SUM(jumlah) FROM pendapatan_tbl " +
+          "WHERE " +
+          "pendapatan_tbl.updated_at BETWEEN :fromDate AND :toDate")
+  fun getTotalPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long?>
 
   @Query("SELECT SUM(jumlah) FROM pendapatan_tbl")
   fun getTotalPendapatan(): Flow<Long?>

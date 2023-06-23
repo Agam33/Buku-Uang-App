@@ -7,7 +7,7 @@ import com.ra.budgetplan.domain.entity.TipeKategori
 import com.ra.budgetplan.presentation.ui.transaction.TransactionType
 
 class TransactionPagerAdapter(
-  fragment: FragmentActivity
+  fragment: Fragment
 ): FragmentStateAdapter(fragment) {
 
   private val fragments = mutableListOf<Fragment>()

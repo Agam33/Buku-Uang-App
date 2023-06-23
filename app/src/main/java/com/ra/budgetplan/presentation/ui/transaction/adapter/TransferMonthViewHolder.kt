@@ -6,26 +6,30 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ra.budgetplan.databinding.ItemRvIncomeMonthBinding
 import com.ra.budgetplan.databinding.ItemRvTransferDaysBinding
+import com.ra.budgetplan.databinding.ItemRvTransferMonthBinding
 import com.ra.budgetplan.domain.entity.DetailTransfer
 
 class TransferMonthViewHolder(
-  private val binding: ItemRvIncomeMonthBinding
+  private val binding: ItemRvTransferMonthBinding
 ): RecyclerView.ViewHolder(binding.root) {
 
   fun bind(date: String, list: List<DetailTransfer>) {
     val mAdapter = ItemMonthAdapter()
     mAdapter.submitList(list)
-    binding.rvIncomeDays.apply {
+    binding.tvTitleRvDays.text = date
+    binding.rvTransferDays.apply {
       adapter = mAdapter
       setHasFixedSize(true)
-      layoutManager = LinearLayoutManager(binding.root.context)
+      layoutManager = LinearLayoutManager(
+        binding.root.context,
+        LinearLayoutManager.VERTICAL,
+        false)
     }
-    binding.tvTitleRvDays.text = date
   }
 
-  inner class ItemMonthAdapter: ListAdapter<DetailTransfer, TransferDayViewHolder>(DIFF_UTIL) {
+  inner class ItemMonthAdapter
+    : ListAdapter<DetailTransfer, TransferDayViewHolder>(DIFF_UTIL) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransferDayViewHolder {
       return TransferDayViewHolder(
         ItemRvTransferDaysBinding.inflate(LayoutInflater.from(parent.context), parent, false)

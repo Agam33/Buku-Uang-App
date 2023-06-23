@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 
 interface GetTransferByDate {
-  fun invoke(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Resource<List<DetailTransfer>>>
+ suspend fun invoke(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailTransfer>
 }

@@ -13,9 +13,7 @@ class FindAkunByIdImpl @Inject constructor(
   private val repository: AkunRepository
 ): FindAkunById {
 
-  override fun invoke(id: UUID): Flow<AkunModel> {
-      return repository.findById(id).map {
-        it.toModel()
-      }
+  override suspend fun invoke(id: UUID): AkunModel {
+      return repository.findById(id).toModel()
   }
 }
