@@ -26,6 +26,7 @@ import com.ra.budgetplan.util.getStringResource
 import com.ra.budgetplan.util.millisToString
 import com.ra.budgetplan.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -56,16 +57,12 @@ class CreateIncomeFragment : Fragment() {
   ): View? {
     // Inflate the layout for this fragment
     _binding = FragmentCreateIncomeBinding.inflate(inflater, container, false)
-    return binding?.root
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
     observer()
     setupDatePicker()
     setupTimePicker()
     setupAccountAndCategoryPicker()
     createExpense()
+    return binding?.root
   }
 
   private fun createExpense() {
@@ -103,11 +100,14 @@ class CreateIncomeFragment : Fragment() {
         updatedAt = createdAt
       )
 
+
+      currentTime.clear()
+
       viewModel.savePendapatan(pendepatanModel)
 
       showShortToast(getString(R.string.msg_success))
 
-      activity?.onBackPressedDispatcher?.onBackPressed()
+      activity?.finish()
     }
   }
 
@@ -210,6 +210,7 @@ class CreateIncomeFragment : Fragment() {
 
   override fun onDestroy() {
     _binding = null
+    Timber.tag("CreateIncomeFragment").d("onDestroy()")
     super.onDestroy()
   }
 }

@@ -19,7 +19,7 @@ interface TransferDao {
           "WHERE " +
           "transfer_tbl.updated_at BETWEEN :fromDate AND :toDate " +
           "ORDER BY transfer_tbl.updated_at DESC")
-  fun getTransferByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<List<DetailTransfer>>
+  suspend fun getTransferByDate(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailTransfer>
 
   @Insert
   suspend fun save(transferEntity: TransferEntity)

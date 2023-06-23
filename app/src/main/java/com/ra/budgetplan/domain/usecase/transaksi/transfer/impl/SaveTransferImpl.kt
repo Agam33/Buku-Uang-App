@@ -15,15 +15,15 @@ class SaveTransferImpl @Inject constructor(
 ): SaveTransfer {
 
   override suspend fun invoke(transferModel: TransferModel) {
-    val toAccount = akunRepository.findById(transferModel.idToAkun).first().toModel()
-    val fromAccount = akunRepository.findById(transferModel.idFromAkun).first().toModel()
+    val toAccount = akunRepository.findById(transferModel.idToAkun).toModel()
+    val fromAccount = akunRepository.findById(transferModel.idFromAkun).toModel()
 
-    toAccount.total -= transferModel.jumlah
-    fromAccount.total += transferModel.jumlah
+    toAccount.total += transferModel.jumlah
+    fromAccount.total -= transferModel.jumlah
+
+    transferRepository.save(transferModel.toEntity())
 
     akunRepository.update(toAccount.toEntity())
     akunRepository.update(fromAccount.toEntity())
-
-    transferRepository.save(transferModel.toEntity())
   }
 }

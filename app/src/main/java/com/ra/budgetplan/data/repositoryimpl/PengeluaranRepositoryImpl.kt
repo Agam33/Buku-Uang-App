@@ -6,12 +6,17 @@ import com.ra.budgetplan.domain.entity.PengeluaranEntity
 import com.ra.budgetplan.domain.repository.PengeluaranRepository
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
-import java.util.Date
 import javax.inject.Inject
 
 class PengeluaranRepositoryImpl @Inject constructor(
   private val localDataSource: PengeluaranLocalDataSource
 ): PengeluaranRepository {
+  override fun getTotalPengeluaranByDate(
+    fromDate: LocalDateTime,
+    toDate: LocalDateTime
+  ): Flow<Long?> {
+    return localDataSource.getTotalPengeluaranByDate(fromDate, toDate)
+  }
 
   override fun getTotalPengeluaran(): Flow<Long?> {
     return localDataSource.getTotalPengeluaran()
@@ -21,9 +26,9 @@ class PengeluaranRepositoryImpl @Inject constructor(
     return localDataSource.getMonthlyPengeluaran(startOfDay, endOfDay)
   }
 
-  override fun getPengeluaranByDate(
+  override suspend fun getPengeluaranByDate(
     fromDate: LocalDateTime, toDate: LocalDateTime
-  ): Flow<List<DetailPengeluaran>> {
+  ): List<DetailPengeluaran> {
     return localDataSource.getPengeluaranByDate(fromDate, toDate)
   }
 

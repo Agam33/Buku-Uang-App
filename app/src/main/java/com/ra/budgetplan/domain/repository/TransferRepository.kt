@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 
 interface TransferRepository {
-  fun getTransferByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<List<DetailTransfer>>
+  suspend fun getTransferByDate(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailTransfer>
   suspend fun save(transfer: TransferEntity)
   suspend fun delete(transfer: TransferEntity)
   suspend fun update(transfer: TransferEntity)

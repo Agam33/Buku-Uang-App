@@ -30,7 +30,7 @@ class AkunLocalDataSourceImpl @Inject constructor(
     return akunDao.findAll()
   }
 
-  override fun findById(id: UUID): Flow<AkunEntity> {
+  override suspend fun findById(id: UUID): AkunEntity {
     return akunDao.findById(id)
   }
 }

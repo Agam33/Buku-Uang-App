@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.ra.budgetplan.presentation.viewmodel.TransactionViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

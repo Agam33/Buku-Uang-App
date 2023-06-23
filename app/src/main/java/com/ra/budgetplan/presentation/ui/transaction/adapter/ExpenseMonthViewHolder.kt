@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ra.budgetplan.databinding.ItemRvExpenseDaysBinding
 import com.ra.budgetplan.databinding.ItemRvExpenseMonthBinding
 import com.ra.budgetplan.domain.entity.DetailPengeluaran
+import timber.log.Timber
 
 class ExpenseMonthViewHolder(
   private val binding: ItemRvExpenseMonthBinding
@@ -17,11 +18,15 @@ class ExpenseMonthViewHolder(
   fun bind(date: String, list: List<DetailPengeluaran>) {
     val mAdapter = ItemMonthAdapter()
     mAdapter.submitList(list)
+
     binding.tvTitleRvDays.text = date
     binding.rvExpenseDays.apply {
       setHasFixedSize(true)
       adapter = mAdapter
-      layoutManager = LinearLayoutManager(binding.root.context)
+      layoutManager = LinearLayoutManager(
+        binding.root.context,
+        LinearLayoutManager.VERTICAL,
+        false)
     }
   }
 

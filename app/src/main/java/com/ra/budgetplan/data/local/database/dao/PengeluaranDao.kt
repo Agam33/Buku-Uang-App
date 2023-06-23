@@ -18,7 +18,7 @@ interface PengeluaranDao {
           "WHERE " +
           "pengeluaran_tbl.updated_at BETWEEN :fromDate AND :toDate " +
           "ORDER BY pengeluaran_tbl.updated_at DESC")
-  fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<List<DetailPengeluaran>>
+  suspend fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailPengeluaran>
 
   @Transaction
   @Query("SELECT * FROM pengeluaran_tbl " +
@@ -26,6 +26,11 @@ interface PengeluaranDao {
           "pengeluaran_tbl.updated_at BETWEEN :startOfDay AND :endOfDay " +
           "ORDER BY pengeluaran_tbl.updated_at DESC")
   fun getMonthlyPengeluaran(startOfDay: LocalDateTime, endOfDay: LocalDateTime): Flow<List<DetailPengeluaran>>
+
+  @Query("SELECT SUM(jumlah) FROM pengeluaran_tbl " +
+          "WHERE " +
+          "pengeluaran_tbl.updated_at BETWEEN :fromDate AND :toDate")
+  fun getTotalPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long?>
 
   @Query("SELECT SUM(jumlah) FROM pengeluaran_tbl")
   fun getTotalPengeluaran(): Flow<Long?>

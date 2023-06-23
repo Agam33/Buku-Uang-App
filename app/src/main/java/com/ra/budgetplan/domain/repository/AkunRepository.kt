@@ -11,5 +11,5 @@ interface AkunRepository {
   suspend fun delete(akun: AkunEntity)
   suspend fun update(akun: AkunEntity)
   fun findAll(): Flow<List<AkunEntity>>
-  fun findById(id: UUID): Flow<AkunEntity>
+  suspend fun findById(id: UUID): AkunEntity
 }
