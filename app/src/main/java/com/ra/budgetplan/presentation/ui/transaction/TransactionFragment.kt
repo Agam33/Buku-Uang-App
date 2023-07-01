@@ -24,6 +24,7 @@ import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
 import com.ra.budgetplan.util.DAILY_DATE_FORMAT
 import com.ra.budgetplan.util.LOCALE_ID
 import com.ra.budgetplan.util.MONTHLY_DATE_FORMAT
+import com.ra.budgetplan.util.OnItemChangedListener
 import com.ra.budgetplan.util.toStringFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -38,7 +39,7 @@ import java.util.Calendar
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TransactionFragment : Fragment() {
+class TransactionFragment : Fragment(), OnItemChangedListener {
 
   private var GLOBAL_CURRENT_DATE: LocalDate = LocalDate.now()
 
@@ -219,9 +220,18 @@ class TransactionFragment : Fragment() {
 
   private fun setupViewPager() {
     transactionPagerAdapter = TransactionPagerAdapter(this).apply {
-      addFragment(ExpenseFragment(), getString(R.string.title_expense), TransactionType.EXPENSE)
-      addFragment(IncomeFragment(), getString(R.string.title_income), TransactionType.INCOME)
-      addFragment(TransferFragment(), getString(R.string.title_transfer), TransactionType.TRANSFER)
+      addFragment(
+        ExpenseFragment().apply {
+            onItemChangedListener = this@TransactionFragment
+        }, getString(R.string.title_expense), TransactionType.EXPENSE)
+
+      addFragment(IncomeFragment().apply {
+        onItemChangedListener = this@TransactionFragment
+      }, getString(R.string.title_income), TransactionType.INCOME)
+
+      addFragment(TransferFragment().apply {
+        onItemChangedListener = this@TransactionFragment
+      }, getString(R.string.title_transfer), TransactionType.TRANSFER)
     }
 
     binding?.run {
@@ -252,11 +262,17 @@ class TransactionFragment : Fragment() {
 
   override fun onDestroyView() {
     Timber.tag("TransactionFragment").d("OnDestroyView() - $GLOBAL_CURRENT_DATE")
+    sharedViewModel.getDateViewType().removeObservers(viewLifecycleOwner)
     super.onDestroyView()
   }
 
   override fun onStop() {
     super.onStop()
     Timber.tag("TransactionFragment").d("OnStop() - $GLOBAL_CURRENT_DATE")
+  }
+
+  override fun onItemChanged() {
+    refreshDate()
+    transactionPagerAdapter.notifyItemRangeChanged(0, transactionPagerAdapter.itemCount)
   }
 }

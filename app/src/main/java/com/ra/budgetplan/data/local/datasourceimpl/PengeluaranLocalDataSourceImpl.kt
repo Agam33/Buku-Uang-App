@@ -6,12 +6,20 @@ import com.ra.budgetplan.domain.entity.DetailPengeluaran
 import com.ra.budgetplan.domain.entity.PengeluaranEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
-import java.util.Date
+import java.util.UUID
 import javax.inject.Inject
 
 class PengeluaranLocalDataSourceImpl @Inject constructor(
   private val pengeluaranDao: PengeluaranDao
 ): PengeluaranLocalDataSource {
+  override suspend fun findById(uuid: UUID): PengeluaranEntity {
+    return pengeluaranDao.findById(uuid)
+  }
+
+  override suspend fun findDetailById(uuid: UUID): DetailPengeluaran {
+    return pengeluaranDao.findDetailPengeluaranById(uuid)
+  }
+
   override fun getTotalPengeluaranByDate(
     fromDate: LocalDateTime,
     toDate: LocalDateTime

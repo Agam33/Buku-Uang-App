@@ -2,10 +2,12 @@ package com.ra.budgetplan.domain.repository
 
 import com.ra.budgetplan.domain.entity.DetailTransfer
 import com.ra.budgetplan.domain.entity.TransferEntity
-import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
+import java.util.UUID
 
 interface TransferRepository {
+  suspend fun findById(uuid: UUID): TransferEntity
+  suspend fun findDetailById(uuid: UUID): DetailTransfer
   suspend fun getTransferByDate(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailTransfer>
   suspend fun save(transfer: TransferEntity)
   suspend fun delete(transfer: TransferEntity)

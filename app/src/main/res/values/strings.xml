@@ -6,12 +6,12 @@
     <string name="title_menu_account">Akun</string>
     <string name="title_menu_category">Kategori</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_income">Pendapatan</string>
+    <string name="title_transfer">Transfer</string>
+    <string name="title_expense">Pengeluaran</string>
     <string name="txt_open">Open</string>
     <string name="txt_close">Close</string>
-    <string name="title_income">Pendapatan</string>
     <string name="example_income_in_rupiah">Rp81.000,00</string>
-    <string name="title_expense">Pengeluaran</string>
-    <string name="title_transfer">Transfer</string>
     <string name="example_expense_in_rupiah">-Rp81.000,00</string>
     <string name="title_total">Total</string>
     <string name="example_total_in_rupiah">Rp81.000,00</string>
@@ -35,6 +35,7 @@
     <string name="txt_name">Nama</string>
     <string name="txt_icon">icon</string>
 
+    <string name="msg_delete">Apakah anda yakin ingin menghapus?</string>
     <string name="txt_hour_and_minute">%1s:%2s</string>
     <string name="msg_date_picker">Pilih Tanggal</string>
     <string name="msg_time_picker">Pilih Waktu</string>

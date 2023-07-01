@@ -9,10 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ra.budgetplan.databinding.ItemRvTransferDaysBinding
 import com.ra.budgetplan.databinding.ItemRvTransferMonthBinding
 import com.ra.budgetplan.domain.entity.DetailTransfer
+import com.ra.budgetplan.domain.mapper.toModel
 
 class TransferMonthViewHolder(
   private val binding: ItemRvTransferMonthBinding
 ): RecyclerView.ViewHolder(binding.root) {
+
+  var onDayItemClickListener: OnDayItemClickListener? = null
 
   fun bind(date: String, list: List<DetailTransfer>) {
     val mAdapter = ItemMonthAdapter()
@@ -30,6 +33,7 @@ class TransferMonthViewHolder(
 
   inner class ItemMonthAdapter
     : ListAdapter<DetailTransfer, TransferDayViewHolder>(DIFF_UTIL) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransferDayViewHolder {
       return TransferDayViewHolder(
         ItemRvTransferDaysBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -37,7 +41,11 @@ class TransferMonthViewHolder(
     }
 
     override fun onBindViewHolder(holder: TransferDayViewHolder, position: Int) {
-      holder.bind(getItem(position))
+      val item = getItem(position)
+      holder.bind(item)
+      holder.binding.root.setOnClickListener {
+        onDayItemClickListener?.onClickDayItem(item.toModel())
+      }
     }
   }
 

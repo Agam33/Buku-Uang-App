@@ -18,14 +18,18 @@ import com.ra.budgetplan.domain.model.TransferModel
 import com.ra.budgetplan.domain.usecase.akun.FindAllAkun
 import com.ra.budgetplan.domain.usecase.akun.FindCategoryByType
 import com.ra.budgetplan.domain.usecase.transaksi.GetTotalTransactionByDate
+import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.DeletePendapatanById
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetPendapatanByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetTotalPendapatanByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.SavePendapatan
+import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.DeletePengeluaranById
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetPengeluaranByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetTotalPengeluaranByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.SavePengeluaran
+import com.ra.budgetplan.domain.usecase.transaksi.transfer.DeleteTransferById
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.GetTransferByDate
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.SaveTransfer
+import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
 import com.ra.budgetplan.util.Resource
 import com.ra.budgetplan.util.toFormatRupiah
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,6 +40,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,7 +56,10 @@ class TransactionViewModel @Inject constructor(
   private val userSettingPref: UserSettingPref,
   private val getTotalPendapatanByDate: GetTotalPendapatanByDate,
   private val getTotalPengeluaranByDate: GetTotalPengeluaranByDate,
-  private val getTotalTransactionByDate: GetTotalTransactionByDate
+  private val getTotalTransactionByDate: GetTotalTransactionByDate,
+  private val deletePengeluaranById: DeletePengeluaranById,
+  private val deleteTransferById: DeleteTransferById,
+  private val deletePendapatanById: DeletePendapatanById
 ): ViewModel() {
 
   private var _listCategory = MutableLiveData<List<KategoriModel>>()
@@ -102,6 +110,12 @@ class TransactionViewModel @Inject constructor(
   private var _incomes = MutableLiveData<Resource<List<DetailPendapatan>>>()
   val incomes: LiveData<Resource<List<DetailPendapatan>>> = _incomes
 
+  private var _detailTransaction = MutableLiveData<TransactionDetail>()
+  val detailTransaction: LiveData<TransactionDetail> = _detailTransaction
+
+  fun setDetailTransaction(detail: TransactionDetail) {
+    _detailTransaction.postValue(detail)
+  }
 
   fun setCurrentDate(localDate: Pair<LocalDateTime, LocalDateTime>) {
     _currentDate.postValue(localDate)
@@ -208,5 +222,17 @@ class TransactionViewModel @Inject constructor(
 
   fun saveTransfer(transferModel: TransferModel) = viewModelScope.launch {
     saveTransfer.invoke(transferModel)
+  }
+
+  suspend fun deletePendapatanById(uuid: UUID) {
+    deletePendapatanById.invoke(uuid)
+  }
+
+  suspend fun deletePengeluaranById(uuid: UUID) {
+    deletePengeluaranById.invoke(uuid)
+  }
+
+  suspend fun deleteTransferById(uuid: UUID) {
+    deleteTransferById.invoke(uuid)
   }
 }
