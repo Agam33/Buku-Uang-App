@@ -18,14 +18,24 @@ import com.ra.budgetplan.domain.model.TransferModel
 import com.ra.budgetplan.domain.usecase.akun.FindAllAkun
 import com.ra.budgetplan.domain.usecase.akun.FindCategoryByType
 import com.ra.budgetplan.domain.usecase.transaksi.GetTotalTransactionByDate
+import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.DeletePendapatanById
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetPendapatanByDate
+import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetPendapatanById
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetTotalPendapatanByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.SavePendapatan
+import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.UpdatePendapatan
+import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.DeletePengeluaranById
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetPengeluaranByDate
+import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetPengeluaranById
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetTotalPengeluaranByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.SavePengeluaran
+import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.UpdatePengeluaran
+import com.ra.budgetplan.domain.usecase.transaksi.transfer.DeleteTransferById
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.GetTransferByDate
+import com.ra.budgetplan.domain.usecase.transaksi.transfer.GetTransferById
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.SaveTransfer
+import com.ra.budgetplan.domain.usecase.transaksi.transfer.UpdateTransfer
+import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
 import com.ra.budgetplan.util.Resource
 import com.ra.budgetplan.util.toFormatRupiah
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,6 +46,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,11 +62,29 @@ class TransactionViewModel @Inject constructor(
   private val userSettingPref: UserSettingPref,
   private val getTotalPendapatanByDate: GetTotalPendapatanByDate,
   private val getTotalPengeluaranByDate: GetTotalPengeluaranByDate,
-  private val getTotalTransactionByDate: GetTotalTransactionByDate
+  private val getTotalTransactionByDate: GetTotalTransactionByDate,
+  private val deletePengeluaranById: DeletePengeluaranById,
+  private val deleteTransferById: DeleteTransferById,
+  private val deletePendapatanById: DeletePendapatanById,
+  private val getPendapatanById: GetPendapatanById,
+  private val getPengeluaranById: GetPengeluaranById,
+  private val getTransferById: GetTransferById,
+  private val updateTransfer: UpdateTransfer,
+  private val updatePendapatan: UpdatePendapatan,
+  private val updatePengeluaran: UpdatePengeluaran,
 ): ViewModel() {
 
   private var _listCategory = MutableLiveData<List<KategoriModel>>()
   val listCategory: LiveData<List<KategoriModel>> get() = _listCategory
+
+  private var _pendapatanModel = MutableLiveData<PendapatanModel>()
+  val pendapatanModel: LiveData<PendapatanModel> = _pendapatanModel
+
+  private var _pengeluaranModel = MutableLiveData<PengeluaranModel>()
+  val pengeluaranModel: LiveData<PengeluaranModel> = _pengeluaranModel
+
+  private var _transferModel = MutableLiveData<TransferModel>()
+  val transferModel: LiveData<TransferModel> = _transferModel
 
   private var _listAccount = MutableLiveData<List<AkunModel>>()
   val listAccount: LiveData<List<AkunModel>> get() = _listAccount
@@ -102,6 +131,34 @@ class TransactionViewModel @Inject constructor(
   private var _incomes = MutableLiveData<Resource<List<DetailPendapatan>>>()
   val incomes: LiveData<Resource<List<DetailPendapatan>>> = _incomes
 
+  private var _detailTransaction = MutableLiveData<TransactionDetail>()
+  val detailTransaction: LiveData<TransactionDetail> = _detailTransaction
+
+
+  fun getPendapatanById(uuid: UUID) {
+    viewModelScope.launch {
+      val data = getPendapatanById.invoke(uuid)
+      _pendapatanModel.postValue(data)
+    }
+  }
+
+  fun getPengeluaranById(uuid: UUID) {
+    viewModelScope.launch {
+      val data = getPengeluaranById.invoke(uuid)
+      _pengeluaranModel.postValue(data)
+    }
+  }
+
+  fun getTransferById(uuid: UUID) {
+    viewModelScope.launch {
+      val data = getTransferById.invoke(uuid)
+      _transferModel.postValue(data)
+    }
+  }
+
+  fun setDetailTransaction(detail: TransactionDetail) {
+    _detailTransaction.postValue(detail)
+  }
 
   fun setCurrentDate(localDate: Pair<LocalDateTime, LocalDateTime>) {
     _currentDate.postValue(localDate)
@@ -208,5 +265,35 @@ class TransactionViewModel @Inject constructor(
 
   fun saveTransfer(transferModel: TransferModel) = viewModelScope.launch {
     saveTransfer.invoke(transferModel)
+  }
+
+  suspend fun deletePendapatanById(uuid: UUID) {
+    deletePendapatanById.invoke(uuid)
+  }
+
+  suspend fun deletePengeluaranById(uuid: UUID) {
+    deletePengeluaranById.invoke(uuid)
+  }
+
+  suspend fun deleteTransferById(uuid: UUID) {
+    deleteTransferById.invoke(uuid)
+  }
+
+  fun updatePendapatan(newPendapatanModel: PendapatanModel, oldPendapatanModel: PendapatanModel) {
+    viewModelScope.launch {
+      updatePendapatan.invoke(newPendapatanModel, oldPendapatanModel)
+    }
+  }
+
+  fun updatePengeluaran(newPengeluaranModel: PengeluaranModel, oldPengeluaranModel: PengeluaranModel) {
+    viewModelScope.launch {
+      updatePengeluaran.invoke(newPengeluaranModel,oldPengeluaranModel)
+    }
+  }
+
+  fun updateTransfer(newTransferModel: TransferModel, oldTransferModel: TransferModel) {
+    viewModelScope.launch {
+      updateTransfer.invoke(newTransferModel, oldTransferModel)
+    }
   }
 }

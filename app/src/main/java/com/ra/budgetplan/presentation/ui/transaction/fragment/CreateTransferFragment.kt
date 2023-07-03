@@ -2,6 +2,7 @@ package com.ra.budgetplan.presentation.ui.transaction.fragment
 
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,19 +11,23 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
+import com.google.android.material.timepicker.TimeFormat
 import com.ra.budgetplan.R
 import com.ra.budgetplan.customview.spinner.TransactionSpinnerAdapter
 import com.ra.budgetplan.databinding.FragmentCreateTransferBinding
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.domain.model.TransferModel
+import com.ra.budgetplan.presentation.ui.transaction.TransactionFragment
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
+import com.ra.budgetplan.util.ActionType
 import com.ra.budgetplan.util.DATE_PATTERN
 import com.ra.budgetplan.util.DATE_TIME_FORMATTER
 import com.ra.budgetplan.util.checkTimeFormat
+import com.ra.budgetplan.util.getActionType
 import com.ra.budgetplan.util.getStringResource
 import com.ra.budgetplan.util.millisToString
 import com.ra.budgetplan.util.showShortToast
+import com.ra.budgetplan.util.toCalendar
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -41,9 +46,6 @@ class CreateTransferFragment : Fragment() {
   private lateinit var fromAccountSpinnerAdapter: TransactionSpinnerAdapter<AkunModel>
   private lateinit var toAccountSpinnerAdapter: TransactionSpinnerAdapter<AkunModel>
 
-  private val currentTime = Calendar.getInstance()
-  private var currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
-  private var currentMinute = currentTime.get(Calendar.MINUTE)
 
   private var fromAccountId: UUID? = null
   private var toAccountId: UUID? = null
@@ -55,11 +57,33 @@ class CreateTransferFragment : Fragment() {
     // Inflate the layout for this fragment
     _binding = FragmentCreateTransferBinding.inflate(inflater, container, false)
     observer()
-    setupDatePicker()
-    setupTimePicker()
     setupAccountPicker()
-    createAccount()
     return binding?.root
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+
+    val actionType = arguments?.getString(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT) as String
+    when(getActionType(actionType)) {
+      ActionType.CREATE -> {
+        val calendar = Calendar.getInstance()
+        setupDatePicker(calendar)
+        setupTimePicker(calendar)
+        binding?.run {
+          btnSave.setOnClickListener {
+            createTransfer()
+          }
+        }
+      }
+      ActionType.EDIT -> {
+        binding?.run {
+          val uuid = arguments?.getString(DetailTransactionDialog.EXTRA_TRANSACTION_ID) as String
+          viewModel.getTransferById(UUID.fromString(uuid))
+          setupEditExpense()
+        }
+      }
+    }
   }
 
   private fun setupAccountPicker() {
@@ -84,15 +108,24 @@ class CreateTransferFragment : Fragment() {
     }
   }
 
-  private fun createAccount() {
+  private fun setupEditExpense() {
     binding?.run {
-      btnSave.setOnClickListener {
-        validateInput()
+      viewModel.transferModel.observe(viewLifecycleOwner) { model ->
+        edtAmount.text = Editable.Factory.getInstance().newEditable(model.jumlah.toString())
+        edtNote.text = Editable.Factory.getInstance().newEditable(model.deskripsi)
+
+        val calendar = model.updatedAt.toCalendar()
+        setupTimePicker(calendar)
+        setupDatePicker(calendar)
+
+        btnSave.setOnClickListener {
+          updateExpense(model)
+        }
       }
     }
   }
 
-  private fun validateInput() {
+  private fun updateExpense(model: TransferModel) {
     binding?.run {
       val amount: String = edtAmount.text.toString()
       val note: String = edtNote.text.toString()
@@ -100,6 +133,57 @@ class CreateTransferFragment : Fragment() {
       if(amount.isBlank()) {
         showShortToast(getString(R.string.msg_empty))
         return
+      }
+
+      if(isSameAccount(
+          fromAccountId ?: return@run,
+          toAccountId ?: return@run)
+      ) {
+        showShortToast(requireContext().getString(R.string.txt_same_account))
+        return@run
+      }
+
+      val timeStringBuilder = StringBuilder()
+      timeStringBuilder.append(edtDate.text.trim())
+      timeStringBuilder.append(" ")
+      timeStringBuilder.append(btnTime.text.trim())
+      val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
+      val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
+
+      val transferModel = TransferModel(
+        uuid = model.uuid,
+        jumlah = amount.toInt(),
+        createdAt = model.createdAt,
+        updatedAt = createdAt,
+        deskripsi = note,
+        idFromAkun = fromAccountId ?: return@run,
+        idToAkun = toAccountId ?: return@run
+      )
+
+      viewModel.updateTransfer(transferModel, model)
+
+      showShortToast(getString(R.string.msg_success))
+
+      activity?.finish()
+    }
+  }
+
+  private fun createTransfer() {
+    binding?.run {
+      val amount: String = edtAmount.text.toString()
+      val note: String = edtNote.text.toString()
+
+      if(amount.isBlank()) {
+        showShortToast(getString(R.string.msg_empty))
+        return
+      }
+
+      if(isSameAccount(
+          fromAccountId ?: return@run ,
+          toAccountId ?: return@run)
+      ) {
+        showShortToast(requireContext().getString(R.string.txt_same_account))
+        return@run
       }
 
       val timeStringBuilder = StringBuilder()
@@ -119,8 +203,6 @@ class CreateTransferFragment : Fragment() {
         idToAkun = toAccountId ?: return@run
       )
 
-      currentTime.clear()
-
       viewModel.saveTransfer(transferModel)
 
       showShortToast(getString(R.string.msg_success))
@@ -129,12 +211,15 @@ class CreateTransferFragment : Fragment() {
     }
   }
 
-  private fun setupTimePicker() {
+  private fun setupTimePicker(calendar: Calendar) {
+    val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+    val currentMinute = calendar.get(Calendar.MINUTE)
+
     val timePicker = MaterialTimePicker.Builder()
       .setTitleText(getString(R.string.msg_time_picker))
-      .setHour(currentTime.get(Calendar.HOUR_OF_DAY))
-      .setMinute(currentTime.get(Calendar.MINUTE))
-      .setTimeFormat(CLOCK_24H)
+      .setHour(calendar.get(Calendar.HOUR_OF_DAY))
+      .setMinute(calendar.get(Calendar.MINUTE))
+      .setTimeFormat(TimeFormat.CLOCK_24H)
       .build()
 
     binding?.btnTime?.text = requireContext()
@@ -158,9 +243,8 @@ class CreateTransferFragment : Fragment() {
     }
   }
 
-  private fun setupDatePicker() {
+  private fun setupDatePicker(calendar: Calendar) {
     binding?.run {
-
       val datePicker = MaterialDatePicker.Builder.datePicker()
         .setTitleText(getString(R.string.msg_date_picker))
         .setSelection(MaterialDatePicker.thisMonthInUtcMilliseconds())
@@ -168,7 +252,7 @@ class CreateTransferFragment : Fragment() {
 
       val sdf = SimpleDateFormat(DATE_PATTERN, Locale("id", "ID"))
 
-      edtDate.text = sdf.millisToString(currentTime.timeInMillis)
+      edtDate.text = sdf.millisToString(calendar.timeInMillis)
 
       edtDate.setOnClickListener {
         datePicker.show(parentFragmentManager, "Date Picker")
@@ -194,6 +278,10 @@ class CreateTransferFragment : Fragment() {
       }
     }
   }
+
+  private fun isSameAccount(fromAccountId: UUID, toAccountId: UUID): Boolean =
+    fromAccountId == toAccountId
+
 
   private fun observer() {
     viewModel.getAllAccount()

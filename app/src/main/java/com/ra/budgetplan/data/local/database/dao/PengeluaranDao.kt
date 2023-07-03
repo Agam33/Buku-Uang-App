@@ -10,6 +10,7 @@ import com.ra.budgetplan.domain.entity.DetailPengeluaran
 import com.ra.budgetplan.domain.entity.PengeluaranEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Dao
 interface PengeluaranDao {
@@ -34,6 +35,12 @@ interface PengeluaranDao {
 
   @Query("SELECT SUM(jumlah) FROM pengeluaran_tbl")
   fun getTotalPengeluaran(): Flow<Long?>
+
+  @Query("SELECT * FROM pengeluaran_tbl AS p WHERE p.uuid = :uuid")
+  suspend fun findDetailPengeluaranById(uuid: UUID): DetailPengeluaran
+
+  @Query("SELECT * FROM pengeluaran_tbl AS p WHERE p.uuid = :uuid")
+  suspend fun findById(uuid: UUID): PengeluaranEntity
 
   @Insert
   suspend fun save(pengeluaran: PengeluaranEntity)

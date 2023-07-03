@@ -4,9 +4,11 @@ import com.ra.budgetplan.domain.entity.DetailPengeluaran
 import com.ra.budgetplan.domain.entity.PengeluaranEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
-import java.util.Date
+import java.util.UUID
 
 interface PengeluaranRepository {
+  suspend fun findById(uuid: UUID): PengeluaranEntity
+  suspend fun findDetailById(uuid: UUID): DetailPengeluaran
   fun getTotalPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long?>
   fun getTotalPengeluaran(): Flow<Long?>
   fun getMonthlyPengeluaran(startOfDay: LocalDateTime, endOfDay: LocalDateTime): Flow<List<DetailPengeluaran>>

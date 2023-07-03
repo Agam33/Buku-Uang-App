@@ -6,22 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.budgetplan.databinding.FragmentTransferBinding
 import com.ra.budgetplan.domain.entity.DetailTransfer
+import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
+import com.ra.budgetplan.presentation.ui.transaction.adapter.OnDayItemClickListener
 import com.ra.budgetplan.presentation.ui.transaction.adapter.TransferRvAdapter
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
+import com.ra.budgetplan.util.OnDeleteItemListener
+import com.ra.budgetplan.util.OnItemChangedListener
 import com.ra.budgetplan.util.Resource
 import com.ra.budgetplan.util.RvGroup
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TransferFragment : Fragment() {
+class TransferFragment : Fragment(), OnDayItemClickListener, OnDeleteItemListener<TransactionDetail> {
 
   private var _binding: FragmentTransferBinding? = null
   private val binding get() =  _binding
 
   private val sharedViewModel: TransactionViewModel by activityViewModels()
+
+  var onItemChangedListener: OnItemChangedListener? = null
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
@@ -70,6 +78,7 @@ class TransferFragment : Fragment() {
       monthly.addIf(key, ArrayList())?.add(data)
     }
     val adp = TransferRvAdapter(monthly)
+    adp.onDayItemClickListener = this@TransferFragment
     binding?.rvTransfer?.apply {
       adapter = adp
       layoutManager = LinearLayoutManager(requireContext())
@@ -80,5 +89,19 @@ class TransferFragment : Fragment() {
   private fun observer() {
     _binding?.vm = sharedViewModel
     _binding?.lifecycleOwner = viewLifecycleOwner
+  }
+
+  override fun onDeleteItem(item: TransactionDetail) {
+    viewLifecycleOwner.lifecycleScope.launch {
+      sharedViewModel.deleteTransferById(item.uuid)
+    }
+    onItemChangedListener?.onItemChanged()
+  }
+
+  override fun onClickDayItem(dayItem: TransactionDetail) {
+    sharedViewModel.setDetailTransaction(dayItem)
+    val detailTransactionDialog = DetailTransactionDialog()
+    detailTransactionDialog.onDeleteItemListener = this@TransferFragment
+    detailTransactionDialog.show(parentFragmentManager, "transfer-detail")
   }
 }

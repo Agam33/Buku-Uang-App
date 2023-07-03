@@ -4,8 +4,6 @@ class TransactionDayItem<T>(
   private val item: List<T>
 ): AbsListItem<List<T>>() {
 
-
-
   override fun getSize(): Int = item.size
 
   override fun getItem(): List<T> = item

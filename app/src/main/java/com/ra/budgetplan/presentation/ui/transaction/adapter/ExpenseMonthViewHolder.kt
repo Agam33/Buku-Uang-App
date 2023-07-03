@@ -9,16 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ra.budgetplan.databinding.ItemRvExpenseDaysBinding
 import com.ra.budgetplan.databinding.ItemRvExpenseMonthBinding
 import com.ra.budgetplan.domain.entity.DetailPengeluaran
-import timber.log.Timber
+import com.ra.budgetplan.domain.mapper.toModel
 
 class ExpenseMonthViewHolder(
   private val binding: ItemRvExpenseMonthBinding
 ): RecyclerView.ViewHolder(binding.root) {
 
+  var onDayItemClickListener: OnDayItemClickListener? = null
+
   fun bind(date: String, list: List<DetailPengeluaran>) {
     val mAdapter = ItemMonthAdapter()
     mAdapter.submitList(list)
-
     binding.tvTitleRvDays.text = date
     binding.rvExpenseDays.apply {
       setHasFixedSize(true)
@@ -30,7 +31,8 @@ class ExpenseMonthViewHolder(
     }
   }
 
-  inner class ItemMonthAdapter : ListAdapter<DetailPengeluaran, ExpenseDayViewHolder>(diffUtil) {
+  inner class ItemMonthAdapter:
+    ListAdapter<DetailPengeluaran, ExpenseDayViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpenseDayViewHolder {
       return ExpenseDayViewHolder(
@@ -39,7 +41,11 @@ class ExpenseMonthViewHolder(
     }
 
     override fun onBindViewHolder(holder: ExpenseDayViewHolder, position: Int) {
-      holder.bind(getItem(position))
+      val item = getItem(position)
+      holder.bind(item)
+      holder.binding.root.setOnClickListener {
+        onDayItemClickListener?.onClickDayItem(item.toModel())
+      }
     }
   }
 
