@@ -1,6 +1,7 @@
 package com.ra.budgetplan.presentation.ui.transaction.fragment
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
@@ -12,9 +13,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.divider.MaterialDivider
 import com.google.android.material.snackbar.Snackbar
 import com.ra.budgetplan.R
+import com.ra.budgetplan.presentation.ui.transaction.CreateTransactionActivity
 import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
+import com.ra.budgetplan.presentation.ui.transaction.TransactionFragment
 import com.ra.budgetplan.presentation.ui.transaction.TransactionType
+import com.ra.budgetplan.presentation.ui.transaction.getTransactionType
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
+import com.ra.budgetplan.util.ActionType
 import com.ra.budgetplan.util.OnDeleteItemListener
 import com.ra.budgetplan.util.toFormatRupiah
 import com.ra.budgetplan.util.toStringFormat
@@ -82,8 +87,7 @@ class DetailTransactionDialog: DialogFragment() {
         v,
         requireContext().getString(R.string.msg_delete),
         Snackbar.LENGTH_SHORT
-      )
-        .setAction("Ya") {
+      ).setAction("Ya") {
           sharedViewModel.detailTransaction
             .observe(requireParentFragment().viewLifecycleOwner) { transactionDetail ->
               onDeleteItemListener?.onDeleteItem(transactionDetail)
@@ -93,7 +97,16 @@ class DetailTransactionDialog: DialogFragment() {
         .show()
     }
     editButton.setOnClickListener {
-
+      sharedViewModel.detailTransaction
+        .observe(requireParentFragment().viewLifecycleOwner) { transactionDetail ->
+          val i = Intent(requireContext(), CreateTransactionActivity::class.java).apply {
+            putExtra(TransactionFragment.EXTRA_TRANSACTION_TYPE, transactionDetail.transactionType.name)
+            putExtra(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT, ActionType.EDIT.name)
+            putExtra(EXTRA_TRANSACTION_ID, transactionDetail.uuid.toString())
+          }
+          startActivity(i)
+      }
+      onDestroyView()
     }
   }
 
@@ -125,5 +138,9 @@ class DetailTransactionDialog: DialogFragment() {
     tvIc2.text = transactionDetail.name2
     tvMoney.text = transactionDetail.jumlah.toFormatRupiah()
     description.text = transactionDetail.description
+  }
+
+  companion object {
+    const val EXTRA_TRANSACTION_ID = "transaction-id"
   }
 }

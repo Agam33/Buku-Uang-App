@@ -31,8 +31,6 @@ class TransactionDetailViewModel @Inject constructor(
   private var _detailTransfer = MutableLiveData<DetailTransfer>()
   val detailTransfer: LiveData<DetailTransfer> = _detailTransfer
 
-
-
   fun getDetailPendapatan(id: UUID) {
     viewModelScope.launch {
       val income = findDetailPendapatanById.invoke(id)

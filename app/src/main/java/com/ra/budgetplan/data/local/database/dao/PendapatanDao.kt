@@ -29,7 +29,6 @@ interface PendapatanDao {
 
   @Query("SELECT SUM(jumlah) FROM pendapatan_tbl")
   fun getTotalPendapatan(): Flow<Long?>
-
   @Query("SELECT * FROM pendapatan_tbl AS pdt WHERE pdt.uuid = :uuid")
   suspend fun findDetailPendapatanById(uuid: UUID): DetailPendapatan
 

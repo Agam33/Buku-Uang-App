@@ -21,6 +21,7 @@ import com.ra.budgetplan.presentation.ui.transaction.fragment.ExpenseFragment
 import com.ra.budgetplan.presentation.ui.transaction.fragment.IncomeFragment
 import com.ra.budgetplan.presentation.ui.transaction.fragment.TransferFragment
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
+import com.ra.budgetplan.util.ActionType
 import com.ra.budgetplan.util.DAILY_DATE_FORMAT
 import com.ra.budgetplan.util.LOCALE_ID
 import com.ra.budgetplan.util.MONTHLY_DATE_FORMAT
@@ -185,6 +186,9 @@ class TransactionFragment : Fragment(), OnItemChangedListener {
             EXTRA_TRANSACTION_TYPE,
             transactionPagerAdapter.getTransactionType(vPagerTransaction.currentItem).name
           )
+          putExtra(
+            EXTRA_TRANSACTION_CREATE_OR_EDIT, ActionType.CREATE.name
+          )
         }
         startActivity(i)
       }
@@ -246,11 +250,13 @@ class TransactionFragment : Fragment(), OnItemChangedListener {
 
   companion object {
     const val EXTRA_TRANSACTION_TYPE = "transaction-type"
+    const val EXTRA_TRANSACTION_CREATE_OR_EDIT = "transaction-create-or-edit"
   }
 
   override fun onStart() {
     super.onStart()
     refreshDate()
+    setupOverallMoney()
     GLOBAL_CURRENT_DATE = LocalDate.now()
     Timber.tag("TransactionFragment").d("OnStart() - $GLOBAL_CURRENT_DATE")
   }
@@ -273,6 +279,7 @@ class TransactionFragment : Fragment(), OnItemChangedListener {
 
   override fun onItemChanged() {
     refreshDate()
+    setupOverallMoney()
     transactionPagerAdapter.notifyItemRangeChanged(0, transactionPagerAdapter.itemCount)
   }
 }

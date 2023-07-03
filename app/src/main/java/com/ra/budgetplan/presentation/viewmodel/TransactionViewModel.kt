@@ -20,15 +20,21 @@ import com.ra.budgetplan.domain.usecase.akun.FindCategoryByType
 import com.ra.budgetplan.domain.usecase.transaksi.GetTotalTransactionByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.DeletePendapatanById
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetPendapatanByDate
+import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetPendapatanById
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetTotalPendapatanByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.SavePendapatan
+import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.UpdatePendapatan
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.DeletePengeluaranById
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetPengeluaranByDate
+import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetPengeluaranById
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetTotalPengeluaranByDate
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.SavePengeluaran
+import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.UpdatePengeluaran
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.DeleteTransferById
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.GetTransferByDate
+import com.ra.budgetplan.domain.usecase.transaksi.transfer.GetTransferById
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.SaveTransfer
+import com.ra.budgetplan.domain.usecase.transaksi.transfer.UpdateTransfer
 import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
 import com.ra.budgetplan.util.Resource
 import com.ra.budgetplan.util.toFormatRupiah
@@ -59,11 +65,26 @@ class TransactionViewModel @Inject constructor(
   private val getTotalTransactionByDate: GetTotalTransactionByDate,
   private val deletePengeluaranById: DeletePengeluaranById,
   private val deleteTransferById: DeleteTransferById,
-  private val deletePendapatanById: DeletePendapatanById
+  private val deletePendapatanById: DeletePendapatanById,
+  private val getPendapatanById: GetPendapatanById,
+  private val getPengeluaranById: GetPengeluaranById,
+  private val getTransferById: GetTransferById,
+  private val updateTransfer: UpdateTransfer,
+  private val updatePendapatan: UpdatePendapatan,
+  private val updatePengeluaran: UpdatePengeluaran,
 ): ViewModel() {
 
   private var _listCategory = MutableLiveData<List<KategoriModel>>()
   val listCategory: LiveData<List<KategoriModel>> get() = _listCategory
+
+  private var _pendapatanModel = MutableLiveData<PendapatanModel>()
+  val pendapatanModel: LiveData<PendapatanModel> = _pendapatanModel
+
+  private var _pengeluaranModel = MutableLiveData<PengeluaranModel>()
+  val pengeluaranModel: LiveData<PengeluaranModel> = _pengeluaranModel
+
+  private var _transferModel = MutableLiveData<TransferModel>()
+  val transferModel: LiveData<TransferModel> = _transferModel
 
   private var _listAccount = MutableLiveData<List<AkunModel>>()
   val listAccount: LiveData<List<AkunModel>> get() = _listAccount
@@ -112,6 +133,28 @@ class TransactionViewModel @Inject constructor(
 
   private var _detailTransaction = MutableLiveData<TransactionDetail>()
   val detailTransaction: LiveData<TransactionDetail> = _detailTransaction
+
+
+  fun getPendapatanById(uuid: UUID) {
+    viewModelScope.launch {
+      val data = getPendapatanById.invoke(uuid)
+      _pendapatanModel.postValue(data)
+    }
+  }
+
+  fun getPengeluaranById(uuid: UUID) {
+    viewModelScope.launch {
+      val data = getPengeluaranById.invoke(uuid)
+      _pengeluaranModel.postValue(data)
+    }
+  }
+
+  fun getTransferById(uuid: UUID) {
+    viewModelScope.launch {
+      val data = getTransferById.invoke(uuid)
+      _transferModel.postValue(data)
+    }
+  }
 
   fun setDetailTransaction(detail: TransactionDetail) {
     _detailTransaction.postValue(detail)
@@ -234,5 +277,23 @@ class TransactionViewModel @Inject constructor(
 
   suspend fun deleteTransferById(uuid: UUID) {
     deleteTransferById.invoke(uuid)
+  }
+
+  fun updatePendapatan(newPendapatanModel: PendapatanModel, oldPendapatanModel: PendapatanModel) {
+    viewModelScope.launch {
+      updatePendapatan.invoke(newPendapatanModel, oldPendapatanModel)
+    }
+  }
+
+  fun updatePengeluaran(newPengeluaranModel: PengeluaranModel, oldPengeluaranModel: PengeluaranModel) {
+    viewModelScope.launch {
+      updatePengeluaran.invoke(newPengeluaranModel,oldPengeluaranModel)
+    }
+  }
+
+  fun updateTransfer(newTransferModel: TransferModel, oldTransferModel: TransferModel) {
+    viewModelScope.launch {
+      updateTransfer.invoke(newTransferModel, oldTransferModel)
+    }
   }
 }
