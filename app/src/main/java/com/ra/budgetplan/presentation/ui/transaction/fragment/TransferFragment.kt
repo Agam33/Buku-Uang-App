@@ -73,7 +73,7 @@ class TransferFragment : Fragment(), OnDayItemClickListener, OnDeleteItemListene
 
     val monthly = RvGroup<String, ArrayList<DetailTransfer>>()
     for (data in it.data ?: ArrayList()) {
-      val updatedAt = data.transfer.createdAt
+      val updatedAt = data.transfer.updatedAt
       val key = updatedAt.toLocalDate().toString()
       monthly.addIf(key, ArrayList())?.add(data)
     }
