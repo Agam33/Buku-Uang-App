@@ -73,7 +73,7 @@ class IncomeFragment : Fragment(),
 
     val monthly = RvGroup<String, ArrayList<DetailPendapatan>>()
     for (data in it.data ?: ArrayList()) {
-      val updatedAt = data.pendapatan.createdAt
+      val updatedAt = data.pendapatan.updatedAt
       val key = updatedAt.toLocalDate().toString()
       monthly.addIf(key, ArrayList())?.add(data)
     }
