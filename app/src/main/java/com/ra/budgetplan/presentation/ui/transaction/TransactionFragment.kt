@@ -21,9 +21,11 @@ import com.ra.budgetplan.presentation.ui.transaction.fragment.ExpenseFragment
 import com.ra.budgetplan.presentation.ui.transaction.fragment.IncomeFragment
 import com.ra.budgetplan.presentation.ui.transaction.fragment.TransferFragment
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
+import com.ra.budgetplan.util.ActionType
 import com.ra.budgetplan.util.DAILY_DATE_FORMAT
 import com.ra.budgetplan.util.LOCALE_ID
 import com.ra.budgetplan.util.MONTHLY_DATE_FORMAT
+import com.ra.budgetplan.util.OnItemChangedListener
 import com.ra.budgetplan.util.toStringFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -38,7 +40,9 @@ import java.util.Calendar
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TransactionFragment : Fragment() {
+class TransactionFragment : Fragment(), OnItemChangedListener {
+
+  private var GLOBAL_CURRENT_DATE: LocalDate = LocalDate.now()
 
   @Inject
   lateinit var userSettingPref: UserSettingPref
@@ -51,75 +55,86 @@ class TransactionFragment : Fragment() {
   private lateinit var transactionPagerAdapter: TransactionPagerAdapter
   private lateinit var tabLayoutMediator: TabLayoutMediator
 
-  private var currentDate = LocalDate.now()
-
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
     // Inflate the layout for this fragment
     _binding = FragmentTransactionBinding.inflate(inflater, container, false)
+    setupViewPager()
+    observer()
+    setupButtonDate()
+    createTransaction()
+    setupOverallMoney()
+    Timber.tag("TransactionFragment").d("OnCreateView() - $GLOBAL_CURRENT_DATE")
     return binding?.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    setupViewPager()
-    setupDate()
-    createTransaction()
+    Timber.tag("TransactionFragment").d("OnViewCreated() - $GLOBAL_CURRENT_DATE")
   }
 
-  private fun setupDate() {
-    sharedViewModel.setCurrentDate(currentDate)
+  private fun observer() {
+    binding?.vm = sharedViewModel
+    binding?.lifecycleOwner = viewLifecycleOwner
+    binding?.overviewIncomeExpenseTotal?.vm = sharedViewModel
+    binding?.overviewIncomeExpenseTotal?.lifecycleOwner = viewLifecycleOwner
+  }
 
+  private fun refreshDate() {
     sharedViewModel.getDateViewType().observe(viewLifecycleOwner) {
       when (getDateViewType(it)) {
         DateViewType.MONTHLY -> {
-          setCurrentDate(currentDate, DateViewType.MONTHLY)
-          binding?.tvCurrentDate?.text = currentDate.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
+          setCurrentDate(it)
+          binding?.tvCurrentDate?.text = GLOBAL_CURRENT_DATE.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
         }
         else -> {
-          setCurrentDate(currentDate, DateViewType.DAILY)
-          binding?.tvCurrentDate?.text = currentDate.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
+          setCurrentDate(it)
+          binding?.tvCurrentDate?.text = GLOBAL_CURRENT_DATE.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
         }
       }
     }
+  }
+
+  private fun setupButtonDate() {
+    Timber.tag("TransactionFragment").d("setupDate() - $GLOBAL_CURRENT_DATE")
+    refreshDate()
 
     binding?.imgBtnPrevDate?.setOnClickListener {
-      lifecycleScope.launch {
-        val dateViewType = userSettingPref.getDateViewType().first()
-        when (getDateViewType(dateViewType)) {
+      viewLifecycleOwner.lifecycleScope.launch {
+        val viewType = userSettingPref.getDateViewType().first()
+        when (getDateViewType(viewType)) {
           DateViewType.MONTHLY -> {
-            currentDate = currentDate.minusMonths(1)
-            sharedViewModel.setCurrentDate(currentDate)
-            setCurrentDate(currentDate, DateViewType.MONTHLY)
-            binding?.tvCurrentDate?.text = currentDate.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
+            GLOBAL_CURRENT_DATE = GLOBAL_CURRENT_DATE.minusMonths(1)
+            setCurrentDate(viewType)
+            binding?.tvCurrentDate?.text = GLOBAL_CURRENT_DATE.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
           }
           else -> {
-            currentDate = currentDate.minusDays(1)
-            sharedViewModel.setCurrentDate(currentDate)
-            setCurrentDate(currentDate, DateViewType.DAILY)
-            binding?.tvCurrentDate?.text = currentDate.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
+            GLOBAL_CURRENT_DATE = GLOBAL_CURRENT_DATE.minusDays(1)
+            setCurrentDate(viewType)
+            binding?.tvCurrentDate?.text = GLOBAL_CURRENT_DATE.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
           }
         }
       }
     }
 
     binding?.imgBtnNextDate?.setOnClickListener {
-      lifecycleScope.launch {
-        val dateViewType = userSettingPref.getDateViewType().first()
-        when (getDateViewType(dateViewType)) {
+      viewLifecycleOwner.lifecycleScope.launch {
+        val viewType = userSettingPref.getDateViewType().first()
+        when (getDateViewType(viewType)) {
           DateViewType.MONTHLY -> {
-            currentDate = currentDate.plusMonths(1)
-            sharedViewModel.setCurrentDate(currentDate)
-            setCurrentDate(currentDate, DateViewType.MONTHLY)
-            binding?.tvCurrentDate?.text = currentDate.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
+            GLOBAL_CURRENT_DATE = GLOBAL_CURRENT_DATE.plusMonths(1)
+            setCurrentDate(viewType)
+            binding?.tvCurrentDate?.text =
+              GLOBAL_CURRENT_DATE.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
           }
+
           else -> {
-            currentDate = currentDate.plusDays(1)
-            sharedViewModel.setCurrentDate(currentDate)
-            setCurrentDate(currentDate, DateViewType.DAILY)
-            binding?.tvCurrentDate?.text = currentDate.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
+            GLOBAL_CURRENT_DATE = GLOBAL_CURRENT_DATE.plusDays(1)
+            setCurrentDate(viewType)
+            binding?.tvCurrentDate?.text =
+              GLOBAL_CURRENT_DATE.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
           }
         }
       }
@@ -131,6 +146,38 @@ class TransactionFragment : Fragment() {
     }
   }
 
+  private fun setupOverallMoney() {
+    sharedViewModel.currentDate.observe(viewLifecycleOwner) {
+      sharedViewModel.getTotalPengeluaranByDate(it.first, it.second)
+    }
+
+    sharedViewModel.currentDate.observe(viewLifecycleOwner) {
+      sharedViewModel.getTotalPendapatanByDate(it.first, it.second)
+    }
+
+    sharedViewModel.currentDate.observe(viewLifecycleOwner) {
+      sharedViewModel.getTotalByDate(it.first, it.second)
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      sharedViewModel.textPendapatan.collect {
+        binding?.overviewIncomeExpenseTotal?.tvIncome?.text = it
+      }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      sharedViewModel.textPengeluaran.collect {
+        binding?.overviewIncomeExpenseTotal?.tvExpense?.text = it
+      }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      sharedViewModel.textTotal.collect {
+        binding?.overviewIncomeExpenseTotal?.tvTotal?.text = it
+      }
+    }
+  }
+
   private fun createTransaction() {
     binding?.run {
       fabAddTransaction.setOnClickListener {
@@ -139,63 +186,100 @@ class TransactionFragment : Fragment() {
             EXTRA_TRANSACTION_TYPE,
             transactionPagerAdapter.getTransactionType(vPagerTransaction.currentItem).name
           )
+          putExtra(
+            EXTRA_TRANSACTION_CREATE_OR_EDIT, ActionType.CREATE.name
+          )
         }
         startActivity(i)
       }
     }
   }
 
-  private fun setCurrentDate(currentDate: LocalDate, viewType: DateViewType) {
-      when(viewType) {
-        DateViewType.MONTHLY -> {
+  private fun setCurrentDate(viewType: String) {
+    val date: Pair<LocalDateTime, LocalDateTime> = when(getDateViewType(viewType)) {
+      DateViewType.MONTHLY -> {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, GLOBAL_CURRENT_DATE.year)
+        calendar.set(Calendar.MONTH, GLOBAL_CURRENT_DATE.month.value - 1)
+        val localDateTime = LocalDateTime.ofInstant(calendar.toInstant(), ZoneId.systemDefault())
 
-          val calendar = Calendar.getInstance()
-          calendar.set(Calendar.YEAR, currentDate.year)
-          calendar.set(Calendar.MONTH, currentDate.month.value - 1)
-          val localDateTime = LocalDateTime.ofInstant(calendar.toInstant(), ZoneId.systemDefault())
+        val fromDate = localDateTime.withDayOfMonth(1)
+          .withHour(0)
+          .withMinute(0)
+        val toDate = localDateTime.with(TemporalAdjusters.lastDayOfMonth())
+          .withHour(23)
+          .withMinute(59)
 
-          val fromDate = localDateTime.withDayOfMonth(1)
-            .withHour(0)
-            .withMinute(0)
-          val toDate = localDateTime.with(TemporalAdjusters.lastDayOfMonth())
-            .withHour(23)
-            .withMinute(59)
+        fromDate to toDate
+      }
+      DateViewType.DAILY -> {
+        val fromDate = GLOBAL_CURRENT_DATE.atStartOfDay()
+        val toDate = GLOBAL_CURRENT_DATE.atTime(LocalTime.MAX)
 
-          sharedViewModel.setTransactionDate(fromDate, toDate)
-        }
-        DateViewType.DAILY -> {
-
-          val startOfDay = currentDate.atStartOfDay()
-          val endOfDay = currentDate.atTime(LocalTime.MAX)
-
-          sharedViewModel.setTransactionDate(startOfDay, endOfDay)
-        }
+        fromDate to toDate
       }
     }
+    sharedViewModel.setCurrentDate(date)
+  }
 
   private fun setupViewPager() {
-    transactionPagerAdapter = TransactionPagerAdapter(requireActivity()).apply {
-      addFragment(ExpenseFragment(), getString(R.string.title_expense), TransactionType.EXPENSE)
-      addFragment(IncomeFragment(), getString(R.string.title_income), TransactionType.INCOME)
-      addFragment(TransferFragment(), getString(R.string.title_transfer), TransactionType.TRANSFER)
+    transactionPagerAdapter = TransactionPagerAdapter(this).apply {
+      addFragment(
+        ExpenseFragment().apply {
+            onItemChangedListener = this@TransactionFragment
+        }, getString(R.string.title_expense), TransactionType.EXPENSE)
+
+      addFragment(IncomeFragment().apply {
+        onItemChangedListener = this@TransactionFragment
+      }, getString(R.string.title_income), TransactionType.INCOME)
+
+      addFragment(TransferFragment().apply {
+        onItemChangedListener = this@TransactionFragment
+      }, getString(R.string.title_transfer), TransactionType.TRANSFER)
     }
 
     binding?.run {
       tabLayoutMediator = TabLayoutMediator(tabLayout, vPagerTransaction) { tab, position ->
         tab.text = transactionPagerAdapter.getTitle(position)
       }
-      vPagerTransaction.orientation= ViewPager2.ORIENTATION_HORIZONTAL
+      vPagerTransaction.orientation = ViewPager2.ORIENTATION_HORIZONTAL
       vPagerTransaction.adapter = transactionPagerAdapter
     }
     tabLayoutMediator.attach()
   }
 
-  override fun onDestroy() {
-    Timber.tag("TRANSACTION-fragment").d("onDestroy")
-    super.onDestroy()
-  }
-
   companion object {
     const val EXTRA_TRANSACTION_TYPE = "transaction-type"
+    const val EXTRA_TRANSACTION_CREATE_OR_EDIT = "transaction-create-or-edit"
+  }
+
+  override fun onStart() {
+    super.onStart()
+    refreshDate()
+    setupOverallMoney()
+    GLOBAL_CURRENT_DATE = LocalDate.now()
+    Timber.tag("TransactionFragment").d("OnStart() - $GLOBAL_CURRENT_DATE")
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Timber.tag("TransactionFragment").d("OnResume() - $GLOBAL_CURRENT_DATE")
+  }
+
+  override fun onDestroyView() {
+    Timber.tag("TransactionFragment").d("OnDestroyView() - $GLOBAL_CURRENT_DATE")
+    sharedViewModel.getDateViewType().removeObservers(viewLifecycleOwner)
+    super.onDestroyView()
+  }
+
+  override fun onStop() {
+    super.onStop()
+    Timber.tag("TransactionFragment").d("OnStop() - $GLOBAL_CURRENT_DATE")
+  }
+
+  override fun onItemChanged() {
+    refreshDate()
+    setupOverallMoney()
+    transactionPagerAdapter.notifyItemRangeChanged(0, transactionPagerAdapter.itemCount)
   }
 }

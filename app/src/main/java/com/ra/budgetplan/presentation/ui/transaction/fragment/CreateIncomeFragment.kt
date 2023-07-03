@@ -2,6 +2,7 @@ package com.ra.budgetplan.presentation.ui.transaction.fragment
 
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,14 +19,19 @@ import com.ra.budgetplan.domain.entity.TipeKategori
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.domain.model.KategoriModel
 import com.ra.budgetplan.domain.model.PendapatanModel
+import com.ra.budgetplan.presentation.ui.transaction.TransactionFragment
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
+import com.ra.budgetplan.util.ActionType
 import com.ra.budgetplan.util.DATE_PATTERN
 import com.ra.budgetplan.util.DATE_TIME_FORMATTER
 import com.ra.budgetplan.util.checkTimeFormat
+import com.ra.budgetplan.util.getActionType
 import com.ra.budgetplan.util.getStringResource
 import com.ra.budgetplan.util.millisToString
 import com.ra.budgetplan.util.showShortToast
+import com.ra.budgetplan.util.toCalendar
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -43,9 +49,6 @@ class CreateIncomeFragment : Fragment() {
   private lateinit var listAccountAdapter: TransactionSpinnerAdapter<AkunModel>
   private lateinit var listCategoryAdapter: TransactionSpinnerAdapter<KategoriModel>
 
-  private val currentTime = Calendar.getInstance()
-  private var currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
-  private var currentMinute = currentTime.get(Calendar.MINUTE)
 
   private var accountId: UUID? = null
   private var categoryId: UUID? = null
@@ -56,27 +59,89 @@ class CreateIncomeFragment : Fragment() {
   ): View? {
     // Inflate the layout for this fragment
     _binding = FragmentCreateIncomeBinding.inflate(inflater, container, false)
+    observer()
+    setupAccountAndCategoryPicker()
     return binding?.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    observer()
-    setupDatePicker()
-    setupTimePicker()
-    setupAccountAndCategoryPicker()
-    createExpense()
-  }
 
-  private fun createExpense() {
-    binding?.run {
-      btnSave.setOnClickListener {
-        validateInput()
+    val actionType = arguments?.getString(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT) as String
+    when(getActionType(actionType)) {
+      ActionType.CREATE -> {
+        val calendar = Calendar.getInstance()
+        setupDatePicker(calendar)
+        setupTimePicker(calendar)
+        binding?.run {
+          btnSave.setOnClickListener {
+            createIncome()
+          }
+        }
+      }
+      ActionType.EDIT -> {
+        binding?.run {
+          val uuid = arguments?.getString(DetailTransactionDialog.EXTRA_TRANSACTION_ID) as String
+          viewModel.getPendapatanById(UUID.fromString(uuid))
+          setupEditIncome()
+        }
       }
     }
   }
 
-  private fun validateInput() {
+  private fun setupEditIncome() {
+    binding?.run {
+      viewModel.pendapatanModel.observe(viewLifecycleOwner) { model ->
+        edtAmount.text = Editable.Factory.getInstance().newEditable(model.jumlah.toString())
+        edtNote.text = Editable.Factory.getInstance().newEditable(model.deskripsi)
+
+        val calendar = model.updatedAt.toCalendar()
+        setupTimePicker(calendar)
+        setupDatePicker(calendar)
+
+        btnSave.setOnClickListener {
+          updateIncome(model)
+        }
+      }
+    }
+  }
+
+  private fun updateIncome(model: PendapatanModel) {
+    binding?.run {
+      val amount: String = edtAmount.text.toString()
+      val note: String = edtNote.text.toString()
+
+      if(amount.isBlank()) {
+        showShortToast(getString(R.string.msg_empty))
+        return
+      }
+
+      val timeStringBuilder = StringBuilder()
+      timeStringBuilder.append(edtDate.text.trim())
+      timeStringBuilder.append(" ")
+      timeStringBuilder.append(btnTime.text.trim())
+      val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
+      val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
+
+      val pendapatanModel = PendapatanModel(
+        uuid = model.uuid,
+        idKategori = categoryId ?: return@run,
+        idAkun = accountId ?: return@run,
+        deskripsi = note,
+        jumlah = amount.toInt(),
+        createdAt = model.createdAt,
+        updatedAt = createdAt
+      )
+
+      viewModel.updatePendapatan(pendapatanModel, model)
+
+      showShortToast(getString(R.string.msg_success))
+
+      activity?.finish()
+    }
+  }
+
+  private fun createIncome() {
     binding?.run {
       val amount: String = edtAmount.text.toString()
       val note: String = edtNote.text.toString()
@@ -107,7 +172,7 @@ class CreateIncomeFragment : Fragment() {
 
       showShortToast(getString(R.string.msg_success))
 
-      activity?.onBackPressedDispatcher?.onBackPressed()
+      activity?.finish()
     }
   }
 
@@ -133,11 +198,14 @@ class CreateIncomeFragment : Fragment() {
     }
   }
 
-  private fun setupTimePicker() {
+  private fun setupTimePicker(calendar: Calendar) {
+    val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+    val currentMinute = calendar.get(Calendar.MINUTE)
+
     val timePicker = MaterialTimePicker.Builder()
       .setTitleText(getString(R.string.msg_time_picker))
-      .setHour(currentTime.get(Calendar.HOUR_OF_DAY))
-      .setMinute(currentTime.get(Calendar.MINUTE))
+      .setHour(calendar.get(Calendar.HOUR_OF_DAY))
+      .setMinute(calendar.get(Calendar.MINUTE))
       .setTimeFormat(TimeFormat.CLOCK_24H)
       .build()
 
@@ -162,7 +230,7 @@ class CreateIncomeFragment : Fragment() {
     }
   }
 
-  private fun setupDatePicker() {
+  private fun setupDatePicker(calendar: Calendar) {
     binding?.run {
       val datePicker = MaterialDatePicker.Builder.datePicker()
         .setTitleText(getString(R.string.msg_date_picker))
@@ -171,7 +239,7 @@ class CreateIncomeFragment : Fragment() {
 
       val sdf = SimpleDateFormat(DATE_PATTERN, Locale("id", "ID"))
 
-      edtDate.text = sdf.millisToString(currentTime.timeInMillis)
+      edtDate.text = sdf.millisToString(calendar.timeInMillis)
 
       edtDate.setOnClickListener {
         datePicker.show(parentFragmentManager, "Date Picker")
@@ -210,6 +278,7 @@ class CreateIncomeFragment : Fragment() {
 
   override fun onDestroy() {
     _binding = null
+    Timber.tag("CreateIncomeFragment").d("onDestroy()")
     super.onDestroy()
   }
 }

@@ -4,16 +4,24 @@ import com.ra.budgetplan.data.local.TransferLocalDataSource
 import com.ra.budgetplan.data.local.database.dao.TransferDao
 import com.ra.budgetplan.domain.entity.DetailTransfer
 import com.ra.budgetplan.domain.entity.TransferEntity
-import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
+import java.util.UUID
 import javax.inject.Inject
 
 class TransferLocalDataSourceImpl @Inject constructor(
   private val transferDao: TransferDao
 ): TransferLocalDataSource {
-  override fun getTransferByDate(
+  override suspend fun findById(uuid: UUID): TransferEntity {
+    return transferDao.findById(uuid)
+  }
+
+  override suspend fun findDetailById(uuid: UUID): DetailTransfer {
+    return transferDao.findDetailTransferById(uuid)
+  }
+
+  override suspend fun getTransferByDate(
     fromDate: LocalDateTime, toDate: LocalDateTime
-  ): Flow<List<DetailTransfer>> {
+  ): List<DetailTransfer> {
     return transferDao.getTransferByDate(fromDate, toDate)
   }
 

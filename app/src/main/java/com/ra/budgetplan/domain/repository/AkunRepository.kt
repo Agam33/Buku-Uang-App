@@ -6,9 +6,10 @@ import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface AkunRepository {
+  fun getTotalMoney(): Flow<Long?>
   suspend fun save(akun: AkunEntity)
   suspend fun delete(akun: AkunEntity)
   suspend fun update(akun: AkunEntity)
   fun findAll(): Flow<List<AkunEntity>>
-  fun findById(id: UUID): Flow<AkunEntity>
+  suspend fun findById(id: UUID): AkunEntity
 }

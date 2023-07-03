@@ -13,7 +13,7 @@ import com.ra.budgetplan.util.toFormatRupiah
     Expense DayViewHolder
  */
 class ExpenseDayViewHolder(
-  private val binding: ItemRvExpenseDaysBinding
+  val binding: ItemRvExpenseDaysBinding
 ): RecyclerView.ViewHolder(binding.root) {
 
   fun bind(model: DetailPengeluaran) {
@@ -22,6 +22,7 @@ class ExpenseDayViewHolder(
     binding.tvAccount.text = model.akun.nama
     binding.titleItem.text = model.kategori.nama
     binding.tvMoney.text = model.pengeluaran.jumlah.toFormatRupiah()
+
   }
 }
 
@@ -29,7 +30,7 @@ class ExpenseDayViewHolder(
     Income DayViewHolder
  */
 class IncomeDayViewHolder(
-  private val binding: ItemRvIncomeDaysBinding
+  val binding: ItemRvIncomeDaysBinding
 ): RecyclerView.ViewHolder(binding.root) {
 
   fun bind(model: DetailPendapatan) {
@@ -45,9 +46,8 @@ class IncomeDayViewHolder(
     Transfer DayViewHolder
  */
 class TransferDayViewHolder(
-  private val binding: ItemRvTransferDaysBinding
+  val binding: ItemRvTransferDaysBinding
 ): RecyclerView.ViewHolder(binding.root) {
-
   fun bind(model: DetailTransfer) {
     binding.ivFromAccount.setImageResource(model.fromAkun.icon)
     binding.ivToAccount.setImageResource(model.toAkun.icon)
@@ -56,5 +56,3 @@ class TransferDayViewHolder(
     binding.tvMoney.text = model.transfer.jumlah.toFormatRupiah()
   }
 }
-
-

@@ -9,10 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ra.budgetplan.databinding.ItemRvIncomeDaysBinding
 import com.ra.budgetplan.databinding.ItemRvIncomeMonthBinding
 import com.ra.budgetplan.domain.entity.DetailPendapatan
+import com.ra.budgetplan.domain.mapper.toModel
 
 class IncomeMonthViewHolder(
   private val binding: ItemRvIncomeMonthBinding
 ): RecyclerView.ViewHolder(binding.root) {
+
+  var onDayItemClickListener: OnDayItemClickListener? = null
 
   fun bind(date: String, list: List<DetailPendapatan>) {
     val mAdapter = ItemMonthAdapter()
@@ -21,7 +24,10 @@ class IncomeMonthViewHolder(
     binding.rvIncomeDays.apply {
       adapter = mAdapter
       setHasFixedSize(true)
-      layoutManager = LinearLayoutManager(binding.root.context)
+      layoutManager = LinearLayoutManager(
+        binding.root.context,
+        LinearLayoutManager.VERTICAL,
+        false)
     }
   }
 
@@ -35,13 +41,20 @@ class IncomeMonthViewHolder(
     }
 
     override fun onBindViewHolder(holder: IncomeDayViewHolder, position: Int) {
-      holder.bind(getItem(position))
+      val item = getItem(position)
+      holder.bind(item)
+      holder.binding.root.setOnClickListener {
+        onDayItemClickListener?.onClickDayItem(item.toModel())
+      }
     }
   }
 
   companion object {
     private val DIFF_UTIL = object : DiffUtil.ItemCallback<DetailPendapatan>() {
-      override fun areItemsTheSame(oldItem: DetailPendapatan, newItem: DetailPendapatan): Boolean {
+      override fun areItemsTheSame(
+        oldItem: DetailPendapatan,
+        newItem: DetailPendapatan
+      ): Boolean {
         return oldItem == newItem
       }
 
@@ -49,7 +62,7 @@ class IncomeMonthViewHolder(
         oldItem: DetailPendapatan,
         newItem: DetailPendapatan
       ): Boolean {
-        return oldItem.akun.uuid == newItem.akun.uuid
+        return oldItem.pendapatan.uuid == newItem.pendapatan.uuid
       }
     }
   }

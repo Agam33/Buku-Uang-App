@@ -6,19 +6,38 @@ import com.ra.budgetplan.domain.entity.PengeluaranEntity
 import com.ra.budgetplan.domain.repository.PengeluaranRepository
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
-import java.util.Date
+import java.util.UUID
 import javax.inject.Inject
 
 class PengeluaranRepositoryImpl @Inject constructor(
   private val localDataSource: PengeluaranLocalDataSource
 ): PengeluaranRepository {
+  override suspend fun findById(uuid: UUID): PengeluaranEntity {
+    return localDataSource.findById(uuid)
+  }
+
+  override suspend fun findDetailById(uuid: UUID): DetailPengeluaran {
+    return localDataSource.findDetailById(uuid)
+  }
+
+  override fun getTotalPengeluaranByDate(
+    fromDate: LocalDateTime,
+    toDate: LocalDateTime
+  ): Flow<Long?> {
+    return localDataSource.getTotalPengeluaranByDate(fromDate, toDate)
+  }
+
+  override fun getTotalPengeluaran(): Flow<Long?> {
+    return localDataSource.getTotalPengeluaran()
+  }
+
   override fun getMonthlyPengeluaran(startOfDay: LocalDateTime, endOfDay: LocalDateTime): Flow<List<DetailPengeluaran>> {
     return localDataSource.getMonthlyPengeluaran(startOfDay, endOfDay)
   }
 
-  override fun getPengeluaranByDate(
+  override suspend fun getPengeluaranByDate(
     fromDate: LocalDateTime, toDate: LocalDateTime
-  ): Flow<List<DetailPengeluaran>> {
+  ): List<DetailPengeluaran> {
     return localDataSource.getPengeluaranByDate(fromDate, toDate)
   }
 

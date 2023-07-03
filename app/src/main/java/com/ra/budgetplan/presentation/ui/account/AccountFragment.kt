@@ -16,7 +16,8 @@ import com.ra.budgetplan.presentation.viewmodel.AccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AccountFragment : Fragment(), RvAccountAdapter.OnOptionAccountClickCallBack {
+class AccountFragment : Fragment(),
+  RvAccountAdapter.OnOptionAccountClickCallBack {
 
   private var _binding: FragmentAccountBinding? = null
   private val binding get() = _binding

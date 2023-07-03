@@ -1,77 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.ra.budgetplan.presentation.viewmodel.TransactionViewModel" />
+    </data>
 
     <LinearLayout
-        android:gravity="center"
-        android:id="@+id/layout_income"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_width="0dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:text="@string/title_income"
-            android:textSize="14sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:gravity="center"
+            android:id="@+id/layout_income"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_income"
-            android:textColor="@color/teal_700"
-            android:text="@string/txt_empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:text="@string/title_income"
+                android:textSize="14sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_income"
+                android:textColor="@color/teal_700"
+                android:text="@string/txt_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:id="@+id/layout_expense"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:text="@string/title_expense"
+                android:textSize="14sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_expense"
+                android:text="@string/txt_empty"
+                android:textColor="@color/red_400"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:id="@+id/layout_total"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:text="@string/title_total"
+                android:textSize="14sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_total"
+                android:textColor="@color/teal_700"
+                android:text="@string/txt_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:gravity="center"
-        android:id="@+id/layout_expense"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:text="@string/title_expense"
-            android:textSize="14sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_expense"
-            android:text="@string/txt_empty"
-            android:textColor="@color/red_400"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:gravity="center"
-        android:id="@+id/layout_total"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:text="@string/title_total"
-            android:textSize="14sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_total"
-            android:textColor="@color/teal_700"
-            android:text="@string/txt_empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-</LinearLayout>
+</layout>

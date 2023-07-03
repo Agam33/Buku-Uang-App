@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.budgetplan.databinding.ItemRvExpenseMonthBinding
 import com.ra.budgetplan.databinding.ItemRvIncomeMonthBinding
+import com.ra.budgetplan.databinding.ItemRvTransferMonthBinding
 import com.ra.budgetplan.domain.entity.DetailPendapatan
 import com.ra.budgetplan.domain.entity.DetailPengeluaran
 import com.ra.budgetplan.domain.entity.DetailTransfer
@@ -18,6 +19,8 @@ class ExpenseRvAdapter(
   private val group:  RvGroup<String, ArrayList<DetailPengeluaran>>
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+  var onDayItemClickListener: OnDayItemClickListener? = null
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
     return ExpenseMonthViewHolder(
           ItemRvExpenseMonthBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,6 +31,7 @@ class ExpenseRvAdapter(
 
   override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
     val monthHolder = holder as ExpenseMonthViewHolder
+    monthHolder.onDayItemClickListener = onDayItemClickListener
     monthHolder.bind(group.keyList[position], group.getValueByIndex(position) ?: arrayListOf())
   }
 }
@@ -40,6 +44,8 @@ class IncomeRvAdapter(
   private val group: RvGroup<String, ArrayList<DetailPendapatan>>
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+  var onDayItemClickListener: OnDayItemClickListener? = null
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
     return IncomeMonthViewHolder(
       ItemRvIncomeMonthBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -50,6 +56,7 @@ class IncomeRvAdapter(
 
   override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
     val monthHolder = holder as IncomeMonthViewHolder
+    monthHolder.onDayItemClickListener = onDayItemClickListener
     monthHolder.bind(group.keyList[position], group.getValueByIndex(position) ?: arrayListOf())
   }
 }
@@ -62,9 +69,11 @@ class TransferRvAdapter(
   private val group: RvGroup<String, ArrayList<DetailTransfer>>
 ):  RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+  var onDayItemClickListener: OnDayItemClickListener? = null
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
     return TransferMonthViewHolder(
-      ItemRvIncomeMonthBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+      ItemRvTransferMonthBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
   }
 
@@ -72,6 +81,7 @@ class TransferRvAdapter(
 
   override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
     val monthHolder = holder as TransferMonthViewHolder
+    monthHolder.onDayItemClickListener = onDayItemClickListener
     monthHolder.bind(group.keyList[position], group.getValueByIndex(position) ?: arrayListOf())
   }
 }

@@ -10,7 +10,7 @@ import com.ra.budgetplan.domain.entity.DetailPengeluaran
 import com.ra.budgetplan.domain.entity.PengeluaranEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
-import java.util.Date
+import java.util.UUID
 
 @Dao
 interface PengeluaranDao {
@@ -19,7 +19,7 @@ interface PengeluaranDao {
           "WHERE " +
           "pengeluaran_tbl.updated_at BETWEEN :fromDate AND :toDate " +
           "ORDER BY pengeluaran_tbl.updated_at DESC")
-  fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<List<DetailPengeluaran>>
+  suspend fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailPengeluaran>
 
   @Transaction
   @Query("SELECT * FROM pengeluaran_tbl " +
@@ -27,6 +27,20 @@ interface PengeluaranDao {
           "pengeluaran_tbl.updated_at BETWEEN :startOfDay AND :endOfDay " +
           "ORDER BY pengeluaran_tbl.updated_at DESC")
   fun getMonthlyPengeluaran(startOfDay: LocalDateTime, endOfDay: LocalDateTime): Flow<List<DetailPengeluaran>>
+
+  @Query("SELECT SUM(jumlah) FROM pengeluaran_tbl " +
+          "WHERE " +
+          "pengeluaran_tbl.updated_at BETWEEN :fromDate AND :toDate")
+  fun getTotalPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long?>
+
+  @Query("SELECT SUM(jumlah) FROM pengeluaran_tbl")
+  fun getTotalPengeluaran(): Flow<Long?>
+
+  @Query("SELECT * FROM pengeluaran_tbl AS p WHERE p.uuid = :uuid")
+  suspend fun findDetailPengeluaranById(uuid: UUID): DetailPengeluaran
+
+  @Query("SELECT * FROM pengeluaran_tbl AS p WHERE p.uuid = :uuid")
+  suspend fun findById(uuid: UUID): PengeluaranEntity
 
   @Insert
   suspend fun save(pengeluaran: PengeluaranEntity)

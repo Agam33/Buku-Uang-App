@@ -8,8 +8,8 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.ra.budgetplan.domain.entity.DetailTransfer
 import com.ra.budgetplan.domain.entity.TransferEntity
-import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Dao
 interface TransferDao {
@@ -19,7 +19,13 @@ interface TransferDao {
           "WHERE " +
           "transfer_tbl.updated_at BETWEEN :fromDate AND :toDate " +
           "ORDER BY transfer_tbl.updated_at DESC")
-  fun getTransferByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<List<DetailTransfer>>
+  suspend fun getTransferByDate(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailTransfer>
+
+  @Query("SELECT * FROM transfer_tbl AS t WHERE t.uuid = :uuid")
+  suspend fun findDetailTransferById(uuid: UUID): DetailTransfer
+
+  @Query("SELECT * FROM transfer_tbl AS t WHERE t.uuid = :uuid")
+  suspend fun findById(uuid: UUID): TransferEntity
 
   @Insert
   suspend fun save(transferEntity: TransferEntity)

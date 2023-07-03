@@ -14,7 +14,7 @@ class SavePendapatanImpl @Inject constructor(
   private val akunRepository: AkunRepository
 ): SavePendapatan {
   override suspend fun invoke(pendapatanModel: PendapatanModel) {
-    val account = akunRepository.findById(pendapatanModel.idAkun).first().toModel()
+    val account = akunRepository.findById(pendapatanModel.idAkun).toModel()
 
     account.total += pendapatanModel.jumlah
 
