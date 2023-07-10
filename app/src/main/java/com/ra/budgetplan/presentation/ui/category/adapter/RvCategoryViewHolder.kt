@@ -40,7 +40,6 @@ class RvCategoryViewHolder(
     ): RecyclerView.ViewHolder(binding.root) {
 
       fun bind(model: KategoriModel) {
-        binding.ivCategory.setImageResource(model.icon)
         binding.tvCategory.text = model.nama
 
         binding.spOptionCategory.adapter = SpinnerOptionAdapter(binding.root.context)

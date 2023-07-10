@@ -5,8 +5,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.ActivityCreateCategoryBinding
 import com.ra.budgetplan.domain.entity.TipeKategori
@@ -42,22 +40,8 @@ class CreateCategoryActivity : AppCompatActivity(), RvIconCategoryAdapter.OnItem
 
   private fun observer() {
     viewModel.setCurrentCategory(currentCategory)
-    viewModel.listIcon.observe(this@CreateCategoryActivity) {
-      setupListIcon(it)
-    }
     viewModel.currCategory.observe(this@CreateCategoryActivity) {
       currentCategory = it
-    }
-  }
-
-  private fun setupListIcon(list: List<IconModel>) {
-    val rvIconCategoryAdapter = RvIconCategoryAdapter()
-    rvIconCategoryAdapter.submitList(list)
-    rvIconCategoryAdapter.onItemSelectedListener = this@CreateCategoryActivity
-    binding.rvIcons.apply {
-      adapter = rvIconCategoryAdapter
-      layoutManager = GridLayoutManager(this@CreateCategoryActivity, 2, LinearLayoutManager.HORIZONTAL, false)
-      setHasFixedSize(true)
     }
   }
 

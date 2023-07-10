@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -17,7 +16,6 @@ import com.ra.budgetplan.presentation.ui.transaction.CreateTransactionActivity
 import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
 import com.ra.budgetplan.presentation.ui.transaction.TransactionFragment
 import com.ra.budgetplan.presentation.ui.transaction.TransactionType
-import com.ra.budgetplan.presentation.ui.transaction.getTransactionType
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
 import com.ra.budgetplan.util.ActionType
 import com.ra.budgetplan.util.OnDeleteItemListener
@@ -37,8 +35,6 @@ class DetailTransactionDialog: DialogFragment() {
   private lateinit var tvIc2: TextView
   private lateinit var tvTransactionType: TextView
   private lateinit var description: TextView
-  private lateinit var ivIc1: ImageView
-  private lateinit var ivIc2: ImageView
   private lateinit var divider: MaterialDivider
   private lateinit var closeButton: ImageButton
   private lateinit var deleteButton: ImageButton
@@ -57,8 +53,6 @@ class DetailTransactionDialog: DialogFragment() {
       tvMoney = it.findViewById(R.id.tv_money)
       tvCurrDate = it.findViewById(R.id.tv_current_date)
       divider = it.findViewById(R.id.divider)
-      ivIc1 = it.findViewById(R.id.iv_ic1)
-      ivIc2 = it.findViewById(R.id.iv_ic2)
       tvIc1 = it.findViewById(R.id.tv_ic1)
       tvIc2 = it.findViewById(R.id.tv_ic2)
       tvTransactionType = it.findViewById(R.id.tv_transaction_type)
@@ -132,8 +126,6 @@ class DetailTransactionDialog: DialogFragment() {
     }
 
     tvCurrDate.text = transactionDetail.updatedAt.toStringFormat("d MMMM, yyyy HH:mm", Locale("id", "id"))
-    ivIc1.setImageResource(transactionDetail.icUrl1)
-    ivIc2.setImageResource(transactionDetail.icUrl2)
     tvIc1.text = transactionDetail.name1
     tvIc2.text = transactionDetail.name2
     tvMoney.text = transactionDetail.jumlah.toFormatRupiah()
