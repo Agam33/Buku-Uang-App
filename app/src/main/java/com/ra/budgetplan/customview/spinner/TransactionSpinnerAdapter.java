@@ -61,16 +61,13 @@ public class TransactionSpinnerAdapter<T> extends ArrayAdapter<T> {
     }
 
     private void setView(View v, T model) {
-        ImageView imageView = v.findViewById(R.id.iv_icon);
         TextView name = v.findViewById(R.id.tv_name);
 
         if(model instanceof AkunModel) {
             AkunModel akunModel = (AkunModel) model;
-            imageView.setImageResource(akunModel.getIcon());
             name.setText(akunModel.getNama());
         } else if(model instanceof KategoriModel) {
             KategoriModel kategoriModel = (KategoriModel) model;
-            imageView.setImageResource(kategoriModel.getIcon());
             name.setText(kategoriModel.getNama());
          }
     }

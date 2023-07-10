@@ -26,7 +26,6 @@ class RvAccountAdapter: ListAdapter<AkunModel, RvAccountAdapter.MViewHolder>(dif
   ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(akun: AkunModel) {
-      binding.ivAccount.setImageResource(akun.icon)
       binding.tvAccount.text = akun.nama
       binding.tvMoney.text = akun.total.toFormatRupiah()
 

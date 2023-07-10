@@ -17,8 +17,6 @@ class ExpenseDayViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
 
   fun bind(model: DetailPengeluaran) {
-    binding.ivCategory.setImageResource(model.kategori.icon)
-    binding.ivAccount.setImageResource(model.akun.icon)
     binding.tvAccount.text = model.akun.nama
     binding.titleItem.text = model.kategori.nama
     binding.tvMoney.text = model.pengeluaran.jumlah.toFormatRupiah()
@@ -34,8 +32,6 @@ class IncomeDayViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
 
   fun bind(model: DetailPendapatan) {
-    binding.ivCategory.setImageResource(model.kategori.icon)
-    binding.ivAccount.setImageResource(model.akun.icon)
     binding.tvAccount.text = model.akun.nama
     binding.titleItem.text = model.kategori.nama
     binding.tvMoney.text = model.pendapatan.jumlah.toFormatRupiah()
@@ -49,8 +45,6 @@ class TransferDayViewHolder(
   val binding: ItemRvTransferDaysBinding
 ): RecyclerView.ViewHolder(binding.root) {
   fun bind(model: DetailTransfer) {
-    binding.ivFromAccount.setImageResource(model.fromAkun.icon)
-    binding.ivToAccount.setImageResource(model.toAkun.icon)
     binding.tvToAccount.text = model.toAkun.nama
     binding.tvFromAccount.text = model.fromAkun.nama
     binding.tvMoney.text = model.transfer.jumlah.toFormatRupiah()

@@ -22,18 +22,11 @@
                 android:layout_width="8dp"
                 android:layout_height="80dp" />
 
-            <ImageView
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_toEndOf="@id/iv_item"
-                android:src="@drawable/income_games_36"
-                android:id="@+id/iv_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/title_item"
-                android:layout_toEndOf="@id/iv_category"
+                android:textStyle="bold"
+                android:layout_toEndOf="@id/iv_item"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto_bold"
@@ -43,20 +36,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <ImageView
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                android:id="@+id/iv_account"
-                android:layout_below="@id/title_item"
-                android:layout_toEndOf="@id/iv_item"
-                android:src="@drawable/account_cash_round_money_36"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_account"
+                android:textStyle="italic"
                 android:layout_below="@id/title_item"
-                android:layout_toEndOf="@id/iv_account"
+                android:layout_toEndOf="@id/iv_item"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
                 android:textSize="16sp"

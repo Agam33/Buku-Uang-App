@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.ra.budgetplan.R
 import com.ra.budgetplan.customview.dialog.icon.Icon
-import com.ra.budgetplan.customview.dialog.icon.IconCategory
 import com.ra.budgetplan.customview.dialog.icon.IconListDialog
 import com.ra.budgetplan.databinding.ActivityCreateNewAccountBinding
 import com.ra.budgetplan.domain.model.AkunModel
@@ -20,13 +18,12 @@ import com.ra.budgetplan.presentation.ui.account.AccountFragment.Companion.EXTRA
 import com.ra.budgetplan.presentation.viewmodel.AccountViewModel
 import com.ra.budgetplan.util.parcelable
 import com.ra.budgetplan.util.setupNoActionbar
-import com.ra.budgetplan.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.util.UUID
 
 @AndroidEntryPoint
-class CreateNewAccountActivity : AppCompatActivity(), IconListDialog.OnClickItemListener {
+class CreateNewAccountActivity : AppCompatActivity() {
 
   private val binding: ActivityCreateNewAccountBinding by lazy {
     ActivityCreateNewAccountBinding.inflate(layoutInflater)
@@ -43,7 +40,6 @@ class CreateNewAccountActivity : AppCompatActivity(), IconListDialog.OnClickItem
     }
 
     setupNoActionbar(binding.toolbar)
-    chooseIcon()
   }
 
   private fun isAccountCreated(): Boolean = intent?.getStringExtra(EXTRA_TEXT) == EDIT_ACCOUNT
@@ -53,17 +49,6 @@ class CreateNewAccountActivity : AppCompatActivity(), IconListDialog.OnClickItem
     account?.let {
       binding.edtInputLayoutName.editText?.setText(account.nama)
       binding.edtInputInitialAmount.text = Editable.Factory.getInstance().newEditable(account.total.toString())
-      binding.ivIcon.setImageResource(account.icon)
-      binding.ivIcon.tag = account.icon
-    }
-  }
-
-  private fun chooseIcon() {
-    binding.btnChooseIcon.setOnClickListener {
-      val dialogIcon = IconListDialog()
-      dialogIcon.category = IconCategory.ACCOUNT
-      dialogIcon.onClickItemListener = this@CreateNewAccountActivity
-      dialogIcon.show(supportFragmentManager, ICON_LIST_IN_CREATE_ACCOUNT)
     }
   }
 
@@ -81,27 +66,23 @@ class CreateNewAccountActivity : AppCompatActivity(), IconListDialog.OnClickItem
       return
     }
 
-    if(binding.ivIcon.tag == null) {
-      showShortToast(getString(R.string.msg_choose_icon))
-      return
-    }
-
     when(intent?.getStringExtra(EXTRA_TEXT)) {
       EDIT_ACCOUNT -> {
         val account = intent?.parcelable<AkunModel>(ACCOUNT_MODEL)
         account?.let {
-          it.icon = binding.ivIcon.tag as Int
+          it.icon = -1
           it.nama = accountName
           it.total = amount.toInt()
           it.updatedAt = LocalDateTime.now()
           viewModel.updateAccount(it)
         }
       }
+
       CREATE_ACCOUNT -> {
         val akun = AkunModel(
           uuid = UUID.randomUUID(),
           icUrl = "",
-          icon = binding.ivIcon.tag as Int,
+          icon = -1,
           nama = accountName,
           total = amount.toInt(),
           createdAt = LocalDateTime.now(),
@@ -130,11 +111,6 @@ class CreateNewAccountActivity : AppCompatActivity(), IconListDialog.OnClickItem
       }
       else -> super.onOptionsItemSelected(item)
     }
-  }
-
-  override fun getIcon(icon: Icon) {
-    binding.ivIcon.setImageResource(icon.icon)
-    binding.ivIcon.tag = icon.icon
   }
 
   companion object {

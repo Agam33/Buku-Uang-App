@@ -22,19 +22,11 @@
                 android:layout_width="8dp"
                 android:layout_height="80dp" />
 
-            <ImageView
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_toEndOf="@id/iv_item"
-                android:src="@drawable/expense__cake_36"
-                android:id="@+id/iv_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
             <com.google.android.material.textview.MaterialTextView
                 android:textSize="14sp"
+                android:textStyle="bold"
                 android:id="@+id/title_item"
-                android:layout_toEndOf="@id/iv_category"
+                android:layout_toEndOf="@id/iv_item"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/roboto_bold"
@@ -43,21 +35,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <ImageView
-                android:layout_marginStart="8dp"
-                android:id="@+id/iv_account"
-                android:layout_below="@id/iv_category"
-                android:layout_toEndOf="@id/iv_item"
-                android:src="@drawable/account_savings_36"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
             <com.google.android.material.textview.MaterialTextView
                 android:layout_marginTop="8dp"
+                android:textStyle="italic"
                 android:id="@+id/tv_account"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:layout_below="@id/title_item"
-                android:layout_toEndOf="@id/iv_account"
+                android:layout_toEndOf="@id/iv_item"
                 android:layout_marginStart="8dp"
                 android:textSize="14sp"
                 android:text="@string/txt_sample_account"
