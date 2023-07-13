@@ -27,7 +27,7 @@ class AccountViewModel @Inject constructor(
   private val akunOverallMoney: AkunOverallMoney,
   private val getTotalPengeluaran: GetTotalPengeluaran,
   private val getTotalPendapatan: GetTotalPendapatan
-): ViewModel() {
+): BaseViewModel() {
 
   private var _rvAccountState = MutableLiveData<Boolean>()
   val rvAccountState: LiveData<Boolean> = _rvAccountState

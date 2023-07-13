@@ -50,4 +50,12 @@ interface PengeluaranDao {
 
   @Update
   suspend fun update(pengeluaran: PengeluaranEntity)
+
+  @Query("SELECT SUM(jumlah) FROM pengeluaran_tbl AS p WHERE p.id_kategori =:idKategori " +
+          "AND p.updated_at BETWEEN :fromDate AND :toDate")
+  suspend fun getTotalPengeluaranByDateAndKategori(
+    fromDate: LocalDateTime,
+    toDate: LocalDateTime,
+    idKategori: UUID
+  ): Long?
 }

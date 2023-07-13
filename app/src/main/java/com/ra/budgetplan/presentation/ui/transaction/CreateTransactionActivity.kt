@@ -10,7 +10,6 @@ import com.ra.budgetplan.presentation.ui.transaction.TransactionFragment.Compani
 import com.ra.budgetplan.presentation.ui.transaction.fragment.CreateExpenseFragment
 import com.ra.budgetplan.presentation.ui.transaction.fragment.CreateIncomeFragment
 import com.ra.budgetplan.presentation.ui.transaction.fragment.CreateTransferFragment
-import com.ra.budgetplan.presentation.ui.transaction.fragment.DetailTransactionDialog
 import com.ra.budgetplan.presentation.ui.transaction.fragment.DetailTransactionDialog.Companion.EXTRA_TRANSACTION_ID
 import com.ra.budgetplan.util.ActionType
 import com.ra.budgetplan.util.getActionType

@@ -12,6 +12,14 @@ import javax.inject.Inject
 class PengeluaranLocalDataSourceImpl @Inject constructor(
   private val pengeluaranDao: PengeluaranDao
 ): PengeluaranLocalDataSource {
+  override suspend fun getTotalPengeluaranByDateAndKategory(
+    fromDate: LocalDateTime,
+    toDate: LocalDateTime,
+    id: UUID
+  ): Long? {
+    return pengeluaranDao.getTotalPengeluaranByDateAndKategori(fromDate, toDate, id)
+  }
+
   override suspend fun findById(uuid: UUID): PengeluaranEntity {
     return pengeluaranDao.findById(uuid)
   }

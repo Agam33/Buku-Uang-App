@@ -30,7 +30,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto_bold"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                 android:textSize="16sp"
                 android:text="@string/txt_sample_income_reward"
                 android:layout_width="wrap_content"

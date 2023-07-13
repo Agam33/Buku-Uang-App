@@ -3,17 +3,16 @@ package com.ra.budgetplan.domain.mapper
 import com.ra.budgetplan.domain.entity.BudgetEntity
 import com.ra.budgetplan.domain.model.BudgetModel
 
-fun budgetToEntity(
-  budgetModel: BudgetModel
+fun BudgetModel.toEntity(
 ): BudgetEntity = BudgetEntity(
-  budgetModel.uuid,
-  budgetModel.idKategori,
-  budgetModel.deskripsi,
-  budgetModel.pengeluaran,
-  budgetModel.maxPengeluaran,
-  budgetModel.bulanTahun,
-  budgetModel.createdAt,
-  budgetModel.updatedAt
+  uuid,
+  idKategori,
+  deskripsi,
+  pengeluaran,
+  maxPengeluaran,
+  bulanTahun,
+  createdAt,
+  updatedAt
 )
 
 
