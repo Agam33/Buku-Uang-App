@@ -2,7 +2,6 @@ package com.ra.budgetplan.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.ra.budgetplan.data.local.preferences.UserSettingPref
@@ -72,7 +71,7 @@ class TransactionViewModel @Inject constructor(
   private val updateTransfer: UpdateTransfer,
   private val updatePendapatan: UpdatePendapatan,
   private val updatePengeluaran: UpdatePengeluaran,
-): ViewModel() {
+): BaseViewModel() {
 
   private var _listCategory = MutableLiveData<List<KategoriModel>>()
   val listCategory: LiveData<List<KategoriModel>> get() = _listCategory

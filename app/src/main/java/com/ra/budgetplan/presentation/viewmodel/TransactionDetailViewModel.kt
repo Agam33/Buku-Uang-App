@@ -20,7 +20,7 @@ class TransactionDetailViewModel @Inject constructor(
   private val findDetailTransferById: FindDetailTransferById,
   private val findDetailPendapatanById: FindDetailPendapatanById,
   private val findDetailPengeluaranById: FindDetailPengeluaranById
-): ViewModel() {
+): BaseViewModel() {
 
   private var _detailPengeluaran = MutableLiveData<DetailPengeluaran>()
   val detailPengeluaran: LiveData<DetailPengeluaran> = _detailPengeluaran

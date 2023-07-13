@@ -10,17 +10,18 @@ import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.ra.budgetplan.presentation.ui.transaction.adapter.DateViewType
-import com.ra.budgetplan.presentation.ui.transaction.adapter.getDateViewType
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
+fun Int.toPercent(maxValue: Int): Double {
+  return (this * 100.0) / maxValue
+}
 
 fun LocalDateTime.toCalendar(): Calendar {
   val zonedDateTime = this.atZone(ZoneId.systemDefault())

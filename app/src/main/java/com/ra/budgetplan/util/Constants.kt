@@ -1,5 +1,8 @@
 package com.ra.budgetplan.util
 
+import android.animation.ValueAnimator
+import android.view.View
+import android.view.animation.DecelerateInterpolator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -19,4 +22,32 @@ fun coroutineIOThread(action: suspend () -> Unit) {
   CoroutineScope(Dispatchers.IO).launch {
     action()
   }
+}
+
+fun expandToRight(v: View, duration: Long, targetWidth: Int) {
+  val prevWidth = v.width
+
+  v.visibility = View.VISIBLE
+  val valueAnimator: ValueAnimator = ValueAnimator.ofInt(prevWidth, targetWidth)
+  valueAnimator.addUpdateListener { animation ->
+    v.layoutParams.width = animation.animatedValue as Int
+    v.requestLayout()
+  }
+
+  valueAnimator.interpolator = DecelerateInterpolator()
+  valueAnimator.duration = duration
+  valueAnimator.start()
+}
+
+fun collapsedToLeft(v: View, duration: Long, targetWidth: Int) {
+  val prevWidth = v.width
+  val valueAnimator: ValueAnimator = ValueAnimator.ofInt(prevWidth, targetWidth)
+  valueAnimator.addUpdateListener { animation ->
+    v.layoutParams.width = animation.animatedValue as Int
+    v.requestLayout()
+  }
+
+  valueAnimator.interpolator = DecelerateInterpolator()
+  valueAnimator.duration = duration
+  valueAnimator.start()
 }

@@ -55,6 +55,24 @@
     </style>
 <!-- End Toggle Button -->
 
+<!-- Icon Button -->
+    <style name="Widget.Budget.App.Icon.Button" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.Budget.App.Icon.Button</item>
+        <item name="android:textAppearance">@style/TextAppearance.Budget.App.Icon.Button</item>
+    </style>
+
+    <style name="TextAppearance.Budget.App.Icon.Button" parent="TextAppearance.AppCompat.Medium">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="ShapeAppearance.Budget.App.Icon.Button" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+<!-- End Icon Button -->
+
 <!-- Dialog -->
     <style name="Widget.App.Dialog.Rounded" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MyApp.Dialog.Rounded</item>

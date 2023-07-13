@@ -7,6 +7,11 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 interface PengeluaranRepository {
+  suspend fun getTotalPengeluaranByDateAndKategory(
+    fromDate: LocalDateTime,
+    toDate: LocalDateTime,
+    idKategori: UUID
+  ): Long?
   suspend fun findById(uuid: UUID): PengeluaranEntity
   suspend fun findDetailById(uuid: UUID): DetailPengeluaran
   fun getTotalPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long?>
