@@ -11,3 +11,11 @@ fun getTransactionType(type: String): TransactionType =
     else -> TransactionType.TRANSFER
   }
 
+fun getTransactionTypeID(type: String): TransactionType =
+  when(type.uppercase()) {
+    "PENGELUARAN" -> TransactionType.EXPENSE
+    "PENDAPATAN" -> TransactionType.INCOME
+    else  -> TransactionType.TRANSFER
+  }
+
+

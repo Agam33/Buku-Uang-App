@@ -67,4 +67,10 @@
     <string name="txt_zero_percent">0%</string>
     <string name="txt_budget">Budget</string>
 
+    <string-array name="transaction_type">
+        <item>Pengeluaran</item>
+        <item>Pendapatan</item>
+        <item>Transfer</item>
+    </string-array>
+
 </resources>

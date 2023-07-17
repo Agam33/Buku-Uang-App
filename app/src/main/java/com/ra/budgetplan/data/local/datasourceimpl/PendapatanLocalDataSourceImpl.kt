@@ -27,6 +27,10 @@ class PendapatanLocalDataSourceImpl @Inject constructor(
     return pendapatanDao.getTotalPendapatanByDate(fromDate, toDate)
   }
 
+  override suspend fun getTotalPendapatan(fromDate: LocalDateTime, toDate: LocalDateTime): Long? {
+    return pendapatanDao.getTotalPendapatan(fromDate, toDate)
+  }
+
   override fun getTotalPendapatan(): Flow<Long?> {
     return pendapatanDao.getTotalPendapatan()
   }

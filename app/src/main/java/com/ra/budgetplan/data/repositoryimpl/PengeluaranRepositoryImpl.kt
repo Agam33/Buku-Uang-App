@@ -20,6 +20,10 @@ class PengeluaranRepositoryImpl @Inject constructor(
     return localDataSource.getTotalPengeluaranByDateAndKategory(fromDate, toDate, idKategori)
   }
 
+  override suspend fun getTotalPengeluaran(fromDate: LocalDateTime, toDate: LocalDateTime): Long? {
+    return localDataSource.getTotalPengeluaran(fromDate, toDate)
+  }
+
   override suspend fun findById(uuid: UUID): PengeluaranEntity {
     return localDataSource.findById(uuid)
   }
