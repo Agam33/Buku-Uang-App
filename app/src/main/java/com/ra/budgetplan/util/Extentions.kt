@@ -23,6 +23,13 @@ fun Int.toPercent(maxValue: Int): Double {
   return (this * 100.0) / maxValue
 }
 
+fun Double.toPercentText(): String {
+  val percentBuilder = java.lang.StringBuilder()
+  percentBuilder.append(String.format("%.1f", this))
+  percentBuilder.append("%")
+  return percentBuilder.toString()
+}
+
 fun LocalDateTime.toCalendar(): Calendar {
   val zonedDateTime = this.atZone(ZoneId.systemDefault())
   val calendar = Calendar.getInstance()

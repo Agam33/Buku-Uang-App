@@ -33,6 +33,11 @@ interface PengeluaranDao {
           "pengeluaran_tbl.updated_at BETWEEN :fromDate AND :toDate")
   fun getTotalPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long?>
 
+  @Query("SELECT SUM(jumlah) FROM pengeluaran_tbl " +
+          "WHERE " +
+          "pengeluaran_tbl.updated_at BETWEEN :fromDate AND :toDate")
+  suspend fun getTotalPengeluaran(fromDate: LocalDateTime, toDate: LocalDateTime): Long?
+
   @Query("SELECT SUM(jumlah) FROM pengeluaran_tbl")
   fun getTotalPengeluaran(): Flow<Long?>
 

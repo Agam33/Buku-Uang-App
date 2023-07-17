@@ -12,6 +12,9 @@ interface PengeluaranRepository {
     toDate: LocalDateTime,
     idKategori: UUID
   ): Long?
+
+  suspend fun getTotalPengeluaran(fromDate: LocalDateTime, toDate: LocalDateTime): Long?
+
   suspend fun findById(uuid: UUID): PengeluaranEntity
   suspend fun findDetailById(uuid: UUID): DetailPengeluaran
   fun getTotalPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long?>

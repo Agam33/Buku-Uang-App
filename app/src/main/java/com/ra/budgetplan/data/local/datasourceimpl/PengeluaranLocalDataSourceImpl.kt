@@ -20,6 +20,10 @@ class PengeluaranLocalDataSourceImpl @Inject constructor(
     return pengeluaranDao.getTotalPengeluaranByDateAndKategori(fromDate, toDate, id)
   }
 
+  override suspend fun getTotalPengeluaran(fromDate: LocalDateTime, toDate: LocalDateTime): Long? {
+    return pengeluaranDao.getTotalPengeluaran(fromDate, toDate)
+  }
+
   override suspend fun findById(uuid: UUID): PengeluaranEntity {
     return pengeluaranDao.findById(uuid)
   }

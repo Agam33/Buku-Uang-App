@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.ItemRvBudgetPermonthBinding
 import com.ra.budgetplan.domain.entity.DetailBudget
-import com.ra.budgetplan.util.collapsedToLeft
-import com.ra.budgetplan.util.expandToRight
+import com.ra.budgetplan.util.toPercentText
+import com.ra.budgetplan.util.collapsed
+import com.ra.budgetplan.util.expanded
 import com.ra.budgetplan.util.toFormatRupiah
 import com.ra.budgetplan.util.toPercent
 
@@ -29,17 +30,13 @@ class BudgetAdapter: ListAdapter<DetailBudget, BudgetAdapter.MViewHolder>(DIFF) 
     fun bind(detailBudget: DetailBudget) {
       val percent = detailBudget.budget.pengeluaran.toPercent(detailBudget.budget.maxPengeluaran)
 
-      val builder = StringBuilder()
-      builder.append(String.format("%.1f", percent))
-      builder.append("%")
-
       binding.root.setOnLongClickListener {
-        expandToRight(binding.optionLayout, 500, 140)
+        expanded(binding.optionLayout, 500, 140)
         true
       }
 
       binding.root.setOnClickListener {
-        collapsedToLeft(binding.optionLayout, 500, 0)
+        collapsed(binding.optionLayout, 500, 0)
       }
 
       binding.ibDelete.setOnClickListener {
@@ -53,7 +50,7 @@ class BudgetAdapter: ListAdapter<DetailBudget, BudgetAdapter.MViewHolder>(DIFF) 
       binding.tvCurrentMoney.text = detailBudget.budget.pengeluaran.toFormatRupiah()
       binding.tvTitleBudget.text = detailBudget.kategoriEntity.nama
       binding.tvGoalMoney.text = detailBudget.budget.maxPengeluaran.toFormatRupiah()
-      binding.tvPercent.text = builder.toString()
+      binding.tvPercent.text = percent.toPercentText()
       binding.goalProgress.progress = percent.toInt()
 
       binding.goalProgress.setIndicatorColor(
