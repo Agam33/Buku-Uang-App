@@ -48,6 +48,7 @@ class RvCategoryViewHolder(
             if(position > 0) {
               val selectedItem = adapter?.getItemAtPosition(position) as SpinnerItemOptions
               onOptionCategoryClickCallBack?.option(selectedItem, model)
+              binding.spOptionCategory.setSelection(0)
             }
           }
 
