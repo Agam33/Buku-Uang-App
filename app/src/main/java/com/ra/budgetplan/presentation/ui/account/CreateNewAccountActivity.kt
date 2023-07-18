@@ -7,8 +7,6 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.ra.budgetplan.R
-import com.ra.budgetplan.customview.dialog.icon.Icon
-import com.ra.budgetplan.customview.dialog.icon.IconListDialog
 import com.ra.budgetplan.databinding.ActivityCreateNewAccountBinding
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.presentation.ui.account.AccountFragment.Companion.ACCOUNT_MODEL
