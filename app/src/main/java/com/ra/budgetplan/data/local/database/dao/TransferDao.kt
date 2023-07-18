@@ -3,11 +3,33 @@ package com.ra.budgetplan.data.local.database.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
+import com.ra.budgetplan.domain.entity.DetailTransfer
 import com.ra.budgetplan.domain.entity.TransferEntity
+import java.time.LocalDateTime
+import java.util.UUID
 
 @Dao
 interface TransferDao {
+
+  @Query("SELECT * FROM transfer_tbl AS tf WHERE tf.id_from_akun = :id")
+  suspend fun findTransferByAccountId(id: UUID): List<TransferEntity>
+
+  @Transaction
+  @Query("SELECT * FROM transfer_tbl " +
+          "WHERE " +
+          "transfer_tbl.updated_at BETWEEN :fromDate AND :toDate " +
+          "ORDER BY transfer_tbl.updated_at DESC")
+  suspend fun getTransferByDate(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailTransfer>
+
+  @Query("SELECT * FROM transfer_tbl AS t WHERE t.uuid = :uuid")
+  suspend fun findDetailTransferById(uuid: UUID): DetailTransfer
+
+  @Query("SELECT * FROM transfer_tbl AS t WHERE t.uuid = :uuid")
+  suspend fun findById(uuid: UUID): TransferEntity
+
   @Insert
   suspend fun save(transferEntity: TransferEntity)
 

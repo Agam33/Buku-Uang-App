@@ -92,33 +92,10 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <com.google.android.material.button.MaterialButton
-            app:strokeColor="@color/indigo_20"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
-            android:id="@+id/btn_choose_icon"
-            android:layout_toEndOf="@id/tv_title_initial_amount"
-            android:layout_below="@id/edt_input_layout_initial_amount"
-            android:text="@string/txt_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <ImageView
-            android:layout_marginTop="18dp"
-            android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/btn_choose_icon"
-            android:layout_below="@id/edt_input_layout_initial_amount"
-            android:id="@+id/iv_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@null" />
-
         <com.google.android.material.divider.MaterialDivider
             app:dividerColor="@color/indigo_90"
             android:layout_marginTop="16dp"
-            android:layout_below="@id/btn_choose_icon"
+            android:layout_below="@id/edt_input_layout_initial_amount"
             android:layout_width="match_parent"
             android:layout_height="8dp"/>
     </RelativeLayout>

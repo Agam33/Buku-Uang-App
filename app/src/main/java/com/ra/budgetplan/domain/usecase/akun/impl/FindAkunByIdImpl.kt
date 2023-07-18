@@ -1,6 +1,6 @@
 package com.ra.budgetplan.domain.usecase.akun.impl
 
-import com.ra.budgetplan.domain.mapper.AkunMapper
+import com.ra.budgetplan.domain.mapper.toModel
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.usecase.akun.FindAkunById
@@ -13,9 +13,7 @@ class FindAkunByIdImpl @Inject constructor(
   private val repository: AkunRepository
 ): FindAkunById {
 
-  override fun invoke(id: UUID): Flow<AkunModel> {
-      return repository.findById(id).map {
-        AkunMapper.akunToModel(it)
-      }
+  override suspend fun invoke(id: UUID): AkunModel {
+      return repository.findById(id).toModel()
   }
 }

@@ -47,7 +47,7 @@ interface LocalDataSourceModule {
   @Singleton
   fun bindTabunganLocalDataSource(
     tabunganRepositoryImpl: AkunLocalDataSourceImpl
-  ): TabunganLocalDataSource
+  ): AkunLocalDataSource
 
   @Binds
   @Singleton

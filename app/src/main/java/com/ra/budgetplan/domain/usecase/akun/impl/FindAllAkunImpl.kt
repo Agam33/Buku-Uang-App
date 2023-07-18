@@ -1,6 +1,6 @@
 package com.ra.budgetplan.domain.usecase.akun.impl
 
-import com.ra.budgetplan.domain.mapper.AkunMapper
+import com.ra.budgetplan.domain.mapper.toModel
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.usecase.akun.FindAllAkun
@@ -12,18 +12,6 @@ import javax.inject.Inject
 class FindAllAkunImpl @Inject constructor(
   private val repository: AkunRepository
 ): FindAllAkun {
-  override fun invoke(): Flow<Resource<List<AkunModel>>> {
-    return flow {
-      repository.findAll().collect { akunList ->
-        if (akunList.isEmpty()) {
-          emit(Resource.Empty(""))
-        } else {
-          val akun = akunList.map { acc ->
-            AkunMapper.akunToModel(acc)
-          }
-          emit(Resource.Success(akun))
-        }
-      }
-    }
-  }
+  override suspend fun invoke(): List<AkunModel> =
+    repository.findAll().map { it.toModel() }
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.FragmentBudgetBinding
+import com.ra.budgetplan.presentation.ui.budget.fragment.MonthBudgetFragment
 
 
 class BudgetFragment : Fragment() {
@@ -16,7 +17,9 @@ class BudgetFragment : Fragment() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
+    childFragmentManager.beginTransaction()
+      .replace(R.id.fragment_container, MonthBudgetFragment())
+      .commit()
   }
 
   override fun onCreateView(

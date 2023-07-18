@@ -1,27 +1,90 @@
 package com.ra.budgetplan.util
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import java.text.NumberFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
-fun Activity.shortToast(message: String) {
+fun Int.toPercent(maxValue: Int): Double {
+  return (this * 100.0) / maxValue
+}
+
+fun Double.toPercentText(): String {
+  val percentBuilder = java.lang.StringBuilder()
+  percentBuilder.append(String.format("%.1f", this))
+  percentBuilder.append("%")
+  return percentBuilder.toString()
+}
+
+fun LocalDateTime.toCalendar(): Calendar {
+  val zonedDateTime = this.atZone(ZoneId.systemDefault())
+  val calendar = Calendar.getInstance()
+  calendar.timeInMillis = zonedDateTime.toInstant().toEpochMilli()
+  return calendar
+}
+
+fun LocalDate.toStringFormat(format: String, locale: Locale = Locale.ENGLISH): String {
+  val formatter = DateTimeFormatter.ofPattern(format, locale)
+  return format(formatter)
+}
+
+fun LocalDateTime.toStringFormat(format: String, locale: Locale = Locale.ENGLISH): String {
+  val formatter = DateTimeFormatter.ofPattern(format, locale)
+  return format(formatter)
+}
+
+fun Int.checkTimeFormat(): String {
+  return if(this <= 9) "0$this" else "$this"
+}
+
+fun Context.getStringResource(resId: Int, vararg formatArgs: Any?): String {
+  return resources.getString(resId, *formatArgs)
+}
+
+fun Activity.showShortToast(message: String) {
   Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
-fun Activity.longToast(message: String) {
+fun Activity.showLongToast(message: String) {
   Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
 
-fun AppCompatActivity.setupNoActionbar(toolbar: androidx.appcompat.widget.Toolbar?) {
+fun Fragment.showShortToast(message: String) {
+  Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+}
+
+fun Fragment.showLongToast(message: String) {
+  Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+}
+
+fun AppCompatActivity.setupNoActionbar(
+  toolbar: androidx.appcompat.widget.Toolbar?,
+  title: String = "",
+) {
   setSupportActionBar(toolbar)
+  if(title.isNotEmpty()) supportActionBar?.title = title
   supportActionBar?.setDisplayHomeAsUpEnabled(true)
 }
+
+fun SimpleDateFormat.millisToString(timeMillis: Long): String {
+  val date = Date(timeMillis)
+  return this.format(date)
+}
+
 fun String.firstCharUppercase(): String {
   if (isEmpty())
     throw NoSuchElementException("Char sequence is empty.")
@@ -35,6 +98,11 @@ fun String.firstCharUppercase(): String {
 }
 
 fun Int.toFormatRupiah(): String {
+  val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+  return formatRupiah.format(this).replace("Rp", "Rp ")
+}
+
+fun Long.toFormatRupiah(): String {
   val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
   return formatRupiah.format(this).replace("Rp", "Rp ")
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.transaction.CreateTransactionActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            app:navigationIconTint="@color/white"
+            android:id="@+id/toolbar"
+            android:background="@color/indigo_20"
+            app:titleTextColor="@color/white"
+            android:elevation="1dp"
+            app:title="@string/txt_transaction"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+
+        <FrameLayout
+            android:layout_margin="8dp"
+            android:id="@+id/fragment_create_transaction_container"
+            android:layout_below="@id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:background="@color/indigo_80"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/fragment_create_transaction_container"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"/>
+
+    </RelativeLayout>
+</layout>

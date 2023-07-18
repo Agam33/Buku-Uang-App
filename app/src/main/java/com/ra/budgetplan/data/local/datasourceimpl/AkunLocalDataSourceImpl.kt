@@ -1,6 +1,6 @@
 package com.ra.budgetplan.data.local.datasourceimpl
 
-import com.ra.budgetplan.data.local.TabunganLocalDataSource
+import com.ra.budgetplan.data.local.AkunLocalDataSource
 import com.ra.budgetplan.data.local.database.dao.AkunDao
 import com.ra.budgetplan.domain.entity.AkunEntity
 import kotlinx.coroutines.flow.Flow
@@ -9,7 +9,11 @@ import javax.inject.Inject
 
 class AkunLocalDataSourceImpl @Inject constructor(
   private val akunDao: AkunDao
-): TabunganLocalDataSource {
+): AkunLocalDataSource {
+  override fun getTotalMoney(): Flow<Long?> {
+    return akunDao.getTotalMoney()
+  }
+
   override suspend fun save(tabungan: AkunEntity) {
     return akunDao.save(tabungan)
   }
@@ -22,11 +26,11 @@ class AkunLocalDataSourceImpl @Inject constructor(
     return akunDao.update(tabungan)
   }
 
-  override fun findAll(): Flow<List<AkunEntity>> {
+  override suspend fun findAll(): List<AkunEntity> {
     return akunDao.findAll()
   }
 
-  override fun findById(id: UUID): Flow<AkunEntity> {
+  override suspend fun findById(id: UUID): AkunEntity {
     return akunDao.findById(id)
   }
 }

@@ -8,8 +8,9 @@
 
     <com.google.android.material.card.MaterialCardView
         app:cardElevation="0dp"
+        app:cardCornerRadius="0dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="90dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -17,41 +18,33 @@
 
             <ImageView
                 android:background="@color/green_30"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:id="@+id/iv_item"
-                android:layout_width="24dp"
+                android:layout_width="8dp"
                 android:layout_height="80dp" />
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/title_item"
+                android:textStyle="bold"
                 android:layout_toEndOf="@id/iv_item"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto_bold"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                 android:textSize="16sp"
                 android:text="@string/txt_sample_income_reward"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <ImageView
-                android:layout_marginStart="8dp"
-                android:id="@+id/iv_account"
-                android:layout_below="@id/title_item"
-                android:layout_toEndOf="@id/iv_item"
-                android:src="@drawable/baseline_money_24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_account"
+                android:textStyle="italic"
                 android:layout_below="@id/title_item"
-                android:layout_toEndOf="@id/iv_account"
-                android:layout_marginStart="4dp"
+                android:layout_toEndOf="@id/iv_item"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
                 android:textSize="16sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:text="@string/txt_sample_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -67,6 +60,13 @@
                 android:text="@string/txt_sample_money_in_rupiah"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_below="@id/iv_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
 

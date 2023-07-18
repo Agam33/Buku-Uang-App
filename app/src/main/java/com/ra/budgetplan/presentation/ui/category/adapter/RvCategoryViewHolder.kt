@@ -40,7 +40,6 @@ class RvCategoryViewHolder(
     ): RecyclerView.ViewHolder(binding.root) {
 
       fun bind(model: KategoriModel) {
-        binding.ivCategory.setImageResource(model.icon)
         binding.tvCategory.text = model.nama
 
         binding.spOptionCategory.adapter = SpinnerOptionAdapter(binding.root.context)
@@ -49,6 +48,7 @@ class RvCategoryViewHolder(
             if(position > 0) {
               val selectedItem = adapter?.getItemAtPosition(position) as SpinnerItemOptions
               onOptionCategoryClickCallBack?.option(selectedItem, model)
+              binding.spOptionCategory.setSelection(0)
             }
           }
 

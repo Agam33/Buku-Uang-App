@@ -1,6 +1,7 @@
 package com.ra.budgetplan.presentation.ui
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -10,11 +11,16 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.ra.budgetplan.R
+import com.ra.budgetplan.data.local.preferences.UserSettingPref
 import com.ra.budgetplan.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+  @Inject
+  lateinit var userSettingPref: UserSettingPref
 
   private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
@@ -36,8 +42,9 @@ class MainActivity : AppCompatActivity() {
     binding.drawerLayout.addDrawerListener(drawerToggle)
     drawerToggle.syncState()
 
-    binding.navigationDrawerView.setNavigationItemSelectedListener {item ->
+    binding.navigationDrawerView.setCheckedItem(R.id.transactionFragment)
 
+    binding.navigationDrawerView.setNavigationItemSelectedListener { item ->
       when(item.itemId) {
         R.id.menu_account -> {
           navController.popBackStack()
@@ -67,6 +74,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun setupActionBar() {
     setSupportActionBar(binding.toolbar)
+    supportActionBar?.title = ""
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     supportActionBar?.elevation = 0F
   }
@@ -76,13 +84,17 @@ class MainActivity : AppCompatActivity() {
     return super.onOptionsItemSelected(item)
   }
 
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    return true
+  }
+
   private fun setupOnBackPressedDispatcher() {
     val callback = object: OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
         if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
           binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-          finish()
+//          finish()
         }
       }
     }

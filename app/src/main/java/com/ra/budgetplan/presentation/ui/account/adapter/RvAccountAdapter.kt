@@ -26,7 +26,6 @@ class RvAccountAdapter: ListAdapter<AkunModel, RvAccountAdapter.MViewHolder>(dif
   ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(akun: AkunModel) {
-      binding.ivAccount.setImageResource(akun.icon)
       binding.tvAccount.text = akun.nama
       binding.tvMoney.text = akun.total.toFormatRupiah()
 
@@ -36,6 +35,7 @@ class RvAccountAdapter: ListAdapter<AkunModel, RvAccountAdapter.MViewHolder>(dif
           if(position > 0) {
             val selectedItem = adapter?.getItemAtPosition(position) as SpinnerItemOptions
             onOptionAccountClickCallBack?.option(selectedItem, akun)
+            binding.spOptionAccount.setSelection(0)
           }
         }
 

@@ -18,9 +18,12 @@ interface AkunDao {
   suspend fun delete(akunEntity: AkunEntity)
 
   @Query("SELECT * FROM akunentity ORDER BY updated_at DESC")
-  fun findAll(): Flow<List<AkunEntity>>
+  suspend fun findAll(): List<AkunEntity>
 
   @Query("SELECT * FROM akunentity AS akun WHERE akun.uuid = :id")
-  fun findById(id: UUID): Flow<AkunEntity>
+  suspend fun findById(id: UUID): AkunEntity
+
+  @Query("SELECT SUM(total) FROM akunentity")
+  fun getTotalMoney(): Flow<Long?>
 
 }

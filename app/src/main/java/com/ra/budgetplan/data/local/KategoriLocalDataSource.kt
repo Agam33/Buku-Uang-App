@@ -12,5 +12,5 @@ interface KategoriLocalDataSource {
   suspend fun deleteKategori(kategori: KategoriEntity)
   suspend fun updateKategori(kategori: KategoriEntity)
   fun findAllKategori(): Flow<List<KategoriEntity>>
-  suspend fun findKategoriById(id: UUID): KategoriEntity
+  suspend fun findKategoriById(id: UUID): Flow<KategoriEntity>
 }

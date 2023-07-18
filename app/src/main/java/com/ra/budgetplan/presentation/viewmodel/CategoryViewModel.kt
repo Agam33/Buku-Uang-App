@@ -24,7 +24,7 @@ class CategoryViewModel @Inject constructor(
   private val findCategoryByType: FindCategoryByType,
   private val saveKategori: SaveKategori,
   private val findIconByCategory: FindIconByCategory
-): ViewModel() {
+): BaseViewModel() {
 
   private var _listIcon = MutableLiveData<List<IconModel>>()
   val listIcon: LiveData<List<IconModel>> = _listIcon
@@ -55,9 +55,8 @@ class CategoryViewModel @Inject constructor(
     }
   }
 
-  fun deleteCategory(kategoriModel: KategoriModel) = viewModelScope.launch {
+  suspend fun deleteCategory(kategoriModel: KategoriModel) =
     deleteKategori.invoke(kategoriModel)
-  }
 
   fun updateCategory(kategoriModel: KategoriModel) = viewModelScope.launch {
     updateKategori.invoke(kategoriModel)

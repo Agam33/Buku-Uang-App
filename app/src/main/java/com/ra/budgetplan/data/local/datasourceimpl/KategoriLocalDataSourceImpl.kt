@@ -31,7 +31,7 @@ class KategoriLocalDataSourceImpl @Inject constructor(
     return kategoriDao.findAll()
   }
 
-  override suspend fun findKategoriById(id: UUID): KategoriEntity {
+  override suspend fun findKategoriById(id: UUID): Flow<KategoriEntity> {
     return kategoriDao.findById(id)
   }
 }

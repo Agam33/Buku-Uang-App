@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".presentation.ui.budget.CreateBudgetActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            app:navigationIconTint="@color/white"
+            android:id="@+id/toolbar"
+            android:background="@color/indigo_20"
+            app:titleTextColor="@color/white"
+            android:elevation="1dp"
+            app:title="@string/txt_budget"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+
+        <com.google.android.material.textview.MaterialTextView
+           android:layout_below="@id/toolbar"
+            android:id="@+id/tv_title_category"
+           android:text="@string/txt_category"
+           android:textSize="18sp"
+           android:layout_marginStart="8dp"
+           android:layout_marginTop="16dp"
+           style="@style/TextAppearance.Material3.TitleMedium"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"/>
+
+       <Spinner
+           android:layout_below="@id/toolbar"
+           android:id="@+id/sp_category"
+           android:layout_marginTop="8dp"
+           android:layout_marginEnd="8dp"
+           android:layout_marginStart="8dp"
+           android:layout_toEndOf="@id/tv_title_category"
+           android:background="@drawable/bg_spinner"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"/>
+
+       <com.google.android.material.textview.MaterialTextView
+           android:textSize="18sp"
+           android:layout_marginStart="8dp"
+           android:layout_marginTop="48dp"
+           style="@style/TextAppearance.Material3.TitleMedium"
+           android:layout_below="@id/tv_title_category"
+           android:id="@+id/tv_title_limit"
+           android:text="@string/txt_limit"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_limit"
+            android:drawableStart="@drawable/edit_outline_24"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:paddingStart="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_below="@id/sp_category"
+            android:layout_toEndOf="@id/tv_title_category"
+            android:background="@drawable/bg_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:maxLength="10"
+            android:lines="1"
+            android:inputType="number"
+            tools:ignore="RtlSymmetry" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
+            android:text="@string/txt_save"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/edt_limit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+
+    </RelativeLayout>
+</layout>

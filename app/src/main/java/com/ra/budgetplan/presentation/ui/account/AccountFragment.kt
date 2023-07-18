@@ -7,21 +7,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ra.budgetplan.R
+import com.ra.budgetplan.customview.dialog.CautionDeleteDialog
+import com.ra.budgetplan.customview.spinner.SpinnerItemOptions
 import com.ra.budgetplan.databinding.FragmentAccountBinding
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.presentation.ui.account.adapter.RvAccountAdapter
-import com.ra.budgetplan.customview.spinner.SpinnerItemOptions
 import com.ra.budgetplan.presentation.viewmodel.AccountViewModel
+import com.ra.budgetplan.util.Resource
+import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AccountFragment : Fragment(), RvAccountAdapter.OnOptionAccountClickCallBack {
+class AccountFragment : Fragment(),
+  RvAccountAdapter.OnOptionAccountClickCallBack {
 
   private var _binding: FragmentAccountBinding? = null
   private val binding get() = _binding
 
-  private val accountAdapter = RvAccountAdapter()
+
 
   private val viewModel: AccountViewModel by viewModels()
 
@@ -30,13 +38,30 @@ class AccountFragment : Fragment(), RvAccountAdapter.OnOptionAccountClickCallBac
     createNewAccount()
     setupAccountList()
     observer()
+    refresh()
   }
 
   private fun setupAccountList() {
-    accountAdapter.onOptionAccountClickCallBack = this@AccountFragment
     viewModel.accounts.observe(viewLifecycleOwner) {
-      accountAdapter.submitList(it)
+      when(it) {
+        is Resource.Success -> {
+          viewModel.setRvState(false)
+          viewModel.setEmptyLayoutState(true)
+          setupAccountAdapter(it.data)
+        }
+        is Resource.Empty -> {
+          viewModel.setRvState(true)
+          viewModel.setEmptyLayoutState(false)
+        }
+        is Resource.Loading -> {}
+      }
     }
+  }
+
+  private fun setupAccountAdapter(list: List<AkunModel>?) {
+    val accountAdapter = RvAccountAdapter()
+    accountAdapter.onOptionAccountClickCallBack = this@AccountFragment
+    accountAdapter.submitList(list)
 
     binding?.run {
       rvAccount.apply {
@@ -45,6 +70,11 @@ class AccountFragment : Fragment(), RvAccountAdapter.OnOptionAccountClickCallBac
         layoutManager = LinearLayoutManager(requireContext())
       }
     }
+  }
+
+  private fun refresh() {
+    viewModel.getAllAccount()
+    viewModel.getOverallMoney()
   }
 
   override fun onCreateView(
@@ -76,15 +106,38 @@ class AccountFragment : Fragment(), RvAccountAdapter.OnOptionAccountClickCallBac
     }
   }
 
-  override fun onDestroy() {
-    _binding = null
-    super.onDestroy()
+  override fun onStart() {
+    super.onStart()
+    refresh()
   }
 
   override fun option(options: SpinnerItemOptions, akun: AkunModel) {
     when(options) {
       SpinnerItemOptions.DELETE -> {
-        viewModel.deleteAccount(akun)
+        val deleteDialog = CautionDeleteDialog()
+
+        deleteDialog.onOptionItemClick = object : CautionDeleteDialog.OnOptionItemClick {
+
+          override fun onDelete() {
+            viewLifecycleOwner.lifecycleScope.launch {
+              viewModel.deleteAccount(akun).collect { status ->
+                when(status) {
+                  StatusItem.SUCCESS -> {
+                    refresh()
+                    showShortToast(requireContext().resources.getString(R.string.msg_success))
+                    deleteDialog.dismiss()
+                  }
+                  StatusItem.LOADING -> {}
+                  StatusItem.FAILED -> {}
+                }
+              }
+            }
+          }
+
+          override fun onCancel() { deleteDialog.dismiss() }
+
+        }
+        deleteDialog.show(parentFragmentManager, "Delete Dialog")
       }
       SpinnerItemOptions.EDIT -> {
         val i = Intent(requireActivity(), CreateNewAccountActivity::class.java).apply {

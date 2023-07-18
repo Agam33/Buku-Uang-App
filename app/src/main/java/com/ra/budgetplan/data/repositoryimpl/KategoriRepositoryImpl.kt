@@ -31,7 +31,7 @@ class KategoriRepositoryImpl @Inject constructor(
     return localDataSource.findAllKategori()
   }
 
-  override suspend fun findById(id: UUID): KategoriEntity {
+  override suspend fun findById(id: UUID): Flow<KategoriEntity> {
     return localDataSource.findKategoriById(id)
   }
 }

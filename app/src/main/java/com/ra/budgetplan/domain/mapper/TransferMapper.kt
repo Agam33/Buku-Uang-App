@@ -3,29 +3,24 @@ package com.ra.budgetplan.domain.mapper
 import com.ra.budgetplan.domain.entity.TransferEntity
 import com.ra.budgetplan.domain.model.TransferModel
 
-object TransferMapper {
+fun TransferEntity.toModel(): TransferModel =
+  TransferModel(
+  uuid,
+  idFromAkun,
+  idToAkun,
+  deskripsi,
+  jumlah,
+  createdAt,
+  updatedAt
+)
 
-  fun transferToModel(
-    transferEntity: TransferEntity
-  ): TransferModel = TransferModel(
-    transferEntity. uuid,
-    transferEntity. idFromAkun,
-    transferEntity. idToAkun,
-    transferEntity. deskripsi,
-    transferEntity. jumlah,
-    transferEntity. createdAt,
-    transferEntity. updatedAt
-  )
-
-  fun transferToEntity(
-    transferModel: TransferModel
-  ): TransferEntity = TransferEntity(
-    transferModel. uuid,
-    transferModel. idFromAkun,
-    transferModel. idToAkun,
-    transferModel. deskripsi,
-    transferModel. jumlah,
-    transferModel. createdAt,
-    transferModel. updatedAt
-  )
-}
+fun TransferModel.toEntity(): TransferEntity =
+  TransferEntity(
+    uuid,
+    idFromAkun,
+    idToAkun,
+    deskripsi,
+    jumlah,
+    createdAt,
+    updatedAt
+)

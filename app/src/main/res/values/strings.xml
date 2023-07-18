@@ -6,16 +6,17 @@
     <string name="title_menu_account">Akun</string>
     <string name="title_menu_category">Kategori</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_income">Pendapatan</string>
+    <string name="title_transfer">Transfer</string>
+    <string name="title_expense">Pengeluaran</string>
     <string name="txt_open">Open</string>
     <string name="txt_close">Close</string>
-    <string name="title_income">Pendapatan</string>
     <string name="example_income_in_rupiah">Rp81.000,00</string>
-    <string name="title_expense">Pengeluaran</string>
-    <string name="title_transfer">Transfer</string>
     <string name="example_expense_in_rupiah">-Rp81.000,00</string>
     <string name="title_total">Total</string>
     <string name="example_total_in_rupiah">Rp81.000,00</string>
     <string name="example_month_year">Apr, 2023</string>
+    <string name="txt_same_account">Tidak bisa transfer ke Akun yang sama. Periksa kembali!!</string>
     <string name="fab_transaction_desc">untuk menambahkan data transaksi</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -35,9 +36,45 @@
     <string name="txt_name">Nama</string>
     <string name="txt_icon">icon</string>
 
+    <string name="msg_delete_failed">Gagal Menghapus.</string>
+    <string name="msg_too_over">Terlalu Besar</string>
+    <string name="msg_already_exist">Sudah ada.</string>
+    <string name="msg_delete">Apakah anda yakin ingin menghapus?</string>
+    <string name="txt_hour_and_minute">%1s:%2s</string>
+    <string name="msg_date_picker">Pilih Tanggal</string>
+    <string name="msg_time_picker">Pilih Waktu</string>
     <string name="msg_empty">Tidak Boleh Kosong</string>
+    <string name="msg_failed_update">Gagal Perbarui</string>
     <string name="msg_success">Berhasil</string>
+    <string name="msg_choose_icon">Pilih Icon!!</string>
     <string name="txt_empty_list">Belum ada catatan.</string>
     <string name="txt_category">Kategori</string>
     <string name="txt_create_category">Tambah Kategori</string>
+    <string name="txt_transaction">Transaksi</string>
+    <string name="title_note">Catatan</string>
+    <string name="txt_edt_hint_note">Catatan..</string>
+    <string name="txt_date">Tanggal</string>
+    <string name="txt_amount">Jumlah</string>
+    <string name="txt_save">Simpan</string>
+    <string name="txt_from_account">Dari Akun</string>
+    <string name="txt_to_account">Ke Akun</string>
+    <string name="txt_time">Waktu</string>
+    <string name="txt_monthly">Bulanan</string>
+    <string name="txt_daily">Harian</string>
+    <string name="txt_title_dialog_date_type">Tampilan tanggal</string>
+    <string name="txt_add">Tambah</string>
+    <string name="txt_limit">Limit</string>
+    <string name="txt_zero_percent">0%</string>
+    <string name="txt_budget">Budget</string>
+    <string name="txt_caution_delete">Apakah anda yakin ingin menghapus?</string>
+    <string name="msg_delete_dialog">Menghapus ini dapat menyebabkan semua yang berkaitan akan terhapus semua!!.</string>
+    <string name="txt_yes">Ya</string>
+    <string name="txt_cancel">Batalkan</string>
+
+    <string-array name="transaction_type">
+        <item>Pengeluaran</item>
+        <item>Pendapatan</item>
+        <item>Transfer</item>
+    </string-array>
+
 </resources>
