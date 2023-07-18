@@ -4,23 +4,14 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.ra.budgetplan.App
-import com.ra.budgetplan.R
 import com.ra.budgetplan.data.local.database.AppDatabase
 import com.ra.budgetplan.data.local.database.DatabaseSeeder
 import com.ra.budgetplan.data.local.database.dao.*
-import com.ra.budgetplan.domain.entity.KategoriEntity
-import com.ra.budgetplan.domain.entity.TipeKategori
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.util.UUID
 import javax.inject.Provider
 import javax.inject.Singleton
 
@@ -44,7 +35,6 @@ class DatabaseModule {
         override fun onCreate(db: SupportSQLiteDatabase) {
           super.onCreate(db)
           databaseSeeder.get().seedDataCategory()
-          databaseSeeder.get().seedDataIcon()
         }
       })
       .build()
@@ -66,9 +56,7 @@ class DatabaseModule {
 
   @Provides
   fun provideDatabaseSeeder(
-    @ApplicationContext context: Context,
     kategoriDao: KategoriDao,
-    iconDao: IconDao
   ): DatabaseSeeder =
-    DatabaseSeeder(context, kategoriDao, iconDao)
+    DatabaseSeeder(kategoriDao)
 }
