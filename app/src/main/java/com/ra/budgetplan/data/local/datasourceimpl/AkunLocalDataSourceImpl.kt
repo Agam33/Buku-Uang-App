@@ -26,7 +26,7 @@ class AkunLocalDataSourceImpl @Inject constructor(
     return akunDao.update(tabungan)
   }
 
-  override fun findAll(): Flow<List<AkunEntity>> {
+  override suspend fun findAll(): List<AkunEntity> {
     return akunDao.findAll()
   }
 

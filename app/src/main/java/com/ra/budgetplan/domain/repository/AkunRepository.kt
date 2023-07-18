@@ -10,6 +10,6 @@ interface AkunRepository {
   suspend fun save(akun: AkunEntity)
   suspend fun delete(akun: AkunEntity)
   suspend fun update(akun: AkunEntity)
-  fun findAll(): Flow<List<AkunEntity>>
+  suspend fun findAll(): List<AkunEntity>
   suspend fun findById(id: UUID): AkunEntity
 }

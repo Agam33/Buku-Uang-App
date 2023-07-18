@@ -66,6 +66,10 @@
     <string name="txt_limit">Limit</string>
     <string name="txt_zero_percent">0%</string>
     <string name="txt_budget">Budget</string>
+    <string name="txt_caution_delete">Apakah anda yakin ingin menghapus?</string>
+    <string name="msg_delete_dialog">Menghapus ini dapat menyebabkan semua yang berkaitan akan terhapus semua!!.</string>
+    <string name="txt_yes">Ya</string>
+    <string name="txt_cancel">Batalkan</string>
 
     <string-array name="transaction_type">
         <item>Pengeluaran</item>

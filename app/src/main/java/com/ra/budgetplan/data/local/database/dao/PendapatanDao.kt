@@ -39,6 +39,9 @@ interface PendapatanDao {
 
   @Query("SELECT * FROM pendapatan_tbl AS pdt WHERE pdt.uuid = :uuid")
   suspend fun findById(uuid: UUID): PendapatanEntity
+  
+  @Query("SELECT * FROM pendapatan_tbl AS pdt WHERE pdt.id_tabungan = :uuid")
+  suspend fun findPendapatanByAccountId(uuid: UUID): List<PendapatanEntity>
 
   @Insert
   suspend fun save(pendapatan: PendapatanEntity)

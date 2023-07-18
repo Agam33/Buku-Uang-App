@@ -5,5 +5,5 @@ import com.ra.budgetplan.util.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface FindAllAkun {
-  fun invoke(): Flow<Resource<List<AkunModel>>>
+  suspend fun invoke(): List<AkunModel>
 }
