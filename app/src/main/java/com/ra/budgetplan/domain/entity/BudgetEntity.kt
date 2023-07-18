@@ -16,7 +16,8 @@ import java.util.UUID
     ForeignKey(
       entity = KategoriEntity::class,
       parentColumns = ["uuid"],
-      childColumns = ["id_kategori"]
+      childColumns = ["id_kategori"],
+      onDelete = ForeignKey.CASCADE
     )
   ]
 )

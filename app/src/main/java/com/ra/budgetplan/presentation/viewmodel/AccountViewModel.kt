@@ -2,7 +2,6 @@ package com.ra.budgetplan.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.domain.usecase.akun.AkunOverallMoney
@@ -35,8 +34,8 @@ class AccountViewModel @Inject constructor(
   private var _emptyMessageState = MutableLiveData<Boolean>()
   val emptyMessageState: LiveData<Boolean> = _emptyMessageState
 
-  private var _accounts = MutableLiveData<List<AkunModel>>()
-  val accounts: LiveData<List<AkunModel>> = _accounts
+  private var _accounts = MutableLiveData<Resource<List<AkunModel>>>()
+  val accounts: LiveData<Resource<List<AkunModel>>> = _accounts
 
   private var _totalExpense = MutableLiveData<String>()
   val totalExpense: LiveData<String> = _totalExpense
@@ -47,12 +46,15 @@ class AccountViewModel @Inject constructor(
   private var _totalAccountMoney = MutableLiveData<String>()
   val totalAccountMoney: LiveData<String> = _totalAccountMoney
 
-  init {
-    getAllAccount()
-    getOverallMoney()
+  fun setRvState(state: Boolean) {
+    _rvAccountState.postValue(state)
   }
 
-  private fun getOverallMoney() {
+  fun setEmptyLayoutState(state: Boolean) {
+    _emptyMessageState.postValue(state)
+  }
+
+  fun getOverallMoney() {
     viewModelScope.launch {
       akunOverallMoney.invoke().collect {
         _totalAccountMoney.postValue(it.toFormatRupiah())
@@ -72,30 +74,19 @@ class AccountViewModel @Inject constructor(
     }
   }
 
-  private fun getAllAccount() {
+  fun getAllAccount() {
     viewModelScope.launch {
-      findAllAkun.invoke().collect { resource ->
-        when (resource) {
-          is Resource.Empty -> {
-            _rvAccountState.postValue(true)
-            _emptyMessageState.postValue(false)
-          }
-
-          is Resource.Success -> {
-            _emptyMessageState.postValue(true)
-            _rvAccountState.postValue(false)
-            _accounts.postValue(resource.data ?: mutableListOf())
-          }
-
-          else -> {}
-        }
+      val list = findAllAkun.invoke()
+      _accounts.postValue(Resource.Loading())
+      if(list.isEmpty()) {
+        _accounts.postValue(Resource.Empty(""))
+      } else {
+        _accounts.postValue(Resource.Success(list))
       }
     }
   }
 
-  fun deleteAccount(akun: AkunModel) = viewModelScope.launch {
-    deleteAkun.invoke(akun)
-  }
+  suspend fun deleteAccount(akun: AkunModel) = deleteAkun.invoke(akun)
 
   fun updateAccount(akun: AkunModel) = viewModelScope.launch {
     updateAkun.invoke(akun)

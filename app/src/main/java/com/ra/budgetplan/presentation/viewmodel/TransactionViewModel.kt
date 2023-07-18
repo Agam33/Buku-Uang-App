@@ -231,15 +231,7 @@ class TransactionViewModel @Inject constructor(
   }
 
   fun getAllAccount() = viewModelScope.launch {
-    findAllAkun.invoke().collect {
-      when (it) {
-        is Resource.Empty -> {}
-        is Resource.Success -> {
-          _listAccount.postValue(it.data ?: mutableListOf())
-        }
-        else -> {}
-      }
-    }
+    _listAccount.postValue(findAllAkun.invoke())
   }
 
   fun setCategoryByType(tipeKategori: TipeKategori) = viewModelScope.launch {

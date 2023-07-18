@@ -16,12 +16,14 @@ import java.util.UUID
     ForeignKey(
       entity = AkunEntity::class,
       parentColumns = ["uuid"],
-      childColumns = ["id_from_akun"]
+      childColumns = ["id_from_akun"],
+      onDelete = ForeignKey.CASCADE
     ),
     ForeignKey(
       entity = AkunEntity::class,
       parentColumns = ["uuid"],
-      childColumns = ["id_to_akun"]
+      childColumns = ["id_to_akun"],
+      onDelete = ForeignKey.CASCADE
     )
   ]
 )

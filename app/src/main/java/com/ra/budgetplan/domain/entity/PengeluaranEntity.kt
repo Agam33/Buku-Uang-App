@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 import androidx.room.Relation
 import java.time.LocalDateTime
@@ -16,12 +17,14 @@ import java.util.UUID
     ForeignKey(
       entity = KategoriEntity::class,
       parentColumns = ["uuid"],
-      childColumns = ["id_kategori"]
+      childColumns = ["id_kategori"],
+      onDelete = CASCADE
     ),
     ForeignKey(
       entity = AkunEntity::class,
       parentColumns = ["uuid"],
-      childColumns = ["id_akun"]
+      childColumns = ["id_akun"],
+      onDelete = CASCADE
     )
   ]
 )

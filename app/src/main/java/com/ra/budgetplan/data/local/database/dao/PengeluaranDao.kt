@@ -14,6 +14,10 @@ import java.util.UUID
 
 @Dao
 interface PengeluaranDao {
+
+  @Query("SELECT * FROM pengeluaran_tbl AS pl WHERE pl.id_akun = :id")
+  suspend fun findPengeluaranByAccountId(id: UUID): List<PengeluaranEntity>
+
   @Transaction
   @Query("SELECT * FROM pengeluaran_tbl " +
           "WHERE " +
