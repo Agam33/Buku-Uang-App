@@ -55,9 +55,8 @@ class CategoryViewModel @Inject constructor(
     }
   }
 
-  fun deleteCategory(kategoriModel: KategoriModel) = viewModelScope.launch {
+  suspend fun deleteCategory(kategoriModel: KategoriModel) =
     deleteKategori.invoke(kategoriModel)
-  }
 
   fun updateCategory(kategoriModel: KategoriModel) = viewModelScope.launch {
     updateKategori.invoke(kategoriModel)
