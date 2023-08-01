@@ -3,13 +3,17 @@ package com.ra.budgetplan.util
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.ra.budgetplan.presentation.ui.MainActivity
+import java.io.File
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -18,6 +22,30 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
+fun Fragment.requestStoragePermission(): Boolean {
+  return REQUIRED_STORAGE_PERMISSION.all {
+    ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+  }
+}
+
+fun Activity.requestStoragePermission(): Boolean {
+  return REQUIRED_STORAGE_PERMISSION.all {
+    ContextCompat.checkSelfPermission(this.baseContext, it) == PackageManager.PERMISSION_GRANTED
+  }
+}
+
+fun Context.restartActivity() {
+  val i = Intent(this, MainActivity::class.java).apply {
+    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+  }
+
+  startActivity(i)
+
+  if(this is Activity) {
+    finish()
+  }
+}
 
 fun Int.toPercent(maxValue: Int): Double {
   return (this * 100.0) / maxValue
@@ -98,12 +126,12 @@ fun String.firstCharUppercase(): String {
 }
 
 fun Int.toFormatRupiah(): String {
-  val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+  val formatRupiah = NumberFormat.getCurrencyInstance(LOCALE_ID)
   return formatRupiah.format(this).replace("Rp", "Rp ")
 }
 
 fun Long.toFormatRupiah(): String {
-  val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+  val formatRupiah = NumberFormat.getCurrencyInstance(LOCALE_ID)
   return formatRupiah.format(this).replace("Rp", "Rp ")
 }
 

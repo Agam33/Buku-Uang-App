@@ -36,6 +36,11 @@
                 android:id="@+id/menu_category"
                 android:icon="@drawable/baseline_category_24"
                 android:title="@string/title_menu_category"/>
+            <item
+                android:checkable="true"
+                android:id="@+id/menu_backup_and_restore"
+                android:title="@string/txt_backup_and_restore"
+                android:icon="@drawable/baseline_backup_24" />
         </menu>
     </item>
 </menu>

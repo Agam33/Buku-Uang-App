@@ -7,6 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ra.budgetplan.data.local.database.AppDatabase
 import com.ra.budgetplan.data.local.database.DatabaseSeeder
 import com.ra.budgetplan.data.local.database.dao.*
+import com.ra.budgetplan.util.DB_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +30,7 @@ class DatabaseModule {
     return Room.databaseBuilder(
       ctx,
       AppDatabase::class.java,
-      "budget_plan.db"
+      DB_NAME
     )
       .addCallback(object : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {

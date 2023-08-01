@@ -30,4 +30,9 @@
         android:id="@+id/transactionFragment"
         android:name="com.ra.budgetplan.presentation.ui.transaction.TransactionFragment"
         android:label="TransactionFragment" />
+    <fragment
+        tools:layout="@layout/fragment_backup_restore"
+        android:id="@+id/backupRestoreFragment"
+        android:name="com.ra.budgetplan.presentation.ui.backuprestore.BackupRestoreFragment"
+        android:label="BackupRestoreFragment"/>
 </navigation>
