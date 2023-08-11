@@ -19,6 +19,11 @@
                 android:icon="@drawable/baseline_analytics_24"
                 android:checkable="true"
                 android:title="@string/title_menu_analytics"/>
+            <item
+                android:id="@+id/menu_debt"
+                android:icon="@drawable/baseline_notes_24"
+                android:checkable="true"
+                android:title="@string/txt_debt"/>
         </menu>
     </item>
 

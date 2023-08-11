@@ -87,6 +87,7 @@
                 android:inputType="number"
                 android:lines="1"
                 android:maxLines="1"
+                android:maxLength="9"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"/>
 

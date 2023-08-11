@@ -18,7 +18,7 @@ interface RepositoryModule {
 
   @Binds
   @Singleton
-  fun bindCicilanRepository(cicilanRepositoryImpl: CicilanRepositoryImpl): CicilanRepository
+  fun bindCicilanRepository(hutangRepositoryImpl: HutangRepositoryImpl): HutangRepository
 
   @Binds
   @Singleton
@@ -42,7 +42,7 @@ interface RepositoryModule {
 
   @Binds
   @Singleton
-  fun bindHutangRepository(hutangRepositoryImpl: HutangRepositoryImpl): HutangRepository
+  fun bindHutangRepository(pembayaranHutangRepositoryImpl: PembayaranHutangRepositoryImpl): PembayaranHutangRepository
 
   @Binds
   @Singleton

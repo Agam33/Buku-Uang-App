@@ -35,4 +35,9 @@
         android:id="@+id/backupRestoreFragment"
         android:name="com.ra.budgetplan.presentation.ui.backuprestore.BackupRestoreFragment"
         android:label="BackupRestoreFragment"/>
+    <fragment
+        tools:layout="@layout/fragment_debt"
+        android:id="@+id/debtFragment"
+        android:name="com.ra.budgetplan.presentation.ui.debt.DebtFragment"
+        android:label="DebtFragment"/>
 </navigation>

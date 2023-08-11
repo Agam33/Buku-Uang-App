@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.net.Uri
 import android.provider.DocumentsContract
 import android.view.View
+import android.view.WindowManager.LayoutParams
 import android.view.animation.DecelerateInterpolator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +42,7 @@ val REQUIRED_STORAGE_PERMISSION = mutableListOf(
   Manifest.permission.READ_EXTERNAL_STORAGE
 )
 
+fun Int.isOverBudget(maxValue: Int): Boolean = this > maxValue
 
 fun coroutineIOThread(action: suspend () -> Unit) {
   CoroutineScope(Dispatchers.IO).launch {
@@ -67,7 +69,7 @@ fun LocalDate.toMonthlyTime(): Pair<LocalDateTime, LocalDateTime> {
 fun calculatePercent(currValue: Int, maxValue: Long): Double =
   ((currValue * 1.0) / (maxValue * 1.0 )) * 100.0
 
-fun expanded(v: View, duration: Long, targetWidth: Int) {
+fun expandedWidth(v: View, duration: Long, targetWidth: Int) {
   val prevWidth = v.width
 
   v.visibility = View.VISIBLE
@@ -82,7 +84,7 @@ fun expanded(v: View, duration: Long, targetWidth: Int) {
   valueAnimator.start()
 }
 
-fun collapsed(v: View, duration: Long, targetWidth: Int) {
+fun collapsedWidth(v: View, duration: Long, targetWidth: Int) {
   val prevWidth = v.width
   val valueAnimator: ValueAnimator = ValueAnimator.ofInt(prevWidth, targetWidth)
   valueAnimator.addUpdateListener { animation ->
@@ -94,6 +96,7 @@ fun collapsed(v: View, duration: Long, targetWidth: Int) {
   valueAnimator.duration = duration
   valueAnimator.start()
 }
+
 
 /**
  * @param files The files want to zip

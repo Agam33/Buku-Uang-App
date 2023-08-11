@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        app:cardCornerRadius="0dp"
+        app:strokeWidth="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="92dp">
+
+            <LinearLayout
+                android:id="@+id/option_layout"
+                android:animateLayoutChanges="true"
+                android:visibility="gone"
+                android:background="@color/indigo_60"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/ib_edit"
+                    android:background="@null"
+                    android:src="@drawable/outline_white_edit_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/ib_delete"
+                    android:src="@drawable/outline_white_delete_24"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_toEndOf="@id/option_layout"
+                android:id="@+id/tv_account_name"
+                android:text="@string/txt_empty"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_toEndOf="@id/option_layout"
+                android:layout_marginTop="8dp"
+                android:textStyle="italic"
+                android:id="@+id/tv_updated_at"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_below="@id/tv_account_name"
+                android:layout_marginStart="8dp"
+                android:textSize="14sp"
+                android:text="@string/txt_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:textStyle="bold"
+                android:id="@+id/tv_money"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/red_400"
+                android:text="@string/txt_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="RelativeOverlap" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_marginTop="4dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

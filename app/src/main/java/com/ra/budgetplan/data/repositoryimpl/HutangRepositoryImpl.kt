@@ -3,20 +3,34 @@ package com.ra.budgetplan.data.repositoryimpl
 import com.ra.budgetplan.data.local.HutangLocalDataSource
 import com.ra.budgetplan.domain.entity.HutangEntity
 import com.ra.budgetplan.domain.repository.HutangRepository
+import kotlinx.coroutines.flow.Flow
+import java.util.UUID
 import javax.inject.Inject
 
 class HutangRepositoryImpl @Inject constructor(
   private val localDataSource: HutangLocalDataSource
 ): HutangRepository {
   override suspend fun save(hutang: HutangEntity) {
-    localDataSource.save(hutang)
+    return localDataSource.save(hutang)
   }
 
   override suspend fun delete(hutang: HutangEntity) {
-    localDataSource.delete(hutang)
+    return localDataSource.delete(hutang)
   }
 
   override suspend fun update(hutang: HutangEntity) {
-    localDataSource.update(hutang)
+    return localDataSource.update(hutang)
+  }
+
+  override suspend fun findById(id: UUID): HutangEntity {
+    return localDataSource.findById(id)
+  }
+
+  override suspend fun findAll(): List<HutangEntity> {
+    return localDataSource.findAll()
+  }
+
+  override fun findByIdWithFlow(id: UUID): Flow<HutangEntity> {
+    return localDataSource.findByIdWithFlow(id)
   }
 }
