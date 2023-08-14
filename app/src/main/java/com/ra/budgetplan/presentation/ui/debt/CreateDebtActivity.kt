@@ -108,7 +108,7 @@ class CreateDebtActivity : AppCompatActivity() {
             desc,
             0,
             maxDebt.toInt(),
-            -1,
+            Int.MAX_VALUE,
             false,
             "",
             dueDate,

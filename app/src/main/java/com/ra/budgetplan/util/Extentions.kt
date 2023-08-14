@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ra.budgetplan.presentation.ui.MainActivity
-import java.io.File
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -35,7 +34,7 @@ fun Fragment.requestStoragePermission(): Boolean {
 
 fun Activity.requestStoragePermission(): Boolean {
   return REQUIRED_STORAGE_PERMISSION.all {
-    ContextCompat.checkSelfPermission(this.baseContext, it) == PackageManager.PERMISSION_GRANTED
+    ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
   }
 }
 

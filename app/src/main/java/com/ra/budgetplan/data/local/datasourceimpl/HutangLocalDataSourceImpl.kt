@@ -10,6 +10,10 @@ import javax.inject.Inject
 class HutangLocalDataSourceImpl @Inject constructor(
   private val hutangDao: HutangDao
 ): HutangLocalDataSource {
+  override suspend fun findByAlarmId(alarmId: Int): HutangEntity {
+    return hutangDao.findByAlarmId(alarmId)
+  }
+
   override suspend fun save(hutang: HutangEntity) {
     return hutangDao.save(hutang)
   }

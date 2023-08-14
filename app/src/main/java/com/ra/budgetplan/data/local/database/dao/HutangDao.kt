@@ -29,4 +29,7 @@ interface HutangDao {
 
   @Query("SELECT * FROM hutang_tbl ORDER BY updated_at DESC")
   suspend fun findAll(): List<HutangEntity>
+
+  @Query("SELECT * FROM hutang_tbl AS htb WHERE htb.id_pengingat = :alarmId")
+  suspend fun findByAlarmId(alarmId: Int): HutangEntity
 }

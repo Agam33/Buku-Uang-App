@@ -20,11 +20,11 @@ import com.ra.budgetplan.util.toStringFormat
 class DebtAdapter: ListAdapter<HutangModel, DebtAdapter.MViewHolder>(DIFF) {
 
   interface OnIconDeleteListener {
-    fun setOnItemDelete(model: HutangModel)
+    fun setOnItemDelete(model: HutangModel, adapterPosition: Int)
   }
 
   interface OnIconAlarmListener {
-    fun setOnItemAlarm(model: HutangModel)
+    fun setOnItemAlarm(model: HutangModel, adapterPosition: Int)
   }
 
   interface OnIconEditListener {
@@ -64,16 +64,24 @@ class DebtAdapter: ListAdapter<HutangModel, DebtAdapter.MViewHolder>(DIFF) {
           else binding.root.context.getColor(R.color.indigo_50)
         )
 
+        imgBtnAlarm.setImageResource(
+          if(model.pengingatAktif) {
+            R.drawable.active_alarm_on_24
+          } else {
+           R.drawable.inactive_round_alarm_24
+          }
+        )
+
         binding.root.setOnClickListener {
           setItemClickListener?.setOnItemClickCallback(model)
         }
 
         imgBtnAlarm.setOnClickListener {
-          setIconAlarmListener?.setOnItemAlarm(model)
+          setIconAlarmListener?.setOnItemAlarm(model, adapterPosition)
         }
 
         imgBtnDelete.setOnClickListener {
-          setIconDeleteListener?.setOnItemDelete(model)
+          setIconDeleteListener?.setOnItemDelete(model, adapterPosition)
         }
 
         imgBtnEdit.setOnClickListener {
