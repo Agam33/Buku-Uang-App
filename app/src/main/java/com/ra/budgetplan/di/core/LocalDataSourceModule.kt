@@ -21,9 +21,9 @@ interface LocalDataSourceModule {
 
   @Binds
   @Singleton
-  fun bindCicilanLocalDataSource(
-    cicilanLocalDataSourceImpl: CicilanLocalDataSourceImpl
-  ): CicilanLocalDataSource
+  fun bindHutangLocalDataSource(
+    hutangLocalDataSourceImpl: HutangLocalDataSourceImpl
+  ): HutangLocalDataSource
 
   @Binds
   @Singleton
@@ -57,9 +57,9 @@ interface LocalDataSourceModule {
 
   @Binds
   @Singleton
-  fun bindHutangLocalDataSource(
-    hutangLocalDataSourceImpl: HutangLocalDataSourceImpl
-  ): HutangLocalDataSource
+  fun bindPembayaranHutangLocalDataSource(
+    pembayaranHutangLocalDataSourceImpl: PembayaranHutangLocalDataSourceImpl
+  ): PembayaranHutangLocalDataSource
 
   @Binds
   @Singleton

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/ib_date"
+        android:background="@null"
+        android:src="@drawable/baseline_calendar_month_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:text="@string/txt_empty"
+        android:id="@+id/tv_calendar"
+        android:layout_toEndOf="@id/ib_date"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageButton
+        android:background="@null"
+        android:layout_below="@id/ib_date"
+        android:src="@drawable/outline_timer_24"
+        android:id="@+id/ib_time"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:text="@string/txt_empty"
+        android:layout_toEndOf="@id/ib_time"
+        android:layout_below="@id/ib_date"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider1"
+        android:layout_below="@id/ib_time"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:id="@+id/layout_cancel_or_done"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="36dp">
+
+        <ImageButton
+            android:background="@null"
+            android:id="@+id/ib_close_dialog"
+            android:src="@drawable/round_close_24"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:background="@null"
+            android:id="@+id/ib_done"
+            android:layout_weight="1"
+            android:src="@drawable/sharp_done_24"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_marginBottom="4dp"
+        android:layout_below="@id/layout_cancel_or_done"
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+</RelativeLayout>

@@ -3,9 +3,13 @@ package com.ra.budgetplan.util
 import android.Manifest
 import android.animation.ValueAnimator
 import android.net.Uri
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.provider.DocumentsContract
 import android.view.View
+import android.view.WindowManager.LayoutParams
 import android.view.animation.DecelerateInterpolator
+import androidx.annotation.RequiresApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,16 +35,22 @@ const val FILE_USER_SETTING_PREF = "user_setting_pref.pb"
 const val FILE_USER_SETTING_SHARED_PREF = "user_setting_shared_pref"
 const val DATE_PATTERN = "yyyy-MM-dd"
 const val DATE_TIME_FORMATTER = "yyyy-MM-dd HH:mm"
+const val ALARM_RECEIVER_NOTIFICATION_ID = 201
+const val ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID = "alarm-receiver-channel-1"
+const val ALARM_RECEIVER_NOTIFICATION_CHANNEL_NAME = "alarm-receiver"
+const val ALARM_RECEIVER_NOTIFICATION_GROUP_KEY = "alarm-receiver-group-key"
 
 val LOCALE_ID = Locale("id", "ID")
 
 const val REQUEST_READ_AND_WRITE_EXTERNAL_STORAGE = 102
+const val REQUEST_POST_NOTIFICATIONS = 103
 
 val REQUIRED_STORAGE_PERMISSION = mutableListOf(
   Manifest.permission.WRITE_EXTERNAL_STORAGE,
   Manifest.permission.READ_EXTERNAL_STORAGE
 )
 
+fun Int.isOverBudget(maxValue: Int): Boolean = this > maxValue
 
 fun coroutineIOThread(action: suspend () -> Unit) {
   CoroutineScope(Dispatchers.IO).launch {
@@ -67,7 +77,7 @@ fun LocalDate.toMonthlyTime(): Pair<LocalDateTime, LocalDateTime> {
 fun calculatePercent(currValue: Int, maxValue: Long): Double =
   ((currValue * 1.0) / (maxValue * 1.0 )) * 100.0
 
-fun expanded(v: View, duration: Long, targetWidth: Int) {
+fun expandedWidth(v: View, duration: Long, targetWidth: Int) {
   val prevWidth = v.width
 
   v.visibility = View.VISIBLE
@@ -82,7 +92,7 @@ fun expanded(v: View, duration: Long, targetWidth: Int) {
   valueAnimator.start()
 }
 
-fun collapsed(v: View, duration: Long, targetWidth: Int) {
+fun collapsedWidth(v: View, duration: Long, targetWidth: Int) {
   val prevWidth = v.width
   val valueAnimator: ValueAnimator = ValueAnimator.ofInt(prevWidth, targetWidth)
   valueAnimator.addUpdateListener { animation ->
@@ -94,6 +104,7 @@ fun collapsed(v: View, duration: Long, targetWidth: Int) {
   valueAnimator.duration = duration
   valueAnimator.start()
 }
+
 
 /**
  * @param files The files want to zip

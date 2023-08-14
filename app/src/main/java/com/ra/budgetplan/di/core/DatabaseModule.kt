@@ -41,16 +41,15 @@ class DatabaseModule {
       .build()
   }
 
-
   //  start provide Dao
   @Provides @Singleton fun provideBudgetDao(db: AppDatabase): BudgetDao = db.budgetDao()
-  @Provides @Singleton fun provideCicilanDao(db: AppDatabase): CicilanDao = db.cicilanDao()
+  @Provides @Singleton fun provideHutangDao(db: AppDatabase): HutangDao = db.hutangDao()
   @Provides @Singleton fun provideKategoriDao(db: AppDatabase): KategoriDao = db.kategoriDao()
   @Provides @Singleton fun providePendapatanDao(db: AppDatabase): PendapatanDao = db.pendapatanDao()
   @Provides @Singleton fun providePengeluaranDao(db: AppDatabase): PengeluaranDao = db.pengeluaranDao()
   @Provides @Singleton fun provideTabunganDao(db: AppDatabase): AkunDao = db.akunDao()
   @Provides @Singleton fun provideTransferDao(db: AppDatabase): TransferDao = db.transferDao()
-  @Provides @Singleton fun provideHutangDao(db: AppDatabase): HutangDao = db.hutangDao()
+  @Provides @Singleton fun providePembayaranHutangDao(db: AppDatabase): PembayaranHutangDao = db.pembayaranHutangDao()
   @Provides @Singleton fun provideIconDao(db: AppDatabase): IconDao = db.iconDao()
 
   //  end provide Dao
