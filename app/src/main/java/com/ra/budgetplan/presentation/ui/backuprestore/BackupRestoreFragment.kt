@@ -31,15 +31,12 @@ import com.ra.budgetplan.util.requestStoragePermission
 import com.ra.budgetplan.util.restartActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.io.File
 import java.time.LocalDate
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class BackupRestoreFragment : Fragment() {
-
-  private val TAG = BackupRestoreFragment::class.java.name
 
   @Inject
   lateinit var userSettingPref: UserSettingPref
@@ -117,14 +114,6 @@ class BackupRestoreFragment : Fragment() {
       lifecycleScope.launch {
         val srcFile = requireContext().getDatabasePath(DB_NAME)
         val destFile = File(dir, String.format(requireContext().resources.getString(R.string.txt_backup_format), DB_BACKUP_FILE_NAME, LocalDate.now()))
-
-        val dbShm = File(srcFile.parent, "$DB_NAME-shm")
-
-        Timber.tag(TAG).d("src: $srcFile")
-        Timber.tag(TAG).d("src parent: ${srcFile.parent}")
-        Timber.tag(TAG).d("Dir: $dir")
-        Timber.tag(TAG).d("Dest: ${destFile.parent}")
-        Timber.tag(TAG).d("SHM: $dbShm")
 
         viewModel.doBackup(srcFile, destFile).collect { status ->
           when(status) {

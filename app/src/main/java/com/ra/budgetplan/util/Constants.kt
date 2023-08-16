@@ -3,6 +3,7 @@ package com.ra.budgetplan.util
 import android.Manifest
 import android.animation.ValueAnimator
 import android.net.Uri
+import android.os.Environment
 import android.provider.DocumentsContract
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -151,13 +152,16 @@ fun unZipFile(zipFile: File, dest: File) {
 }
 
 fun getUriPath(uri: Uri?): String? {
-  var resultPath: String? = null
   if(isDownloadsDocument(uri)) {
     val id = DocumentsContract.getTreeDocumentId(uri)
-    resultPath = id.split(":")[1]
+    if(id == "downloads") {
+      val f = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+      return f.absolutePath
+    }
+    return id.split(":")[1]
   }
 
-  return resultPath
+  return null
 }
 
 fun isDownloadsDocument(uri: Uri?): Boolean {
