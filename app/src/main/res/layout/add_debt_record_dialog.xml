@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_marginTop="4dp"
+            android:textSize="16sp"
+            android:id="@+id/tv_title_date"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="@string/txt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/indigo_90"
+            app:backgroundTint="@color/white"
+            android:text="@string/txt_empty"
+            android:id="@+id/btn_date"
+            android:layout_marginStart="8dp"
+            android:padding="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_toEndOf="@id/tv_title_date"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_date"
+            android:layout_marginTop="4dp"
+            android:text="@string/txt_time"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="16sp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/indigo_90"
+            app:backgroundTint="@color/white"
+            android:text="@string/txt_empty"
+            android:id="@+id/btn_time"
+            android:layout_marginStart="8dp"
+            android:padding="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_below="@id/btn_date"
+            android:layout_toEndOf="@id/tv_title_date"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:layout_below="@id/btn_time"
+            android:id="@+id/tv_title_account"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="@string/title_menu_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Spinner
+            android:layout_below="@id/btn_time"
+            android:background="@drawable/bg_spinner"
+            android:id="@+id/sp_account"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/tv_title_date"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:id="@+id/tv_amount"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="@string/txt_amount"
+            android:layout_below="@id/sp_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_amount"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:paddingStart="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_below="@id/sp_account"
+            android:layout_toEndOf="@id/tv_title_date"
+            android:background="@drawable/bg_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:lines="1"
+            android:maxLength="9"
+            android:inputType="number"
+            tools:ignore="RtlSymmetry" />
+
+        <com.google.android.material.button.MaterialButton
+            app:cornerRadius="4dp"
+            android:backgroundTint="@color/indigo_50"
+            android:id="@+id/btn_save"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="@string/txt_save"
+            android:layout_below="@id/edt_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            app:cornerRadius="4dp"
+            android:backgroundTint="@color/red_400"
+            android:id="@+id/btn_cancel"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/txt_cancel"
+            android:layout_below="@id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+</layout>

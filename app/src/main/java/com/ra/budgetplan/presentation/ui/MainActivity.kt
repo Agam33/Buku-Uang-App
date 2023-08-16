@@ -70,6 +70,10 @@ class MainActivity : AppCompatActivity() {
           navController.popBackStack()
           navController.navigate(R.id.backupRestoreFragment)
         }
+        R.id.menu_debt -> {
+          navController.popBackStack()
+          navController.navigate(R.id.debtFragment)
+        }
       }
       binding.drawerLayout.closeDrawer(GravityCompat.START)
       true

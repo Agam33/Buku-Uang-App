@@ -1,5 +1,6 @@
 package com.ra.budgetplan.util
 
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -8,12 +9,14 @@ import android.icu.text.SimpleDateFormat
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.View
+import android.view.WindowManager
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ra.budgetplan.presentation.ui.MainActivity
-import java.io.File
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -31,7 +34,7 @@ fun Fragment.requestStoragePermission(): Boolean {
 
 fun Activity.requestStoragePermission(): Boolean {
   return REQUIRED_STORAGE_PERMISSION.all {
-    ContextCompat.checkSelfPermission(this.baseContext, it) == PackageManager.PERMISSION_GRANTED
+    ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
   }
 }
 
@@ -97,6 +100,48 @@ fun Fragment.showShortToast(message: String) {
 
 fun Fragment.showLongToast(message: String) {
   Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+}
+
+
+fun View.collapsedHeight(
+  duration: Long,
+  targetHeight: Int = 0,
+  action: () -> Unit = {}
+) {
+  val prevHeight = height
+  val valueAnimator: ValueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight)
+  valueAnimator.addUpdateListener { animation ->
+    layoutParams.height = animation.animatedValue as Int
+    requestLayout()
+  }
+
+  valueAnimator.interpolator = DecelerateInterpolator()
+  valueAnimator.duration = duration
+  valueAnimator.start()
+
+  action()
+}
+
+fun View.expandedHeight(
+  duration: Long,
+  targetHeight: Int = WindowManager.LayoutParams.WRAP_CONTENT,
+  action: () -> Unit = {}
+) {
+  val prevHeight = height
+
+  visibility = View.VISIBLE
+
+  val valueAnimator: ValueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight)
+  valueAnimator.addUpdateListener { animation ->
+    layoutParams.height = animation.animatedValue as Int
+    requestLayout()
+  }
+
+  valueAnimator.interpolator = DecelerateInterpolator()
+  valueAnimator.duration = duration
+  valueAnimator.start()
+
+  action()
 }
 
 fun AppCompatActivity.setupNoActionbar(

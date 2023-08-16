@@ -35,7 +35,10 @@
     <string name="txt_create_new_account">Tambah Akun</string>
     <string name="txt_name">Nama</string>
     <string name="txt_icon">icon</string>
-
+    <string name="txt_due_date_format">%s (Jatuh Tempo)</string>
+    <string name="msg_change_alarm_schedule">Ingin mengganti jadwal Alarm?</string>
+    <string name="msg_cancel_alarm_schedule">Batalkan alarm?</string>
+    <string name="msg_delete_debt">Menghapus ini dapat menyebabkan semua yang berkaitan akan terhapus. Uang pada akun tidak dikembalikan (akan tetap berkurang).</string>
     <string name="msg_delete_failed">Gagal Menghapus.</string>
     <string name="msg_too_over">Terlalu Besar</string>
     <string name="msg_already_exist">Sudah ada.</string>
@@ -44,6 +47,7 @@
     <string name="msg_date_picker">Pilih Tanggal</string>
     <string name="msg_time_picker">Pilih Waktu</string>
     <string name="msg_empty">Tidak Boleh Kosong</string>
+    <string name="msg_title_debt_notification">Hutang %s</string>
     <string name="msg_failed_update">Gagal Perbarui</string>
     <string name="msg_failed_to">Gagal %s.</string>
     <string name="msg_success_to">Berhasil %s.</string>
@@ -51,6 +55,7 @@
     <string name="msg_choose_icon">Pilih Icon!!</string>
     <string name="msg_allowed">Izinkan</string>
     <string name="msg_allow_access_storage">Izinkan untuk akses penyimpanan.</string>
+    <string name="msg_allow_notification">Izinkan untuk notifikasi.</string>
     <string name="msg_empty_backup_file_directory">Pilih direktori penyimpanan.</string>
     <string name="txt_empty_list">Belum ada catatan.</string>
     <string name="txt_category">Kategori</string>
@@ -81,13 +86,16 @@
     <string name="txt_copyright">©2023 R.A Dev</string>
     <string name="txt_backup_and_restore">Cadangkan dan Pulihkan</string>
     <string name="txt_backup_format">%s_%s.zip</string>
+    <string name="txt_debt">Hutang</string>
+    <string name="txt_detail">Detail</string>
+    <string name="txt_due_date">Jatuh Tempo</string>
 
     <string-array name="transaction_type">
         <item>Pengeluaran</item>
         <item>Pendapatan</item>
         <item>Transfer</item>
     </string-array>
-    
+
     <string-array name="backup_and_restore_tips">
         <item>Data yang dibackup tidak akan terhapus walaupun aplikasi di uninstall.</item>
         <item>Sebelum melakukan backup atau restore pilih direktori penyimpanan.</item>

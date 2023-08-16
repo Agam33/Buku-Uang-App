@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.ra.budgetplan.presentation.viewmodel.DetailDebtViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.debt.DetailDebtActivity">
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp">
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/goal_progress"
+                        app:indicatorSize="80dp"
+                        app:trackColor="@color/indigo_100"
+                        app:indicatorColor="@color/indigo_50"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_percent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_alignEnd="@id/goal_progress"
+                        android:layout_alignStart="@id/goal_progress"
+                        android:layout_alignTop="@id/goal_progress"
+                        android:layout_alignBottom="@id/goal_progress"
+                        android:text="@string/txt_zero_percent"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:textStyle="bold"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                        android:text="@string/txt_empty"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/tv_debt_title"
+                        android:layout_toEndOf="@id/goal_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_toEndOf="@id/goal_progress"
+                        android:layout_marginTop="8dp"
+                        android:layout_below="@id/tv_debt_title"
+                        android:id="@+id/tv_due_date"
+                        android:text="@string/txt_empty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_current_money"
+                        android:layout_below="@id/goal_progress"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:textSize="14sp"
+                        android:text="@string/txt_empty"
+                        android:textStyle="italic"
+                        android:textAppearance="@style/TextAppearance.Material3.DisplayMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_empty"
+                        android:layout_below="@id/goal_progress"
+                        android:layout_toEndOf="@id/tv_current_money"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/txt_empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_goal_money"
+                        android:layout_below="@id/goal_progress"
+                        android:layout_toEndOf="@id/tv_empty"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:textSize="14sp"
+                        android:text="@string/txt_empty"
+                        android:textStyle="italic"
+                        android:textAppearance="@style/TextAppearance.Material3.DisplayMedium"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_add"
+                        android:text="@string/txt_add"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@id/goal_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            app:hide="@{vm.rvDebtRecordState}"
+            android:id="@+id/rv_debt_record"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_rv_debt_record"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <include
+            app:hide="@{vm.emptyListState}"
+            android:id="@+id/empty_layout"
+            layout="@layout/empty_layout"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -9,8 +9,9 @@ import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.ItemRvBudgetPermonthBinding
 import com.ra.budgetplan.domain.entity.DetailBudget
 import com.ra.budgetplan.util.toPercentText
-import com.ra.budgetplan.util.collapsed
-import com.ra.budgetplan.util.expanded
+import com.ra.budgetplan.util.collapsedWidth
+import com.ra.budgetplan.util.expandedWidth
+import com.ra.budgetplan.util.isOverBudget
 import com.ra.budgetplan.util.toFormatRupiah
 import com.ra.budgetplan.util.toPercent
 
@@ -31,12 +32,12 @@ class BudgetAdapter: ListAdapter<DetailBudget, BudgetAdapter.MViewHolder>(DIFF) 
       val percent = detailBudget.budget.pengeluaran.toPercent(detailBudget.budget.maxPengeluaran)
 
       binding.root.setOnLongClickListener {
-        expanded(binding.optionLayout, 500, 140)
+        expandedWidth(binding.optionLayout, 500, 140)
         true
       }
 
       binding.root.setOnClickListener {
-        collapsed(binding.optionLayout, 500, 0)
+        collapsedWidth(binding.optionLayout, 500, 0)
       }
 
       binding.ibDelete.setOnClickListener {
@@ -54,12 +55,9 @@ class BudgetAdapter: ListAdapter<DetailBudget, BudgetAdapter.MViewHolder>(DIFF) 
       binding.goalProgress.progress = percent.toInt()
 
       binding.goalProgress.setIndicatorColor(
-        if(isOverBudget(detailBudget.budget.pengeluaran, detailBudget.budget.maxPengeluaran)
+        if(detailBudget.budget.pengeluaran.isOverBudget(detailBudget.budget.maxPengeluaran)
       ) binding.root.context.getColor(R.color.red_400) else binding.root.context.getColor(R.color.indigo_50))
     }
-
-    private fun isOverBudget(current: Int, maxBudget: Int): Boolean =
-      current > maxBudget
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MViewHolder {
