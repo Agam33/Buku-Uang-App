@@ -27,7 +27,7 @@ import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
 const val DB_NAME = "budget_plan.db"
-const val DB_BACKUP_FILE_NAME = "budget_plan"
+const val DB_BACKUP_FILE_NAME = "bk_uang"
 const val DAILY_DATE_FORMAT = "MMMM d, yyyy"
 const val MONTHLY_DATE_FORMAT = "MMMM, yyyy"
 const val FILE_USER_SETTING_PREF = "user_setting_pref.pb"
