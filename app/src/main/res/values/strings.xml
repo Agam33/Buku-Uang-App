@@ -35,6 +35,7 @@
     <string name="txt_create_new_account">Tambah Akun</string>
     <string name="txt_name">Nama</string>
     <string name="txt_icon">icon</string>
+    <string name="msg_to_close_app">Ingin keluar aplikasi?</string>
     <string name="txt_due_date_format">%s (Jatuh Tempo)</string>
     <string name="msg_change_alarm_schedule">Ingin mengganti jadwal Alarm?</string>
     <string name="msg_cancel_alarm_schedule">Batalkan alarm?</string>

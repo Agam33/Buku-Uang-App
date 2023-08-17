@@ -73,9 +73,6 @@ class TransactionViewModel @Inject constructor(
   private val updatePengeluaran: UpdatePengeluaran,
 ): BaseViewModel() {
 
-  private var _listCategory = MutableLiveData<List<KategoriModel>>()
-  val listCategory: LiveData<List<KategoriModel>> get() = _listCategory
-
   private var _pendapatanModel = MutableLiveData<PendapatanModel>()
   val pendapatanModel: LiveData<PendapatanModel> = _pendapatanModel
 

@@ -10,6 +10,7 @@ import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.snackbar.Snackbar
 import com.ra.budgetplan.R
 import com.ra.budgetplan.data.local.preferences.UserSettingPref
 import com.ra.budgetplan.databinding.ActivityMainBinding
@@ -102,7 +103,11 @@ class MainActivity : AppCompatActivity() {
         if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
           binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-//          finish()
+          Snackbar.make(binding.root, resources.getString(R.string.msg_to_close_app), Snackbar.LENGTH_SHORT)
+            .setAction(resources.getString(R.string.txt_yes)) {
+              finish()
+            }
+            .show()
         }
       }
     }
