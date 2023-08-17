@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Budget Ku</string>
+    <string name="app_name">Buku Uang</string>
     <string name="title_menu_transaction">Transaksi</string>
     <string name="title_menu_budget">Budget</string>
     <string name="title_menu_analytics">Analisis</string>
@@ -99,9 +99,9 @@
     <string-array name="backup_and_restore_tips">
         <item>Data yang dibackup tidak akan terhapus walaupun aplikasi di uninstall.</item>
         <item>Sebelum melakukan backup atau restore pilih direktori penyimpanan.</item>
-        <item>Ketika data dibackup akan berupa file .zip. Contoh budget_app.zip.</item>
+        <item>Ketika data dibackup akan berupa file .zip. Contoh: bk_uang(tahun-bulan-tanggal).zip.</item>
         <item>Saat ingin melakukan restore, pastikan direktori sesuai dengan file saat disimpan.</item>
-        <item>Pastikan nama file budget_plan_(tahun-bulan-tanggal).zip.</item>
+        <item>Pastikan nama file bk_uang(tahun-bulan-tanggal).zip.</item>
         <item>Setelah melakukan restore, data saat itu akan tergantikan dengan data yang baru.</item>
     </string-array>
 
