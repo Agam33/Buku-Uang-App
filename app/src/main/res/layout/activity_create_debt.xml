@@ -90,11 +90,12 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_title_due_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/btn_time"
             android:layout_below="@id/divider_1"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:textStyle="bold"
@@ -108,14 +109,14 @@
             android:textSize="16sp"
             android:id="@+id/tv_title_date"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-            android:layout_below="@+id/tv_title_due_date"
+            android:layout_below="@+id/divider_1"
             android:text="@string/txt_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_below="@+id/tv_title_due_date"
+            android:layout_below="@+id/tv_title_date"
             app:strokeColor="@color/indigo_90"
             app:backgroundTint="@color/white"
             android:text="@string/txt_empty"
@@ -123,33 +124,33 @@
             android:layout_marginStart="8dp"
             android:padding="8dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:layout_toEndOf="@id/tv_title_date"
-            android:layout_width="140dp"
+
+            android:layout_width="120dp"
             android:layout_height="60dp"/>
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_below="@+id/tv_title_due_date"
+            android:layout_below="@+id/divider_1"
             android:layout_marginTop="4dp"
             android:id="@+id/tv_time"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
             android:text="@string/txt_time"
             android:textSize="16sp"
             android:layout_toEndOf="@id/edt_date"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.button.MaterialButton
-            android:layout_below="@+id/tv_title_due_date"
+            android:layout_below="@+id/tv_time"
+            android:layout_toEndOf="@id/edt_date"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             app:strokeColor="@color/indigo_90"
             app:backgroundTint="@color/white"
             android:text="@string/txt_empty"
             android:id="@+id/btn_time"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="32dp"
             android:padding="8dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:layout_toEndOf="@id/tv_time"
             android:layout_width="100dp"
             android:layout_height="60dp"/>
 
