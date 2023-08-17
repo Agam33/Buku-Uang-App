@@ -14,9 +14,6 @@ import java.util.UUID
 @Dao
 interface TransferDao {
 
-  @Query("SELECT * FROM transfer_tbl AS tf WHERE tf.id_from_akun = :id")
-  suspend fun findTransferByAccountId(id: UUID): List<TransferEntity>
-
   @Transaction
   @Query("SELECT * FROM transfer_tbl " +
           "WHERE " +

@@ -6,9 +6,7 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.view.View
-import android.view.WindowManager.LayoutParams
 import android.view.animation.DecelerateInterpolator
-import androidx.annotation.RequiresApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,12 +35,10 @@ const val DATE_TIME_FORMATTER = "yyyy-MM-dd HH:mm"
 const val ALARM_RECEIVER_NOTIFICATION_ID = 201
 const val ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID = "alarm-receiver-channel-1"
 const val ALARM_RECEIVER_NOTIFICATION_CHANNEL_NAME = "alarm-receiver"
-const val ALARM_RECEIVER_NOTIFICATION_GROUP_KEY = "alarm-receiver-group-key"
 
 val LOCALE_ID = Locale("id", "ID")
 
 const val REQUEST_READ_AND_WRITE_EXTERNAL_STORAGE = 102
-const val REQUEST_POST_NOTIFICATIONS = 103
 
 val REQUIRED_STORAGE_PERMISSION = mutableListOf(
   Manifest.permission.WRITE_EXTERNAL_STORAGE,
