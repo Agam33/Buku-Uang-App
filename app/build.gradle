@@ -36,6 +36,16 @@ android {
     buildFeatures {
         dataBinding true
     }
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
+        kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlin.time.ExperimentalTime"]
+        kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+    }
 }
 
 dependencies {
@@ -44,9 +54,31 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    /* ~ Start Testing ~ */
+    // Mockito 5.3.1
+    def nhaarman_mockito = '2.2.0'
+    def mockito_inline = '3.5.13'
+    def turbine_version = '0.5.2'
+    testImplementation "org.mockito:mockito-inline:$mockito_inline"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$nhaarman_mockito"
+    testImplementation "app.cash.turbine:turbine:$turbine_version"
+
+    // JUnit5
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.3"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.3"
+    // (Optional) if you need "Parameterized Tests"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.8.2"
+    // Junit4
+    testImplementation "junit:junit:4.13.2"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.9.3"
+
+    /* ~ End Testing ~ */
 
     def dagger_hilt_version = '2.44'
     implementation "com.google.dagger:hilt-android:$dagger_hilt_version"
