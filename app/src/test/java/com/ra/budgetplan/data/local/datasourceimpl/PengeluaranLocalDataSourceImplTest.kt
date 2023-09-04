@@ -115,9 +115,9 @@ internal class PengeluaranLocalDataSourceImplTest {
       .thenReturn(flow)
 
     pengeluaranLocalDataSource.getTotalPengeluaranByDate(fromDate, toDate).test {
-      val expectedVal = expectItem()
+      val expectedVal = awaitItem()
       assertEquals(actualPengeluaran, expectedVal)
-      expectComplete()
+      awaitComplete()
     }
   }
 
@@ -132,9 +132,9 @@ internal class PengeluaranLocalDataSourceImplTest {
       .thenReturn(flow)
 
     pengeluaranLocalDataSource.getTotalPengeluaran().test {
-      val expectedVal = expectItem()
+      val expectedVal = awaitItem()
       assertEquals(actualPengeluaran, expectedVal)
-      expectComplete()
+      awaitComplete()
     }
   }
 
@@ -169,10 +169,10 @@ internal class PengeluaranLocalDataSourceImplTest {
       .thenReturn(flow)
 
     pengeluaranLocalDataSource.getMonthlyPengeluaran(fromDate, toDate).test {
-      val expectedVal = expectItem()
+      val expectedVal = awaitItem()
       assertEquals(actualListDetailPengeluara.size, expectedVal.size)
       assertEquals(actualListDetailPengeluara, expectedVal)
-      expectComplete()
+      awaitComplete()
     }
   }
 

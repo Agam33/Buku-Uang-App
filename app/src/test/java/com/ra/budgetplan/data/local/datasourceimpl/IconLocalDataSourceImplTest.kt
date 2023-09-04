@@ -26,10 +26,10 @@ internal class IconLocalDataSourceImplTest {
     whenever(iconLocalDataSource.findAll()).thenReturn(flow)
 
     iconLocalDataSource.findAll().test {
-      val expectedVal = expectItem()
+      val expectedVal = awaitItem()
       Assertions.assertEquals(expectedVal, actualListIcon)
       Assertions.assertEquals(expectedVal.size, actualListIcon.size)
-      expectComplete()
+      awaitComplete()
     }
   }
 
@@ -44,10 +44,10 @@ internal class IconLocalDataSourceImplTest {
       .thenReturn(flow)
 
     iconLocalDataSource.findByCategory(IconCategory.EXPENSE).test {
-      val expectedItem = expectItem()
+      val expectedItem = awaitItem()
       Assertions.assertEquals(actualListIcon.size, expectedItem.size)
       Assertions.assertEquals(actualListIcon, expectedItem)
-      expectComplete()
+      awaitComplete()
     }
   }
 }

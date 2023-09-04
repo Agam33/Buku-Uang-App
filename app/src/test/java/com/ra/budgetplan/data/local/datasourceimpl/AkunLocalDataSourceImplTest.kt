@@ -28,10 +28,10 @@ internal class AkunLocalDataSourceImplTest {
     whenever(akunLocalDataSource.getTotalMoney())
       .thenReturn(flow)
 
-    akunLocalDataSource.getTotalMoney().test() {
-      val item = expectItem()
+    akunLocalDataSource.getTotalMoney().test {
+      val item = awaitItem()
       Assertions.assertEquals(actualTotalMoney, item)
-      expectComplete()
+      awaitComplete()
     }
   }
 

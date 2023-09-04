@@ -16,7 +16,7 @@ class FindKategoriByIdImpl @Inject constructor(
   override suspend fun invoke(id: UUID): Flow<KategoriModel> {
     return flow {
       repository.findById(id).collect {
-        it.toModel()
+        emit(it.toModel())
       }
     }
   }

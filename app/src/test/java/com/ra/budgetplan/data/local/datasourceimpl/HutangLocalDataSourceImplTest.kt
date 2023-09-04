@@ -118,10 +118,10 @@ internal class HutangLocalDataSourceImplTest {
     whenever(hutangLocalDataSource.findByIdWithFlow(actualId)).thenReturn(flow)
 
     hutangLocalDataSource.findByIdWithFlow(actualId).test {
-      val item = expectItem()
+      val item = awaitItem()
       assertEquals(actualHutang, item)
       assertEquals(actualHutang.uuid, item.uuid)
-      expectComplete()
+      awaitComplete()
     }
   }
 }

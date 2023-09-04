@@ -95,9 +95,9 @@ internal class PendapatanLocalDataSourceImplTest {
       .thenReturn(flow)
 
     pendapatanDao.getTotalPendapatanByDate(fromDate, toDate).test {
-      val expectedVal = expectItem()
+      val expectedVal = awaitItem()
       Assertions.assertEquals(actualTotalPendapatan, expectedVal)
-      expectComplete()
+      awaitComplete()
     }
 
   }
@@ -114,9 +114,9 @@ internal class PendapatanLocalDataSourceImplTest {
       .thenReturn(flow)
 
     pendapatanDao.getTotalPendapatan().test {
-      val expectedVal = expectItem()
+      val expectedVal = awaitItem()
       Assertions.assertEquals(actualTotalPendapatan, expectedVal)
-      expectComplete()
+      awaitComplete()
     }
   }
 

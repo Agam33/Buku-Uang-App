@@ -29,10 +29,10 @@ internal class KategoriLocalDataSourceImplTest {
       .thenReturn(flow)
 
     kategoriLocalDataSource.findByType(TipeKategori.PENGELUARAN).test {
-      val expectedVal = expectItem()
+      val expectedVal = awaitItem()
       assertEquals(expectedVal, actualKategori)
       assertEquals(expectedVal.size, actualKategori.size)
-      expectComplete()
+      awaitComplete()
     }
   }
 
@@ -86,10 +86,10 @@ internal class KategoriLocalDataSourceImplTest {
     whenever(kategoriLocalDataSource.findAllKategori()).thenReturn(flow)
 
     kategoriLocalDataSource.findAllKategori().test {
-      val expectedVal = expectItem()
+      val expectedVal = awaitItem()
       assertEquals(actualListKategori, expectedVal)
       assertEquals(actualListKategori.size, expectedVal.size)
-      expectComplete()
+      awaitComplete()
     }
 
   }
@@ -104,10 +104,10 @@ internal class KategoriLocalDataSourceImplTest {
     whenever(kategoriLocalDataSource.findKategoriById(actualKategori.uuid)).thenReturn(flow)
 
     kategoriLocalDataSource.findKategoriById(actualKategori.uuid).test {
-      val expectedVal = expectItem()
+      val expectedVal = awaitItem()
       assertEquals(expectedVal, actualKategori)
       assertEquals(expectedVal.uuid, actualKategori.uuid)
-      expectComplete()
+      awaitComplete()
     }
   }
 }

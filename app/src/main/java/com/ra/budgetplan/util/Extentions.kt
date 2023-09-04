@@ -170,13 +170,13 @@ fun String.firstCharUppercase(): String {
   return result.toString()
 }
 
-fun Int.toFormatRupiah(): String {
-  val formatRupiah = NumberFormat.getCurrencyInstance(LOCALE_ID)
+fun Int.toFormatRupiah(locale: Locale = Locale("id", "ID")): String {
+  val formatRupiah = NumberFormat.getCurrencyInstance(locale)
   return formatRupiah.format(this).replace("Rp", "Rp ")
 }
 
-fun Long.toFormatRupiah(): String {
-  val formatRupiah = NumberFormat.getCurrencyInstance(LOCALE_ID)
+fun Long.toFormatRupiah(locale: Locale = Locale("id", "ID")): String {
+  val formatRupiah = NumberFormat.getCurrencyInstance(locale)
   return formatRupiah.format(this).replace("Rp", "Rp ")
 }
 
