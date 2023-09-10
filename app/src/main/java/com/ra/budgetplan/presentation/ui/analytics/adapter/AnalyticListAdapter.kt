@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.budgetplan.databinding.ItemRvDataAnalyticsBinding
 import com.ra.budgetplan.domain.model.AnalyticModel
-import com.ra.budgetplan.util.toPercentText
-import com.ra.budgetplan.util.toFormatRupiah
+import com.ra.budgetplan.util.Extension.toFormatRupiah
+import com.ra.budgetplan.util.Extension.toPercentText
 
 class AnalyticListAdapter: ListAdapter<AnalyticModel, AnalyticListAdapter.MViewHolder>(DIFF) {
 

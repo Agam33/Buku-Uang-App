@@ -5,33 +5,31 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
 import com.ra.budgetplan.R
+import com.ra.budgetplan.base.BaseActivity
 import com.ra.budgetplan.data.local.preferences.UserSettingPref
 import com.ra.budgetplan.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
   @Inject
   lateinit var userSettingPref: UserSettingPref
 
-  private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-
-  private val navController: NavController by lazy { Navigation.findNavController(this@MainActivity, R.id.fragment_container) }
+  private lateinit var navController: NavController
 
   private lateinit var drawerToggle: ActionBarDrawerToggle
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(binding.root)
+    navController = Navigation.findNavController(this@MainActivity, R.id.fragment_container)
     setupActionBar()
     setupNavigationDrawer()
     setupOnBackPressedDispatcher()
@@ -46,33 +44,27 @@ class MainActivity : AppCompatActivity() {
     binding.navigationDrawerView.setCheckedItem(R.id.transactionFragment)
 
     binding.navigationDrawerView.setNavigationItemSelectedListener { item ->
+      navController.popBackStack()
       when(item.itemId) {
         R.id.menu_account -> {
-          navController.popBackStack()
           navController.navigate(R.id.accountFragment)
         }
         R.id.menu_analytics -> {
-          navController.popBackStack()
           navController.navigate(R.id.analyticFragment)
         }
         R.id.menu_budget -> {
-          navController.popBackStack()
           navController.navigate(R.id.budgetFragment)
         }
         R.id.menu_category -> {
-          navController.popBackStack()
           navController.navigate(R.id.categoryFragment)
         }
         R.id.menu_transaction -> {
-          navController.popBackStack()
           navController.navigate(R.id.transactionFragment)
         }
         R.id.menu_backup_and_restore -> {
-          navController.popBackStack()
           navController.navigate(R.id.backupRestoreFragment)
         }
         R.id.menu_debt -> {
-          navController.popBackStack()
           navController.navigate(R.id.debtFragment)
         }
       }

@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.ItemRvBudgetPermonthBinding
 import com.ra.budgetplan.domain.entity.DetailBudget
-import com.ra.budgetplan.util.toPercentText
-import com.ra.budgetplan.util.collapsedWidth
-import com.ra.budgetplan.util.expandedWidth
-import com.ra.budgetplan.util.isOverBudget
-import com.ra.budgetplan.util.toFormatRupiah
-import com.ra.budgetplan.util.toPercent
+import com.ra.budgetplan.util.Constants.collapsedWidth
+import com.ra.budgetplan.util.Constants.expandedWidth
+import com.ra.budgetplan.util.Constants.isOverBudget
+import com.ra.budgetplan.util.Extension.toFormatRupiah
+import com.ra.budgetplan.util.Extension.toPercent
+import com.ra.budgetplan.util.Extension.toPercentText
 
 class BudgetAdapter: ListAdapter<DetailBudget, BudgetAdapter.MViewHolder>(DIFF) {
 

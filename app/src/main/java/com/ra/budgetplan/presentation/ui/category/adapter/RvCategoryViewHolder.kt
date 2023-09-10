@@ -14,7 +14,7 @@ import com.ra.budgetplan.databinding.GroupRvCategoriesBinding
 import com.ra.budgetplan.databinding.ItemRvCategoriesBinding
 import com.ra.budgetplan.domain.entity.TipeKategori
 import com.ra.budgetplan.domain.model.KategoriModel
-import com.ra.budgetplan.util.firstCharUppercase
+import com.ra.budgetplan.util.Extension.firstCharUppercase
 
 class RvCategoryViewHolder(
   private val binding: GroupRvCategoriesBinding,

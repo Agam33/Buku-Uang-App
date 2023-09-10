@@ -3,16 +3,14 @@ package com.ra.budgetplan.presentation.ui.transaction.fragment
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.text.Editable
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.ra.budgetplan.R
+import com.ra.budgetplan.base.BaseFragment
 import com.ra.budgetplan.customview.spinner.TransactionSpinnerAdapter
 import com.ra.budgetplan.databinding.FragmentCreateExpenseBinding
 import com.ra.budgetplan.domain.entity.TipeKategori
@@ -22,14 +20,14 @@ import com.ra.budgetplan.domain.model.PengeluaranModel
 import com.ra.budgetplan.presentation.ui.transaction.TransactionFragment
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
 import com.ra.budgetplan.util.ActionType
-import com.ra.budgetplan.util.DATE_PATTERN
-import com.ra.budgetplan.util.DATE_TIME_FORMATTER
-import com.ra.budgetplan.util.checkTimeFormat
+import com.ra.budgetplan.util.Constants.DATE_PATTERN
+import com.ra.budgetplan.util.Constants.DATE_TIME_FORMATTER
+import com.ra.budgetplan.util.Extension.checkTimeFormat
+import com.ra.budgetplan.util.Extension.getStringResource
+import com.ra.budgetplan.util.Extension.millisToString
+import com.ra.budgetplan.util.Extension.showShortToast
+import com.ra.budgetplan.util.Extension.toCalendar
 import com.ra.budgetplan.util.getActionType
-import com.ra.budgetplan.util.getStringResource
-import com.ra.budgetplan.util.millisToString
-import com.ra.budgetplan.util.showShortToast
-import com.ra.budgetplan.util.toCalendar
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -38,10 +36,7 @@ import java.util.Locale
 import java.util.UUID
 
 @AndroidEntryPoint
-class CreateExpenseFragment : Fragment() {
-
-  private var _binding: FragmentCreateExpenseBinding? = null
-  private val binding get() = _binding
+class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layout.fragment_create_expense) {
 
   private val viewModel: TransactionViewModel by viewModels()
 
@@ -51,19 +46,10 @@ class CreateExpenseFragment : Fragment() {
   private var accountId: UUID? = null
   private var categoryId: UUID? = null
 
-  override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    // Inflate the layout for this fragment
-    _binding = FragmentCreateExpenseBinding.inflate(inflater, container, false)
-    observer()
-    setupAccountAndCategoryPicker()
-    return binding?.root
-  }
-
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    observer()
+    setupAccountAndCategoryPicker()
 
     val actionType = arguments?.getString(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT) as String
     when(getActionType(actionType)) {
@@ -272,10 +258,5 @@ class CreateExpenseFragment : Fragment() {
     viewModel.setCategoryByType(TipeKategori.PENGELUARAN)
     viewModel.listCategoryByType.observe(viewLifecycleOwner, ::setupListCategory)
     viewModel.listAccount.observe(viewLifecycleOwner, ::setupListAccount)
-  }
-
-  override fun onDestroy() {
-    _binding = null
-    super.onDestroy()
   }
 }

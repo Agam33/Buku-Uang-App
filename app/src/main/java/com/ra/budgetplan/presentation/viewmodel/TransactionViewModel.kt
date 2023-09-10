@@ -35,8 +35,8 @@ import com.ra.budgetplan.domain.usecase.transaksi.transfer.GetTransferById
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.SaveTransfer
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.UpdateTransfer
 import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
+import com.ra.budgetplan.util.Extension.toFormatRupiah
 import com.ra.budgetplan.util.Resource
-import com.ra.budgetplan.util.toFormatRupiah
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

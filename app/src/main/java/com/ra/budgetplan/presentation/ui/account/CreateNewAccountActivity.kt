@@ -5,34 +5,28 @@ import android.text.Editable
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.ActivityCreateNewAccountBinding
 import com.ra.budgetplan.domain.model.AkunModel
+import com.ra.budgetplan.base.BaseActivity
 import com.ra.budgetplan.presentation.ui.account.AccountFragment.Companion.ACCOUNT_MODEL
 import com.ra.budgetplan.presentation.ui.account.AccountFragment.Companion.CREATE_ACCOUNT
 import com.ra.budgetplan.presentation.ui.account.AccountFragment.Companion.EDIT_ACCOUNT
 import com.ra.budgetplan.presentation.ui.account.AccountFragment.Companion.EXTRA_TEXT
 import com.ra.budgetplan.presentation.viewmodel.AccountViewModel
-import com.ra.budgetplan.util.parcelable
-import com.ra.budgetplan.util.setupNoActionbar
+import com.ra.budgetplan.util.Extension.parcelable
+import com.ra.budgetplan.util.Extension.setupNoActionbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.util.UUID
 
 @AndroidEntryPoint
-class CreateNewAccountActivity : AppCompatActivity() {
-
-  private val binding: ActivityCreateNewAccountBinding by lazy {
-    ActivityCreateNewAccountBinding.inflate(layoutInflater)
-  }
+class CreateNewAccountActivity : BaseActivity<ActivityCreateNewAccountBinding>(R.layout.activity_create_new_account) {
 
   private val viewModel: AccountViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(binding.root)
-
     if(isAccountCreated()) {
       setupDetailAccount()
     }
