@@ -6,7 +6,6 @@ import android.text.Editable
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -14,22 +13,23 @@ import com.google.android.material.timepicker.TimeFormat
 import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.ActivityCreateDebtBinding
 import com.ra.budgetplan.domain.model.HutangModel
+import com.ra.budgetplan.base.BaseActivity
 import com.ra.budgetplan.presentation.ui.debt.DebtFragment.Companion.DEBT_EXTRA_ACTION
 import com.ra.budgetplan.presentation.ui.debt.DebtFragment.Companion.DEBT_MODEL
 import com.ra.budgetplan.presentation.viewmodel.DebtViewModel
 import com.ra.budgetplan.util.ActionType
-import com.ra.budgetplan.util.DATE_PATTERN
-import com.ra.budgetplan.util.DATE_TIME_FORMATTER
-import com.ra.budgetplan.util.LOCALE_ID
+import com.ra.budgetplan.util.Constants.DATE_PATTERN
+import com.ra.budgetplan.util.Constants.DATE_TIME_FORMATTER
+import com.ra.budgetplan.util.Constants.LOCALE_ID
+import com.ra.budgetplan.util.Extension.checkTimeFormat
+import com.ra.budgetplan.util.Extension.getStringResource
+import com.ra.budgetplan.util.Extension.millisToString
+import com.ra.budgetplan.util.Extension.parcelable
+import com.ra.budgetplan.util.Extension.setupNoActionbar
+import com.ra.budgetplan.util.Extension.showShortToast
+import com.ra.budgetplan.util.Extension.toCalendar
 import com.ra.budgetplan.util.StatusItem
-import com.ra.budgetplan.util.checkTimeFormat
 import com.ra.budgetplan.util.getActionType
-import com.ra.budgetplan.util.getStringResource
-import com.ra.budgetplan.util.millisToString
-import com.ra.budgetplan.util.parcelable
-import com.ra.budgetplan.util.setupNoActionbar
-import com.ra.budgetplan.util.showShortToast
-import com.ra.budgetplan.util.toCalendar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -38,16 +38,12 @@ import java.util.Calendar
 import java.util.UUID
 
 @AndroidEntryPoint
-class CreateDebtActivity : AppCompatActivity() {
-
-  private val binding: ActivityCreateDebtBinding by lazy { ActivityCreateDebtBinding.inflate(layoutInflater) }
+class CreateDebtActivity : BaseActivity<ActivityCreateDebtBinding>(R.layout.activity_create_debt) {
 
   private val sharedViewModel: DebtViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(binding.root)
-
     setupNoActionbar(binding.toolbar)
 
     val actionType = intent?.getStringExtra(DEBT_EXTRA_ACTION) as String

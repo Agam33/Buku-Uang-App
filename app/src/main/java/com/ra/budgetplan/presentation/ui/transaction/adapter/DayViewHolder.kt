@@ -7,7 +7,7 @@ import com.ra.budgetplan.databinding.ItemRvTransferDaysBinding
 import com.ra.budgetplan.domain.entity.DetailPendapatan
 import com.ra.budgetplan.domain.entity.DetailPengeluaran
 import com.ra.budgetplan.domain.entity.DetailTransfer
-import com.ra.budgetplan.util.toFormatRupiah
+import com.ra.budgetplan.util.Extension.toFormatRupiah
 
 /*
     Expense DayViewHolder

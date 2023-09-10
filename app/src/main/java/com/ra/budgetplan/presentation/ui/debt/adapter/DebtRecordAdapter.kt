@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.budgetplan.databinding.ItemRvDebtRecordBinding
 import com.ra.budgetplan.domain.model.DetailPembayaranHutangModel
-import com.ra.budgetplan.util.DATE_TIME_FORMATTER
-import com.ra.budgetplan.util.collapsedWidth
-import com.ra.budgetplan.util.expandedWidth
-import com.ra.budgetplan.util.toFormatRupiah
-import com.ra.budgetplan.util.toStringFormat
+import com.ra.budgetplan.util.Constants.DATE_TIME_FORMATTER
+import com.ra.budgetplan.util.Constants.collapsedWidth
+import com.ra.budgetplan.util.Constants.expandedWidth
+import com.ra.budgetplan.util.Extension.toFormatRupiah
+import com.ra.budgetplan.util.Extension.toStringFormat
 
 class DebtRecordAdapter:
   ListAdapter<DetailPembayaranHutangModel, DebtRecordAdapter.MViewHolder>(DIFF) {

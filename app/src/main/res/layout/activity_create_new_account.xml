@@ -61,7 +61,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_marginTop="40dp"
-            android:text="Jumlah"
+            android:text="@string/txt_amount"
             android:layout_marginStart="8dp"
             android:id="@+id/tv_title_initial_amount"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"

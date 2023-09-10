@@ -6,39 +6,33 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.ActivityCreateCategoryBinding
 import com.ra.budgetplan.domain.entity.TipeKategori
 import com.ra.budgetplan.domain.model.IconModel
 import com.ra.budgetplan.domain.model.KategoriModel
+import com.ra.budgetplan.base.BaseActivity
 import com.ra.budgetplan.presentation.ui.category.adapter.RvIconCategoryAdapter
 import com.ra.budgetplan.presentation.viewmodel.CategoryViewModel
 import com.ra.budgetplan.util.ActionType
+import com.ra.budgetplan.util.Extension.parcelable
+import com.ra.budgetplan.util.Extension.setupNoActionbar
+import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.getActionType
-import com.ra.budgetplan.util.parcelable
-import com.ra.budgetplan.util.setupNoActionbar
-import com.ra.budgetplan.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.util.UUID
 
 @AndroidEntryPoint
-class CreateCategoryActivity : AppCompatActivity(), RvIconCategoryAdapter.OnItemSelectedListener {
-
-  private val binding: ActivityCreateCategoryBinding by lazy {
-    ActivityCreateCategoryBinding.inflate(layoutInflater)
-  }
+class CreateCategoryActivity : BaseActivity<ActivityCreateCategoryBinding>(R.layout.activity_create_category), RvIconCategoryAdapter.OnItemSelectedListener {
 
   private val viewModel: CategoryViewModel by viewModels()
 
   private var iconId: Int = -1
   private var currentCategory = TipeKategori.PENDAPATAN
 
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(binding.root)
     observer()
     setupCategory()
 
