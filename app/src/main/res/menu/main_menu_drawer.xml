@@ -5,7 +5,7 @@
         android:title="">
         <menu>
             <item
-                android:icon="@drawable/baseline_transaction_24"
+                android:icon="@drawable/outline_transaction_24"
                 android:id="@+id/menu_transaction"
                 android:checkable="true"
                 android:title="@string/title_menu_transaction"/>

@@ -60,10 +60,9 @@
         <activity
             android:name=".presentation.ui.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.BudgetPlan.NoActionBar">
+            android:theme="@style/Theme.BudgetPlan.M3">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 

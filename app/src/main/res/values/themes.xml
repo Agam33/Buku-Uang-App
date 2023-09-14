@@ -35,9 +35,8 @@
 
     <style name="Theme.BudgetPlan.M3" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/indigo_20</item>
-        <item name="colorPrimaryVariant">@color/indigo_30</item>
-        <item name="colorOnPrimary">@color/indigo_100</item>
+        <item name="colorPrimary">@color/blue_10</item>
+        <item name="colorOnPrimary">@color/white</item>
 
         <!-- Secondary brand color. -->
 
@@ -45,11 +44,13 @@
         <item name="elevationOverlayColor">#80FFFFFF</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
-
+        <item name="android:statusBarColor">@color/blue_20</item>
+        
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/indigo_100</item>
-        <item name="fontFamily">@font/roboto</item>
+        <item name="materialCardViewStyle">@style/Widget.App.CardFilled.Normal</item>
+        <item name="materialButtonStyle">@style/Widget.App.Button.Normal</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="fontFamily">@font/montserrat_alternates</item>
         <item name="collapsingToolbarLayoutStyle">@style/Widget.App.CollapsingToolbar</item>
     </style>
 
