@@ -14,22 +14,8 @@
         android:layout_height="match_parent"
         tools:context=".presentation.ui.debt.DebtFragment">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:fitsSystemWindows="true"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"/>
-
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-        </com.google.android.material.appbar.AppBarLayout>
-
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="22dp"
             app:hide="@{vm.rvDebtListState}"
             tools:itemCount="15"
             tools:listitem="@layout/item_rv_debt"

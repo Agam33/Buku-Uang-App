@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.App.CardOutlined.Normal"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="4dp"
+        app:strokeColor="@color/blue_40"
+        app:strokeWidth="1.5dp"
+        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small"
         android:layout_marginBottom="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
