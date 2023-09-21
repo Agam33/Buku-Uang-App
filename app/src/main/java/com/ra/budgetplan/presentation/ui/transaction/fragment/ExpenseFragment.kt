@@ -1,12 +1,13 @@
 package com.ra.budgetplan.presentation.ui.transaction.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ra.budgetplan.R
-import com.ra.budgetplan.base.BaseFragment
 import com.ra.budgetplan.databinding.FragmentExpenseBinding
 import com.ra.budgetplan.domain.entity.DetailPengeluaran
 import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
@@ -22,17 +23,26 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
-class ExpenseFragment : BaseFragment<FragmentExpenseBinding>(R.layout.fragment_expense),
+class ExpenseFragment : Fragment(),
   OnDayItemClickListener, OnDeleteItemListener<TransactionDetail> {
+
+  private var _binding: FragmentExpenseBinding? = null
+  private val binding get() = _binding
 
   private val sharedViewModel: TransactionViewModel by activityViewModels()
 
   var onItemChangedListener: OnItemChangedListener? = null
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+
+    // Inflate the layout for this fragment
+    _binding = FragmentExpenseBinding.inflate(inflater, container, false)
     observer()
     setupList()
+    return binding?.root
   }
 
   private fun setupList() {
@@ -78,8 +88,8 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>(R.layout.fragment_e
   }
 
   private fun observer() {
-    binding?.vm = sharedViewModel
-    binding?.lifecycleOwner = viewLifecycleOwner
+    _binding?.vm = sharedViewModel
+    _binding?.lifecycleOwner = viewLifecycleOwner
   }
 
   override fun onResume() {
@@ -105,4 +115,5 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>(R.layout.fragment_e
     detailTransactionDialog.onDeleteItemListener = this@ExpenseFragment
     detailTransactionDialog.show(parentFragmentManager, "expense-detail")
   }
+
 }

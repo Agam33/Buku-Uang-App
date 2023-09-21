@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.ItemRvDebtBinding
 import com.ra.budgetplan.domain.model.HutangModel
-import com.ra.budgetplan.util.Constants.DATE_TIME_FORMATTER
-import com.ra.budgetplan.util.Constants.isOverBudget
-import com.ra.budgetplan.util.Extension.collapsedHeight
-import com.ra.budgetplan.util.Extension.expandedHeight
-import com.ra.budgetplan.util.Extension.toFormatRupiah
-import com.ra.budgetplan.util.Extension.toPercent
-import com.ra.budgetplan.util.Extension.toPercentText
-import com.ra.budgetplan.util.Extension.toStringFormat
+import com.ra.budgetplan.util.DATE_TIME_FORMATTER
+import com.ra.budgetplan.util.collapsedHeight
+import com.ra.budgetplan.util.expandedHeight
+import com.ra.budgetplan.util.isOverBudget
+import com.ra.budgetplan.util.toFormatRupiah
+import com.ra.budgetplan.util.toPercent
+import com.ra.budgetplan.util.toPercentText
+import com.ra.budgetplan.util.toStringFormat
 
 class DebtAdapter: ListAdapter<HutangModel, DebtAdapter.MViewHolder>(DIFF) {
 

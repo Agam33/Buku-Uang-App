@@ -2,12 +2,14 @@ package com.ra.budgetplan.presentation.ui.category
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.budgetplan.R
-import com.ra.budgetplan.base.BaseFragment
 import com.ra.budgetplan.customview.dialog.CautionDeleteDialog
 import com.ra.budgetplan.customview.spinner.SpinnerItemOptions
 import com.ra.budgetplan.databinding.FragmentCategoryBinding
@@ -19,13 +21,18 @@ import com.ra.budgetplan.presentation.ui.category.CreateCategoryActivity.Compani
 import com.ra.budgetplan.presentation.ui.category.adapter.RvGroupCategoryAdapter
 import com.ra.budgetplan.presentation.viewmodel.CategoryViewModel
 import com.ra.budgetplan.util.ActionType
-import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment_category), RvGroupCategoryAdapter.OnOptionCategoryClickCallBack {
+class CategoryFragment : Fragment(),
+  RvGroupCategoryAdapter.OnOptionCategoryClickCallBack {
+
+  private var _binding: FragmentCategoryBinding? = null
+
+  private val binding get() = _binding
 
   private lateinit var groupCategoryAdapter: RvGroupCategoryAdapter
 
@@ -57,6 +64,20 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
 
   private fun refresh() {
     viewModel.setCategories()
+  }
+
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    // Inflate the layout for this fragment
+    _binding = FragmentCategoryBinding.inflate(layoutInflater, container, false)
+    return binding?.root
+  }
+
+  override fun onDestroy() {
+    _binding = null
+    super.onDestroy()
   }
 
   private fun setupListCategory(data :HashMap<TipeKategori, List<KategoriModel>>?) {
