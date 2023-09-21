@@ -4,29 +4,31 @@ import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.ra.budgetplan.R
-import com.ra.budgetplan.base.BaseFragment
 import com.ra.budgetplan.data.local.preferences.UserSettingPref
 import com.ra.budgetplan.databinding.FragmentBackupRestoreBinding
 import com.ra.budgetplan.presentation.ui.backuprestore.adapter.BackupRestoreAdapter
 import com.ra.budgetplan.presentation.ui.backuprestore.dialog.FolderRestoreDialog
 import com.ra.budgetplan.presentation.viewmodel.BackupRestoreViewModel
-import com.ra.budgetplan.util.Constants.DB_BACKUP_FILE_NAME
-import com.ra.budgetplan.util.Constants.DB_NAME
-import com.ra.budgetplan.util.Constants.REQUEST_READ_AND_WRITE_EXTERNAL_STORAGE
-import com.ra.budgetplan.util.Constants.REQUIRED_STORAGE_PERMISSION
-import com.ra.budgetplan.util.Constants.getUriPath
-import com.ra.budgetplan.util.Extension.requestStoragePermission
-import com.ra.budgetplan.util.Extension.restartActivity
+import com.ra.budgetplan.util.DB_BACKUP_FILE_NAME
+import com.ra.budgetplan.util.DB_NAME
+import com.ra.budgetplan.util.REQUEST_READ_AND_WRITE_EXTERNAL_STORAGE
+import com.ra.budgetplan.util.REQUIRED_STORAGE_PERMISSION
 import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.getUriPath
+import com.ra.budgetplan.util.requestStoragePermission
+import com.ra.budgetplan.util.restartActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
@@ -34,17 +36,25 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layout.fragment_backup_restore) {
+class BackupRestoreFragment : Fragment() {
 
   @Inject
   lateinit var userSettingPref: UserSettingPref
 
+  private var _binding: FragmentBackupRestoreBinding? = null
+  private val binding get() = _binding
+
   private val viewModel: BackupRestoreViewModel by viewModels()
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    // Inflate the layout for this fragment
+    _binding = FragmentBackupRestoreBinding.inflate(layoutInflater, container, false)
     setupRvTips()
     setupButton()
+    return binding?.root
   }
 
   private fun setupRvTips() {

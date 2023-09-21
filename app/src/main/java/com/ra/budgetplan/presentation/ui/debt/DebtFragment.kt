@@ -5,13 +5,15 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.ra.budgetplan.R
-import com.ra.budgetplan.base.BaseFragment
 import com.ra.budgetplan.customview.dialog.CalendarDialog
 import com.ra.budgetplan.customview.dialog.CautionDeleteDialog
 import com.ra.budgetplan.customview.dialog.CautionDeleteDialog.Companion.MSG_CAUTION_DIALOG
@@ -21,27 +23,38 @@ import com.ra.budgetplan.presentation.ui.debt.adapter.DebtAdapter
 import com.ra.budgetplan.presentation.viewmodel.DebtViewModel
 import com.ra.budgetplan.receiver.AlarmReceiver
 import com.ra.budgetplan.util.ActionType
-import com.ra.budgetplan.util.Constants.DATE_PATTERN
-import com.ra.budgetplan.util.Constants.LOCALE_ID
-import com.ra.budgetplan.util.Extension.showShortToast
+import com.ra.budgetplan.util.DATE_PATTERN
+import com.ra.budgetplan.util.LOCALE_ID
 import com.ra.budgetplan.util.Resource
 import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
 @AndroidEntryPoint
-class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
+class DebtFragment : Fragment() {
+
+  private var _binding: FragmentDebtBinding? = null
+  private val binding get() = _binding
 
   private val sharedViewModel: DebtViewModel by viewModels()
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    binding?.vm = sharedViewModel
-    binding?.lifecycleOwner = viewLifecycleOwner
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    // Inflate the layout for this fragment
+    _binding = FragmentDebtBinding.inflate(layoutInflater, container, false)
+
+    _binding?.vm = sharedViewModel
+    _binding?.lifecycleOwner = viewLifecycleOwner
+
     setupRv()
     createNewDebt()
+
+    return _binding?.root
   }
 
   private fun createNewDebt() {

@@ -5,8 +5,8 @@ import com.ra.budgetplan.domain.repository.PendapatanRepository
 import com.ra.budgetplan.domain.repository.PengeluaranRepository
 import com.ra.budgetplan.domain.usecase.analisis.ShowAnalyticList
 import com.ra.budgetplan.presentation.ui.transaction.TransactionType
-import com.ra.budgetplan.util.Constants.calculatePercent
 import com.ra.budgetplan.util.Resource
+import com.ra.budgetplan.util.calculatePercent
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject

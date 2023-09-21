@@ -8,12 +8,7 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        style="@style/Widget.App.CardElevated.Normal"
-        app:cardElevation="4dp"
-        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Large"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

@@ -7,7 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ra.budgetplan.data.local.database.AppDatabase
 import com.ra.budgetplan.data.local.database.DatabaseSeeder
 import com.ra.budgetplan.data.local.database.dao.*
-import com.ra.budgetplan.util.Constants.DB_NAME
+import com.ra.budgetplan.util.DB_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

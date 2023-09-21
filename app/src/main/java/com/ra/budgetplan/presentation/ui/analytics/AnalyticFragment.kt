@@ -2,10 +2,13 @@ package com.ra.budgetplan.presentation.ui.analytics
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.animation.Easing
@@ -16,24 +19,26 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
 import com.ra.budgetplan.R
-import com.ra.budgetplan.base.BaseFragment
 import com.ra.budgetplan.databinding.FragmentAnalyticBinding
 import com.ra.budgetplan.presentation.ui.analytics.adapter.AnalyticListAdapter
 import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
 import com.ra.budgetplan.presentation.ui.transaction.TransactionType
 import com.ra.budgetplan.presentation.ui.transaction.getTransactionTypeID
 import com.ra.budgetplan.presentation.viewmodel.AnalyticViewModel
-import com.ra.budgetplan.util.Constants.LOCALE_ID
-import com.ra.budgetplan.util.Constants.MONTHLY_DATE_FORMAT
-import com.ra.budgetplan.util.Constants.toMonthlyTime
-import com.ra.budgetplan.util.Extension.toStringFormat
+import com.ra.budgetplan.util.LOCALE_ID
+import com.ra.budgetplan.util.MONTHLY_DATE_FORMAT
 import com.ra.budgetplan.util.Resource
+import com.ra.budgetplan.util.toMonthlyTime
+import com.ra.budgetplan.util.toStringFormat
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
 
 @AndroidEntryPoint
-class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment_analytic) {
+class AnalyticFragment : Fragment() {
+
+  private var _binding: FragmentAnalyticBinding? = null
+  private val binding get() = _binding
 
   private val viewModel: AnalyticViewModel by viewModels()
 
@@ -41,13 +46,18 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
 
   private var currentDate = LocalDate.now()
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    // Inflate the layout for this fragment
+    _binding = FragmentAnalyticBinding.inflate(inflater, container, false)
     observer()
     setupDate()
     setupCategory()
     setupPieChart()
     selectedTransactionCategory()
+    return _binding?.root
   }
 
   private fun observer() {

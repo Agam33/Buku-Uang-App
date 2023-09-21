@@ -6,8 +6,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.ra.budgetplan.util.Constants.FILE_USER_SETTING_PREF
-import com.ra.budgetplan.util.Constants.FILE_USER_SETTING_SHARED_PREF
+import com.ra.budgetplan.util.FILE_USER_SETTING_PREF
+import com.ra.budgetplan.util.FILE_USER_SETTING_SHARED_PREF
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -15,10 +15,10 @@ import com.ra.budgetplan.domain.mapper.toModel
 import com.ra.budgetplan.presentation.ui.debt.DebtFragment
 import com.ra.budgetplan.presentation.ui.debt.DebtFragment.Companion.DEBT_MODEL_ID
 import com.ra.budgetplan.presentation.ui.debt.DetailDebtActivity
-import com.ra.budgetplan.util.Constants.ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID
-import com.ra.budgetplan.util.Constants.ALARM_RECEIVER_NOTIFICATION_CHANNEL_NAME
-import com.ra.budgetplan.util.Constants.ALARM_RECEIVER_NOTIFICATION_ID
-import com.ra.budgetplan.util.Constants.coroutineIOThread
+import com.ra.budgetplan.util.ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID
+import com.ra.budgetplan.util.ALARM_RECEIVER_NOTIFICATION_CHANNEL_NAME
+import com.ra.budgetplan.util.ALARM_RECEIVER_NOTIFICATION_ID
+import com.ra.budgetplan.util.coroutineIOThread
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

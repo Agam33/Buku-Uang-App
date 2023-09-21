@@ -18,9 +18,9 @@ import com.ra.budgetplan.presentation.ui.transaction.TransactionFragment
 import com.ra.budgetplan.presentation.ui.transaction.TransactionType
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
 import com.ra.budgetplan.util.ActionType
-import com.ra.budgetplan.util.Extension.toFormatRupiah
-import com.ra.budgetplan.util.Extension.toStringFormat
 import com.ra.budgetplan.util.OnDeleteItemListener
+import com.ra.budgetplan.util.toFormatRupiah
+import com.ra.budgetplan.util.toStringFormat
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 

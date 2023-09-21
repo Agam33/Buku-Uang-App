@@ -16,6 +16,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_title"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        android:textStyle="bold"
         android:textSize="18sp"
         android:textAlignment="center"
         android:layout_width="match_parent"
@@ -35,15 +36,16 @@
 
     <TextView
         android:id="@+id/tv_msg_delete"
-        android:fontFamily="@font/montserrat_alternates_medium"
         android:text="@string/msg_delete_dialog"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
         android:textStyle="bold"
         android:layout_marginTop="32dp"
         android:layout_below="@id/divider"
         android:layout_width="match_parent"
         android:layout_height="100dp"/>
+
 
     <LinearLayout
         android:layout_below="@id/tv_msg_delete"
@@ -54,26 +56,22 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.ElevatedButton"
-            android:textColor="@color/white"
             android:id="@+id/btn_yes"
             android:textAllCaps="false"
             android:backgroundTint="@color/red_600"
             android:text="@string/txt_yes"
-            android:textSize="14sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.ElevatedButton"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/blue_10"
             android:id="@+id/btn_no"
             android:textAllCaps="false"
             android:text="@string/txt_cancel"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:layout_width="0dp"
