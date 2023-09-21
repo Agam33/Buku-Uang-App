@@ -1,12 +1,13 @@
 package com.ra.budgetplan.presentation.ui.transaction.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ra.budgetplan.R
-import com.ra.budgetplan.base.BaseFragment
 import com.ra.budgetplan.databinding.FragmentIncomeBinding
 import com.ra.budgetplan.domain.entity.DetailPendapatan
 import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
@@ -21,18 +22,26 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class IncomeFragment : BaseFragment<FragmentIncomeBinding>(R.layout.fragment_income),
+class IncomeFragment : Fragment(),
   OnDayItemClickListener,
   OnDeleteItemListener<TransactionDetail> {
 
   private val sharedViewModel: TransactionViewModel by activityViewModels()
 
+  private var _binding: FragmentIncomeBinding? = null
+  private val binding get() = _binding
+
   var onItemChangedListener: OnItemChangedListener? = null
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    // Inflate the layout for this fragment
+    _binding = FragmentIncomeBinding.inflate(inflater, container, false)
     observer()
     setupList()
+    return binding?.root
   }
 
   private fun setupList() {
@@ -78,8 +87,8 @@ class IncomeFragment : BaseFragment<FragmentIncomeBinding>(R.layout.fragment_inc
   }
 
   private fun observer() {
-    binding?.vm = sharedViewModel
-    binding?.lifecycleOwner = viewLifecycleOwner
+    _binding?.vm = sharedViewModel
+    _binding?.lifecycleOwner = viewLifecycleOwner
   }
 
   override fun onDeleteItem(item: TransactionDetail) {
