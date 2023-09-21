@@ -2,9 +2,9 @@ package com.ra.budgetplan.presentation.ui.transaction
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.ActivityCreateTransactionBinding
+import com.ra.budgetplan.base.BaseActivity
 import com.ra.budgetplan.presentation.ui.transaction.TransactionFragment.Companion.EXTRA_TRANSACTION_CREATE_OR_EDIT
 import com.ra.budgetplan.presentation.ui.transaction.TransactionFragment.Companion.EXTRA_TRANSACTION_TYPE
 import com.ra.budgetplan.presentation.ui.transaction.fragment.CreateExpenseFragment
@@ -12,20 +12,15 @@ import com.ra.budgetplan.presentation.ui.transaction.fragment.CreateIncomeFragme
 import com.ra.budgetplan.presentation.ui.transaction.fragment.CreateTransferFragment
 import com.ra.budgetplan.presentation.ui.transaction.fragment.DetailTransactionDialog.Companion.EXTRA_TRANSACTION_ID
 import com.ra.budgetplan.util.ActionType
+import com.ra.budgetplan.util.Extension.setupNoActionbar
 import com.ra.budgetplan.util.getActionType
-import com.ra.budgetplan.util.setupNoActionbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateTransactionActivity : AppCompatActivity() {
-
-  private val binding: ActivityCreateTransactionBinding by lazy {
-    ActivityCreateTransactionBinding.inflate(layoutInflater)
-  }
+class CreateTransactionActivity : BaseActivity<ActivityCreateTransactionBinding>(R.layout.activity_create_transaction) {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(binding.root)
 
     val type = intent.getStringExtra(EXTRA_TRANSACTION_TYPE) as String
 

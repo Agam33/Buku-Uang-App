@@ -119,9 +119,9 @@
 
             <com.google.android.material.divider.MaterialDivider
                 app:tabMode="fixed"
-                android:background="@color/indigo_70"
+                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"/>
+                android:layout_height="1dp"/>
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

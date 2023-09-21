@@ -26,10 +26,11 @@
             app:strokeColor="@color/indigo_90"
             app:backgroundTint="@color/white"
             android:text="@string/txt_empty"
+            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:id="@+id/edt_date"
             android:layout_marginStart="8dp"
             android:padding="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_toEndOf="@id/tv_title_category"
             android:layout_width="100dp"
             android:layout_height="60dp"/>
@@ -53,7 +54,8 @@
             android:id="@+id/btn_time"
             android:layout_marginStart="8dp"
             android:padding="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:layout_toEndOf="@id/tv_time"
             android:layout_width="100dp"
             android:layout_height="60dp"/>
@@ -170,10 +172,15 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            app:cornerRadius="4dp"
-            android:backgroundTint="@color/indigo_50"
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            app:cornerRadius="8dp"
+            android:backgroundTint="@color/blue_10"
+            android:textColor="@color/white"
             android:id="@+id/btn_save"
+            android:textSize="14sp"
             android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/txt_save"
             android:layout_below="@id/input_layout_edt_note"
             android:layout_width="match_parent"
