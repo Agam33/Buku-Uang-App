@@ -1,8 +1,6 @@
 package com.ra.budgetplan.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.asLiveData
-import app.cash.turbine.test
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -42,22 +40,14 @@ import com.ra.budgetplan.presentation.ui.transaction.adapter.DateViewType
 import com.ra.budgetplan.util.MainDispatcherRule
 import com.ra.budgetplan.util.Resource
 import com.ra.budgetplan.util.getOrAwaitValue
-import com.ra.budgetplan.util.toFormatRupiah
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.rules.TestRule
 import java.time.LocalDateTime
-import kotlin.time.Duration
 
 class TransactionViewModelTest {
   @get:Rule
