@@ -2,32 +2,34 @@ package com.ra.budgetplan.presentation.ui.debt
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.budgetplan.R
 import com.ra.budgetplan.databinding.ActivityDetailDebtBinding
 import com.ra.budgetplan.domain.model.DetailPembayaranHutangModel
-import com.ra.budgetplan.base.BaseActivity
 import com.ra.budgetplan.presentation.ui.debt.DebtFragment.Companion.DEBT_EXTRA_ACTION
 import com.ra.budgetplan.presentation.ui.debt.DebtFragment.Companion.DEBT_MODEL
 import com.ra.budgetplan.presentation.ui.debt.adapter.DebtRecordAdapter
 import com.ra.budgetplan.presentation.ui.debt.dialog.AddDebtRecordDialog
 import com.ra.budgetplan.presentation.viewmodel.DetailDebtViewModel
 import com.ra.budgetplan.util.ActionType
-import com.ra.budgetplan.util.Constants.DATE_TIME_FORMATTER
-import com.ra.budgetplan.util.Extension.toFormatRupiah
-import com.ra.budgetplan.util.Extension.toPercent
-import com.ra.budgetplan.util.Extension.toPercentText
-import com.ra.budgetplan.util.Extension.toStringFormat
+import com.ra.budgetplan.util.DATE_TIME_FORMATTER
 import com.ra.budgetplan.util.OnItemChangedListener
 import com.ra.budgetplan.util.Resource
 import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.toFormatRupiah
+import com.ra.budgetplan.util.toPercent
+import com.ra.budgetplan.util.toPercentText
+import com.ra.budgetplan.util.toStringFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.UUID
 
 @AndroidEntryPoint
-class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.activity_detail_debt), OnItemChangedListener, DebtRecordAdapter.OnItemLongClickListener {
+class DetailDebtActivity : AppCompatActivity(), OnItemChangedListener, DebtRecordAdapter.OnItemLongClickListener {
+
+  private val binding: ActivityDetailDebtBinding by lazy { ActivityDetailDebtBinding.inflate(layoutInflater) }
 
   private val viewModel: DetailDebtViewModel by viewModels()
 
@@ -35,6 +37,7 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    setContentView(binding.root)
 
     debtModelId = UUID.fromString(intent?.getStringExtra(DebtFragment.DEBT_MODEL_ID))
 

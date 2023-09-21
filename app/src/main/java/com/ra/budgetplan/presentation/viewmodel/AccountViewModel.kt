@@ -11,8 +11,8 @@ import com.ra.budgetplan.domain.usecase.akun.SaveAkun
 import com.ra.budgetplan.domain.usecase.akun.UpdateAkun
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.GetTotalPendapatan
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.GetTotalPengeluaran
-import com.ra.budgetplan.util.Extension.toFormatRupiah
 import com.ra.budgetplan.util.Resource
+import com.ra.budgetplan.util.toFormatRupiah
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

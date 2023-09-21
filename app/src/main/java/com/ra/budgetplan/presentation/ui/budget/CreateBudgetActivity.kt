@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ra.budgetplan.R
 import com.ra.budgetplan.customview.spinner.TransactionSpinnerAdapter
@@ -13,21 +14,23 @@ import com.ra.budgetplan.databinding.ActivityCreateBudgetBinding
 import com.ra.budgetplan.domain.entity.TipeKategori
 import com.ra.budgetplan.domain.model.BudgetModel
 import com.ra.budgetplan.domain.model.KategoriModel
-import com.ra.budgetplan.base.BaseActivity
 import com.ra.budgetplan.presentation.viewmodel.BudgetViewModel
 import com.ra.budgetplan.util.ActionType
-import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.StatusItem
 import com.ra.budgetplan.util.getActionType
+import com.ra.budgetplan.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
 @AndroidEntryPoint
-class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.activity_create_budget) {
+class CreateBudgetActivity : AppCompatActivity() {
+
+  private val binding: ActivityCreateBudgetBinding by lazy { ActivityCreateBudgetBinding.inflate(layoutInflater) }
 
   private val viewModel: BudgetViewModel by viewModels()
 
@@ -37,6 +40,8 @@ class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    setContentView(binding.root)
+
     observer()
     setupCategories()
 

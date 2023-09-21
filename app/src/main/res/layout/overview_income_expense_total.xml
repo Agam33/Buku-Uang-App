@@ -22,7 +22,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:text="@string/title_income"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -45,7 +45,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:text="@string/title_expense"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -68,7 +68,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:text="@string/title_total"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

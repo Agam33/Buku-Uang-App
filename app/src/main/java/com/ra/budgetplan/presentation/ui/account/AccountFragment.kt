@@ -2,27 +2,34 @@ package com.ra.budgetplan.presentation.ui.account
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.budgetplan.R
-import com.ra.budgetplan.base.BaseFragment
 import com.ra.budgetplan.customview.dialog.CautionDeleteDialog
 import com.ra.budgetplan.customview.spinner.SpinnerItemOptions
 import com.ra.budgetplan.databinding.FragmentAccountBinding
 import com.ra.budgetplan.domain.model.AkunModel
 import com.ra.budgetplan.presentation.ui.account.adapter.RvAccountAdapter
 import com.ra.budgetplan.presentation.viewmodel.AccountViewModel
-import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.Resource
 import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_account),
+class AccountFragment : Fragment(),
   RvAccountAdapter.OnOptionAccountClickCallBack {
+
+  private var _binding: FragmentAccountBinding? = null
+  private val binding get() = _binding
+
+
 
   private val viewModel: AccountViewModel by viewModels()
 
@@ -68,6 +75,15 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
   private fun refresh() {
     viewModel.getAllAccount()
     viewModel.getOverallMoney()
+  }
+
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    // Inflate the layout for this fragment
+    _binding = FragmentAccountBinding.inflate(inflater, container, false)
+    return binding?.root
   }
 
   private fun observer() {

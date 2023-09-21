@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import com.ra.budgetplan.data.local.database.dao.KategoriDao
 import com.ra.budgetplan.domain.entity.KategoriEntity
 import com.ra.budgetplan.domain.entity.TipeKategori.*
-import com.ra.budgetplan.util.Constants.coroutineIOThread
+import com.ra.budgetplan.util.coroutineIOThread
 import java.time.LocalDateTime
 import java.util.UUID
 

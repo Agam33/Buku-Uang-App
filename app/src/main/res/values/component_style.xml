@@ -6,7 +6,7 @@
     </style>
 
     <style name="ThemeOverlay.Global.FAB" parent="">
-        <item name="colorSecondary">@color/blue_10</item>
+        <item name="colorSecondary">@color/army_green_20</item>
         <item name="colorOnSecondary">@color/white</item>
     </style>
 <!-- End FAB custom-->
@@ -83,40 +83,4 @@
         <item name="cornerSize">16dp</item>
     </style>
 <!-- End Dialog-->
-
-
-<!--Font Style -->
-    <style name="Widget.App.TitleText" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/montserrat_alternates_medium</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">22dp</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-
-<!--Toolbar Style-->
-
-    <style name="Widget.App.Toolbar" parent="Widget.Material3.Toolbar">
-        <item name="titleTextColor">@color/white</item>
-        <item name="android:background">@color/blue_30</item>
-    </style>
-
-<!-- Card -->
-    <style name="Widget.App.CardFilled.Normal" parent="Widget.Material3.CardView.Filled">
-        <item name="cardBackgroundColor">@color/white</item>
-    </style>
-
-    <style name="Widget.App.CardOutlined.Normal" parent="Widget.Material3.CardView.Outlined">
-        <item name="cardBackgroundColor">@color/white</item>
-    </style>
-
-    <style name="Widget.App.CardElevated.Normal" parent="Widget.Material3.CardView.Elevated">
-        <item name="cardBackgroundColor">@color/white</item>
-    </style>
-
-<!--Button-->
-    <style name="Widget.App.Button.Normal" parent="Widget.Material3.Button">
-        <item name="android:background">@color/blue_10</item>
-    </style>
-
 </resources>
