@@ -1,6 +1,5 @@
 package com.ra.budgetplan.domain.usecase.backuprestore.impl
 
-import com.ra.budgetplan.data.local.database.AppDatabase
 import com.ra.budgetplan.domain.usecase.backuprestore.RestoreDb
 import com.ra.budgetplan.util.Constants.unZipFile
 import com.ra.budgetplan.util.StatusItem
@@ -11,12 +10,9 @@ import java.io.File
 import java.io.IOException
 import javax.inject.Inject
 
-class RestoreDbImpl @Inject constructor(
-  private val db: AppDatabase
-): RestoreDb {
+class RestoreDbImpl @Inject constructor(): RestoreDb {
   override fun invoke(src: File, dest: File): Flow<StatusItem> {
     return flow {
-      db.close()
       emit(StatusItem.LOADING)
 
       if(src.exists()) {
