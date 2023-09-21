@@ -16,7 +16,6 @@ class RestoreDbImpl @Inject constructor(
 ): RestoreDb {
   override fun invoke(src: File, dest: File): Flow<StatusItem> {
     return flow {
-      db.close()
       emit(StatusItem.LOADING)
 
       if(src.exists()) {
