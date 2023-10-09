@@ -3,7 +3,9 @@ package com.ra.budgetplan.data.local.preferences
 import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.preferencesOf
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.ra.budgetplan.presentation.ui.transaction.adapter.DateViewType
 import kotlinx.coroutines.flow.Flow
@@ -15,10 +17,35 @@ class UserSettingPrefImpl @Inject constructor(
  private val sharedPreferences: SharedPreferences
 ): UserSettingPref {
 
-  private val KEY_DATE_VIEW_TYPE = stringPreferencesKey("key-date-view-type")
-
   companion object {
+    private val KEY_DATE_VIEW_TYPE = stringPreferencesKey("key-date-view-type")
+    private val KEY_ALARM_TRANSACTION = stringPreferencesKey("key-alarm-transaction")
     private const val KEY_BACKUP_FILE_PATH = "backup-file-path"
+    private val KEY_ACTIVE_ALARM = booleanPreferencesKey("key-active-alarm")
+  }
+
+  override fun isActiveAlarmTransaction(): Flow<Boolean> {
+    return dataStore.data.map {preferences ->
+      preferences[KEY_ACTIVE_ALARM] ?: false
+    }
+  }
+
+  override suspend fun setAlarmTransaction(state: Boolean) {
+    dataStore.edit { preferences ->
+      preferences[KEY_ACTIVE_ALARM] = state
+    }
+  }
+
+  override fun getTextAlarmTransaction(): Flow<String> {
+    return dataStore.data.map { preferences ->
+     preferences[KEY_ALARM_TRANSACTION] ?: "00 : 00"
+    }
+  }
+
+  override suspend fun setTextAlarmTransaction(text: String) {
+    dataStore.edit { preferences ->
+      preferences[KEY_ALARM_TRANSACTION] = text
+    }
   }
 
   override fun getDateViewType(): Flow<String>  {

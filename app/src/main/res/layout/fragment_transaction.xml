@@ -36,7 +36,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageButton
-                            android:id="@+id/btn_view_type"
+                            android:id="@+id/btn_options"
                             android:layout_marginEnd="8dp"
                             android:background="@null"
                             android:src="@drawable/baseline_view_list_24"
@@ -82,6 +82,7 @@
                 android:id="@+id/tab_layout"
                 style="@style/ThemeOverlay.App.Transaction.TabLayout"
                 app:tabTextAppearance="?attr/textAppearanceBodyMedium"
+                app:tabBackground="@color/white"
                 app:tabMode="fixed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

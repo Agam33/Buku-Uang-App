@@ -38,9 +38,13 @@ object Constants {
   const val ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID = "alarm-receiver-channel-1"
   const val ALARM_RECEIVER_NOTIFICATION_CHANNEL_NAME = "alarm-receiver"
   const val REQUEST_READ_AND_WRITE_EXTERNAL_STORAGE = 102
+  const val TAG_TIME_PICKER_FRAGMENT = "tag-time-picker-fragment"
+  const val ALARM_TRANSACTION_NOTIFICATION_CHANNEL_ID = "alarm-transaction-ch-1"
+  const val ALARM_TRANSACTION_NOTIFICATION_CHANNEL_NAME = "alarm-transaction"
+  const val TRANSACTION_ALARM_ID = 3000001
+  const val TRANSACTION_DAILY_WORKER_NAME = "transaction-daily-worker-name"
 
   val LOCALE_ID = Locale("id", "ID")
-
 
   val REQUIRED_STORAGE_PERMISSION = mutableListOf(
     Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -49,7 +53,7 @@ object Constants {
 
   fun Int.isOverBudget(maxValue: Int): Boolean = this > maxValue
 
-  fun coroutineIOThread(action: suspend () -> Unit) {
+  inline fun coroutineIOThread(crossinline action: suspend () -> Unit) {
     CoroutineScope(Dispatchers.IO).launch {
       action()
     }
@@ -171,7 +175,7 @@ object Constants {
     return null
   }
 
-  fun isDownloadsDocument(uri: Uri?): Boolean {
+  private fun isDownloadsDocument(uri: Uri?): Boolean {
     return "com.android.providers.downloads.documents" == uri?.authority
   }
 }

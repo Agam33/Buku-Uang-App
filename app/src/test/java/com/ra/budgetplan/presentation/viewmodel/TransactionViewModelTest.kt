@@ -10,6 +10,7 @@ import com.ra.budgetplan.domain.entity.DetailPengeluaran
 import com.ra.budgetplan.domain.entity.DetailTransfer
 import com.ra.budgetplan.domain.entity.TipeKategori
 import com.ra.budgetplan.domain.mapper.toModel
+import com.ra.budgetplan.domain.usecase.akun.FindAkunById
 import com.ra.budgetplan.domain.usecase.akun.FindAllAkun
 import com.ra.budgetplan.domain.usecase.akun.FindCategoryByType
 import com.ra.budgetplan.domain.usecase.transaksi.GetTotalTransactionByDate
@@ -79,6 +80,7 @@ class TransactionViewModelTest {
   private val updateTransfer: UpdateTransfer = mock()
   private val updatePendapatan: UpdatePendapatan = mock()
   private val updatePengeluaran: UpdatePengeluaran = mock()
+  private val findAkunById: FindAkunById = mock()
 
   @Before
   fun init() {
@@ -89,8 +91,22 @@ class TransactionViewModelTest {
       getTotalPendapatanByDate, getTotalPengeluaranByDate, getTotalTransactionByDate,
       deletePengeluaranById, deleteTransferById, deletePendapatanById,
       getPendapatanById, getPengeluaranById, getTransferById,
-      updateTransfer, updatePendapatan, updatePengeluaran
+      updateTransfer, updatePendapatan, updatePengeluaran, findAkunById
     )
+  }
+
+  @Test
+  fun `checkAccountMoney, should be success`() = runTest {
+    val akun = AkunDummy.getAllAccounts()[0].toModel()
+    whenever(findAkunById.invoke(akun.uuid)).thenReturn(akun)
+
+    val amount = 1000
+
+    transactionViewModel.checkAccountMoney(akun.uuid, amount)
+
+    val status = transactionViewModel.shouldSaveTransactionState.getOrAwaitValue()
+
+    assertEquals(status, true)
   }
 
   @Test

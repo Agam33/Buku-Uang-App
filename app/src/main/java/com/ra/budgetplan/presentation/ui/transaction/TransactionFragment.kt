@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ra.budgetplan.R
-import com.ra.budgetplan.customview.dialog.date.DateViewTypeDialog
 import com.ra.budgetplan.data.local.preferences.UserSettingPref
 import com.ra.budgetplan.databinding.FragmentTransactionBinding
 import com.ra.budgetplan.presentation.ui.transaction.adapter.DateViewType
@@ -19,6 +18,7 @@ import com.ra.budgetplan.presentation.ui.transaction.adapter.TransactionPagerAda
 import com.ra.budgetplan.presentation.ui.transaction.adapter.getDateViewType
 import com.ra.budgetplan.presentation.ui.transaction.fragment.ExpenseFragment
 import com.ra.budgetplan.presentation.ui.transaction.fragment.IncomeFragment
+import com.ra.budgetplan.presentation.ui.transaction.fragment.TransactionBottomSheet
 import com.ra.budgetplan.presentation.ui.transaction.fragment.TransferFragment
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
 import com.ra.budgetplan.util.ActionType
@@ -27,6 +27,7 @@ import com.ra.budgetplan.util.Constants.LOCALE_ID
 import com.ra.budgetplan.util.Constants.MONTHLY_DATE_FORMAT
 import com.ra.budgetplan.util.Extension.toStringFormat
 import com.ra.budgetplan.util.OnItemChangedListener
+import com.ra.budgetplan.util.ZoomOutPageTransformer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -41,8 +42,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TransactionFragment : Fragment(), OnItemChangedListener {
-
-  private var GLOBAL_CURRENT_DATE: LocalDate = LocalDate.now()
 
   @Inject
   lateinit var userSettingPref: UserSettingPref
@@ -66,13 +65,13 @@ class TransactionFragment : Fragment(), OnItemChangedListener {
     setupButtonDate()
     createTransaction()
     setupOverallMoney()
-    Timber.tag("TransactionFragment").d("OnCreateView() - $GLOBAL_CURRENT_DATE")
+    Timber.tag("TransactionFragment").d("OnCreateView() - $TRANSACTION_CURRENT_DATE")
     return binding?.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    Timber.tag("TransactionFragment").d("OnViewCreated() - $GLOBAL_CURRENT_DATE")
+    Timber.tag("TransactionFragment").d("OnViewCreated() - $TRANSACTION_CURRENT_DATE")
   }
 
   private fun observer() {
@@ -87,18 +86,18 @@ class TransactionFragment : Fragment(), OnItemChangedListener {
       when (getDateViewType(it)) {
         DateViewType.MONTHLY -> {
           setCurrentDate(it)
-          binding?.tvCurrentDate?.text = GLOBAL_CURRENT_DATE.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
+          binding?.tvCurrentDate?.text = TRANSACTION_CURRENT_DATE.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
         }
         else -> {
           setCurrentDate(it)
-          binding?.tvCurrentDate?.text = GLOBAL_CURRENT_DATE.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
+          binding?.tvCurrentDate?.text = TRANSACTION_CURRENT_DATE.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
         }
       }
     }
   }
 
   private fun setupButtonDate() {
-    Timber.tag("TransactionFragment").d("setupDate() - $GLOBAL_CURRENT_DATE")
+    Timber.tag("TransactionFragment").d("setupDate() - $TRANSACTION_CURRENT_DATE")
     refreshDate()
 
     binding?.imgBtnPrevDate?.setOnClickListener {
@@ -106,14 +105,14 @@ class TransactionFragment : Fragment(), OnItemChangedListener {
         val viewType = userSettingPref.getDateViewType().first()
         when (getDateViewType(viewType)) {
           DateViewType.MONTHLY -> {
-            GLOBAL_CURRENT_DATE = GLOBAL_CURRENT_DATE.minusMonths(1)
+            TRANSACTION_CURRENT_DATE = TRANSACTION_CURRENT_DATE.minusMonths(1)
             setCurrentDate(viewType)
-            binding?.tvCurrentDate?.text = GLOBAL_CURRENT_DATE.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
+            binding?.tvCurrentDate?.text = TRANSACTION_CURRENT_DATE.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
           }
           else -> {
-            GLOBAL_CURRENT_DATE = GLOBAL_CURRENT_DATE.minusDays(1)
+            TRANSACTION_CURRENT_DATE = TRANSACTION_CURRENT_DATE.minusDays(1)
             setCurrentDate(viewType)
-            binding?.tvCurrentDate?.text = GLOBAL_CURRENT_DATE.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
+            binding?.tvCurrentDate?.text = TRANSACTION_CURRENT_DATE.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
           }
         }
       }
@@ -124,25 +123,25 @@ class TransactionFragment : Fragment(), OnItemChangedListener {
         val viewType = userSettingPref.getDateViewType().first()
         when (getDateViewType(viewType)) {
           DateViewType.MONTHLY -> {
-            GLOBAL_CURRENT_DATE = GLOBAL_CURRENT_DATE.plusMonths(1)
+            TRANSACTION_CURRENT_DATE = TRANSACTION_CURRENT_DATE.plusMonths(1)
             setCurrentDate(viewType)
             binding?.tvCurrentDate?.text =
-              GLOBAL_CURRENT_DATE.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
+              TRANSACTION_CURRENT_DATE.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
           }
 
           else -> {
-            GLOBAL_CURRENT_DATE = GLOBAL_CURRENT_DATE.plusDays(1)
+            TRANSACTION_CURRENT_DATE = TRANSACTION_CURRENT_DATE.plusDays(1)
             setCurrentDate(viewType)
             binding?.tvCurrentDate?.text =
-              GLOBAL_CURRENT_DATE.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
+              TRANSACTION_CURRENT_DATE.toStringFormat(DAILY_DATE_FORMAT, LOCALE_ID)
           }
         }
       }
     }
 
-    binding?.btnViewType?.setOnClickListener {
-      val dialog = DateViewTypeDialog()
-      dialog.show(parentFragmentManager, "dialog_date_view_type")
+    binding?.btnOptions?.setOnClickListener {
+      val bottomSheet = TransactionBottomSheet()
+      bottomSheet.show(childFragmentManager, TransactionBottomSheet.TAG)
     }
   }
 
@@ -199,8 +198,8 @@ class TransactionFragment : Fragment(), OnItemChangedListener {
     val date: Pair<LocalDateTime, LocalDateTime> = when(getDateViewType(viewType)) {
       DateViewType.MONTHLY -> {
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.YEAR, GLOBAL_CURRENT_DATE.year)
-        calendar.set(Calendar.MONTH, GLOBAL_CURRENT_DATE.month.value - 1)
+        calendar.set(Calendar.YEAR, TRANSACTION_CURRENT_DATE.year)
+        calendar.set(Calendar.MONTH, TRANSACTION_CURRENT_DATE.month.value - 1)
         val localDateTime = LocalDateTime.ofInstant(calendar.toInstant(), ZoneId.systemDefault())
 
         val fromDate = localDateTime.withDayOfMonth(1)
@@ -213,8 +212,8 @@ class TransactionFragment : Fragment(), OnItemChangedListener {
         fromDate to toDate
       }
       DateViewType.DAILY -> {
-        val fromDate = GLOBAL_CURRENT_DATE.atStartOfDay()
-        val toDate = GLOBAL_CURRENT_DATE.atTime(LocalTime.MAX)
+        val fromDate = TRANSACTION_CURRENT_DATE.atStartOfDay()
+        val toDate = TRANSACTION_CURRENT_DATE.atTime(LocalTime.MAX)
 
         fromDate to toDate
       }
@@ -244,42 +243,44 @@ class TransactionFragment : Fragment(), OnItemChangedListener {
       }
       vPagerTransaction.orientation = ViewPager2.ORIENTATION_HORIZONTAL
       vPagerTransaction.adapter = transactionPagerAdapter
+      vPagerTransaction.setPageTransformer(ZoomOutPageTransformer())
     }
     tabLayoutMediator.attach()
-  }
-
-  companion object {
-    const val EXTRA_TRANSACTION_TYPE = "transaction-type"
-    const val EXTRA_TRANSACTION_CREATE_OR_EDIT = "transaction-create-or-edit"
   }
 
   override fun onStart() {
     super.onStart()
     refreshDate()
     setupOverallMoney()
-    GLOBAL_CURRENT_DATE = LocalDate.now()
-    Timber.tag("TransactionFragment").d("OnStart() - $GLOBAL_CURRENT_DATE")
+    TRANSACTION_CURRENT_DATE = LocalDate.now()
+    Timber.tag("TransactionFragment").d("OnStart() - $TRANSACTION_CURRENT_DATE")
   }
 
   override fun onResume() {
     super.onResume()
-    Timber.tag("TransactionFragment").d("OnResume() - $GLOBAL_CURRENT_DATE")
+    Timber.tag("TransactionFragment").d("OnResume() - $TRANSACTION_CURRENT_DATE")
   }
 
   override fun onDestroyView() {
-    Timber.tag("TransactionFragment").d("OnDestroyView() - $GLOBAL_CURRENT_DATE")
+    Timber.tag("TransactionFragment").d("OnDestroyView() - $TRANSACTION_CURRENT_DATE")
     sharedViewModel.getDateViewType().removeObservers(viewLifecycleOwner)
     super.onDestroyView()
   }
 
   override fun onStop() {
     super.onStop()
-    Timber.tag("TransactionFragment").d("OnStop() - $GLOBAL_CURRENT_DATE")
+    Timber.tag("TransactionFragment").d("OnStop() - $TRANSACTION_CURRENT_DATE")
   }
 
   override fun onItemChanged() {
     refreshDate()
     setupOverallMoney()
     transactionPagerAdapter.notifyItemRangeChanged(0, transactionPagerAdapter.itemCount)
+  }
+
+  companion object {
+    private var TRANSACTION_CURRENT_DATE: LocalDate = LocalDate.now()
+    const val EXTRA_TRANSACTION_TYPE = "transaction-type"
+    const val EXTRA_TRANSACTION_CREATE_OR_EDIT = "transaction-create-or-edit"
   }
 }

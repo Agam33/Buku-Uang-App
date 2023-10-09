@@ -12,10 +12,12 @@ import com.ra.budgetplan.domain.usecase.hutang.DeleteRecordPembayaranHutang
 import com.ra.budgetplan.domain.usecase.hutang.FindAllRecordPembayaranHutang
 import com.ra.budgetplan.domain.usecase.hutang.FindHutangById
 import com.ra.budgetplan.domain.usecase.hutang.FindHutangByIdWithFlow
+import com.ra.budgetplan.domain.usecase.hutang.GetSizeListPembayaranHutangById
 import com.ra.budgetplan.domain.usecase.hutang.SavePembayaranHutang
 import com.ra.budgetplan.domain.usecase.hutang.UpdatePembayaranHutang
 import com.ra.budgetplan.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
@@ -28,7 +30,8 @@ class DetailDebtViewModel @Inject constructor(
   private val findHutangByIdWithFlow: FindHutangByIdWithFlow,
   private val findHutangById: FindHutangById,
   private val deleteRecordPembayaranHutang: DeleteRecordPembayaranHutang,
-  private val updatePembayaranHutang: UpdatePembayaranHutang
+  private val updatePembayaranHutang: UpdatePembayaranHutang,
+  private val getSizeListPembayaranHutangById: GetSizeListPembayaranHutangById
 ): BaseViewModel() {
 
   private var _rvDebtRecordState = MutableLiveData<Boolean>()
@@ -46,9 +49,20 @@ class DetailDebtViewModel @Inject constructor(
   private var _debtModel = MutableLiveData<HutangModel>()
   val debtModel: LiveData<HutangModel> get() = _debtModel
 
+  private var _sizeListPembayaranHutang = MutableLiveData<String>()
+  val sizeListPembayaranHutang: LiveData<String> = _sizeListPembayaranHutang
+
   fun setState(rvState: Boolean, emptyState: Boolean) {
     _rvDebtRecordState.postValue(rvState)
     _emptyListState.postValue(emptyState)
+  }
+
+  fun getSizeListPembayaranHutang(id: UUID) {
+    viewModelScope.launch {
+      getSizeListPembayaranHutangById.invoke(id).collect {
+        _sizeListPembayaranHutang.postValue("${it ?: 0}")
+      }
+    }
   }
 
   fun getAllAccount() {

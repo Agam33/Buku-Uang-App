@@ -1,7 +1,10 @@
 package com.ra.budgetplan.util
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,8 +19,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.ra.budgetplan.presentation.ui.MainActivity
+import com.ra.budgetplan.service.TransactionDailyWorker
 import com.ra.budgetplan.util.Constants.REQUIRED_STORAGE_PERMISSION
+import timber.log.Timber
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -26,8 +37,56 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeUnit
+import kotlin.math.abs
 
 object Extension {
+
+  fun Context.setExactAndAllowWhileIdleAlarm(
+    calendar: Calendar,
+    pendingIntent: PendingIntent,
+  ) {
+    val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+  }
+
+  fun Context.cancelAlarm(
+    pendingIntent: PendingIntent
+  ) {
+    val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    alarmManager.cancel(pendingIntent)
+  }
+
+  fun Context.setDailyWorker(calendar: Calendar) {
+    val future: Long = calendar.timeInMillis
+    val now: Long  = System.currentTimeMillis()
+    val initialDelay: Long = future - now
+
+    val constraints = Constraints.Builder()
+      .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+      .build()
+
+    val periodicRequest = PeriodicWorkRequest.Builder(
+      TransactionDailyWorker::class.java,
+      1,
+      TimeUnit.DAYS
+    )
+      .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
+      .setConstraints(constraints)
+      .build()
+
+    WorkManager.getInstance(this)
+      .enqueueUniquePeriodicWork(
+        Constants.TRANSACTION_DAILY_WORKER_NAME,
+        ExistingPeriodicWorkPolicy.UPDATE,
+        periodicRequest
+      )
+  }
+
+  fun Context.cancelDailyWorker(uniqueName: String) {
+    WorkManager.getInstance(this)
+      .cancelUniqueWork(uniqueName)
+  }
 
   fun Fragment.requestStoragePermission(): Boolean {
     return REQUIRED_STORAGE_PERMISSION.all {
@@ -192,5 +251,4 @@ object Extension {
     SDK_INT >= 33 -> getParcelable(key, T::class.java)
     else -> @Suppress("DEPRECATION") getParcelable(key) as? T
   }
-
 }
