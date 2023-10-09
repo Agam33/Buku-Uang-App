@@ -4,12 +4,17 @@ import com.ra.budgetplan.data.local.PembayaranHutangLocalDataSource
 import com.ra.budgetplan.domain.entity.DetailPembayaranHutang
 import com.ra.budgetplan.domain.entity.PembayaranHutangEntity
 import com.ra.budgetplan.domain.repository.PembayaranHutangRepository
+import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 import javax.inject.Inject
 
 class PembayaranHutangRepositoryImpl @Inject constructor(
   private val localDataSource: PembayaranHutangLocalDataSource
 ): PembayaranHutangRepository {
+  override fun getSizeListPembayaranHutangById(id: UUID): Flow<Int?> {
+    return localDataSource.getSizeListPembayaranHutangById(id)
+  }
+
   override suspend fun findAllRecordByHutangId(id: UUID): List<DetailPembayaranHutang> {
     return localDataSource.findAllRecordByHutangId(id)
   }

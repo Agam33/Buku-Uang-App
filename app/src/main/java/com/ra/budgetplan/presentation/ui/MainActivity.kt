@@ -7,6 +7,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
@@ -42,30 +43,33 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     drawerToggle.syncState()
 
     binding.navigationDrawerView.setCheckedItem(R.id.transactionFragment)
-
+    val option = NavOptions.Builder().apply {
+      setLaunchSingleTop(true)
+      setEnterAnim(R.animator.zoom_out_anim)
+    }.build()
     binding.navigationDrawerView.setNavigationItemSelectedListener { item ->
       navController.popBackStack()
       when(item.itemId) {
         R.id.menu_account -> {
-          navController.navigate(R.id.accountFragment)
+          navController.navigate(R.id.accountFragment, Bundle(), option)
         }
         R.id.menu_analytics -> {
-          navController.navigate(R.id.analyticFragment)
+          navController.navigate(R.id.analyticFragment, Bundle(), option)
         }
         R.id.menu_budget -> {
-          navController.navigate(R.id.budgetFragment)
+          navController.navigate(R.id.budgetFragment, Bundle(), option)
         }
         R.id.menu_category -> {
-          navController.navigate(R.id.categoryFragment)
+          navController.navigate(R.id.categoryFragment, Bundle(), option)
         }
         R.id.menu_transaction -> {
-          navController.navigate(R.id.transactionFragment)
+          navController.navigate(R.id.transactionFragment, Bundle(), option)
         }
         R.id.menu_backup_and_restore -> {
-          navController.navigate(R.id.backupRestoreFragment)
+          navController.navigate(R.id.backupRestoreFragment, Bundle(), option)
         }
         R.id.menu_debt -> {
-          navController.navigate(R.id.debtFragment)
+          navController.navigate(R.id.debtFragment, Bundle(), option)
         }
       }
       binding.drawerLayout.closeDrawer(GravityCompat.START)

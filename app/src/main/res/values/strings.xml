@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Buku Uang</string>
+    <string name="app_version">v1.1.2</string>
     <string name="title_menu_transaction">Transaksi</string>
     <string name="title_menu_budget">Budget</string>
     <string name="title_menu_analytics">Analisis</string>
@@ -45,6 +46,7 @@
     <string name="msg_already_exist">Sudah ada.</string>
     <string name="msg_delete">Apakah anda yakin ingin menghapus?</string>
     <string name="txt_hour_and_minute">%1s:%2s</string>
+    <string name="txt_alarm_transaction_time">%1s : %2s</string>
     <string name="msg_date_picker">Pilih Tanggal</string>
     <string name="msg_time_picker">Pilih Waktu</string>
     <string name="msg_empty">Tidak Boleh Kosong</string>
@@ -90,6 +92,13 @@
     <string name="txt_debt">Hutang</string>
     <string name="txt_detail">Detail</string>
     <string name="txt_due_date">Jatuh Tempo</string>
+    <string name="total_list">Jumlah catatan :</string>
+    <string name="txt_example_time">00 : 00</string>
+    <string name="txt_transaction_view">Transaksi View</string>
+    <string name="txt_alarm_transaction">Alarm Transaksi</string>
+    <string name="txt_transaction_alarm_msg">Jangan lupa mencatat ya!!</string>
+    <string name="txt_account_minus">"Uang pada akun akan minus. Apakah ingin tetap melanjutkan?"</string>
+    <string name="txt_continue">Lanjutkan</string>
 
     <string-array name="transaction_type">
         <item>Pengeluaran</item>

@@ -1,5 +1,6 @@
 package com.ra.budgetplan.data.repositoryimpl
 
+import app.cash.turbine.test
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -9,13 +10,34 @@ import com.ra.budgetplan.domain.repository.PembayaranHutangRepository
 import com.ra.budgetplan.dummy.model.AkunDummy
 import com.ra.budgetplan.dummy.model.HutangDummy
 import com.ra.budgetplan.dummy.model.PembayaranHutangDummy
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.util.UUID
 
 internal class PembayaranHutangRepositoryImplTest {
   private lateinit var pembayaranHutangRepository : PembayaranHutangRepository
   private val pembayaranHutangLocalDataSource: PembayaranHutangLocalDataSource = mock()
+
+
+  @Test
+  fun `getSizeListPembayaranHutangById(), should success`() = runBlocking {
+    pembayaranHutangRepository = PembayaranHutangRepositoryImpl(pembayaranHutangLocalDataSource)
+
+    val actualSize = 23
+    val uuid = UUID.randomUUID()
+
+    whenever(pembayaranHutangRepository.getSizeListPembayaranHutangById(uuid))
+      .thenReturn( flow { emit (actualSize) })
+
+    pembayaranHutangRepository.getSizeListPembayaranHutangById(uuid)
+      .test {
+        val item = awaitItem()
+        assertEquals(item, actualSize)
+        awaitComplete()
+      }
+  }
 
   @Test
   fun `FindAllRecordByHutangId, should success`() = runBlocking {

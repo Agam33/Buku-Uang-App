@@ -97,7 +97,6 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
         val percent = it.totalPengeluaran.toPercent(it.maxCicilan)
         tvPercent.text = percent.toPercentText()
         goalProgress.progress = percent.toInt()
-
         tvCurrentMoney.text = it.totalPengeluaran.toFormatRupiah()
         tvGoalMoney.text = it.maxCicilan.toFormatRupiah()
         tvDebtTitle.text = it.nama
@@ -112,6 +111,7 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
     debtModelId?.let {
       viewModel.getHutangById(it)
       viewModel.getAllDebtRecord(it)
+      viewModel.getSizeListPembayaranHutang(it)
     }
   }
 

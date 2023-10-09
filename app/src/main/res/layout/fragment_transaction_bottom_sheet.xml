@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:padding="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            style="@style/Widget.Material3.BottomSheet"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Drag handle for accessibility -->
+            <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                android:id="@+id/drag_handle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_title_alarm_time"
+                android:layout_below="@id/drag_handle"
+                android:textSize="12sp"
+                android:text="@string/txt_alarm_transaction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_below="@id/tv_title_alarm_time"
+                android:id="@+id/tv_alarm_time"
+                android:textAlignment="center"
+                android:text="@string/txt_example_time"
+                android:textSize="32sp"
+                style="@style/Widget.App.TitleText"
+                android:alpha=".3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:layout_below="@id/tv_title_alarm_time"
+                android:id="@+id/switch_active_alarm"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider_alarm"
+                android:layout_below="@id/switch_active_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_marginTop="16dp"
+                android:id="@+id/tv_transaction_view"
+                android:layout_below="@id/divider_alarm"
+                android:textSize="12sp"
+                android:text="@string/txt_transaction_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RadioGroup
+                android:checkedButton="@id/rb_daily"
+                android:id="@+id/radio_group"
+                android:layout_below="@id/tv_transaction_view"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="UselessParent">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rb_daily"
+                    android:text="@string/txt_daily"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:layout_marginStart="16dp"
+                    android:id="@+id/rb_monthly"
+                    android:text="@string/txt_monthly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider_transaction_view"
+                android:layout_marginBottom="16dp"
+                android:layout_below="@id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.widget.AdapterView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.ra.budgetplan.R
@@ -44,6 +46,8 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
   private var fromAccountId: UUID? = null
   private var toAccountId: UUID? = null
 
+  private var alertDialog: AlertDialog? = null
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     observer()
@@ -65,7 +69,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
         binding?.run {
           val uuid = arguments?.getString(DetailTransactionDialog.EXTRA_TRANSACTION_ID) as String
           viewModel.getTransferById(UUID.fromString(uuid))
-          setupEditExpense()
+          setupEditTransfer()
         }
       }
     }
@@ -93,7 +97,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
     }
   }
 
-  private fun setupEditExpense() {
+  private fun setupEditTransfer() {
     binding?.run {
       viewModel.transferModel.observe(viewLifecycleOwner) { model ->
         edtAmount.text = Editable.Factory.getInstance().newEditable(model.jumlah.toString())
@@ -104,13 +108,13 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
         setupDatePicker(calendar)
 
         btnSave.setOnClickListener {
-          updateExpense(model)
+          updateTransfer(model)
         }
       }
     }
   }
 
-  private fun updateExpense(model: TransferModel) {
+  private fun updateTransfer(model: TransferModel) {
     binding?.run {
       val amount: String = edtAmount.text.toString()
       val note: String = edtNote.text.toString()
@@ -145,11 +149,25 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
         idToAkun = toAccountId ?: return@run
       )
 
-      viewModel.updateTransfer(transferModel, model)
+      viewModel.checkAccountMoney(fromAccountId ?: return@run, amount.toInt())
 
-      showShortToast(getString(R.string.msg_success))
-
-      activity?.finish()
+      viewModel.shouldSaveTransactionState.observe(viewLifecycleOwner) { isSave ->
+        if (isSave) {
+          viewModel.updateTransfer(transferModel, model)
+          showShortToast(getString(R.string.msg_success))
+          activity?.finish()
+        } else {
+          if(alertDialog == null || !alertDialog!!.isShowing) {
+            val builder = MaterialAlertDialogBuilder(requireContext())
+              .setMessage(requireContext().resources.getString(R.string.txt_account_minus))
+              .setPositiveButton(requireContext().resources.getString(R.string.txt_continue)) { _, _ ->
+                viewModel.setSavePengeluaranState(true)
+              }
+            alertDialog = builder.create()
+            alertDialog!!.show()
+          }
+        }
+      }
     }
   }
 
@@ -188,11 +206,25 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
         idToAkun = toAccountId ?: return@run
       )
 
-      viewModel.saveTransfer(transferModel)
+      viewModel.checkAccountMoney(fromAccountId ?: return@run, amount.toInt())
 
-      showShortToast(getString(R.string.msg_success))
-
-      activity?.finish()
+      viewModel.shouldSaveTransactionState.observe(viewLifecycleOwner) { isSave ->
+        if (isSave) {
+          viewModel.saveTransfer(transferModel)
+          showShortToast(getString(R.string.msg_success))
+          activity?.finish()
+        } else {
+          if(alertDialog == null || !alertDialog!!.isShowing) {
+            val builder = MaterialAlertDialogBuilder(requireContext())
+              .setMessage(requireContext().resources.getString(R.string.txt_account_minus))
+              .setPositiveButton(requireContext().resources.getString(R.string.txt_continue)) { _, _ ->
+                viewModel.setSavePengeluaranState(true)
+              }
+            alertDialog = builder.create()
+            alertDialog!!.show()
+          }
+        }
+      }
     }
   }
 
