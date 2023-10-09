@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.widget.AdapterView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.ra.budgetplan.R
@@ -20,6 +22,7 @@ import com.ra.budgetplan.domain.model.PengeluaranModel
 import com.ra.budgetplan.presentation.ui.transaction.TransactionFragment
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
 import com.ra.budgetplan.util.ActionType
+import com.ra.budgetplan.util.Constants
 import com.ra.budgetplan.util.Constants.DATE_PATTERN
 import com.ra.budgetplan.util.Constants.DATE_TIME_FORMATTER
 import com.ra.budgetplan.util.Extension.checkTimeFormat
@@ -45,6 +48,8 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
 
   private var accountId: UUID? = null
   private var categoryId: UUID? = null
+
+  private var alertDialog: AlertDialog? = null
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -175,7 +180,7 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
     }
 
     binding?.btnTime?.setOnClickListener {
-      timePicker.show(parentFragmentManager, "Time Picker")
+      timePicker.show(parentFragmentManager, Constants.TAG_TIME_PICKER_FRAGMENT)
     }
   }
 
@@ -205,7 +210,7 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
       val amount: String = edtAmount.text.toString()
       val note: String = edtNote.text.toString()
 
-      if(amount.isBlank()) {
+      if (amount.isBlank()) {
         showShortToast(getString(R.string.msg_empty))
         return
       }
@@ -227,11 +232,25 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
         updatedAt = createdAt
       )
 
-      viewModel.savePengeluaran(pengeluaranModel)
+      viewModel.checkAccountMoney(accountId ?: return@run, amount.toInt())
 
-      showShortToast(getString(R.string.msg_success))
-
-      activity?.finish()
+      viewModel.shouldSaveTransactionState.observe(viewLifecycleOwner) { isSave ->
+        if (isSave) {
+          viewModel.savePengeluaran(pengeluaranModel)
+          showShortToast(getString(R.string.msg_success))
+          activity?.finish()
+        } else {
+          if(alertDialog == null || !alertDialog!!.isShowing) {
+            val builder = MaterialAlertDialogBuilder(requireContext())
+              .setMessage(requireContext().resources.getString(R.string.txt_account_minus))
+              .setPositiveButton(requireContext().resources.getString(R.string.txt_continue)) { _, _ ->
+                viewModel.setSavePengeluaranState(true)
+              }
+            alertDialog = builder.create()
+            alertDialog!!.show()
+          }
+        }
+      }
     }
   }
 

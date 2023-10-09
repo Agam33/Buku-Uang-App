@@ -1,8 +1,6 @@
 package com.ra.budgetplan.presentation.ui.debt
 
-import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -19,10 +17,14 @@ import com.ra.budgetplan.databinding.FragmentDebtBinding
 import com.ra.budgetplan.domain.model.HutangModel
 import com.ra.budgetplan.presentation.ui.debt.adapter.DebtAdapter
 import com.ra.budgetplan.presentation.viewmodel.DebtViewModel
-import com.ra.budgetplan.receiver.AlarmReceiver
+import com.ra.budgetplan.service.AlarmCategory
+import com.ra.budgetplan.service.AlarmReceiver
+import com.ra.budgetplan.service.AlarmReceiver.Companion.ALARM_CATEGORY
 import com.ra.budgetplan.util.ActionType
 import com.ra.budgetplan.util.Constants.DATE_PATTERN
 import com.ra.budgetplan.util.Constants.LOCALE_ID
+import com.ra.budgetplan.util.Extension.cancelAlarm
+import com.ra.budgetplan.util.Extension.setExactAndAllowWhileIdleAlarm
 import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.Resource
 import com.ra.budgetplan.util.StatusItem
@@ -127,8 +129,8 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
       override fun setOnItemAlarm(model: HutangModel, adapterPosition: Int) {
         val alarmId = model.uuid.hashCode()
 
-        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireContext(), AlarmReceiver::class.java).apply {
+          putExtra(ALARM_CATEGORY, AlarmCategory.DEBT.name)
           putExtra(DEBT_MODEL_ID, model.uuid.toString())
           putExtra(DEBT_ALARM_EXTRA_TITLE, model.nama)
           putExtra(DEBT_ALARM_EXTRA_ID, alarmId)
@@ -156,7 +158,7 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
                   when(status) {
                     StatusItem.LOADING -> {}
                     StatusItem.SUCCESS -> {
-                      alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+                      requireContext().setExactAndAllowWhileIdleAlarm(calendar, pendingIntent)
                       debtAdapter.notifyItemChanged(adapterPosition)
                       showShortToast(requireContext().getString(R.string.msg_success))
                     }
@@ -182,7 +184,7 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
                   when(status) {
                     StatusItem.LOADING -> {}
                     StatusItem.SUCCESS -> {
-                      alarmManager.cancel(pendingIntent)
+                      requireContext().cancelAlarm(pendingIntent)
                       debtAdapter.notifyItemChanged(adapterPosition)
                     }
                     StatusItem.FAILED -> {}

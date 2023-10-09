@@ -7,6 +7,7 @@ import com.ra.budgetplan.domain.usecase.hutang.DeleteRecordPembayaranHutang
 import com.ra.budgetplan.domain.usecase.hutang.FindAllRecordPembayaranHutang
 import com.ra.budgetplan.domain.usecase.hutang.FindHutangById
 import com.ra.budgetplan.domain.usecase.hutang.FindHutangByIdWithFlow
+import com.ra.budgetplan.domain.usecase.hutang.GetSizeListPembayaranHutangById
 import com.ra.budgetplan.domain.usecase.hutang.SavePembayaranHutang
 import com.ra.budgetplan.domain.usecase.hutang.ShowAllHutang
 import com.ra.budgetplan.domain.usecase.hutang.UpdateHutang
@@ -18,6 +19,7 @@ import com.ra.budgetplan.domain.usecase.hutang.impl.DeleteRecordPembayaranHutang
 import com.ra.budgetplan.domain.usecase.hutang.impl.FindAllRecordPembayaranHutangImpl
 import com.ra.budgetplan.domain.usecase.hutang.impl.FindHutangByIdImpl
 import com.ra.budgetplan.domain.usecase.hutang.impl.FindHutangByIdWithFlowImpl
+import com.ra.budgetplan.domain.usecase.hutang.impl.GetSizeListPembayaranHutangByIdImpl
 import com.ra.budgetplan.domain.usecase.hutang.impl.SavePembayaranHutangImpl
 import com.ra.budgetplan.domain.usecase.hutang.impl.ShowAllHutangImpl
 import com.ra.budgetplan.domain.usecase.hutang.impl.UpdateHutangImpl
@@ -30,6 +32,9 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 interface UseCaseHutangModule {
+
+  @Binds
+  fun bindGetSizePembayaranHutangById(getSizeListPembayaranHutangByIdImpl: GetSizeListPembayaranHutangByIdImpl): GetSizeListPembayaranHutangById
 
   @Binds
   fun bindCreateHutang(createHutangImpl: CreateHutangImpl): CreateHutang

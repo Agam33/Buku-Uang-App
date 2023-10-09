@@ -14,6 +14,7 @@ import com.ra.budgetplan.domain.model.KategoriModel
 import com.ra.budgetplan.domain.model.PendapatanModel
 import com.ra.budgetplan.domain.model.PengeluaranModel
 import com.ra.budgetplan.domain.model.TransferModel
+import com.ra.budgetplan.domain.usecase.akun.FindAkunById
 import com.ra.budgetplan.domain.usecase.akun.FindAllAkun
 import com.ra.budgetplan.domain.usecase.akun.FindCategoryByType
 import com.ra.budgetplan.domain.usecase.transaksi.GetTotalTransactionByDate
@@ -71,7 +72,11 @@ class TransactionViewModel @Inject constructor(
   private val updateTransfer: UpdateTransfer,
   private val updatePendapatan: UpdatePendapatan,
   private val updatePengeluaran: UpdatePengeluaran,
+  private val findAkunById: FindAkunById
 ): BaseViewModel() {
+
+  private var _shouldSaveTransactionState = MutableLiveData<Boolean>()
+  val shouldSaveTransactionState: LiveData<Boolean> = _shouldSaveTransactionState
 
   private var _pendapatanModel = MutableLiveData<PendapatanModel>()
   val pendapatanModel: LiveData<PendapatanModel> = _pendapatanModel
@@ -130,6 +135,20 @@ class TransactionViewModel @Inject constructor(
   private var _detailTransaction = MutableLiveData<TransactionDetail>()
   val detailTransaction: LiveData<TransactionDetail> = _detailTransaction
 
+  fun setSavePengeluaranState(state: Boolean) {
+    _shouldSaveTransactionState.postValue(state)
+  }
+
+  fun checkAccountMoney(idAkun: UUID, amount: Int) {
+    viewModelScope.launch {
+      val account = findAkunById.invoke(idAkun)
+      if(account.total - amount < 0) {
+        setSavePengeluaranState(false)
+      } else {
+        setSavePengeluaranState(true)
+      }
+    }
+  }
 
   fun getPendapatanById(uuid: UUID) {
     viewModelScope.launch {

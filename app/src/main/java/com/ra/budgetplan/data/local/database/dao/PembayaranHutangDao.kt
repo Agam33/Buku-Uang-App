@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.ra.budgetplan.domain.entity.DetailPembayaranHutang
 import com.ra.budgetplan.domain.entity.PembayaranHutangEntity
+import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 @Dao
@@ -16,6 +17,9 @@ interface PembayaranHutangDao {
           "WHERE pht.id_hutang = :id " +
           "ORDER BY pht.updated_at DESC")
   suspend fun findAllRecordByHutangId(id: UUID): List<DetailPembayaranHutang>
+
+  @Query("SELECT COUNT(*) FROM pembayaran_hutang_tbl AS pht WHERE pht.id_hutang = :id")
+  fun getSizeListPembayaranHutangById(id: UUID): Flow<Int?>
 
   @Insert
   suspend fun save(pembayaran: PembayaranHutangEntity)

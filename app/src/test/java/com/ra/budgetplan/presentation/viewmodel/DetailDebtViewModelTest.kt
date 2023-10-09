@@ -11,6 +11,7 @@ import com.ra.budgetplan.domain.usecase.hutang.DeleteRecordPembayaranHutang
 import com.ra.budgetplan.domain.usecase.hutang.FindAllRecordPembayaranHutang
 import com.ra.budgetplan.domain.usecase.hutang.FindHutangById
 import com.ra.budgetplan.domain.usecase.hutang.FindHutangByIdWithFlow
+import com.ra.budgetplan.domain.usecase.hutang.GetSizeListPembayaranHutangById
 import com.ra.budgetplan.domain.usecase.hutang.SavePembayaranHutang
 import com.ra.budgetplan.domain.usecase.hutang.UpdatePembayaranHutang
 import com.ra.budgetplan.dummy.model.AkunDummy
@@ -21,12 +22,14 @@ import com.ra.budgetplan.util.Resource
 import com.ra.budgetplan.util.StatusItem
 import com.ra.budgetplan.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.rules.TestRule
+import java.util.UUID
 
 class DetailDebtViewModelTest {
   @get:Rule
@@ -44,6 +47,8 @@ class DetailDebtViewModelTest {
   private val findHutangById: FindHutangById = mock()
   private val deleteRecordPembayaranHutang: DeleteRecordPembayaranHutang = mock()
   private val updatePembayaranHutang: UpdatePembayaranHutang = mock()
+  private val getSizeListPembayaranHutangById: GetSizeListPembayaranHutangById = mock()
+
 
   @Before
   fun init() {
@@ -54,8 +59,24 @@ class DetailDebtViewModelTest {
       findHutangByIdWithFlow,
       findHutangById,
       deleteRecordPembayaranHutang,
-      updatePembayaranHutang
+      updatePembayaranHutang,
+      getSizeListPembayaranHutangById
     )
+  }
+
+  @Test
+  fun `GetSizeListPembayaranHutangById(), should success`() = runBlocking {
+    val actualSize = 23
+    val uuid = UUID.randomUUID()
+
+    whenever(getSizeListPembayaranHutangById.invoke(uuid))
+      .thenReturn( flow { emit(actualSize) } )
+
+    detailDebtViewModel.getSizeListPembayaranHutang(uuid)
+
+    val expectedItem = detailDebtViewModel.sizeListPembayaranHutang.getOrAwaitValue()
+
+    assertEquals(expectedItem, actualSize.toString())
   }
 
   @Test
