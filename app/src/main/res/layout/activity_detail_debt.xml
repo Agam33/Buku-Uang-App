@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.ra.budgetplan.presentation.viewmodel.DetailDebtViewModel" />
+            type="com.ra.bkuang.presentation.viewmodel.DetailDebtViewModel" />
     </data>
 
     <RelativeLayout

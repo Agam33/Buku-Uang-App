@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.ra.budgetplan.presentation.viewmodel.DebtViewModel" />
+            type="com.ra.bkuang.presentation.viewmodel.DebtViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
