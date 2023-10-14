@@ -7,7 +7,7 @@ import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.repository.HutangRepository
 import com.ra.budgetplan.domain.repository.PembayaranHutangRepository
 import com.ra.budgetplan.domain.usecase.hutang.SavePembayaranHutang
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -17,9 +17,9 @@ class SavePembayaranHutangImpl @Inject constructor(
   private val hutangRepository: HutangRepository,
   private val akunRepository: AkunRepository
 ): SavePembayaranHutang {
-  override suspend fun invoke(pembayaranHutangModel: PembayaranHutangModel): Flow<StatusItem> {
+  override suspend fun invoke(pembayaranHutangModel: PembayaranHutangModel): Flow<ResourceState> {
     return flow {
-      emit(StatusItem.LOADING)
+      emit(ResourceState.LOADING)
       val accountModel = akunRepository.findById(pembayaranHutangModel.idAkun).toModel()
       val debtModel = hutangRepository.findById(pembayaranHutangModel.idHutang).toModel()
 
@@ -28,7 +28,7 @@ class SavePembayaranHutangImpl @Inject constructor(
 
       pembayaranHutangRepository.save(pembayaranHutangModel.toEntity())
 
-      emit(StatusItem.SUCCESS)
+      emit(ResourceState.SUCCESS)
 
       hutangRepository.update(debtModel.toEntity())
       akunRepository.update(accountModel.toEntity())

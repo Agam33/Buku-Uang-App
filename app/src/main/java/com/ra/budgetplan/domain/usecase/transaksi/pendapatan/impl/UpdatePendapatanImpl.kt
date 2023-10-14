@@ -6,26 +6,32 @@ import com.ra.budgetplan.domain.model.PendapatanModel
 import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.repository.PendapatanRepository
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.UpdatePendapatan
+import com.ra.budgetplan.util.ResourceState
 import javax.inject.Inject
 
 class UpdatePendapatanImpl @Inject constructor(
   private val repository: PendapatanRepository,
   private val accountRepository: AkunRepository
 ): UpdatePendapatan {
-  override suspend fun invoke(newPendapatanModel: PendapatanModel, oldPendapatanModel: PendapatanModel) {
-    repository.update(newPendapatanModel.toEntity())
+  override suspend fun invoke(newPendapatanModel: PendapatanModel, oldPendapatanModel: PendapatanModel): ResourceState {
+    return try {
+      repository.update(newPendapatanModel.toEntity())
 
-    val newAccount = accountRepository.findById(newPendapatanModel.idAkun).toModel()
+      val newAccount = accountRepository.findById(newPendapatanModel.idAkun).toModel()
 
-    newAccount.total += newPendapatanModel.jumlah
+      newAccount.total += newPendapatanModel.jumlah
 
-    accountRepository.update(newAccount.toEntity())
+      accountRepository.update(newAccount.toEntity())
 
-    val oldAccount = accountRepository.findById(oldPendapatanModel.idAkun).toModel()
+      val oldAccount = accountRepository.findById(oldPendapatanModel.idAkun).toModel()
 
-    oldAccount.total -= oldPendapatanModel.jumlah
+      oldAccount.total -= oldPendapatanModel.jumlah
 
-    accountRepository.update(oldAccount.toEntity())
+      accountRepository.update(oldAccount.toEntity())
 
+      ResourceState.SUCCESS
+    } catch (e: Exception) {
+      ResourceState.FAILED
+    }
   }
 }

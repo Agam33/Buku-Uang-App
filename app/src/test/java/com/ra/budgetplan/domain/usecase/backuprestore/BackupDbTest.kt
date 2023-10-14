@@ -2,7 +2,7 @@ package com.ra.budgetplan.domain.usecase.backuprestore
 
 import com.ra.budgetplan.domain.usecase.backuprestore.impl.BackupDbImpl
 import com.ra.budgetplan.util.Constants.DB_NAME
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -14,7 +14,7 @@ class BackupDbTest {
   @Test
   fun TestBackupShouldBeFailed() = runBlocking {
     val backupDb: BackupDb = BackupDbImpl()
-    val actualStatus = StatusItem.FAILED
+    val actualStatus = ResourceState.FAILED
 
     val srcFile = File("/test/$DB_NAME")
     val destFile = File("/storage/emulated/0/Download")

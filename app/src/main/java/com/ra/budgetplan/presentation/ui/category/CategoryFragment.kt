@@ -20,7 +20,7 @@ import com.ra.budgetplan.presentation.ui.category.adapter.RvGroupCategoryAdapter
 import com.ra.budgetplan.presentation.viewmodel.CategoryViewModel
 import com.ra.budgetplan.util.ActionType
 import com.ra.budgetplan.util.Extension.showShortToast
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -90,13 +90,13 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
               viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.deleteCategory(kategoriModel).collect { status ->
                   when(status) {
-                    StatusItem.SUCCESS -> {
+                    ResourceState.SUCCESS -> {
                       refresh()
                       showShortToast(requireContext().resources.getString(R.string.msg_success))
                       deleteDialog.dismiss()
                     }
-                    StatusItem.LOADING -> {}
-                    StatusItem.FAILED -> {}
+                    ResourceState.LOADING -> {}
+                    ResourceState.FAILED -> {}
                   }
                 }
               }

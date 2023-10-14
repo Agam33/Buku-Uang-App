@@ -17,7 +17,7 @@ import com.ra.budgetplan.dummy.model.BudgetDummy
 import com.ra.budgetplan.dummy.model.KategoriDummy
 import com.ra.budgetplan.util.MainDispatcherRule
 import com.ra.budgetplan.util.Resource
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -61,13 +61,13 @@ class BudgetViewModelTest {
   fun `CreateBudget, should be success`() = runTest {
     val budget = BudgetDummy.getAllBudget()[0].toModel()
 
-    val actualStatusItem = StatusItem.SUCCESS
+    val actualResourceState = ResourceState.SUCCESS
     whenever(createBudget.invoke(budget.bulanTahun, budget.bulanTahun, budget))
-      .thenReturn(flow { emit(actualStatusItem) })
+      .thenReturn(flow { emit(actualResourceState) })
 
     budgetViewModel.createBudget(budget).test {
       val expectedVal = awaitItem()
-      assertEquals(actualStatusItem, expectedVal)
+      assertEquals(actualResourceState, expectedVal)
       awaitComplete()
     }
   }
@@ -76,13 +76,13 @@ class BudgetViewModelTest {
   fun `UpdateBudget, should be success`() = runTest {
     val budget = BudgetDummy.getAllBudget()[0].toModel()
 
-    val actualStatusItem = StatusItem.SUCCESS
+    val actualResourceState = ResourceState.SUCCESS
     whenever(editBudget.invoke(budget))
-      .thenReturn(flow { emit(actualStatusItem) })
+      .thenReturn(flow { emit(actualResourceState) })
 
     budgetViewModel.updateBudget(budget).test {
       val expectedVal = awaitItem()
-      assertEquals(actualStatusItem, expectedVal)
+      assertEquals(actualResourceState, expectedVal)
       awaitComplete()
     }
   }
@@ -91,7 +91,7 @@ class BudgetViewModelTest {
   fun `DeleteBudgetById, should be success`() = runTest {
     val budget = BudgetDummy.getAllBudget()[0].toModel()
 
-    val actualStatus = StatusItem.SUCCESS
+    val actualStatus = ResourceState.SUCCESS
     whenever(deleteBudgetById.invoke(budget.uuid))
       .thenReturn(flow { emit(actualStatus) })
 

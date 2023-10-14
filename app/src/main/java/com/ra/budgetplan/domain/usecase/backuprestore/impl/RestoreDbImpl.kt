@@ -2,7 +2,7 @@ package com.ra.budgetplan.domain.usecase.backuprestore.impl
 
 import com.ra.budgetplan.domain.usecase.backuprestore.RestoreDb
 import com.ra.budgetplan.util.Constants.unZipFile
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,20 +11,20 @@ import java.io.IOException
 import javax.inject.Inject
 
 class RestoreDbImpl @Inject constructor(): RestoreDb {
-  override fun invoke(src: File, dest: File): Flow<StatusItem> {
+  override fun invoke(src: File, dest: File): Flow<ResourceState> {
     return flow {
-      emit(StatusItem.LOADING)
+      emit(ResourceState.LOADING)
 
       if(src.exists()) {
         try {
           unZipFile(src, dest)
           delay(500)
-          emit(StatusItem.SUCCESS)
+          emit(ResourceState.SUCCESS)
         } catch (e: IOException) {
-          emit(StatusItem.FAILED)
+          emit(ResourceState.FAILED)
         }
       } else {
-        emit(StatusItem.FAILED)
+        emit(ResourceState.FAILED)
       }
     }
   }

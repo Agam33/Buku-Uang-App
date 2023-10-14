@@ -40,6 +40,7 @@ import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
 import com.ra.budgetplan.presentation.ui.transaction.adapter.DateViewType
 import com.ra.budgetplan.util.MainDispatcherRule
 import com.ra.budgetplan.util.Resource
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -102,9 +103,11 @@ class TransactionViewModelTest {
 
     val amount = 1000
 
-    transactionViewModel.checkAccountMoney(akun.uuid, amount)
+    transactionViewModel.checkAccountMoney(akun.uuid, amount) {
+      transactionViewModel.setSaveTransactionState(true)
+    }
 
-    val status = transactionViewModel.shouldSaveTransactionState.getOrAwaitValue()
+    val status = transactionViewModel.saveTransactionState.getOrAwaitValue()
 
     assertEquals(status, true)
   }
@@ -113,108 +116,138 @@ class TransactionViewModelTest {
   fun `UpdateTransfer, should be success`() = runTest {
     val transfer = TransferDummy.getAllTransfer()[0].toModel()
 
-    whenever(updateTransfer.invoke(transfer, transfer))
-      .thenReturn(Unit)
+    val actualValue = ResourceState.SUCCESS
 
-    transactionViewModel.updateTransfer(transfer, transfer)
+    whenever(updateTransfer.invoke(transfer, transfer))
+      .thenReturn(actualValue)
+
+    val expectedVal = transactionViewModel.updateTransfer(transfer, transfer)
 
     verify(updateTransfer).invoke(transfer, transfer)
+
+    assertEquals(actualValue, expectedVal)
   }
 
   @Test
   fun `UpdatePengeluaran, should be success`() = runTest {
     val pengeluaran = PengeluaranDummy.getAllPengeluaran()[0].toModel()
 
-    whenever(updatePengeluaran.invoke(pengeluaran, pengeluaran))
-      .thenReturn(Unit)
+    val actualVal = ResourceState.SUCCESS
 
-    transactionViewModel.updatePengeluaran(pengeluaran, pengeluaran)
+    whenever(updatePengeluaran.invoke(pengeluaran, pengeluaran))
+      .thenReturn(actualVal)
+
+    val expectedVal = transactionViewModel.updatePengeluaran(pengeluaran, pengeluaran)
 
     verify(updatePengeluaran).invoke(pengeluaran, pengeluaran)
+
+    assertEquals(actualVal, expectedVal)
   }
 
   @Test
   fun `UpdatePendapatan, should be success`() = runTest {
     val pendapatan = PendapatanDummy.getAllPendapatan()[0].toModel()
 
-    whenever(updatePendapatan.invoke(pendapatan, pendapatan))
-      .thenReturn(Unit)
+    val actualVal = ResourceState.SUCCESS
 
-    transactionViewModel.updatePendapatan(pendapatan, pendapatan)
+    whenever(updatePendapatan.invoke(pendapatan, pendapatan))
+      .thenReturn(actualVal)
+
+    val expectedVal = transactionViewModel.updatePendapatan(pendapatan, pendapatan)
 
     verify(updatePendapatan).invoke(pendapatan, pendapatan)
+
+    assertEquals(actualVal, expectedVal)
   }
 
   @Test
   fun `DeleteTransferById, should be success`() = runTest {
     val transferId = TransferDummy.getAllTransfer()[0].toModel().uuid
 
+    val actualVal = ResourceState.SUCCESS
     whenever(deleteTransferById.invoke(transferId))
-      .thenReturn(Unit)
+      .thenReturn(actualVal)
 
-    transactionViewModel.deleteTransferById(transferId)
+    val expectedVal = transactionViewModel.deleteTransferById(transferId)
 
     verify(deleteTransferById).invoke(transferId)
+
+    assertEquals(expectedVal, actualVal)
   }
 
   @Test
   fun `DeletePengeluaranById, should be success`() = runTest {
     val pengeluaranId = PengeluaranDummy.getAllPengeluaran()[0].toModel().uuid
 
+    val actualVal = ResourceState.SUCCESS
     whenever(deletePengeluaranById.invoke(pengeluaranId))
-      .thenReturn(Unit)
+      .thenReturn(actualVal)
 
-    transactionViewModel.deletePengeluaranById(pengeluaranId)
+    val expectedVal = transactionViewModel.deletePengeluaranById(pengeluaranId)
 
     verify(deletePengeluaranById).invoke(pengeluaranId)
+
+    assertEquals(expectedVal, actualVal)
   }
 
   @Test
   fun `DeletePendapatanById, should be success`() = runTest {
     val pendapatanId = PendapatanDummy.getAllPendapatan()[0].toModel().uuid
 
+    val actualVal = ResourceState.SUCCESS
     whenever(deletePendapatanById.invoke(pendapatanId))
-      .thenReturn(Unit)
+      .thenReturn(actualVal)
 
-    transactionViewModel.deletePendapatanById(pendapatanId)
+    val expectedVal = transactionViewModel.deletePendapatanById(pendapatanId)
 
     verify(deletePendapatanById).invoke(pendapatanId)
+
+    assertEquals(actualVal, expectedVal)
   }
 
   @Test
   fun `SaveTransfer, should be success`() = runTest {
     val transferModel = TransferDummy.getAllTransfer()[0].toModel()
 
+    val actualVal = ResourceState.SUCCESS
     whenever(saveTransfer.invoke(transferModel))
-      .thenReturn(Unit)
+      .thenReturn(actualVal)
 
-    transactionViewModel.saveTransfer(transferModel)
+    val expectedVal = transactionViewModel.saveTransfer(transferModel)
 
     verify(saveTransfer).invoke(transferModel)
+
+    assertEquals(actualVal, expectedVal)
   }
 
   @Test
   fun `SavePendapatan, should be success`() = runTest {
     val pendapatanModel = PendapatanDummy.getAllPendapatan()[0].toModel()
 
+    val actualVal = ResourceState.SUCCESS
     whenever(savePendapatan.invoke(pendapatanModel))
-      .thenReturn(Unit)
+      .thenReturn(actualVal)
 
-    transactionViewModel.savePendapatan(pendapatanModel)
+    val expectedVal = transactionViewModel.savePendapatan(pendapatanModel)
 
     verify(savePendapatan).invoke(pendapatanModel)
+
+    assertEquals(actualVal, expectedVal)
   }
 
   @Test
   fun `SavePengeluaran, should be success`() = runTest {
     val pengeluaranModel = PengeluaranDummy.getAllPengeluaran()[0].toModel()
 
+    val actualVal = ResourceState.SUCCESS
     whenever(savePengeluaran.invoke(pengeluaranModel))
-      .thenReturn(Unit)
+      .thenReturn(actualVal)
 
-    transactionViewModel.savePengeluaran(pengeluaranModel)
+    val expectedVal = transactionViewModel.savePengeluaran(pengeluaranModel)
 
     verify(savePengeluaran).invoke(pengeluaranModel)
+
+    assertEquals(actualVal, expectedVal)
   }
 
   @Test

@@ -5,8 +5,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.ra.budgetplan.domain.repository.BudgetRepository
 import com.ra.budgetplan.domain.usecase.budget.DeleteBudgetById
 import com.ra.budgetplan.dummy.model.BudgetDummy
-import com.ra.budgetplan.util.StatusItem
-import kotlinx.coroutines.flow.flow
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
@@ -30,6 +29,6 @@ internal class DeleteBudgetByIdImplTest {
 
     val expectedVal = deleteBudgetById.invoke(actualBudget.uuid).last()
 
-    assertEquals(StatusItem.SUCCESS, expectedVal)
+    assertEquals(ResourceState.SUCCESS, expectedVal)
   }
 }

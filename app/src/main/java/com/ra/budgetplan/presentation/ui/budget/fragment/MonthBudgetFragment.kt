@@ -22,7 +22,7 @@ import com.ra.budgetplan.util.Constants.LOCALE_ID
 import com.ra.budgetplan.util.Constants.MONTHLY_DATE_FORMAT
 import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.Extension.toStringFormat
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -106,14 +106,14 @@ class MonthBudgetFragment : BaseFragment<FragmentMonthBudgetBinding>(R.layout.fr
         lifecycleScope.launch {
           viewModel.deleteBudgetById(detailBudget.budget.uuid).collect { status ->
             when(status) {
-              StatusItem.FAILED -> {
+              ResourceState.FAILED -> {
                 showShortToast(requireContext().getString(R.string.msg_delete_failed))
               }
-              StatusItem.SUCCESS -> {
+              ResourceState.SUCCESS -> {
                 showShortToast(requireContext().getString(R.string.msg_success))
                 refreshDate()
               }
-              StatusItem.LOADING -> {}
+              ResourceState.LOADING -> {}
             }
           }
         }

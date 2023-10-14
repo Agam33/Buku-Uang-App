@@ -27,7 +27,7 @@ import com.ra.budgetplan.util.Extension.cancelAlarm
 import com.ra.budgetplan.util.Extension.setExactAndAllowWhileIdleAlarm
 import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.Resource
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -106,13 +106,13 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
             viewLifecycleOwner.lifecycleScope.launch {
               sharedViewModel.deleteHutang(model).collect { status ->
                 when(status) {
-                  StatusItem.LOADING -> {}
-                  StatusItem.SUCCESS -> {
+                  ResourceState.LOADING -> {}
+                  ResourceState.SUCCESS -> {
                     showShortToast(requireContext().resources.getString(R.string.msg_success))
                     refresh()
                     cautionDeleteDialog.dismiss()
                   }
-                  StatusItem.FAILED -> {}
+                  ResourceState.FAILED -> {}
                 }
               }
             }
@@ -156,13 +156,13 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
               lifecycleScope.launch {
                 sharedViewModel.updateHutang(model).collect { status ->
                   when(status) {
-                    StatusItem.LOADING -> {}
-                    StatusItem.SUCCESS -> {
+                    ResourceState.LOADING -> {}
+                    ResourceState.SUCCESS -> {
                       requireContext().setExactAndAllowWhileIdleAlarm(calendar, pendingIntent)
                       debtAdapter.notifyItemChanged(adapterPosition)
                       showShortToast(requireContext().getString(R.string.msg_success))
                     }
-                    StatusItem.FAILED -> {}
+                    ResourceState.FAILED -> {}
                   }
                 }
               }
@@ -182,12 +182,12 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
               lifecycleScope.launch {
                 sharedViewModel.updateHutang(model).collect { status ->
                   when(status) {
-                    StatusItem.LOADING -> {}
-                    StatusItem.SUCCESS -> {
+                    ResourceState.LOADING -> {}
+                    ResourceState.SUCCESS -> {
                       requireContext().cancelAlarm(pendingIntent)
                       debtAdapter.notifyItemChanged(adapterPosition)
                     }
-                    StatusItem.FAILED -> {}
+                    ResourceState.FAILED -> {}
                   }
                 }
               }

@@ -1,6 +1,5 @@
 package com.ra.budgetplan.domain.usecase.budget.impl
 
-import app.cash.turbine.test
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.budgetplan.domain.mapper.toModel
@@ -9,7 +8,7 @@ import com.ra.budgetplan.domain.repository.PengeluaranRepository
 import com.ra.budgetplan.domain.usecase.budget.CreateBudget
 import com.ra.budgetplan.dummy.model.BudgetDummy
 import com.ra.budgetplan.dummy.model.PengeluaranDummy
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
@@ -40,6 +39,6 @@ internal class CreateBudgetImplTest {
       .thenReturn(Unit)
 
     val expectedVal = createBudget.invoke(LocalDate.now(), LocalDate.now(), actualBudget.toModel()).last()
-    assertEquals(expectedVal, StatusItem.SUCCESS)
+    assertEquals(expectedVal, ResourceState.SUCCESS)
   }
 }

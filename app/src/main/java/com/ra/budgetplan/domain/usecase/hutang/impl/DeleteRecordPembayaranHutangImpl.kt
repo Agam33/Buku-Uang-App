@@ -7,7 +7,7 @@ import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.repository.HutangRepository
 import com.ra.budgetplan.domain.repository.PembayaranHutangRepository
 import com.ra.budgetplan.domain.usecase.hutang.DeleteRecordPembayaranHutang
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -17,9 +17,9 @@ class DeleteRecordPembayaranHutangImpl @Inject constructor(
   private val akunRepository: AkunRepository,
   private val pembayaranHutangRepository: PembayaranHutangRepository
 ): DeleteRecordPembayaranHutang {
-  override suspend fun invoke(detailPembayaranHutangModel: DetailPembayaranHutangModel): Flow<StatusItem> {
+  override suspend fun invoke(detailPembayaranHutangModel: DetailPembayaranHutangModel): Flow<ResourceState> {
     return flow {
-      emit(StatusItem.LOADING)
+      emit(ResourceState.LOADING)
 
       val accountModel = akunRepository.findById(detailPembayaranHutangModel.akunModel.uuid).toModel()
       val debtModel = hutangRepository.findById(detailPembayaranHutangModel.hutangModel.uuid).toModel()
@@ -28,7 +28,7 @@ class DeleteRecordPembayaranHutangImpl @Inject constructor(
       debtModel.totalPengeluaran -= detailPembayaranHutangModel.pembayaranHutangModel.jumlah
 
       pembayaranHutangRepository.delete(detailPembayaranHutangModel.pembayaranHutangModel.toEntity())
-      emit(StatusItem.SUCCESS)
+      emit(ResourceState.SUCCESS)
 
       hutangRepository.update(debtModel.toEntity())
       akunRepository.update(accountModel.toEntity())

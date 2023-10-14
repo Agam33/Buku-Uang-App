@@ -1,5 +1,5 @@
 package com.ra.budgetplan.util
 
-enum class StatusItem {
+enum class ResourceState {
   LOADING, FAILED, SUCCESS
 }

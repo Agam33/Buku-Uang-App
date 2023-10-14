@@ -8,7 +8,7 @@ import com.ra.budgetplan.domain.repository.PengeluaranRepository
 import com.ra.budgetplan.domain.usecase.budget.EditBudget
 import com.ra.budgetplan.dummy.model.BudgetDummy
 import com.ra.budgetplan.dummy.model.PengeluaranDummy
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
@@ -36,6 +36,6 @@ internal class EditBudgetImplTest {
 
     val expectedVal = editBudget.invoke(actualBudget.toModel()).last()
 
-    assertEquals(StatusItem.SUCCESS, expectedVal)
+    assertEquals(ResourceState.SUCCESS, expectedVal)
   }
 }

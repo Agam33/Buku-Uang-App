@@ -10,6 +10,7 @@ import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.SavePengeluaran
 import com.ra.budgetplan.dummy.model.AkunDummy
 import com.ra.budgetplan.dummy.model.BudgetDummy
 import com.ra.budgetplan.dummy.model.PengeluaranDummy
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -39,6 +40,6 @@ internal class SavePengeluaranImplTest {
     whenever(akunRepository.update(actualAkun)).thenReturn(Unit)
 
     val expectedVal = savePengeluaran.invoke(actualPengeluaran.toModel())
-    assertEquals(expectedVal, Unit)
+    assertEquals(expectedVal, ResourceState.SUCCESS)
   }
 }

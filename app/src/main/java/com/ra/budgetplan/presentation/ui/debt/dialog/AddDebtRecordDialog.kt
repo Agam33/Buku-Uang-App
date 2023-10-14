@@ -35,7 +35,7 @@ import com.ra.budgetplan.util.Extension.parcelable
 import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.Extension.toCalendar
 import com.ra.budgetplan.util.OnItemChangedListener
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getActionType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -152,12 +152,12 @@ class AddDebtRecordDialog: DialogFragment() {
         requireActivity().lifecycleScope.launch {
           viewModel.updatePembayaranHutang(detailPembayaranDebtModel, oldModel).collect { status ->
             when(status) {
-              StatusItem.LOADING -> {}
-              StatusItem.SUCCESS -> {
+              ResourceState.LOADING -> {}
+              ResourceState.SUCCESS -> {
                 onItemChangedListener?.onItemChanged()
                 dismiss()
               }
-              StatusItem.FAILED -> {}
+              ResourceState.FAILED -> {}
             }
           }
         }
@@ -177,12 +177,12 @@ class AddDebtRecordDialog: DialogFragment() {
         requireActivity().lifecycleScope.launch {
           viewModel.savePembayaranHutang(paymentDebtModel).collect { status ->
             when(status) {
-              StatusItem.LOADING -> {}
-              StatusItem.SUCCESS -> {
+              ResourceState.LOADING -> {}
+              ResourceState.SUCCESS -> {
                 onItemChangedListener?.onItemChanged()
                 dismiss()
               }
-              StatusItem.FAILED -> {}
+              ResourceState.FAILED -> {}
             }
           }
         }

@@ -9,6 +9,7 @@ import com.ra.budgetplan.domain.repository.TransferRepository
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.UpdateTransfer
 import com.ra.budgetplan.dummy.model.AkunDummy
 import com.ra.budgetplan.dummy.model.TransferDummy
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -47,6 +48,6 @@ internal class UpdateTransferImplTest {
     whenever(akunRepository.update(actualToAkun)).thenReturn(Unit)
 
     val expectedVal = updateTransfer.invoke(actualNewTransfer.toModel(), actualOldTransfer.toModel())
-    assertEquals(expectedVal, Unit)
+    assertEquals(expectedVal, ResourceState.SUCCESS)
   }
 }

@@ -8,6 +8,7 @@ import com.ra.budgetplan.domain.repository.PendapatanRepository
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.SavePendapatan
 import com.ra.budgetplan.dummy.model.AkunDummy
 import com.ra.budgetplan.dummy.model.PendapatanDummy
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -29,6 +30,6 @@ internal class SavePendapatanImplTest {
     whenever(pendapatanRepository.save(actualPendapatan)).thenReturn(Unit)
 
     val expectedVal = savePendapatan.invoke(actualPendapatan.toModel())
-    assertEquals(expectedVal, Unit)
+    assertEquals(expectedVal, ResourceState.SUCCESS)
   }
 }
