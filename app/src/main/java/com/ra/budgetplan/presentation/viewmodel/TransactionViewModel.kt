@@ -75,8 +75,8 @@ class TransactionViewModel @Inject constructor(
   private val findAkunById: FindAkunById
 ): BaseViewModel() {
 
-  private var _shouldSaveTransactionState = MutableLiveData<Boolean>()
-  val shouldSaveTransactionState: LiveData<Boolean> = _shouldSaveTransactionState
+  private var _saveTransactionState = MutableLiveData<Boolean>()
+  val saveTransactionState: LiveData<Boolean> = _saveTransactionState
 
   private var _pendapatanModel = MutableLiveData<PendapatanModel>()
   val pendapatanModel: LiveData<PendapatanModel> = _pendapatanModel
@@ -135,17 +135,32 @@ class TransactionViewModel @Inject constructor(
   private var _detailTransaction = MutableLiveData<TransactionDetail>()
   val detailTransaction: LiveData<TransactionDetail> = _detailTransaction
 
-  fun setSavePengeluaranState(state: Boolean) {
-    _shouldSaveTransactionState.postValue(state)
+  private val _saveTransactionDialogStateUi = MutableLiveData<Boolean>()
+  val saveTransactionDialogStateUi: LiveData<Boolean> = _saveTransactionDialogStateUi
+
+  private val _updateTransactionState = MutableLiveData<Boolean>()
+  val updateTransactionState: LiveData<Boolean> = _updateTransactionState
+
+  fun setSaveTransactionState(state: Boolean) {
+    _saveTransactionState.postValue(state)
   }
 
-  fun checkAccountMoney(idAkun: UUID, amount: Int) {
+  fun setUpdateTransctionState(state: Boolean) {
+    _updateTransactionState.postValue(state)
+  }
+
+  fun setSaveTransactionDialogStateUi(state: Boolean) {
+    _saveTransactionDialogStateUi.postValue(state)
+  }
+
+  fun checkAccountMoney(idAkun: UUID, amount: Int, action: suspend () -> Unit = {}) {
     viewModelScope.launch {
       val account = findAkunById.invoke(idAkun)
-      if(account.total - amount < 0) {
-        setSavePengeluaranState(false)
+      if(account.total - amount >= 0) {
+        action()
+        _saveTransactionDialogStateUi.postValue(false)
       } else {
-        setSavePengeluaranState(true)
+        _saveTransactionDialogStateUi.postValue(true)
       }
     }
   }
@@ -262,45 +277,37 @@ class TransactionViewModel @Inject constructor(
     }
   }
 
-  fun savePengeluaran(pengeluaranModel: PengeluaranModel) = viewModelScope.launch {
+  suspend fun savePengeluaran(pengeluaranModel: PengeluaranModel) =
     savePengeluaran.invoke(pengeluaranModel)
-  }
 
-  fun savePendapatan(pendapatanModel: PendapatanModel) = viewModelScope.launch {
+
+  suspend fun savePendapatan(pendapatanModel: PendapatanModel) =
     savePendapatan.invoke(pendapatanModel)
-  }
 
-  fun saveTransfer(transferModel: TransferModel) = viewModelScope.launch {
+
+  suspend fun saveTransfer(transferModel: TransferModel) =
     saveTransfer.invoke(transferModel)
-  }
 
-  suspend fun deletePendapatanById(uuid: UUID) {
+
+  suspend fun deletePendapatanById(uuid: UUID) =
     deletePendapatanById.invoke(uuid)
-  }
 
-  suspend fun deletePengeluaranById(uuid: UUID) {
+
+  suspend fun deletePengeluaranById(uuid: UUID) =
     deletePengeluaranById.invoke(uuid)
-  }
 
-  suspend fun deleteTransferById(uuid: UUID) {
+
+  suspend fun deleteTransferById(uuid: UUID) =
     deleteTransferById.invoke(uuid)
-  }
 
-  fun updatePendapatan(newPendapatanModel: PendapatanModel, oldPendapatanModel: PendapatanModel) {
-    viewModelScope.launch {
-      updatePendapatan.invoke(newPendapatanModel, oldPendapatanModel)
-    }
-  }
 
-  fun updatePengeluaran(newPengeluaranModel: PengeluaranModel, oldPengeluaranModel: PengeluaranModel) {
-    viewModelScope.launch {
-      updatePengeluaran.invoke(newPengeluaranModel,oldPengeluaranModel)
-    }
-  }
+  suspend fun updatePendapatan(newPendapatanModel: PendapatanModel, oldPendapatanModel: PendapatanModel) =
+    updatePendapatan.invoke(newPendapatanModel, oldPendapatanModel)
 
-  fun updateTransfer(newTransferModel: TransferModel, oldTransferModel: TransferModel) {
-    viewModelScope.launch {
-      updateTransfer.invoke(newTransferModel, oldTransferModel)
-    }
-  }
+
+  suspend fun updatePengeluaran(newPengeluaranModel: PengeluaranModel, oldPengeluaranModel: PengeluaranModel) =
+    updatePengeluaran.invoke(newPengeluaranModel,oldPengeluaranModel)
+
+  suspend fun updateTransfer(newTransferModel: TransferModel, oldTransferModel: TransferModel)=
+    updateTransfer.invoke(newTransferModel, oldTransferModel)
 }

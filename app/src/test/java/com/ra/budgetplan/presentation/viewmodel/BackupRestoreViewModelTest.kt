@@ -6,7 +6,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.budgetplan.domain.usecase.backuprestore.BackupDb
 import com.ra.budgetplan.domain.usecase.backuprestore.RestoreDb
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -35,10 +35,10 @@ class BackupRestoreViewModelTest {
     val src = File("/src")
     val dest = File("/dest")
 
-    val actualStatusItem = StatusItem.SUCCESS
+    val actualResourceState = ResourceState.SUCCESS
 
     whenever(backupDb.invoke(src, dest))
-      .thenReturn(flow { emit(actualStatusItem) })
+      .thenReturn(flow { emit(actualResourceState) })
 
     backupRestoreViewModel.doBackup(src, dest)
 
@@ -50,10 +50,10 @@ class BackupRestoreViewModelTest {
     val src = File("/src")
     val dest = File("/dest")
 
-    val actualStatusItem = StatusItem.SUCCESS
+    val actualResourceState = ResourceState.SUCCESS
 
     whenever(restoreDb.invoke(src, dest))
-      .thenReturn(flow { emit(actualStatusItem) })
+      .thenReturn(flow { emit(actualResourceState) })
 
     backupRestoreViewModel.doRestore(src, dest)
 

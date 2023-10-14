@@ -5,10 +5,9 @@ import com.ra.budgetplan.domain.model.BudgetModel
 import com.ra.budgetplan.domain.repository.BudgetRepository
 import com.ra.budgetplan.domain.repository.PengeluaranRepository
 import com.ra.budgetplan.domain.usecase.budget.EditBudget
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.temporal.TemporalAdjusters
@@ -20,9 +19,9 @@ class EditBudgetImpl @Inject constructor(
   private val pengeluaranRepository: PengeluaranRepository
 ): EditBudget {
 
-  override fun invoke(budgetModel: BudgetModel): Flow<StatusItem> {
+  override fun invoke(budgetModel: BudgetModel): Flow<ResourceState> {
     return flow {
-      emit(StatusItem.LOADING)
+      emit(ResourceState.LOADING)
 
       val calendar = Calendar.getInstance()
       calendar.set(Calendar.YEAR, budgetModel.bulanTahun.year)
@@ -47,7 +46,7 @@ class EditBudgetImpl @Inject constructor(
       budgetModel.pengeluaran = totalPengeluaran.toInt()
 
       budgetRepository.update(budgetModel.toEntity())
-      emit(StatusItem.SUCCESS)
+      emit(ResourceState.SUCCESS)
     }
   }
 }

@@ -6,6 +6,7 @@ import com.ra.budgetplan.domain.model.TransferModel
 import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.repository.TransferRepository
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.UpdateTransfer
+import com.ra.budgetplan.util.ResourceState
 import javax.inject.Inject
 
 class UpdateTransferImpl @Inject constructor(
@@ -15,25 +16,31 @@ class UpdateTransferImpl @Inject constructor(
   override suspend fun invoke(
     newTransferModel: TransferModel,
     oldTransferModel: TransferModel
-  ) {
-    respository.update(newTransferModel.toEntity())
+  ): ResourceState {
+    return try {
+      respository.update(newTransferModel.toEntity())
 
-    val newFromAccount = accountRepository.findById(newTransferModel.idFromAkun).toModel()
-    val newToAccount = accountRepository.findById(newTransferModel.idToAkun).toModel()
+      val newFromAccount = accountRepository.findById(newTransferModel.idFromAkun).toModel()
+      val newToAccount = accountRepository.findById(newTransferModel.idToAkun).toModel()
 
-    newFromAccount.total -= newTransferModel.jumlah
-    newToAccount.total += newTransferModel.jumlah
+      newFromAccount.total -= newTransferModel.jumlah
+      newToAccount.total += newTransferModel.jumlah
 
-    accountRepository.update(newFromAccount.toEntity())
-    accountRepository.update(newToAccount.toEntity())
+      accountRepository.update(newFromAccount.toEntity())
+      accountRepository.update(newToAccount.toEntity())
 
-    val fromAccount = accountRepository.findById(oldTransferModel.idFromAkun).toModel()
-    val toAccount = accountRepository.findById(oldTransferModel.idToAkun).toModel()
+      val fromAccount = accountRepository.findById(oldTransferModel.idFromAkun).toModel()
+      val toAccount = accountRepository.findById(oldTransferModel.idToAkun).toModel()
 
-    fromAccount.total += oldTransferModel.jumlah
-    toAccount.total -= oldTransferModel.jumlah
+      fromAccount.total += oldTransferModel.jumlah
+      toAccount.total -= oldTransferModel.jumlah
 
-    accountRepository.update(fromAccount.toEntity())
-    accountRepository.update(toAccount.toEntity())
+      accountRepository.update(fromAccount.toEntity())
+      accountRepository.update(toAccount.toEntity())
+
+      ResourceState.SUCCESS
+    } catch (e: Exception) {
+     ResourceState.FAILED
+    }
   }
 }

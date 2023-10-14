@@ -19,7 +19,7 @@ import com.ra.budgetplan.dummy.model.HutangDummy
 import com.ra.budgetplan.dummy.model.PembayaranHutangDummy
 import com.ra.budgetplan.util.MainDispatcherRule
 import com.ra.budgetplan.util.Resource
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
@@ -115,14 +115,14 @@ class DetailDebtViewModelTest {
   fun `UpdatePembayaranHutang, should be success`() = runTest {
     val actualPembayaranHutang = PembayaranHutangDummy.getAllPembayaranHutang()[0].toModel()
 
-    val actualStatusItem = StatusItem.SUCCESS
+    val actualResourceState = ResourceState.SUCCESS
 
     whenever(updatePembayaranHutang.invoke(actualPembayaranHutang, actualPembayaranHutang))
-      .thenReturn(flow { emit(actualStatusItem) })
+      .thenReturn(flow { emit(actualResourceState) })
 
     detailDebtViewModel.updatePembayaranHutang(actualPembayaranHutang, actualPembayaranHutang).test {
       val expectedVal = awaitItem()
-      assertEquals(actualStatusItem, expectedVal)
+      assertEquals(actualResourceState, expectedVal)
       awaitComplete()
     }
   }
@@ -139,14 +139,14 @@ class DetailDebtViewModelTest {
       akunModel = actualAkun
     )
 
-    val actualStatusItem = StatusItem.SUCCESS
+    val actualResourceState = ResourceState.SUCCESS
 
     whenever(deleteRecordPembayaranHutang.invoke(actualDetailPembayaran))
-      .thenReturn(flow { emit(actualStatusItem) })
+      .thenReturn(flow { emit(actualResourceState) })
 
     detailDebtViewModel.deleteRecordPembayaranHutang(actualDetailPembayaran).test {
       val expectedVal = awaitItem()
-      assertEquals(actualStatusItem, expectedVal)
+      assertEquals(actualResourceState, expectedVal)
       awaitComplete()
     }
   }
@@ -155,14 +155,14 @@ class DetailDebtViewModelTest {
   fun `SavePembayaranHutang, should be success`() = runTest {
     val actualPembayaranHutang = PembayaranHutangDummy.getAllPembayaranHutang()[0].toModel()
 
-    val actualStatusItem = StatusItem.SUCCESS
+    val actualResourceState = ResourceState.SUCCESS
 
     whenever(savePembayaranHutang.invoke(actualPembayaranHutang))
-      .thenReturn(flow { emit(actualStatusItem) })
+      .thenReturn(flow { emit(actualResourceState) })
 
     detailDebtViewModel.savePembayaranHutang(actualPembayaranHutang).test {
       val expectedVal = awaitItem()
-      assertEquals(actualStatusItem, expectedVal)
+      assertEquals(actualResourceState, expectedVal)
       awaitComplete()
     }
   }

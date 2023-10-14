@@ -7,6 +7,7 @@ import com.ra.budgetplan.domain.repository.PendapatanRepository
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.DeletePendapatanById
 import com.ra.budgetplan.dummy.model.AkunDummy
 import com.ra.budgetplan.dummy.model.PendapatanDummy
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -32,6 +33,6 @@ internal class DeletePendapatanByIdImplTest {
 
     val expectedVal = deletePendapatanById.invoke(actualId)
 
-    assertEquals(expectedVal, Unit)
+    assertEquals(expectedVal, ResourceState.SUCCESS)
   }
 }

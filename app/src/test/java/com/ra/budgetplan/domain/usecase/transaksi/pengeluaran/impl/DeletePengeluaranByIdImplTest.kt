@@ -9,6 +9,7 @@ import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.DeletePengeluaranB
 import com.ra.budgetplan.dummy.model.AkunDummy
 import com.ra.budgetplan.dummy.model.BudgetDummy
 import com.ra.budgetplan.dummy.model.PengeluaranDummy
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -41,6 +42,6 @@ internal class DeletePengeluaranByIdImplTest {
     whenever(akunRepository.update(actualAkun)).thenReturn(Unit)
 
     val expectedVal = deletePengeluaranById.invoke(actualId)
-    assertEquals(expectedVal, Unit)
+    assertEquals(expectedVal, ResourceState.SUCCESS)
   }
 }

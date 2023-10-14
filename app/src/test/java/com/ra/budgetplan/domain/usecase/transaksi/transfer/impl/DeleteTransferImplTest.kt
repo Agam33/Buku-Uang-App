@@ -6,6 +6,7 @@ import com.ra.budgetplan.domain.mapper.toModel
 import com.ra.budgetplan.domain.repository.TransferRepository
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.DeleteTransfer
 import com.ra.budgetplan.dummy.model.TransferDummy
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -24,6 +25,6 @@ internal class DeleteTransferImplTest {
       .thenReturn(Unit)
 
     val expectedVal = deleteTransfer.invoke(actualTransfer.toModel())
-    assertEquals(expectedVal, Unit)
+    assertEquals(expectedVal, ResourceState.SUCCESS)
   }
 }

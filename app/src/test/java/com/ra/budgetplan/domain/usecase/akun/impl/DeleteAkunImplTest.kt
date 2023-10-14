@@ -6,7 +6,7 @@ import com.ra.budgetplan.domain.mapper.toModel
 import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.usecase.akun.DeleteAkun
 import com.ra.budgetplan.dummy.model.AkunDummy
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -21,13 +21,13 @@ internal class DeleteAkunImplTest {
     deleteAkun = DeleteAkunImpl(repository)
 
     val actualAkun = AkunDummy.getAllAccounts()[0]
-    val statusItem = StatusItem.SUCCESS
+    val resourceState = ResourceState.SUCCESS
 
     whenever(repository.delete(actualAkun))
       .thenReturn(Unit)
 
     val expectedVal = deleteAkun.invoke(actualAkun.toModel()).last()
 
-    assertEquals(statusItem, expectedVal)
+    assertEquals(resourceState, expectedVal)
   }
 }

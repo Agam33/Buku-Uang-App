@@ -28,7 +28,7 @@ import com.ra.budgetplan.util.Extension.parcelable
 import com.ra.budgetplan.util.Extension.setupNoActionbar
 import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.Extension.toCalendar
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getActionType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -114,11 +114,11 @@ class CreateDebtActivity : BaseActivity<ActivityCreateDebtBinding>(R.layout.acti
           lifecycleScope.launch {
             sharedViewModel.createHutang(hutangModel).collect { status ->
               when(status) {
-                StatusItem.LOADING -> {}
-                StatusItem.SUCCESS -> {
+                ResourceState.LOADING -> {}
+                ResourceState.SUCCESS -> {
                   showShortToast(resources.getString(R.string.msg_success))
                 }
-                StatusItem.FAILED -> {}
+                ResourceState.FAILED -> {}
               }
             }
           }
@@ -136,11 +136,11 @@ class CreateDebtActivity : BaseActivity<ActivityCreateDebtBinding>(R.layout.acti
             lifecycleScope.launch {
               sharedViewModel.updateHutang(it).collect { status ->
                 when(status) {
-                  StatusItem.LOADING -> {}
-                  StatusItem.SUCCESS -> {
+                  ResourceState.LOADING -> {}
+                  ResourceState.SUCCESS -> {
                     showShortToast(resources.getString(R.string.msg_success))
                   }
-                  StatusItem.FAILED -> {}
+                  ResourceState.FAILED -> {}
                 }
               }
             }

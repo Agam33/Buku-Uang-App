@@ -7,7 +7,7 @@ import com.ra.budgetplan.domain.mapper.toModel
 import com.ra.budgetplan.domain.repository.KategoriRepository
 import com.ra.budgetplan.domain.usecase.kategori.DeleteKategori
 import com.ra.budgetplan.dummy.model.KategoriDummy
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -28,7 +28,7 @@ internal class DeleteKategoriImplTest {
     deleteKategori.invoke(actualKategori.toModel()).test {
       awaitItem()
       val expectedVal = awaitItem()
-      assertEquals(StatusItem.SUCCESS, expectedVal)
+      assertEquals(ResourceState.SUCCESS, expectedVal)
       awaitComplete()
     }
   }

@@ -7,6 +7,7 @@ import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.repository.BudgetRepository
 import com.ra.budgetplan.domain.repository.PengeluaranRepository
 import com.ra.budgetplan.domain.usecase.transaksi.pengeluaran.UpdatePengeluaran
+import com.ra.budgetplan.util.ResourceState
 import javax.inject.Inject
 
 class UpdatePengeluaranImpl @Inject constructor(
@@ -14,42 +15,48 @@ class UpdatePengeluaranImpl @Inject constructor(
   private val accountRepository: AkunRepository,
   private val budgetRepository: BudgetRepository
 ): UpdatePengeluaran {
-  override suspend fun invoke(newPengeluaranModel: PengeluaranModel, oldPengeluaranModel: PengeluaranModel) {
-    repository.update(newPengeluaranModel.toEntity())
+  override suspend fun invoke(newPengeluaranModel: PengeluaranModel, oldPengeluaranModel: PengeluaranModel): ResourceState {
+    return try {
+      repository.update(newPengeluaranModel.toEntity())
 
-    val newAccount = accountRepository.findById(newPengeluaranModel.idAkun).toModel()
+      val newAccount = accountRepository.findById(newPengeluaranModel.idAkun).toModel()
 
-    newAccount.total -= newPengeluaranModel.jumlah
+      newAccount.total -= newPengeluaranModel.jumlah
 
-    accountRepository.update(newAccount.toEntity())
+      accountRepository.update(newAccount.toEntity())
 
-    val oldAccount = accountRepository.findById(oldPengeluaranModel.idAkun).toModel()
+      val oldAccount = accountRepository.findById(oldPengeluaranModel.idAkun).toModel()
 
-    oldAccount.total += oldPengeluaranModel.jumlah
+      oldAccount.total += oldPengeluaranModel.jumlah
 
-    val fromDate = oldPengeluaranModel.updatedAt.toLocalDate().withDayOfMonth(1)
-    val toDate = oldPengeluaranModel.updatedAt.toLocalDate().withDayOfMonth(oldPengeluaranModel.updatedAt.toLocalDate().dayOfMonth)
-    val katId = oldPengeluaranModel.idKategori
+      val fromDate = oldPengeluaranModel.updatedAt.toLocalDate().withDayOfMonth(1)
+      val toDate = oldPengeluaranModel.updatedAt.toLocalDate().withDayOfMonth(oldPengeluaranModel.updatedAt.toLocalDate().dayOfMonth)
+      val katId = oldPengeluaranModel.idKategori
 
-    val isBudgetExist = budgetRepository.isExistByDateAndKategoriId(
-      fromDate,
-      toDate,
-      katId
-    )
-
-    if(isBudgetExist) {
-      val budgetModel = budgetRepository.findBudgetByDateAndKategoriId(
+      val isBudgetExist = budgetRepository.isExistByDateAndKategoriId(
         fromDate,
         toDate,
         katId
-      ).toModel()
+      )
 
-      budgetModel.pengeluaran -= oldPengeluaranModel.jumlah
-      budgetModel.pengeluaran += newPengeluaranModel.jumlah
+      if(isBudgetExist) {
+        val budgetModel = budgetRepository.findBudgetByDateAndKategoriId(
+          fromDate,
+          toDate,
+          katId
+        ).toModel()
 
-      budgetRepository.update(budgetModel.toEntity())
+        budgetModel.pengeluaran -= oldPengeluaranModel.jumlah
+        budgetModel.pengeluaran += newPengeluaranModel.jumlah
+
+        budgetRepository.update(budgetModel.toEntity())
+      }
+
+      accountRepository.update(oldAccount.toEntity())
+
+      ResourceState.SUCCESS
+    } catch (e: Exception) {
+      ResourceState.FAILED
     }
-
-    accountRepository.update(oldAccount.toEntity())
-  }
+ }
 }

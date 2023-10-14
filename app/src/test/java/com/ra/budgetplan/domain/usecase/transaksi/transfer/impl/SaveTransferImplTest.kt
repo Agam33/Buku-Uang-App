@@ -9,6 +9,7 @@ import com.ra.budgetplan.domain.repository.TransferRepository
 import com.ra.budgetplan.domain.usecase.transaksi.transfer.SaveTransfer
 import com.ra.budgetplan.dummy.model.AkunDummy
 import com.ra.budgetplan.dummy.model.TransferDummy
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -36,6 +37,6 @@ internal class SaveTransferImplTest {
     verify(akunRepository).findById(actualTransfer.idToAkun)
     verify(transferRepository).save(actualTransfer)
 
-    assertEquals(expectedVal, Unit)
+    assertEquals(expectedVal, ResourceState.SUCCESS)
   }
 }

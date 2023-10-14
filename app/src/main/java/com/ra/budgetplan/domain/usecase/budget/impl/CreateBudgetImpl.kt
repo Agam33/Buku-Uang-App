@@ -5,7 +5,7 @@ import com.ra.budgetplan.domain.model.BudgetModel
 import com.ra.budgetplan.domain.repository.BudgetRepository
 import com.ra.budgetplan.domain.repository.PengeluaranRepository
 import com.ra.budgetplan.domain.usecase.budget.CreateBudget
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
@@ -24,12 +24,12 @@ class CreateBudgetImpl @Inject constructor(
     fromDate: LocalDate,
     toDate: LocalDate,
     budgetModel: BudgetModel
-  ): Flow<StatusItem> {
+  ): Flow<ResourceState> {
     return flow {
       val isExist = budgetRepository.isExistByDateAndKategoriId(fromDate, toDate, budgetModel.idKategori)
-      emit(StatusItem.LOADING)
+      emit(ResourceState.LOADING)
       if(isExist) {
-        emit(StatusItem.FAILED)
+        emit(ResourceState.FAILED)
       } else {
 
         val calendar = Calendar.getInstance()
@@ -56,7 +56,7 @@ class CreateBudgetImpl @Inject constructor(
 
         budgetRepository.save(budgetModel.toEntity())
 
-        emit(StatusItem.SUCCESS)
+        emit(ResourceState.SUCCESS)
       }
     }
   }

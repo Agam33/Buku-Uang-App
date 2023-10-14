@@ -14,7 +14,7 @@ import com.ra.budgetplan.domain.usecase.budget.EditBudget
 import com.ra.budgetplan.domain.usecase.budget.FindAllBudgetByDate
 import com.ra.budgetplan.domain.usecase.budget.FindBudgetById
 import com.ra.budgetplan.util.Resource
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -67,13 +67,13 @@ class BudgetViewModel @Inject constructor(
     }
   }
 
-  fun deleteBudgetById(id: UUID): Flow<StatusItem> =
+  fun deleteBudgetById(id: UUID): Flow<ResourceState> =
     deleteBudgetById.invoke(id)
 
-  fun updateBudget(budgetModel: BudgetModel): Flow<StatusItem> =
+  fun updateBudget(budgetModel: BudgetModel): Flow<ResourceState> =
     editBudget.invoke(budgetModel)
 
-  fun createBudget(budgetModel: BudgetModel): Flow<StatusItem> =
+  fun createBudget(budgetModel: BudgetModel): Flow<ResourceState> =
     createBudget.invoke(
       budgetModel.bulanTahun,
       budgetModel.bulanTahun,

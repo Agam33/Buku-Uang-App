@@ -18,7 +18,7 @@ import com.ra.budgetplan.dummy.model.PendapatanDummy
 import com.ra.budgetplan.dummy.model.PengeluaranDummy
 import com.ra.budgetplan.util.Extension.toFormatRupiah
 import com.ra.budgetplan.util.MainDispatcherRule
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -155,14 +155,14 @@ class AccountViewModelTest {
   @Test
   fun `DeleteAccount, should be success`() = runTest {
     val actualAccount = AkunDummy.getAllAccounts()[0].toModel()
-    val actualStatusItem = StatusItem.SUCCESS
+    val actualResourceState = ResourceState.SUCCESS
 
     whenever(deleteAkun.invoke(actualAccount))
-      .thenReturn(flow { emit(actualStatusItem) })
+      .thenReturn(flow { emit(actualResourceState) })
 
     accountViewModel.deleteAccount(actualAccount).test {
       val expectedItem = awaitItem()
-      assertEquals(actualStatusItem, expectedItem)
+      assertEquals(actualResourceState, expectedItem)
       awaitComplete()
     }
 

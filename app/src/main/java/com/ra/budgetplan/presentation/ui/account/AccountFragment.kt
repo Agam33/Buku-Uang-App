@@ -16,7 +16,7 @@ import com.ra.budgetplan.presentation.ui.account.adapter.RvAccountAdapter
 import com.ra.budgetplan.presentation.viewmodel.AccountViewModel
 import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.Resource
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -106,13 +106,13 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
             viewLifecycleOwner.lifecycleScope.launch {
               viewModel.deleteAccount(akun).collect { status ->
                 when(status) {
-                  StatusItem.SUCCESS -> {
+                  ResourceState.SUCCESS -> {
                     refresh()
                     showShortToast(requireContext().resources.getString(R.string.msg_success))
                     deleteDialog.dismiss()
                   }
-                  StatusItem.LOADING -> {}
-                  StatusItem.FAILED -> {}
+                  ResourceState.LOADING -> {}
+                  ResourceState.FAILED -> {}
                 }
               }
             }

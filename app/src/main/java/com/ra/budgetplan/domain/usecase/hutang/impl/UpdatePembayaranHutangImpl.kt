@@ -7,7 +7,7 @@ import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.repository.HutangRepository
 import com.ra.budgetplan.domain.repository.PembayaranHutangRepository
 import com.ra.budgetplan.domain.usecase.hutang.UpdatePembayaranHutang
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -20,14 +20,14 @@ class UpdatePembayaranHutangImpl @Inject constructor(
   override suspend fun invoke(
     newModel: PembayaranHutangModel,
     oldModel: PembayaranHutangModel
-  ): Flow<StatusItem> {
+  ): Flow<ResourceState> {
     return flow {
-      emit(StatusItem.LOADING)
+      emit(ResourceState.LOADING)
       val accountModel = akunRepository.findById(oldModel.idAkun).toModel()
       val debtModel = hutangRepository.findById(oldModel.idHutang).toModel()
 
       pembayaranHutangRepository.update(newModel.toEntity())
-      emit(StatusItem.SUCCESS)
+      emit(ResourceState.SUCCESS)
 
       accountModel.total += oldModel.jumlah
       debtModel.totalPengeluaran -= oldModel.jumlah

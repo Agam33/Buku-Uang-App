@@ -26,7 +26,7 @@ import com.ra.budgetplan.util.Constants.REQUIRED_STORAGE_PERMISSION
 import com.ra.budgetplan.util.Constants.getUriPath
 import com.ra.budgetplan.util.Extension.requestStoragePermission
 import com.ra.budgetplan.util.Extension.restartActivity
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
@@ -107,15 +107,15 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
 
         viewModel.doBackup(srcFile, destFile).collect { status ->
           when(status) {
-            StatusItem.LOADING -> {}
-            StatusItem.SUCCESS -> {
+            ResourceState.LOADING -> {}
+            ResourceState.SUCCESS -> {
               Toast.makeText(requireContext(),
                 String.format(requireContext().resources.getString(R.string.msg_success_to), requireContext().resources.getString(R.string.txt_backup)),
                 Toast.LENGTH_SHORT
               ).show()
               requireContext().restartActivity()
             }
-            StatusItem.FAILED -> {
+            ResourceState.FAILED -> {
               Toast.makeText(requireContext(),
                 String.format(requireContext().resources.getString(R.string.msg_failed_to), requireContext().resources.getString(R.string.txt_backup)),
                 Toast.LENGTH_SHORT

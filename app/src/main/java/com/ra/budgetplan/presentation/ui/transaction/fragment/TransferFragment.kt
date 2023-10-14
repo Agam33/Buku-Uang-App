@@ -13,9 +13,11 @@ import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
 import com.ra.budgetplan.presentation.ui.transaction.adapter.OnDayItemClickListener
 import com.ra.budgetplan.presentation.ui.transaction.adapter.TransferRvAdapter
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
+import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.OnDeleteItemListener
 import com.ra.budgetplan.util.OnItemChangedListener
 import com.ra.budgetplan.util.Resource
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.RvGroup
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -84,7 +86,7 @@ class TransferFragment : BaseFragment<FragmentTransferBinding>(R.layout.fragment
 
   override fun onDeleteItem(item: TransactionDetail) {
     viewLifecycleOwner.lifecycleScope.launch {
-      sharedViewModel.deleteTransferById(item.uuid)
+      resourceStateTransfer(sharedViewModel.deleteTransferById(item.uuid))
     }
     onItemChangedListener?.onItemChanged()
   }
@@ -94,5 +96,17 @@ class TransferFragment : BaseFragment<FragmentTransferBinding>(R.layout.fragment
     val detailTransactionDialog = DetailTransactionDialog()
     detailTransactionDialog.onDeleteItemListener = this@TransferFragment
     detailTransactionDialog.show(parentFragmentManager, "transfer-detail")
+  }
+
+  private fun resourceStateTransfer(r: ResourceState) {
+    when(r) {
+      ResourceState.SUCCESS -> {
+        showShortToast(getString(R.string.msg_success))
+      }
+      ResourceState.FAILED -> {
+        showShortToast(getString(R.string.msg_failed))
+      }
+      ResourceState.LOADING -> {}
+    }
   }
 }

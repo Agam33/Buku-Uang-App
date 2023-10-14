@@ -6,20 +6,26 @@ import com.ra.budgetplan.domain.model.PendapatanModel
 import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.repository.PendapatanRepository
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.SavePendapatan
-import kotlinx.coroutines.flow.first
+import com.ra.budgetplan.util.ResourceState
 import javax.inject.Inject
 
 class SavePendapatanImpl @Inject constructor(
   private val pendapatanRepository: PendapatanRepository,
   private val akunRepository: AkunRepository
 ): SavePendapatan {
-  override suspend fun invoke(pendapatanModel: PendapatanModel) {
-    val account = akunRepository.findById(pendapatanModel.idAkun).toModel()
+  override suspend fun invoke(pendapatanModel: PendapatanModel): ResourceState {
+    return try {
+      val account = akunRepository.findById(pendapatanModel.idAkun).toModel()
 
-    account.total += pendapatanModel.jumlah
+      account.total += pendapatanModel.jumlah
 
-    akunRepository.update(account.toEntity())
+      akunRepository.update(account.toEntity())
 
-    pendapatanRepository.save(pendapatanModel.toEntity())
+      pendapatanRepository.save(pendapatanModel.toEntity())
+
+      ResourceState.SUCCESS
+    } catch (e: Exception) {
+      ResourceState.FAILED
+    }
   }
 }

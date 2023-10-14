@@ -7,7 +7,7 @@ import com.ra.budgetplan.domain.mapper.toModel
 import com.ra.budgetplan.domain.repository.HutangRepository
 import com.ra.budgetplan.domain.usecase.hutang.UpdateHutang
 import com.ra.budgetplan.dummy.model.HutangDummy
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -28,8 +28,8 @@ internal class UpdateHutangImplTest {
     updateHutang.invoke(actualHutang.toModel()).test {
       val expectedVal1 = awaitItem()
       val expectedVal2 = awaitItem()
-      assertEquals(expectedVal1, StatusItem.LOADING)
-      assertEquals(expectedVal2, StatusItem.SUCCESS)
+      assertEquals(expectedVal1, ResourceState.LOADING)
+      assertEquals(expectedVal2, ResourceState.SUCCESS)
       awaitComplete()
     }
   }
