@@ -27,42 +27,42 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/budget_logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BudgetPlan"
+        android:theme="@style/Theme.BkUang"
         tools:targetApi="31">
         <activity
             android:name=".presentation.ui.debt.CreateDebtActivity"
-            android:theme="@style/Theme.BudgetPlan.M3"
+            android:theme="@style/Theme.BkUang.M3"
             android:parentActivityName=".presentation.ui.MainActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.ui.debt.DetailDebtActivity"
-            android:theme="@style/Theme.BudgetPlan.M3"
+            android:theme="@style/Theme.BkUang.M3"
             android:parentActivityName=".presentation.ui.MainActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.ui.budget.CreateBudgetActivity"
             android:exported="false"
             android:parentActivityName=".presentation.ui.MainActivity"
-            android:theme="@style/Theme.BudgetPlan.M3" />
+            android:theme="@style/Theme.BkUang.M3" />
         <activity
             android:name=".presentation.ui.transaction.CreateTransactionActivity"
             android:exported="false"
             android:parentActivityName=".presentation.ui.MainActivity"
-            android:theme="@style/Theme.BudgetPlan.M3" />
+            android:theme="@style/Theme.BkUang.M3" />
         <activity
             android:name=".presentation.ui.category.CreateCategoryActivity"
             android:exported="false"
             android:parentActivityName=".presentation.ui.MainActivity"
-            android:theme="@style/Theme.BudgetPlan.M3" />
+            android:theme="@style/Theme.BkUang.M3" />
         <activity
             android:name=".presentation.ui.account.CreateNewAccountActivity"
             android:exported="false"
             android:parentActivityName=".presentation.ui.MainActivity"
-            android:theme="@style/Theme.BudgetPlan.M3" />
+            android:theme="@style/Theme.BkUang.M3" />
         <activity
             android:name=".presentation.ui.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.BudgetPlan.M3">
+            android:theme="@style/Theme.BkUang.M3">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
