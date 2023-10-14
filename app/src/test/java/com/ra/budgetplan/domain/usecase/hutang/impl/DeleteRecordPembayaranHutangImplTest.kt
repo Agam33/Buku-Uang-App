@@ -2,7 +2,6 @@ package com.ra.budgetplan.domain.usecase.hutang.impl
 
 import app.cash.turbine.test
 import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.budgetplan.domain.mapper.toEntity
 import com.ra.budgetplan.domain.mapper.toModel
@@ -10,12 +9,11 @@ import com.ra.budgetplan.domain.model.DetailPembayaranHutangModel
 import com.ra.budgetplan.domain.repository.AkunRepository
 import com.ra.budgetplan.domain.repository.HutangRepository
 import com.ra.budgetplan.domain.repository.PembayaranHutangRepository
-import com.ra.budgetplan.domain.usecase.hutang.CreatePembayaranHutang
 import com.ra.budgetplan.domain.usecase.hutang.DeleteRecordPembayaranHutang
 import com.ra.budgetplan.dummy.model.AkunDummy
 import com.ra.budgetplan.dummy.model.HutangDummy
 import com.ra.budgetplan.dummy.model.PembayaranHutangDummy
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -52,8 +50,8 @@ internal class DeleteRecordPembayaranHutangImplTest {
     deleteRecordPembayaranHutang.invoke(actualDetailPembayaran).test {
       val expectedVal1 = awaitItem()
       val expectedVal2 = awaitItem()
-      assertEquals(expectedVal1, StatusItem.LOADING)
-      assertEquals(expectedVal2, StatusItem.SUCCESS)
+      assertEquals(expectedVal1, ResourceState.LOADING)
+      assertEquals(expectedVal2, ResourceState.SUCCESS)
       awaitComplete()
     }
   }

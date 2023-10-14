@@ -11,7 +11,7 @@ import com.ra.budgetplan.domain.usecase.hutang.SavePembayaranHutang
 import com.ra.budgetplan.dummy.model.AkunDummy
 import com.ra.budgetplan.dummy.model.HutangDummy
 import com.ra.budgetplan.dummy.model.PembayaranHutangDummy
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -45,8 +45,8 @@ internal class SavePembayaranHutangImplTest {
     savePembayaranHutang.invoke(actualPembayaranHuntang.toModel()).test {
       val expectedVal1 = awaitItem()
       val expectedVal2 = awaitItem()
-      assertEquals(expectedVal1, StatusItem.LOADING)
-      assertEquals(expectedVal2, StatusItem.SUCCESS)
+      assertEquals(expectedVal1, ResourceState.LOADING)
+      assertEquals(expectedVal2, ResourceState.SUCCESS)
       awaitComplete()
     }
   }

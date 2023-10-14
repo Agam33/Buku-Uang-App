@@ -17,7 +17,7 @@ import com.ra.budgetplan.domain.usecase.kategori.UpdateKategori
 import com.ra.budgetplan.dummy.model.IconDummy
 import com.ra.budgetplan.dummy.model.KategoriDummy
 import com.ra.budgetplan.util.MainDispatcherRule
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -83,13 +83,13 @@ internal class CategoryViewModelTest {
   fun `DeleteKategori, should be success`() = runTest {
     val kategori = KategoriDummy.getAllKategori()[0].toModel()
 
-    val actualStatusItem = StatusItem.SUCCESS
+    val actualResourceState = ResourceState.SUCCESS
     whenever(deleteKategori.invoke(kategori))
-      .thenReturn(flow { emit(actualStatusItem) })
+      .thenReturn(flow { emit(actualResourceState) })
 
     categoryViewModel.deleteCategory(kategori).test {
       val expectedVal = awaitItem()
-      assertEquals(actualStatusItem, expectedVal)
+      assertEquals(actualResourceState, expectedVal)
       awaitComplete()
     }
 

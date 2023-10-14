@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.widget.AdapterView
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -27,8 +27,10 @@ import com.ra.budgetplan.util.Extension.getStringResource
 import com.ra.budgetplan.util.Extension.millisToString
 import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.Extension.toCalendar
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getActionType
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -46,15 +48,18 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
   private var fromAccountId: UUID? = null
   private var toAccountId: UUID? = null
 
-  private var alertDialog: AlertDialog? = null
+  private lateinit var transferModel: TransferModel
+
+  private lateinit var actionType: ActionType
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     observer()
     setupAccountPicker()
 
-    val actionType = arguments?.getString(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT) as String
-    when(getActionType(actionType)) {
+    val type = arguments?.getString(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT) as String
+    actionType = getActionType(type)
+    when(actionType) {
       ActionType.CREATE -> {
         val calendar = Calendar.getInstance()
         setupDatePicker(calendar)
@@ -139,7 +144,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
       val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
       val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
 
-      val transferModel = TransferModel(
+      transferModel = TransferModel(
         uuid = model.uuid,
         jumlah = amount.toInt(),
         createdAt = model.createdAt,
@@ -149,22 +154,17 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
         idToAkun = toAccountId ?: return@run
       )
 
-      viewModel.checkAccountMoney(fromAccountId ?: return@run, amount.toInt())
+      viewModel.checkAccountMoney(
+        fromAccountId ?: return@run,
+        amount.toInt()
+      ) {
+        resourceStateTransfer(viewModel.updateTransfer(transferModel, model))
+      }
 
-      viewModel.shouldSaveTransactionState.observe(viewLifecycleOwner) { isSave ->
+      viewModel.updateTransactionState.observe(viewLifecycleOwner) { isSave ->
         if (isSave) {
-          viewModel.updateTransfer(transferModel, model)
-          showShortToast(getString(R.string.msg_success))
-          activity?.finish()
-        } else {
-          if(alertDialog == null || !alertDialog!!.isShowing) {
-            val builder = MaterialAlertDialogBuilder(requireContext())
-              .setMessage(requireContext().resources.getString(R.string.txt_account_minus))
-              .setPositiveButton(requireContext().resources.getString(R.string.txt_continue)) { _, _ ->
-                viewModel.setSavePengeluaranState(true)
-              }
-            alertDialog = builder.create()
-            alertDialog!!.show()
+          lifecycleScope.launch {
+            resourceStateTransfer(viewModel.updateTransfer(transferModel, model))
           }
         }
       }
@@ -196,7 +196,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
       val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
       val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
 
-      val transferModel = TransferModel(
+      transferModel = TransferModel(
         uuid = UUID.randomUUID(),
         jumlah = amount.toInt(),
         createdAt = createdAt,
@@ -206,22 +206,17 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
         idToAkun = toAccountId ?: return@run
       )
 
-      viewModel.checkAccountMoney(fromAccountId ?: return@run, amount.toInt())
+      viewModel.checkAccountMoney(
+        fromAccountId ?: return@run,
+        amount.toInt()
+      ) {
+        resourceStateTransfer(viewModel.saveTransfer(transferModel))
+      }
 
-      viewModel.shouldSaveTransactionState.observe(viewLifecycleOwner) { isSave ->
+      viewModel.saveTransactionState.observe(viewLifecycleOwner) { isSave ->
         if (isSave) {
-          viewModel.saveTransfer(transferModel)
-          showShortToast(getString(R.string.msg_success))
-          activity?.finish()
-        } else {
-          if(alertDialog == null || !alertDialog!!.isShowing) {
-            val builder = MaterialAlertDialogBuilder(requireContext())
-              .setMessage(requireContext().resources.getString(R.string.txt_account_minus))
-              .setPositiveButton(requireContext().resources.getString(R.string.txt_continue)) { _, _ ->
-                viewModel.setSavePengeluaranState(true)
-              }
-            alertDialog = builder.create()
-            alertDialog!!.show()
+          lifecycleScope.launch {
+            resourceStateTransfer(viewModel.saveTransfer(transferModel))
           }
         }
       }
@@ -302,5 +297,38 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
   private fun observer() {
     viewModel.getAllAccount()
     viewModel.listAccount.observe(viewLifecycleOwner, ::setupSpinnerListAccount)
+
+    viewModel.setSaveTransactionState(false)
+    viewModel.setUpdateTransctionState(false)
+    viewModel.setSaveTransactionDialogStateUi(false)
+
+    viewModel.saveTransactionDialogStateUi.observe(viewLifecycleOwner) { isShown ->
+      if(isShown) {
+        MaterialAlertDialogBuilder(requireContext())
+          .setMessage(requireContext().resources.getString(R.string.txt_account_minus))
+          .setPositiveButton(requireContext().resources.getString(R.string.txt_continue)) { _, _ ->
+            viewModel.setSaveTransactionDialogStateUi(false)
+            when(actionType) {
+              ActionType.CREATE -> viewModel.setSaveTransactionState(true)
+              ActionType.EDIT -> viewModel.setUpdateTransctionState(true)
+            }
+          }
+          .create()
+          .show()
+      }
+    }
+  }
+
+  private fun resourceStateTransfer(r: ResourceState) {
+    when(r) {
+      ResourceState.SUCCESS -> {
+        showShortToast(getString(R.string.msg_success))
+        activity?.finish()
+      }
+      ResourceState.FAILED -> {
+        showShortToast(getString(R.string.msg_failed))
+      }
+      ResourceState.LOADING -> {}
+    }
   }
 }

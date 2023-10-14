@@ -6,6 +6,7 @@ import android.text.Editable
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -27,8 +28,10 @@ import com.ra.budgetplan.util.Extension.getStringResource
 import com.ra.budgetplan.util.Extension.millisToString
 import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.Extension.toCalendar
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getActionType
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -119,11 +122,9 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
         updatedAt = createdAt
       )
 
-      viewModel.updatePendapatan(pendapatanModel, model)
-
-      showShortToast(getString(R.string.msg_success))
-
-      activity?.finish()
+      lifecycleScope.launch {
+        resourceStateIncome(viewModel.updatePendapatan(pendapatanModel, model))
+      }
     }
   }
 
@@ -154,11 +155,9 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
         updatedAt = createdAt
       )
 
-      viewModel.savePendapatan(pendepatanModel)
-
-      showShortToast(getString(R.string.msg_success))
-
-      activity?.finish()
+      lifecycleScope.launch {
+        resourceStateIncome(viewModel.savePendapatan(pendepatanModel))
+      }
     }
   }
 
@@ -260,5 +259,18 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
     viewModel.setCategoryByType(TipeKategori.PENDAPATAN)
     viewModel.listCategoryByType.observe(viewLifecycleOwner, ::setupListCategory)
     viewModel.listAccount.observe(viewLifecycleOwner, ::setupListAccount)
+  }
+
+  private fun resourceStateIncome(r: ResourceState) {
+    when(r) {
+      ResourceState.SUCCESS -> {
+        showShortToast(getString(R.string.msg_success))
+        activity?.finish()
+      }
+      ResourceState.FAILED -> {
+        showShortToast(getString(R.string.msg_failed))
+      }
+      ResourceState.LOADING -> {}
+    }
   }
 }

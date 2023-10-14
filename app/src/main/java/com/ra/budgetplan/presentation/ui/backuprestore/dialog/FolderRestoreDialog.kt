@@ -18,7 +18,7 @@ import com.ra.budgetplan.presentation.viewmodel.BackupRestoreViewModel
 import com.ra.budgetplan.util.Constants.DB_BACKUP_FILE_NAME
 import com.ra.budgetplan.util.Constants.DB_NAME
 import com.ra.budgetplan.util.Extension.restartActivity
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
@@ -93,15 +93,15 @@ class FolderRestoreDialog: DialogFragment(),
 
         viewModel.doRestore(it, File(destFile.parent!!)).collect { status ->
           when(status) {
-            StatusItem.LOADING -> {}
-            StatusItem.SUCCESS -> {
+            ResourceState.LOADING -> {}
+            ResourceState.SUCCESS -> {
               Toast.makeText(requireContext(),
                 String.format(requireContext().resources.getString(R.string.msg_success_to), requireContext().resources.getString(R.string.txt_restore)),
                 Toast.LENGTH_SHORT
               ).show()
               requireContext().restartActivity()
             }
-            StatusItem.FAILED -> {
+            ResourceState.FAILED -> {
               Toast.makeText(requireContext(),
                 String.format(requireContext().resources.getString(R.string.msg_failed_to), requireContext().resources.getString(R.string.txt_restore)),
                 Toast.LENGTH_SHORT

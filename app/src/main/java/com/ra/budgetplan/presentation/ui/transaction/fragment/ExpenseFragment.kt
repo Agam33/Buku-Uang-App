@@ -13,9 +13,11 @@ import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
 import com.ra.budgetplan.presentation.ui.transaction.adapter.ExpenseRvAdapter
 import com.ra.budgetplan.presentation.ui.transaction.adapter.OnDayItemClickListener
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
+import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.OnDeleteItemListener
 import com.ra.budgetplan.util.OnItemChangedListener
 import com.ra.budgetplan.util.Resource
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.RvGroup
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -94,9 +96,21 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>(R.layout.fragment_e
 
   override fun onDeleteItem(item: TransactionDetail) {
     viewLifecycleOwner.lifecycleScope.launch {
-      sharedViewModel.deletePengeluaranById(item.uuid)
+      resourceStateExpense(sharedViewModel.deletePengeluaranById(item.uuid))
     }
     onItemChangedListener?.onItemChanged()
+  }
+
+  private fun resourceStateExpense(r: ResourceState) {
+    when(r) {
+      ResourceState.SUCCESS -> {
+        showShortToast(getString(R.string.msg_success))
+      }
+      ResourceState.FAILED -> {
+        showShortToast(getString(R.string.msg_failed))
+      }
+      ResourceState.LOADING -> {}
+    }
   }
 
   override fun onClickDayItem(dayItem: TransactionDetail) {

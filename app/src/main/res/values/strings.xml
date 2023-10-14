@@ -55,6 +55,7 @@
     <string name="msg_failed_to">Gagal %s.</string>
     <string name="msg_success_to">Berhasil %s.</string>
     <string name="msg_success">Berhasil</string>
+    <string name="msg_failed">Gagal</string>
     <string name="msg_choose_icon">Pilih Icon!!</string>
     <string name="msg_allowed">Izinkan</string>
     <string name="msg_allow_access_storage">Izinkan untuk akses penyimpanan.</string>

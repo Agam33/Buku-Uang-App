@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.widget.AdapterView
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -30,8 +30,10 @@ import com.ra.budgetplan.util.Extension.getStringResource
 import com.ra.budgetplan.util.Extension.millisToString
 import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.Extension.toCalendar
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getActionType
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -49,15 +51,18 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
   private var accountId: UUID? = null
   private var categoryId: UUID? = null
 
-  private var alertDialog: AlertDialog? = null
+  private lateinit var actionType: ActionType
+
+  private lateinit var pengeluaranModel: PengeluaranModel
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     observer()
     setupAccountAndCategoryPicker()
 
-    val actionType = arguments?.getString(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT) as String
-    when(getActionType(actionType)) {
+    val type = arguments?.getString(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT) as String
+    actionType = getActionType(type)
+    when(actionType) {
       ActionType.CREATE -> {
         val calendar = Calendar.getInstance()
         setupDatePicker(calendar)
@@ -112,7 +117,7 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
       val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
       val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
 
-      val pengeluaranModel = PengeluaranModel(
+      pengeluaranModel = PengeluaranModel(
         uuid = model.uuid,
         idKategori = categoryId ?: return@run,
         idAkun = accountId ?: return@run,
@@ -122,11 +127,20 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
         updatedAt = createdAt
       )
 
-      viewModel.updatePengeluaran(pengeluaranModel, model)
+      viewModel.checkAccountMoney(
+        accountId ?: return@run,
+        amount.toInt()
+      ) {
+        resourceStateExpense(viewModel.updatePengeluaran(pengeluaranModel, model))
+      }
 
-      showShortToast(getString(R.string.msg_success))
-
-      activity?.finish()
+      viewModel.updateTransactionState.observe(viewLifecycleOwner) { isUpdate ->
+        if(isUpdate) {
+          lifecycleScope.launch {
+            resourceStateExpense(viewModel.updatePengeluaran(pengeluaranModel, model))
+          }
+        }
+      }
     }
   }
 
@@ -222,7 +236,7 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
       val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
       val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
 
-      val pengeluaranModel = PengeluaranModel(
+      pengeluaranModel = PengeluaranModel(
         uuid = UUID.randomUUID(),
         idKategori = categoryId ?: return@run,
         idAkun = accountId ?: return@run,
@@ -232,22 +246,17 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
         updatedAt = createdAt
       )
 
-      viewModel.checkAccountMoney(accountId ?: return@run, amount.toInt())
+      viewModel.checkAccountMoney(
+        accountId ?: return@run,
+        amount.toInt()
+      ) {
+        resourceStateExpense(viewModel.savePengeluaran(pengeluaranModel))
+      }
 
-      viewModel.shouldSaveTransactionState.observe(viewLifecycleOwner) { isSave ->
+      viewModel.saveTransactionState.observe(viewLifecycleOwner) { isSave ->
         if (isSave) {
-          viewModel.savePengeluaran(pengeluaranModel)
-          showShortToast(getString(R.string.msg_success))
-          activity?.finish()
-        } else {
-          if(alertDialog == null || !alertDialog!!.isShowing) {
-            val builder = MaterialAlertDialogBuilder(requireContext())
-              .setMessage(requireContext().resources.getString(R.string.txt_account_minus))
-              .setPositiveButton(requireContext().resources.getString(R.string.txt_continue)) { _, _ ->
-                viewModel.setSavePengeluaranState(true)
-              }
-            alertDialog = builder.create()
-            alertDialog!!.show()
+          lifecycleScope.launch {
+            resourceStateExpense(viewModel.savePengeluaran(pengeluaranModel))
           }
         }
       }
@@ -277,5 +286,38 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
     viewModel.setCategoryByType(TipeKategori.PENGELUARAN)
     viewModel.listCategoryByType.observe(viewLifecycleOwner, ::setupListCategory)
     viewModel.listAccount.observe(viewLifecycleOwner, ::setupListAccount)
+
+    viewModel.setSaveTransactionState(false)
+    viewModel.setUpdateTransctionState(false)
+    viewModel.setSaveTransactionDialogStateUi(false)
+
+    viewModel.saveTransactionDialogStateUi.observe(viewLifecycleOwner) { isShown ->
+      if(isShown) {
+        MaterialAlertDialogBuilder(requireContext())
+          .setMessage(requireContext().resources.getString(R.string.txt_account_minus))
+          .setPositiveButton(requireContext().resources.getString(R.string.txt_continue)) { _, _ ->
+            viewModel.setSaveTransactionDialogStateUi(false)
+            when(actionType) {
+              ActionType.CREATE -> viewModel.setSaveTransactionState(true)
+              ActionType.EDIT -> viewModel.setUpdateTransctionState(true)
+            }
+          }
+            .create()
+            .show()
+      }
+    }
+  }
+
+  private fun resourceStateExpense(r: ResourceState) {
+      when(r) {
+        ResourceState.SUCCESS -> {
+          showShortToast(getString(R.string.msg_success))
+          activity?.finish()
+        }
+        ResourceState.FAILED -> {
+          showShortToast(getString(R.string.msg_failed))
+        }
+        ResourceState.LOADING -> {}
+      }
   }
 }

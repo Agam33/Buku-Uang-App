@@ -13,9 +13,11 @@ import com.ra.budgetplan.presentation.ui.transaction.TransactionDetail
 import com.ra.budgetplan.presentation.ui.transaction.adapter.IncomeRvAdapter
 import com.ra.budgetplan.presentation.ui.transaction.adapter.OnDayItemClickListener
 import com.ra.budgetplan.presentation.viewmodel.TransactionViewModel
+import com.ra.budgetplan.util.Extension.showShortToast
 import com.ra.budgetplan.util.OnDeleteItemListener
 import com.ra.budgetplan.util.OnItemChangedListener
 import com.ra.budgetplan.util.Resource
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.RvGroup
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -84,9 +86,21 @@ class IncomeFragment : BaseFragment<FragmentIncomeBinding>(R.layout.fragment_inc
 
   override fun onDeleteItem(item: TransactionDetail) {
     viewLifecycleOwner.lifecycleScope.launch {
-      sharedViewModel.deletePendapatanById(item.uuid)
+      resourceStateIncome(sharedViewModel.deletePendapatanById(item.uuid))
     }
     onItemChangedListener?.onItemChanged()
+  }
+
+  private fun resourceStateIncome(r: ResourceState) {
+    when(r) {
+      ResourceState.SUCCESS -> {
+        showShortToast(getString(R.string.msg_success))
+      }
+      ResourceState.FAILED -> {
+        showShortToast(getString(R.string.msg_failed))
+      }
+      ResourceState.LOADING -> {}
+    }
   }
 
   override fun onClickDayItem(dayItem: TransactionDetail) {

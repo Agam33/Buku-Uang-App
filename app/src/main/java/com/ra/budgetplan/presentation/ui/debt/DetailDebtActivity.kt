@@ -21,7 +21,7 @@ import com.ra.budgetplan.util.Extension.toPercentText
 import com.ra.budgetplan.util.Extension.toStringFormat
 import com.ra.budgetplan.util.OnItemChangedListener
 import com.ra.budgetplan.util.Resource
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -123,11 +123,11 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
     lifecycleScope.launch {
       viewModel.deleteRecordPembayaranHutang(model).collect { status ->
         when(status) {
-          StatusItem.LOADING -> {}
-          StatusItem.SUCCESS -> {
+          ResourceState.LOADING -> {}
+          ResourceState.SUCCESS -> {
             observer()
           }
-          StatusItem.FAILED -> {}
+          ResourceState.FAILED -> {}
         }
       }
     }

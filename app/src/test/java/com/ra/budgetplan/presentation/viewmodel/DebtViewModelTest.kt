@@ -13,7 +13,7 @@ import com.ra.budgetplan.domain.usecase.hutang.UpdateHutang
 import com.ra.budgetplan.dummy.model.HutangDummy
 import com.ra.budgetplan.util.MainDispatcherRule
 import com.ra.budgetplan.util.Resource
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
@@ -52,7 +52,7 @@ class DebtViewModelTest {
   @Test
   fun `UpdateHutang, should be success`() = runTest {
     val actualHutang = HutangDummy.getAllHutang()[0].toModel()
-    val actualStatus = StatusItem.SUCCESS
+    val actualStatus = ResourceState.SUCCESS
 
     whenever(updateHutang.invoke(actualHutang))
       .thenReturn(flow { emit(actualStatus) })
@@ -67,7 +67,7 @@ class DebtViewModelTest {
   @Test
   fun `DeleteHutang, should be success`() = runTest {
     val actualHutang = HutangDummy.getAllHutang()[0].toModel()
-    val actualStatus = StatusItem.SUCCESS
+    val actualStatus = ResourceState.SUCCESS
 
     whenever(deleteHutang.invoke(actualHutang))
       .thenReturn(flow { emit(actualStatus) })
@@ -82,7 +82,7 @@ class DebtViewModelTest {
   @Test
   fun `CreateHutang, should be success`() = runTest {
     val actualHutang = HutangDummy.getAllHutang()[0].toModel()
-    val actualStatus = StatusItem.SUCCESS
+    val actualStatus = ResourceState.SUCCESS
 
     whenever(createHutang.invoke(actualHutang))
       .thenReturn(flow { emit(actualStatus) })

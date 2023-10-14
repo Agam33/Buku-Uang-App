@@ -8,6 +8,7 @@ import com.ra.budgetplan.domain.repository.PendapatanRepository
 import com.ra.budgetplan.domain.usecase.transaksi.pendapatan.UpdatePendapatan
 import com.ra.budgetplan.dummy.model.AkunDummy
 import com.ra.budgetplan.dummy.model.PendapatanDummy
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -31,6 +32,6 @@ internal class UpdatePendapatanImplTest {
     whenever(akunRepository.update(actualAkun)).thenReturn(Unit)
 
     val expectedVal = updatePendapatan.invoke(actualPendapatan.toModel(), actualPendapatan.toModel())
-    assertEquals(expectedVal, Unit)
+    assertEquals(expectedVal, ResourceState.SUCCESS)
   }
 }

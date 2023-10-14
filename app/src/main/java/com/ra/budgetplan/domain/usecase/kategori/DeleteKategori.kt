@@ -1,9 +1,9 @@
 package com.ra.budgetplan.domain.usecase.kategori
 
 import com.ra.budgetplan.domain.model.KategoriModel
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 
 interface DeleteKategori {
-  suspend fun invoke(kategori: KategoriModel): Flow<StatusItem>
+  suspend fun invoke(kategori: KategoriModel): Flow<ResourceState>
 }

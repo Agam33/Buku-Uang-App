@@ -17,7 +17,7 @@ import com.ra.budgetplan.base.BaseActivity
 import com.ra.budgetplan.presentation.viewmodel.BudgetViewModel
 import com.ra.budgetplan.util.ActionType
 import com.ra.budgetplan.util.Extension.showShortToast
-import com.ra.budgetplan.util.StatusItem
+import com.ra.budgetplan.util.ResourceState
 import com.ra.budgetplan.util.getActionType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -81,11 +81,11 @@ class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.
       lifecycleScope.launch {
         viewModel.updateBudget(budgetModel).collect { status ->
           when(status) {
-            StatusItem.LOADING -> {}
-            StatusItem.FAILED -> {
+            ResourceState.LOADING -> {}
+            ResourceState.FAILED -> {
               showShortToast(getString(R.string.msg_failed_update))
             }
-            StatusItem.SUCCESS -> {
+            ResourceState.SUCCESS -> {
               showShortToast(getString(R.string.msg_success))
               delay(300)
               onBackPressedDispatcher.onBackPressed()
@@ -128,11 +128,11 @@ class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.
       lifecycleScope.launch {
         viewModel.createBudget(budgetModel).collect { status ->
           when(status) {
-            StatusItem.LOADING -> {}
-            StatusItem.FAILED -> {
+            ResourceState.LOADING -> {}
+            ResourceState.FAILED -> {
               showShortToast(getString(R.string.msg_already_exist))
             }
-            StatusItem.SUCCESS -> {
+            ResourceState.SUCCESS -> {
               showShortToast(getString(R.string.msg_success))
               delay(300)
               onBackPressedDispatcher.onBackPressed()
