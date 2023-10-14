@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace 'com.ra.budgetplan'
+    namespace 'com.ra.bkuang'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.ra.budgetplan"
+        applicationId "com.ra.bkuang"
         minSdk 26
         targetSdk 33
         versionCode 1
