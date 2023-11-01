@@ -1,6 +1,6 @@
 package com.ra.bkuang.data.local
 
-import com.ra.bkuang.domain.entity.HutangEntity
+import com.ra.bkuang.data.entity.HutangEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 

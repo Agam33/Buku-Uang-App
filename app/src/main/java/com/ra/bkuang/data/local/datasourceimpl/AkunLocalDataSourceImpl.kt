@@ -2,7 +2,7 @@ package com.ra.bkuang.data.local.datasourceimpl
 
 import com.ra.bkuang.data.local.AkunLocalDataSource
 import com.ra.bkuang.data.local.database.dao.AkunDao
-import com.ra.bkuang.domain.entity.AkunEntity
+import com.ra.bkuang.data.entity.AkunEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 import javax.inject.Inject

@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.usecase.transaksi.pendapatan
 
-import com.ra.bkuang.domain.entity.DetailPendapatan
+import com.ra.bkuang.data.entity.DetailPendapatan
 import java.util.UUID
 
 interface FindDetailPendapatanById {

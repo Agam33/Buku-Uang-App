@@ -2,8 +2,8 @@ package com.ra.bkuang.data.local.database
 
 import android.annotation.SuppressLint
 import com.ra.bkuang.data.local.database.dao.KategoriDao
-import com.ra.bkuang.domain.entity.KategoriEntity
-import com.ra.bkuang.domain.entity.TipeKategori.*
+import com.ra.bkuang.data.entity.KategoriEntity
+import com.ra.bkuang.data.entity.TipeKategori.*
 import com.ra.bkuang.util.Constants.coroutineIOThread
 import java.time.LocalDateTime
 import java.util.UUID
@@ -17,7 +17,8 @@ class DatabaseSeeder(
     val categories = mutableListOf<KategoriEntity>()
 
     // Expense
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon = -1,
@@ -25,9 +26,11 @@ class DatabaseSeeder(
       tipeKategori = PENGELUARAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon = -1,
@@ -35,9 +38,11 @@ class DatabaseSeeder(
       tipeKategori = PENGELUARAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =  -1,
@@ -45,9 +50,11 @@ class DatabaseSeeder(
       tipeKategori = PENGELUARAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon = -1,
@@ -55,9 +62,11 @@ class DatabaseSeeder(
       tipeKategori = PENGELUARAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon = -1,
@@ -65,9 +74,11 @@ class DatabaseSeeder(
       tipeKategori = PENGELUARAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =  -1,
@@ -75,9 +86,11 @@ class DatabaseSeeder(
       tipeKategori = PENGELUARAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -85,9 +98,11 @@ class DatabaseSeeder(
       tipeKategori = PENGELUARAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon = -1,
@@ -95,9 +110,11 @@ class DatabaseSeeder(
       tipeKategori = PENGELUARAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon = -1,
@@ -105,9 +122,11 @@ class DatabaseSeeder(
       tipeKategori = PENGELUARAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -115,10 +134,12 @@ class DatabaseSeeder(
       tipeKategori = PENGELUARAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
     // Income
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -126,9 +147,11 @@ class DatabaseSeeder(
       tipeKategori = PENDAPATAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -136,9 +159,11 @@ class DatabaseSeeder(
       tipeKategori = PENDAPATAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -146,9 +171,11 @@ class DatabaseSeeder(
       tipeKategori = PENDAPATAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -156,9 +183,11 @@ class DatabaseSeeder(
       tipeKategori = PENDAPATAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -166,9 +195,11 @@ class DatabaseSeeder(
       tipeKategori = PENDAPATAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -176,9 +207,11 @@ class DatabaseSeeder(
       tipeKategori = PENDAPATAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -186,9 +219,11 @@ class DatabaseSeeder(
       tipeKategori = PENDAPATAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -196,9 +231,11 @@ class DatabaseSeeder(
       tipeKategori = PENDAPATAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -206,9 +243,11 @@ class DatabaseSeeder(
       tipeKategori = PENDAPATAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
-    categories.add(KategoriEntity(
+    categories.add(
+      KategoriEntity(
       uuid = UUID.randomUUID(),
       icUrl = "",
       icon =-1,
@@ -216,7 +255,8 @@ class DatabaseSeeder(
       tipeKategori = PENDAPATAN,
       updatedAt = LocalDateTime.now(),
       createdAt = LocalDateTime.now()
-    ))
+    )
+    )
 
     coroutineIOThread {
       kategoriDao.saveAll(categories)

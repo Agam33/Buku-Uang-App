@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.mapper
 
-import com.ra.bkuang.domain.entity.BudgetEntity
+import com.ra.bkuang.data.entity.BudgetEntity
 import com.ra.bkuang.domain.model.BudgetModel
 
 fun BudgetModel.toEntity(

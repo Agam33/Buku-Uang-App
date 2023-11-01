@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.usecase.transaksi.transfer
 
-import com.ra.bkuang.domain.entity.DetailTransfer
+import com.ra.bkuang.data.entity.DetailTransfer
 import java.util.UUID
 
 interface FindDetailTransferById {

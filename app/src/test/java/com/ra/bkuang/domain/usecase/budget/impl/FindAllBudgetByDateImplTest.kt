@@ -2,7 +2,7 @@ package com.ra.bkuang.domain.usecase.budget.impl
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.domain.entity.DetailBudget
+import com.ra.bkuang.data.entity.DetailBudget
 import com.ra.bkuang.domain.repository.BudgetRepository
 import com.ra.bkuang.domain.usecase.budget.FindAllBudgetByDate
 import com.ra.bkuang.dummy.model.BudgetDummy

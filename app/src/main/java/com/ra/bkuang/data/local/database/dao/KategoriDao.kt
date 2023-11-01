@@ -1,8 +1,8 @@
 package com.ra.bkuang.data.local.database.dao
 
 import androidx.room.*
-import com.ra.bkuang.domain.entity.KategoriEntity
-import com.ra.bkuang.domain.entity.TipeKategori
+import com.ra.bkuang.data.entity.KategoriEntity
+import com.ra.bkuang.data.entity.TipeKategori
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 

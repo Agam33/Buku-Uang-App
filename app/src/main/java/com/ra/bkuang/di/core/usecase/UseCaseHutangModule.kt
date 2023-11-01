@@ -34,6 +34,16 @@ import dagger.hilt.components.SingletonComponent
 interface UseCaseHutangModule {
 
   @Binds
+  fun bindFindAllRecordPembayaranHutang(findAllRecordPembayaranHutang: FindAllRecordPembayaranHutangImpl): FindAllRecordPembayaranHutang
+
+  @Binds
+  fun bindSavePembayaranHutang(savePembayaranHutangImpl: SavePembayaranHutangImpl): SavePembayaranHutang
+
+  @Binds
+  fun bindFindHutangByIdWithFlow(findHutangByIdWithFlowImpl: FindHutangByIdWithFlowImpl): FindHutangByIdWithFlow
+
+
+  @Binds
   fun bindGetSizePembayaranHutangById(getSizeListPembayaranHutangByIdImpl: GetSizeListPembayaranHutangByIdImpl): GetSizeListPembayaranHutangById
 
   @Binds
@@ -51,14 +61,6 @@ interface UseCaseHutangModule {
   @Binds
   fun bindCreatePembayaranHutang(createPembayaranHutangImpl: CreatePembayaranHutangImpl): CreatePembayaranHutang
 
-  @Binds
-  fun bindFindAllRecordPembayaranHutang(findAllRecordPembayaranHutang: FindAllRecordPembayaranHutangImpl): FindAllRecordPembayaranHutang
-
-  @Binds
-  fun bindSavePembayaranHutang(savePembayaranHutangImpl: SavePembayaranHutangImpl): SavePembayaranHutang
-
-  @Binds
-  fun bindFindHutangByIdWithFlow(findHutangByIdWithFlowImpl: FindHutangByIdWithFlowImpl): FindHutangByIdWithFlow
 
   @Binds
   fun bindFindHutangById(findHutangByIdImpl: FindHutangByIdImpl): FindHutangById

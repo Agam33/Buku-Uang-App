@@ -6,7 +6,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.bkuang.data.local.PembayaranHutangLocalDataSource
 import com.ra.bkuang.data.local.database.dao.PembayaranHutangDao
-import com.ra.bkuang.domain.entity.DetailPembayaranHutang
+import com.ra.bkuang.data.entity.DetailPembayaranHutang
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.HutangDummy
 import com.ra.bkuang.dummy.model.PembayaranHutangDummy

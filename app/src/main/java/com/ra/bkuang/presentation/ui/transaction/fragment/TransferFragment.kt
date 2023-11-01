@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
 import com.ra.bkuang.base.BaseFragment
 import com.ra.bkuang.databinding.FragmentTransferBinding
-import com.ra.bkuang.domain.entity.DetailTransfer
+import com.ra.bkuang.data.entity.DetailTransfer
 import com.ra.bkuang.presentation.ui.transaction.TransactionDetail
 import com.ra.bkuang.presentation.ui.transaction.adapter.OnDayItemClickListener
 import com.ra.bkuang.presentation.ui.transaction.adapter.TransferRvAdapter

@@ -1,6 +1,6 @@
 package com.ra.bkuang.dummy.model
 
-import com.ra.bkuang.domain.entity.BudgetEntity
+import com.ra.bkuang.data.entity.BudgetEntity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID

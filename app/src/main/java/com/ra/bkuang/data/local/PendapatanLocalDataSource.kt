@@ -1,7 +1,7 @@
 package com.ra.bkuang.data.local
 
-import com.ra.bkuang.domain.entity.DetailPendapatan
-import com.ra.bkuang.domain.entity.PendapatanEntity
+import com.ra.bkuang.data.entity.DetailPendapatan
+import com.ra.bkuang.data.entity.PendapatanEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import java.util.UUID
