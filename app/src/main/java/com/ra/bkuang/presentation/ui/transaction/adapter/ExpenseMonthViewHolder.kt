@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.databinding.ItemRvExpenseDaysBinding
 import com.ra.bkuang.databinding.ItemRvExpenseMonthBinding
-import com.ra.bkuang.domain.entity.DetailPengeluaran
+import com.ra.bkuang.data.entity.DetailPengeluaran
 import com.ra.bkuang.domain.mapper.toModel
 
 class ExpenseMonthViewHolder(

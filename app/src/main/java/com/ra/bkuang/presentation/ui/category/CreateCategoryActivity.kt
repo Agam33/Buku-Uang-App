@@ -8,7 +8,7 @@ import android.view.View
 import androidx.activity.viewModels
 import com.ra.bkuang.R
 import com.ra.bkuang.databinding.ActivityCreateCategoryBinding
-import com.ra.bkuang.domain.entity.TipeKategori
+import com.ra.bkuang.data.entity.TipeKategori
 import com.ra.bkuang.domain.model.IconModel
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.base.BaseActivity

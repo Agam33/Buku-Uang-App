@@ -3,6 +3,15 @@ package com.ra.bkuang.data.local.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.ra.bkuang.data.entity.AkunEntity
+import com.ra.bkuang.data.entity.BudgetEntity
+import com.ra.bkuang.data.entity.HutangEntity
+import com.ra.bkuang.data.entity.IconEntity
+import com.ra.bkuang.data.entity.KategoriEntity
+import com.ra.bkuang.data.entity.PembayaranHutangEntity
+import com.ra.bkuang.data.entity.PendapatanEntity
+import com.ra.bkuang.data.entity.PengeluaranEntity
+import com.ra.bkuang.data.entity.TransferEntity
 import com.ra.bkuang.data.local.database.dao.*
 import com.ra.bkuang.domain.entity.*
 import com.ra.bkuang.util.DbLocalDateConverter

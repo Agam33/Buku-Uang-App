@@ -1,4 +1,4 @@
-package com.ra.bkuang.domain.entity
+package com.ra.bkuang.data.entity
 
 enum class TipeKategori {
   PENGELUARAN,

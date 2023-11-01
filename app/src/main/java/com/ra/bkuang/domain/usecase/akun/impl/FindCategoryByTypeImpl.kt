@@ -1,7 +1,7 @@
 package com.ra.bkuang.domain.usecase.akun.impl
 
-import com.ra.bkuang.domain.entity.KategoriEntity
-import com.ra.bkuang.domain.entity.TipeKategori
+import com.ra.bkuang.data.entity.KategoriEntity
+import com.ra.bkuang.data.entity.TipeKategori
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.domain.repository.KategoriRepository

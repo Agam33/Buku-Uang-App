@@ -1,6 +1,6 @@
 package com.ra.bkuang.dummy.model
 
-import com.ra.bkuang.domain.entity.PengeluaranEntity
+import com.ra.bkuang.data.entity.PengeluaranEntity
 import java.time.LocalDateTime
 import java.util.UUID
 

@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.domain.entity.DetailBudget
-import com.ra.bkuang.domain.entity.TipeKategori
+import com.ra.bkuang.data.entity.DetailBudget
+import com.ra.bkuang.data.entity.TipeKategori
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.usecase.akun.FindCategoryByType
 import com.ra.bkuang.domain.usecase.budget.CreateBudget

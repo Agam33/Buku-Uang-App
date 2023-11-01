@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.usecase.transaksi.pengeluaran
 
-import com.ra.bkuang.domain.entity.DetailPengeluaran
+import com.ra.bkuang.data.entity.DetailPengeluaran
 import java.time.LocalDateTime
 
 interface GetPengeluaranByDate {

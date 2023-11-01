@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.ra.bkuang.R
 import com.ra.bkuang.customview.spinner.TransactionSpinnerAdapter
 import com.ra.bkuang.databinding.ActivityCreateBudgetBinding
-import com.ra.bkuang.domain.entity.TipeKategori
+import com.ra.bkuang.data.entity.TipeKategori
 import com.ra.bkuang.domain.model.BudgetModel
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.base.BaseActivity

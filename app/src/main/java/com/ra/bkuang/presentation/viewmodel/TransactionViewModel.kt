@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.data.local.preferences.UserSettingPref
-import com.ra.bkuang.domain.entity.DetailPendapatan
-import com.ra.bkuang.domain.entity.DetailPengeluaran
-import com.ra.bkuang.domain.entity.DetailTransfer
-import com.ra.bkuang.domain.entity.TipeKategori
+import com.ra.bkuang.data.entity.DetailPendapatan
+import com.ra.bkuang.data.entity.DetailPengeluaran
+import com.ra.bkuang.data.entity.DetailTransfer
+import com.ra.bkuang.data.entity.TipeKategori
 import com.ra.bkuang.domain.model.AkunModel
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.domain.model.PendapatanModel

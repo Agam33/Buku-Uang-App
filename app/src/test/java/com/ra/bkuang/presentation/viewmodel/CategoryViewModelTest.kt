@@ -6,7 +6,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.bkuang.customview.dialog.icon.IconCategory
-import com.ra.bkuang.domain.entity.TipeKategori
+import com.ra.bkuang.data.entity.TipeKategori
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.domain.usecase.akun.FindCategoryByType
