@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.mapper
 
-import com.ra.bkuang.domain.entity.TransferEntity
+import com.ra.bkuang.data.entity.TransferEntity
 import com.ra.bkuang.domain.model.TransferModel
 
 fun TransferEntity.toModel(): TransferModel =

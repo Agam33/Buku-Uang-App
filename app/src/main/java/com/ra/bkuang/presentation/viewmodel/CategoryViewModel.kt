@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.customview.dialog.icon.IconCategory
-import com.ra.bkuang.domain.entity.TipeKategori
+import com.ra.bkuang.data.entity.TipeKategori
 import com.ra.bkuang.domain.model.IconModel
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.domain.usecase.akun.FindCategoryByType

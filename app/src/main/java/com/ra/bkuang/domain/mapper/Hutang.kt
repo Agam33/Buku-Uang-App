@@ -1,7 +1,7 @@
 package com.ra.bkuang.domain.mapper
 
-import com.ra.bkuang.domain.entity.HutangEntity
-import com.ra.bkuang.domain.entity.PembayaranHutangEntity
+import com.ra.bkuang.data.entity.HutangEntity
+import com.ra.bkuang.data.entity.PembayaranHutangEntity
 import com.ra.bkuang.domain.model.HutangModel
 import com.ra.bkuang.domain.model.PembayaranHutangModel
 

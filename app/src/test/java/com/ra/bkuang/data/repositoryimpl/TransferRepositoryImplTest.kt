@@ -4,7 +4,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.bkuang.data.local.TransferLocalDataSource
-import com.ra.bkuang.domain.entity.DetailTransfer
+import com.ra.bkuang.data.entity.DetailTransfer
 import com.ra.bkuang.domain.repository.TransferRepository
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.TransferDummy

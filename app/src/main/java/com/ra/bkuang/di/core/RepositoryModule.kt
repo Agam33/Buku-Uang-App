@@ -14,6 +14,10 @@ interface RepositoryModule {
 
   @Binds
   @Singleton
+  fun bindHutangRepository(pembayaranHutangRepositoryImpl: PembayaranHutangRepositoryImpl): PembayaranHutangRepository
+
+  @Binds
+  @Singleton
   fun bindBudgetRepository(budgetRepositoryImpl: BudgetRepositoryImpl): BudgetRepository
 
   @Binds
@@ -39,10 +43,6 @@ interface RepositoryModule {
   @Binds
   @Singleton
   fun bindTransferRepository(transferRepositoryImpl: TransferRepositoryImpl): TransferRepository
-
-  @Binds
-  @Singleton
-  fun bindHutangRepository(pembayaranHutangRepositoryImpl: PembayaranHutangRepositoryImpl): PembayaranHutangRepository
 
   @Binds
   @Singleton

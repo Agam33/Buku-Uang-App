@@ -1,7 +1,7 @@
 package com.ra.bkuang.domain.repository
 
-import com.ra.bkuang.domain.entity.DetailPengeluaran
-import com.ra.bkuang.domain.entity.PengeluaranEntity
+import com.ra.bkuang.data.entity.DetailPengeluaran
+import com.ra.bkuang.data.entity.PengeluaranEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import java.util.UUID

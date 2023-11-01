@@ -3,8 +3,8 @@ package com.ra.bkuang.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ra.bkuang.domain.entity.DetailBudget
-import com.ra.bkuang.domain.entity.TipeKategori
+import com.ra.bkuang.data.entity.DetailBudget
+import com.ra.bkuang.data.entity.TipeKategori
 import com.ra.bkuang.domain.model.BudgetModel
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.domain.usecase.akun.FindCategoryByType

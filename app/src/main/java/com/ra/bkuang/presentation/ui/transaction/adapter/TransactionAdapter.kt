@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.databinding.ItemRvExpenseMonthBinding
 import com.ra.bkuang.databinding.ItemRvIncomeMonthBinding
 import com.ra.bkuang.databinding.ItemRvTransferMonthBinding
-import com.ra.bkuang.domain.entity.DetailPendapatan
-import com.ra.bkuang.domain.entity.DetailPengeluaran
-import com.ra.bkuang.domain.entity.DetailTransfer
+import com.ra.bkuang.data.entity.DetailPendapatan
+import com.ra.bkuang.data.entity.DetailPengeluaran
+import com.ra.bkuang.data.entity.DetailTransfer
 import com.ra.bkuang.util.RvGroup
 
 

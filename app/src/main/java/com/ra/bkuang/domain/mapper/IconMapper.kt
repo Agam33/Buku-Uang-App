@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.mapper
 
-import com.ra.bkuang.domain.entity.IconEntity
+import com.ra.bkuang.data.entity.IconEntity
 import com.ra.bkuang.domain.model.IconModel
 
 fun IconEntity.toModel(): IconModel {

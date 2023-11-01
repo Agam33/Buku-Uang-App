@@ -10,7 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ra.bkuang.R
 import com.ra.bkuang.base.BaseFragment
 import com.ra.bkuang.databinding.FragmentMonthBudgetBinding
-import com.ra.bkuang.domain.entity.DetailBudget
+import com.ra.bkuang.data.entity.DetailBudget
 import com.ra.bkuang.presentation.ui.budget.CreateBudgetActivity
 import com.ra.bkuang.presentation.ui.budget.CreateBudgetActivity.Companion.BUDGET_EXTRA_ACTION
 import com.ra.bkuang.presentation.ui.budget.CreateBudgetActivity.Companion.BUDGET_EXTRA_DATE

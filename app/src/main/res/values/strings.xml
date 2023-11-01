@@ -88,7 +88,7 @@
     <string name="txt_restore">Pulihkan</string>
     <string name="txt_select_directory">Pilih direktori</string>
     <string name="txt_copyright">©2023 R.A Dev</string>
-    <string name="txt_backup_and_restore">Cadangkan dan Pulihkan</string>
+    <string name="txt_backup_and_restore">Cadangkan</string>
     <string name="txt_backup_format">%s_%s.zip</string>
     <string name="txt_debt">Hutang</string>
     <string name="txt_detail">Detail</string>

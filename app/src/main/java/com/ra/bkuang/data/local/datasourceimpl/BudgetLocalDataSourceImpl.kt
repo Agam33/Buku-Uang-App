@@ -2,8 +2,8 @@ package com.ra.bkuang.data.local.datasourceimpl
 
 import com.ra.bkuang.data.local.BudgetLocalDataSource
 import com.ra.bkuang.data.local.database.dao.BudgetDao
-import com.ra.bkuang.domain.entity.BudgetEntity
-import com.ra.bkuang.domain.entity.DetailBudget
+import com.ra.bkuang.data.entity.BudgetEntity
+import com.ra.bkuang.data.entity.DetailBudget
 import java.time.LocalDate
 import java.util.UUID
 import javax.inject.Inject
