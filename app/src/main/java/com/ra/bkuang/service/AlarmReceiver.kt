@@ -131,7 +131,7 @@ class AlarmReceiver: BroadcastReceiver() {
 
     val alarmNotification = NotificationCompat.Builder(context, ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID)
       .setContentTitle(String.format(context.getString(R.string.msg_title_debt_notification), title))
-      .setSmallIcon(R.drawable.baseline_account_balance_wallet_24)
+      .setSmallIcon(R.drawable.book_icon_v2)
       .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
       .setSound(alarmSound)
       .setChannelId(ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID)
