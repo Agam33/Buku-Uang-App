@@ -12,7 +12,7 @@ import com.ra.bkuang.customview.spinner.SpinnerItemOptions
 import com.ra.bkuang.customview.spinner.SpinnerOptionAdapter
 import com.ra.bkuang.databinding.GroupRvCategoriesBinding
 import com.ra.bkuang.databinding.ItemRvCategoriesBinding
-import com.ra.bkuang.data.entity.TipeKategori
+import com.ra.bkuang.data.local.entity.TipeKategori
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.util.Extension.firstCharUppercase
 

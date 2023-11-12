@@ -2,8 +2,8 @@ package com.ra.bkuang.data.local.datasourceimpl
 
 import com.ra.bkuang.data.local.TransferLocalDataSource
 import com.ra.bkuang.data.local.database.dao.TransferDao
-import com.ra.bkuang.data.entity.DetailTransfer
-import com.ra.bkuang.data.entity.TransferEntity
+import com.ra.bkuang.data.local.entity.DetailTransfer
+import com.ra.bkuang.data.local.entity.TransferEntity
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject

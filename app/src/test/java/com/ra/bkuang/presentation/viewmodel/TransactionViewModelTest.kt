@@ -5,10 +5,10 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.bkuang.data.local.preferences.UserSettingPref
-import com.ra.bkuang.data.entity.DetailPendapatan
-import com.ra.bkuang.data.entity.DetailPengeluaran
-import com.ra.bkuang.data.entity.DetailTransfer
-import com.ra.bkuang.data.entity.TipeKategori
+import com.ra.bkuang.data.local.entity.DetailPendapatan
+import com.ra.bkuang.data.local.entity.DetailPengeluaran
+import com.ra.bkuang.data.local.entity.DetailTransfer
+import com.ra.bkuang.data.local.entity.TipeKategori
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.usecase.akun.FindAkunById
 import com.ra.bkuang.domain.usecase.akun.FindAllAkun

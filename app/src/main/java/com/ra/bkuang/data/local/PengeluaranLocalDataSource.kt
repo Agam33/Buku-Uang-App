@@ -1,7 +1,7 @@
 package com.ra.bkuang.data.local
 
-import com.ra.bkuang.data.entity.DetailPengeluaran
-import com.ra.bkuang.data.entity.PengeluaranEntity
+import com.ra.bkuang.data.local.entity.DetailPengeluaran
+import com.ra.bkuang.data.local.entity.PengeluaranEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import java.util.UUID

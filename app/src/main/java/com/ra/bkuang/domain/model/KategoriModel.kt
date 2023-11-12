@@ -1,7 +1,7 @@
 package com.ra.bkuang.domain.model
 
 import android.os.Parcelable
-import com.ra.bkuang.data.entity.TipeKategori
+import com.ra.bkuang.data.local.entity.TipeKategori
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 import java.util.*

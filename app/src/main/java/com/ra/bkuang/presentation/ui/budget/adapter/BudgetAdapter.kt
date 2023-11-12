@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.R
 import com.ra.bkuang.databinding.ItemRvBudgetPermonthBinding
-import com.ra.bkuang.data.entity.DetailBudget
+import com.ra.bkuang.data.local.entity.DetailBudget
 import com.ra.bkuang.util.Constants.collapsedWidth
 import com.ra.bkuang.util.Constants.expandedWidth
 import com.ra.bkuang.util.Constants.isOverBudget

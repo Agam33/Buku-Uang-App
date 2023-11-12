@@ -3,7 +3,7 @@ package com.ra.bkuang.data.local.datasourceimpl
 import com.ra.bkuang.customview.dialog.icon.IconCategory
 import com.ra.bkuang.data.local.IconLocalDataSource
 import com.ra.bkuang.data.local.database.dao.IconDao
-import com.ra.bkuang.data.entity.IconEntity
+import com.ra.bkuang.data.local.entity.IconEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

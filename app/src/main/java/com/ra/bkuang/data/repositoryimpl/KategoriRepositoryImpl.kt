@@ -1,8 +1,8 @@
 package com.ra.bkuang.data.repositoryimpl
 
 import com.ra.bkuang.data.local.KategoriLocalDataSource
-import com.ra.bkuang.data.entity.KategoriEntity
-import com.ra.bkuang.data.entity.TipeKategori
+import com.ra.bkuang.data.local.entity.KategoriEntity
+import com.ra.bkuang.data.local.entity.TipeKategori
 import com.ra.bkuang.domain.repository.KategoriRepository
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID

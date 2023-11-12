@@ -11,7 +11,7 @@ import com.ra.bkuang.base.BaseFragment
 import com.ra.bkuang.customview.dialog.CautionDeleteDialog
 import com.ra.bkuang.customview.spinner.SpinnerItemOptions
 import com.ra.bkuang.databinding.FragmentCategoryBinding
-import com.ra.bkuang.data.entity.TipeKategori
+import com.ra.bkuang.data.local.entity.TipeKategori
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.presentation.ui.category.CreateCategoryActivity.Companion.CATEGORY_TYPE
 import com.ra.bkuang.presentation.ui.category.CreateCategoryActivity.Companion.CREATE_OR_EDIT_CATEGORY

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
 import com.ra.bkuang.base.BaseFragment
 import com.ra.bkuang.databinding.FragmentExpenseBinding
-import com.ra.bkuang.data.entity.DetailPengeluaran
+import com.ra.bkuang.data.local.entity.DetailPengeluaran
 import com.ra.bkuang.presentation.ui.transaction.TransactionDetail
 import com.ra.bkuang.presentation.ui.transaction.adapter.ExpenseRvAdapter
 import com.ra.bkuang.presentation.ui.transaction.adapter.OnDayItemClickListener

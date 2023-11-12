@@ -2,7 +2,7 @@ package com.ra.bkuang.domain.usecase.transaksi.transfer.impl
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.data.entity.TransferEntity
+import com.ra.bkuang.data.local.entity.TransferEntity
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.repository.AkunRepository
 import com.ra.bkuang.domain.repository.TransferRepository

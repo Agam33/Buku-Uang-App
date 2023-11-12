@@ -1,7 +1,7 @@
 package com.ra.bkuang.data.local.database.dao
 
 import androidx.room.*
-import com.ra.bkuang.data.entity.AkunEntity
+import com.ra.bkuang.data.local.entity.AkunEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 

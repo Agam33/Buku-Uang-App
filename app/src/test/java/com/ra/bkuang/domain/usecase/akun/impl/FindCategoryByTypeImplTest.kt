@@ -3,7 +3,7 @@ package com.ra.bkuang.domain.usecase.akun.impl
 import app.cash.turbine.test
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.data.entity.TipeKategori
+import com.ra.bkuang.data.local.entity.TipeKategori
 import com.ra.bkuang.domain.repository.KategoriRepository
 import com.ra.bkuang.domain.usecase.akun.FindCategoryByType
 import com.ra.bkuang.dummy.model.KategoriDummy
