@@ -4,9 +4,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.databinding.ItemRvExpenseDaysBinding
 import com.ra.bkuang.databinding.ItemRvIncomeDaysBinding
 import com.ra.bkuang.databinding.ItemRvTransferDaysBinding
-import com.ra.bkuang.data.entity.DetailPendapatan
-import com.ra.bkuang.data.entity.DetailPengeluaran
-import com.ra.bkuang.data.entity.DetailTransfer
+import com.ra.bkuang.data.local.entity.DetailPendapatan
+import com.ra.bkuang.data.local.entity.DetailPengeluaran
+import com.ra.bkuang.data.local.entity.DetailTransfer
 import com.ra.bkuang.util.Extension.toFormatRupiah
 
 /*

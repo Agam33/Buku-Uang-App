@@ -1,7 +1,7 @@
 package com.ra.bkuang.dummy.model
 
-import com.ra.bkuang.data.entity.KategoriEntity
-import com.ra.bkuang.data.entity.TipeKategori
+import com.ra.bkuang.data.local.entity.KategoriEntity
+import com.ra.bkuang.data.local.entity.TipeKategori
 import java.time.LocalDateTime
 import java.util.UUID
 

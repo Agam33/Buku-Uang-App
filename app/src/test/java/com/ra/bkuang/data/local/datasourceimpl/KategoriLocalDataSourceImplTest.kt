@@ -6,7 +6,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.bkuang.data.local.KategoriLocalDataSource
 import com.ra.bkuang.data.local.database.dao.KategoriDao
-import com.ra.bkuang.data.entity.TipeKategori
+import com.ra.bkuang.data.local.entity.TipeKategori
 import com.ra.bkuang.dummy.model.KategoriDummy
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking

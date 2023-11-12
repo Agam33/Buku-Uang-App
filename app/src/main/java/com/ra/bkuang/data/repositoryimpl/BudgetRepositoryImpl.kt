@@ -1,8 +1,8 @@
 package com.ra.bkuang.data.repositoryimpl
 
 import com.ra.bkuang.data.local.BudgetLocalDataSource
-import com.ra.bkuang.data.entity.BudgetEntity
-import com.ra.bkuang.data.entity.DetailBudget
+import com.ra.bkuang.data.local.entity.BudgetEntity
+import com.ra.bkuang.data.local.entity.DetailBudget
 import com.ra.bkuang.domain.repository.BudgetRepository
 import java.time.LocalDate
 import java.util.UUID

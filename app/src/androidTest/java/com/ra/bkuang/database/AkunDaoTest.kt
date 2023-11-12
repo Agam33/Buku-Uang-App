@@ -7,7 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.ra.bkuang.data.local.database.AppDatabase
 import com.ra.bkuang.data.local.database.dao.AkunDao
-import com.ra.bkuang.data.entity.AkunEntity
+import com.ra.bkuang.data.local.entity.AkunEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert

@@ -14,7 +14,7 @@ import com.ra.bkuang.R
 import com.ra.bkuang.base.BaseFragment
 import com.ra.bkuang.customview.spinner.TransactionSpinnerAdapter
 import com.ra.bkuang.databinding.FragmentCreateIncomeBinding
-import com.ra.bkuang.data.entity.TipeKategori
+import com.ra.bkuang.data.local.entity.TipeKategori
 import com.ra.bkuang.domain.model.AkunModel
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.domain.model.PendapatanModel

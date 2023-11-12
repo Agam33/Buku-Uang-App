@@ -2,7 +2,7 @@ package com.ra.bkuang.domain.usecase.transaksi.pengeluaran.impl
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.data.entity.DetailPengeluaran
+import com.ra.bkuang.data.local.entity.DetailPengeluaran
 import com.ra.bkuang.domain.repository.PengeluaranRepository
 import com.ra.bkuang.domain.usecase.transaksi.pengeluaran.FindDetailPengeluaranById
 import com.ra.bkuang.dummy.model.AkunDummy

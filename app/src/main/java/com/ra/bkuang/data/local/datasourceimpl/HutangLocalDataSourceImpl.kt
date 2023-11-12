@@ -2,7 +2,7 @@ package com.ra.bkuang.data.local.datasourceimpl
 
 import com.ra.bkuang.data.local.HutangLocalDataSource
 import com.ra.bkuang.data.local.database.dao.HutangDao
-import com.ra.bkuang.data.entity.HutangEntity
+import com.ra.bkuang.data.local.entity.HutangEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 import javax.inject.Inject

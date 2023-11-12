@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.usecase.transaksi.pendapatan.impl
 
-import com.ra.bkuang.data.entity.DetailPendapatan
+import com.ra.bkuang.data.local.entity.DetailPendapatan
 import com.ra.bkuang.domain.repository.PendapatanRepository
 import com.ra.bkuang.domain.usecase.transaksi.pendapatan.GetPendapatanByDate
 import java.time.LocalDateTime

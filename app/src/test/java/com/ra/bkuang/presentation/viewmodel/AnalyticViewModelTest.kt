@@ -3,7 +3,7 @@ package com.ra.bkuang.presentation.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.data.entity.DetailPengeluaran
+import com.ra.bkuang.data.local.entity.DetailPengeluaran
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.model.AnalyticModel
 import com.ra.bkuang.domain.usecase.analisis.DetailAnalytics

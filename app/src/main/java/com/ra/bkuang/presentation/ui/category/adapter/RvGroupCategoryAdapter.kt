@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.customview.spinner.SpinnerItemOptions
 import com.ra.bkuang.databinding.GroupRvCategoriesBinding
-import com.ra.bkuang.data.entity.TipeKategori
+import com.ra.bkuang.data.local.entity.TipeKategori
 import com.ra.bkuang.domain.model.KategoriModel
 
 class RvGroupCategoryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {

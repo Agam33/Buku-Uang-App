@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.databinding.ItemRvTransferDaysBinding
 import com.ra.bkuang.databinding.ItemRvTransferMonthBinding
-import com.ra.bkuang.data.entity.DetailTransfer
+import com.ra.bkuang.data.local.entity.DetailTransfer
 import com.ra.bkuang.domain.mapper.toModel
 
 class TransferMonthViewHolder(

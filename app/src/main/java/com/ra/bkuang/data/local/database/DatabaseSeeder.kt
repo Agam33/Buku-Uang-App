@@ -2,8 +2,8 @@ package com.ra.bkuang.data.local.database
 
 import android.annotation.SuppressLint
 import com.ra.bkuang.data.local.database.dao.KategoriDao
-import com.ra.bkuang.data.entity.KategoriEntity
-import com.ra.bkuang.data.entity.TipeKategori.*
+import com.ra.bkuang.data.local.entity.KategoriEntity
+import com.ra.bkuang.data.local.entity.TipeKategori.*
 import com.ra.bkuang.util.Constants.coroutineIOThread
 import java.time.LocalDateTime
 import java.util.UUID
