@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.data.local.preferences.UserSettingPref
+import com.ra.bkuang.presentation.settings.UserSettingPref
 import com.ra.bkuang.data.local.entity.DetailPendapatan
 import com.ra.bkuang.data.local.entity.DetailPengeluaran
 import com.ra.bkuang.data.local.entity.DetailTransfer
@@ -36,11 +36,11 @@ import com.ra.bkuang.dummy.model.KategoriDummy
 import com.ra.bkuang.dummy.model.PendapatanDummy
 import com.ra.bkuang.dummy.model.PengeluaranDummy
 import com.ra.bkuang.dummy.model.TransferDummy
-import com.ra.bkuang.presentation.ui.transaction.TransactionDetail
-import com.ra.bkuang.presentation.ui.transaction.adapter.DateViewType
 import com.ra.bkuang.util.MainDispatcherRule
-import com.ra.bkuang.util.Resource
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.Resource
+import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.presentation.ui.features.transaction.TransactionDetail
+import com.ra.bkuang.presentation.util.DateViewType
 import com.ra.bkuang.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest

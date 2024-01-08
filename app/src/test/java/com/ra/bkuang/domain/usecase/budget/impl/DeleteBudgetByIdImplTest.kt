@@ -5,7 +5,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.ra.bkuang.domain.repository.BudgetRepository
 import com.ra.bkuang.domain.usecase.budget.DeleteBudgetById
 import com.ra.bkuang.dummy.model.BudgetDummy
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*

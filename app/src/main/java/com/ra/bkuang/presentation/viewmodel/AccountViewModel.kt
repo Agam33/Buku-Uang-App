@@ -11,8 +11,8 @@ import com.ra.bkuang.domain.usecase.akun.SaveAkun
 import com.ra.bkuang.domain.usecase.akun.UpdateAkun
 import com.ra.bkuang.domain.usecase.transaksi.pendapatan.GetTotalPendapatan
 import com.ra.bkuang.domain.usecase.transaksi.pengeluaran.GetTotalPengeluaran
-import com.ra.bkuang.util.Extension.toFormatRupiah
-import com.ra.bkuang.util.Resource
+import com.ra.bkuang.presentation.util.Extension.toFormatRupiah
+import com.ra.bkuang.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

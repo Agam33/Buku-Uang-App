@@ -15,7 +15,7 @@ import com.ra.bkuang.domain.usecase.hutang.FindHutangByIdWithFlow
 import com.ra.bkuang.domain.usecase.hutang.GetSizeListPembayaranHutangById
 import com.ra.bkuang.domain.usecase.hutang.SavePembayaranHutang
 import com.ra.bkuang.domain.usecase.hutang.UpdatePembayaranHutang
-import com.ra.bkuang.util.Resource
+import com.ra.bkuang.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.UUID

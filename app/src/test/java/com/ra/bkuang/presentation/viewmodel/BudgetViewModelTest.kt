@@ -16,8 +16,8 @@ import com.ra.bkuang.domain.usecase.budget.FindBudgetById
 import com.ra.bkuang.dummy.model.BudgetDummy
 import com.ra.bkuang.dummy.model.KategoriDummy
 import com.ra.bkuang.util.MainDispatcherRule
-import com.ra.bkuang.util.Resource
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.Resource
+import com.ra.bkuang.domain.util.ResourceState
 import com.ra.bkuang.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest

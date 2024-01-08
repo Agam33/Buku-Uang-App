@@ -9,7 +9,7 @@ import com.ra.bkuang.domain.usecase.hutang.DeleteHutang
 import com.ra.bkuang.domain.usecase.hutang.FindHutangById
 import com.ra.bkuang.domain.usecase.hutang.ShowAllHutang
 import com.ra.bkuang.domain.usecase.hutang.UpdateHutang
-import com.ra.bkuang.util.Resource
+import com.ra.bkuang.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.UUID

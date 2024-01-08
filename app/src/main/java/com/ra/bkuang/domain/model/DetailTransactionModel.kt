@@ -1,7 +1,8 @@
 package com.ra.bkuang.domain.model
 
-import com.ra.bkuang.presentation.ui.transaction.TransactionDetail
-import com.ra.bkuang.presentation.ui.transaction.TransactionType
+
+import com.ra.bkuang.presentation.ui.features.transaction.TransactionDetail
+import com.ra.bkuang.presentation.ui.features.transaction.TransactionType
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 import java.util.UUID

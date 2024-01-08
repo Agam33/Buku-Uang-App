@@ -11,7 +11,7 @@ import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.KategoriDummy
 import com.ra.bkuang.dummy.model.PendapatanDummy
 import com.ra.bkuang.dummy.model.PengeluaranDummy
-import com.ra.bkuang.presentation.ui.transaction.TransactionType
+import com.ra.bkuang.presentation.ui.features.transaction.TransactionType
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

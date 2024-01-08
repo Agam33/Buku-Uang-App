@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.usecase.icon.impl
 
-import com.ra.bkuang.customview.dialog.icon.IconCategory
+import com.ra.bkuang.presentation.ui.customview.dialog.icon.IconCategory
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.model.IconModel
 import com.ra.bkuang.domain.repository.IconRepository

@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.usecase.icon
 
-import com.ra.bkuang.customview.dialog.icon.IconCategory
+import com.ra.bkuang.presentation.ui.customview.dialog.icon.IconCategory
 import com.ra.bkuang.domain.model.IconModel
 import kotlinx.coroutines.flow.Flow
 
