@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.ra.bkuang.data.local.preferences.UserSettingPref
 import com.ra.bkuang.data.local.entity.DetailPendapatan
 import com.ra.bkuang.data.local.entity.DetailPengeluaran
 import com.ra.bkuang.data.local.entity.DetailTransfer
@@ -35,9 +34,10 @@ import com.ra.bkuang.domain.usecase.transaksi.transfer.GetTransferByDate
 import com.ra.bkuang.domain.usecase.transaksi.transfer.GetTransferById
 import com.ra.bkuang.domain.usecase.transaksi.transfer.SaveTransfer
 import com.ra.bkuang.domain.usecase.transaksi.transfer.UpdateTransfer
-import com.ra.bkuang.presentation.ui.transaction.TransactionDetail
-import com.ra.bkuang.util.Extension.toFormatRupiah
-import com.ra.bkuang.util.Resource
+import com.ra.bkuang.domain.util.Resource
+import com.ra.bkuang.presentation.settings.UserSettingPref
+import com.ra.bkuang.presentation.ui.features.transaction.TransactionDetail
+import com.ra.bkuang.presentation.util.Extension.toFormatRupiah
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

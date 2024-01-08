@@ -4,7 +4,7 @@ import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.model.HutangModel
 import com.ra.bkuang.domain.repository.HutangRepository
 import com.ra.bkuang.domain.usecase.hutang.ShowAllHutang
-import com.ra.bkuang.util.Resource
+import com.ra.bkuang.domain.util.Resource
 import javax.inject.Inject
 
 class ShowAllHutangImpl @Inject constructor(

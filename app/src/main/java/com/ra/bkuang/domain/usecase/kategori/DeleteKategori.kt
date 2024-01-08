@@ -1,7 +1,7 @@
 package com.ra.bkuang.domain.usecase.kategori
 
 import com.ra.bkuang.domain.model.KategoriModel
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 
 interface DeleteKategori {

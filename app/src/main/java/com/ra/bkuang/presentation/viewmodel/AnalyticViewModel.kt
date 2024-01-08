@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.domain.model.AnalyticModel
 import com.ra.bkuang.domain.usecase.analisis.DetailAnalytics
 import com.ra.bkuang.domain.usecase.analisis.ShowAnalyticList
-import com.ra.bkuang.presentation.ui.transaction.TransactionDetail
-import com.ra.bkuang.presentation.ui.transaction.TransactionType
-import com.ra.bkuang.util.Resource
+import com.ra.bkuang.domain.util.Resource
+import com.ra.bkuang.presentation.ui.features.transaction.TransactionDetail
+import com.ra.bkuang.presentation.ui.features.transaction.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime

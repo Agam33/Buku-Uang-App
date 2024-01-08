@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".presentation.ui.budget.CreateBudgetActivity">
+        tools:context=".presentation.ui.features.budget.CreateBudgetActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             app:navigationIconTint="@color/white"

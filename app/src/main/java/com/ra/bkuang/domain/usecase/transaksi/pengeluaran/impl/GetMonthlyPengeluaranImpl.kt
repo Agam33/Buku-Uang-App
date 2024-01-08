@@ -3,8 +3,8 @@ package com.ra.bkuang.domain.usecase.transaksi.pengeluaran.impl
 import com.ra.bkuang.data.local.entity.DetailPengeluaran
 import com.ra.bkuang.domain.repository.PengeluaranRepository
 import com.ra.bkuang.domain.usecase.transaksi.pengeluaran.GetMonthlyPengeluaran
-import com.ra.bkuang.util.Resource
-import com.ra.bkuang.util.RvGroup
+import com.ra.bkuang.domain.util.Resource
+import com.ra.bkuang.domain.model.RvGroup
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDateTime

@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.repository
 
-import com.ra.bkuang.customview.dialog.icon.IconCategory
+import com.ra.bkuang.presentation.ui.customview.dialog.icon.IconCategory
 import com.ra.bkuang.data.local.entity.IconEntity
 import kotlinx.coroutines.flow.Flow
 

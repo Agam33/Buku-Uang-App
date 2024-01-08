@@ -5,7 +5,7 @@ import com.ra.bkuang.domain.model.BudgetModel
 import com.ra.bkuang.domain.repository.BudgetRepository
 import com.ra.bkuang.domain.repository.PengeluaranRepository
 import com.ra.bkuang.domain.usecase.budget.CreateBudget
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate

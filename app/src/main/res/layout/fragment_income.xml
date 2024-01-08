@@ -12,7 +12,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.transaction.fragment.IncomeFragment">
+        tools:context=".presentation.ui.features.transaction.fragment.IncomeFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             app:hide="@{vm.rvIncomeState}"

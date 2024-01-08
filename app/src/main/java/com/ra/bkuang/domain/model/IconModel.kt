@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.model
 
-import com.ra.bkuang.customview.dialog.icon.IconCategory
+import com.ra.bkuang.presentation.ui.customview.dialog.icon.IconCategory
 import java.util.UUID
 
 data class IconModel(

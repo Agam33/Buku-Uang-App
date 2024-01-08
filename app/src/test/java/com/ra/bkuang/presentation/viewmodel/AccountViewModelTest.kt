@@ -16,9 +16,9 @@ import com.ra.bkuang.domain.usecase.transaksi.pengeluaran.GetTotalPengeluaran
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.PendapatanDummy
 import com.ra.bkuang.dummy.model.PengeluaranDummy
-import com.ra.bkuang.util.Extension.toFormatRupiah
+import com.ra.bkuang.presentation.util.Extension.toFormatRupiah
 import com.ra.bkuang.util.MainDispatcherRule
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import com.ra.bkuang.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
