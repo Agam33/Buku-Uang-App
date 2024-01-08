@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.debt.DetailDebtActivity">
+        tools:context=".presentation.ui.features.debt.DetailDebtActivity">
 
         <RelativeLayout
             android:id="@+id/top_container"

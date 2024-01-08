@@ -9,7 +9,7 @@ import com.ra.bkuang.domain.usecase.transaksi.pengeluaran.DeletePengeluaranById
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.BudgetDummy
 import com.ra.bkuang.dummy.model.PengeluaranDummy
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

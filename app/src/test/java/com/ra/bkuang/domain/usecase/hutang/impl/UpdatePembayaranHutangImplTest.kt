@@ -11,7 +11,7 @@ import com.ra.bkuang.domain.usecase.hutang.UpdatePembayaranHutang
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.HutangDummy
 import com.ra.bkuang.dummy.model.PembayaranHutangDummy
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

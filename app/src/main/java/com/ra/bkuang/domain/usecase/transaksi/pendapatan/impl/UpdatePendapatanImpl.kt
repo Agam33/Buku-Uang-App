@@ -6,7 +6,7 @@ import com.ra.bkuang.domain.model.PendapatanModel
 import com.ra.bkuang.domain.repository.AkunRepository
 import com.ra.bkuang.domain.repository.PendapatanRepository
 import com.ra.bkuang.domain.usecase.transaksi.pendapatan.UpdatePendapatan
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import javax.inject.Inject
 
 class UpdatePendapatanImpl @Inject constructor(

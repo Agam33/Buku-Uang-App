@@ -12,7 +12,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.transaction.fragment.ExpenseFragment">
+        tools:context=".presentation.ui.features.transaction.fragment.ExpenseFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             app:hide="@{vm.rvExpenseState}"

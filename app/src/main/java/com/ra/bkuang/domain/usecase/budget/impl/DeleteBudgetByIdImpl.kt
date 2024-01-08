@@ -2,7 +2,7 @@ package com.ra.bkuang.domain.usecase.budget.impl
 
 import com.ra.bkuang.domain.repository.BudgetRepository
 import com.ra.bkuang.domain.usecase.budget.DeleteBudgetById
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.UUID

@@ -4,9 +4,9 @@ import com.ra.bkuang.domain.model.AnalyticModel
 import com.ra.bkuang.domain.repository.PendapatanRepository
 import com.ra.bkuang.domain.repository.PengeluaranRepository
 import com.ra.bkuang.domain.usecase.analisis.ShowAnalyticList
-import com.ra.bkuang.presentation.ui.transaction.TransactionType
-import com.ra.bkuang.util.Constants.calculatePercent
-import com.ra.bkuang.util.Resource
+import com.ra.bkuang.presentation.util.Constants.calculatePercent
+import com.ra.bkuang.domain.util.Resource
+import com.ra.bkuang.presentation.ui.features.transaction.TransactionType
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject

@@ -13,8 +13,8 @@ import com.ra.bkuang.domain.usecase.budget.DeleteBudgetById
 import com.ra.bkuang.domain.usecase.budget.EditBudget
 import com.ra.bkuang.domain.usecase.budget.FindAllBudgetByDate
 import com.ra.bkuang.domain.usecase.budget.FindBudgetById
-import com.ra.bkuang.util.Resource
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.Resource
+import com.ra.bkuang.domain.util.ResourceState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

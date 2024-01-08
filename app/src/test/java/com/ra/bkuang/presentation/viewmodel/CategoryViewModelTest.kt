@@ -5,7 +5,7 @@ import app.cash.turbine.test
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.customview.dialog.icon.IconCategory
+import com.ra.bkuang.presentation.ui.customview.dialog.icon.IconCategory
 import com.ra.bkuang.data.local.entity.TipeKategori
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.model.KategoriModel
@@ -17,7 +17,7 @@ import com.ra.bkuang.domain.usecase.kategori.UpdateKategori
 import com.ra.bkuang.dummy.model.IconDummy
 import com.ra.bkuang.dummy.model.KategoriDummy
 import com.ra.bkuang.util.MainDispatcherRule
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import com.ra.bkuang.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest

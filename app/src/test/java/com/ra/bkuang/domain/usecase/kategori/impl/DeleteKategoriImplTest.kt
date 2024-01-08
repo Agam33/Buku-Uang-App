@@ -7,7 +7,7 @@ import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.repository.KategoriRepository
 import com.ra.bkuang.domain.usecase.kategori.DeleteKategori
 import com.ra.bkuang.dummy.model.KategoriDummy
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

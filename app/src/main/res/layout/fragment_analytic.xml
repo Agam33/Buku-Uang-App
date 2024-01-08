@@ -12,7 +12,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.analytics.AnalyticFragment">
+        tools:context=".presentation.ui.features.analytics.AnalyticFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

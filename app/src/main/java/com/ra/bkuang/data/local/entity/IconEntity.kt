@@ -2,7 +2,7 @@ package com.ra.bkuang.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ra.bkuang.customview.dialog.icon.IconCategory
+import com.ra.bkuang.presentation.ui.customview.dialog.icon.IconCategory
 import java.util.UUID
 
 @Entity

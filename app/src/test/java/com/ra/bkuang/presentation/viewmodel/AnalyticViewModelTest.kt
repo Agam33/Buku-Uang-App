@@ -11,10 +11,10 @@ import com.ra.bkuang.domain.usecase.analisis.ShowAnalyticList
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.KategoriDummy
 import com.ra.bkuang.dummy.model.PengeluaranDummy
-import com.ra.bkuang.presentation.ui.transaction.TransactionDetail
-import com.ra.bkuang.presentation.ui.transaction.TransactionType
 import com.ra.bkuang.util.MainDispatcherRule
-import com.ra.bkuang.util.Resource
+import com.ra.bkuang.domain.util.Resource
+import com.ra.bkuang.presentation.ui.features.transaction.TransactionDetail
+import com.ra.bkuang.presentation.ui.features.transaction.TransactionType
 import com.ra.bkuang.util.getOrAwaitValue
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

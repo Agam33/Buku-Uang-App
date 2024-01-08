@@ -4,7 +4,7 @@ import com.ra.bkuang.domain.mapper.toEntity
 import com.ra.bkuang.domain.model.AkunModel
 import com.ra.bkuang.domain.repository.AkunRepository
 import com.ra.bkuang.domain.usecase.akun.DeleteAkun
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

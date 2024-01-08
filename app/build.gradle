@@ -44,9 +44,9 @@ android {
         }
     }
     tasks.withType(KotlinCompile).configureEach {
-        kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
-        kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlin.time.ExperimentalTime"]
-        kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+        kotlinOptions.freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"]
+        kotlinOptions.freeCompilerArgs += ["-opt-in=kotlin.time.ExperimentalTime"]
+        kotlinOptions.freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
     }
 }
 
@@ -62,7 +62,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    /* ~ Start Testing ~ */
+    /* ~ Testing ~ */
 
     // arch
     testImplementation "androidx.arch.core:core-testing:2.2.0"
@@ -94,7 +94,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
     testImplementation 'app.cash.turbine:turbine:1.0.0'
 
-    /* ~ End Testing ~ */
+    /* ~ Testing ~ */
 
     def dagger_hilt_version = '2.44'
     implementation "com.google.dagger:hilt-android:$dagger_hilt_version"

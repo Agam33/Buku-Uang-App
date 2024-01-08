@@ -10,7 +10,7 @@ import com.ra.bkuang.domain.usecase.transaksi.pengeluaran.GetMonthlyPengeluaran
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.KategoriDummy
 import com.ra.bkuang.dummy.model.PengeluaranDummy
-import com.ra.bkuang.util.RvGroup
+import com.ra.bkuang.domain.model.RvGroup
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals

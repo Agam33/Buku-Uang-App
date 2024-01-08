@@ -13,9 +13,8 @@ import com.ra.bkuang.data.local.entity.PendapatanEntity
 import com.ra.bkuang.data.local.entity.PengeluaranEntity
 import com.ra.bkuang.data.local.entity.TransferEntity
 import com.ra.bkuang.data.local.database.dao.*
-import com.ra.bkuang.domain.entity.*
-import com.ra.bkuang.util.DbLocalDateConverter
-import com.ra.bkuang.util.DbLocalDateTimeConverter
+import com.ra.bkuang.data.util.DbLocalDateConverter
+import com.ra.bkuang.data.util.DbLocalDateTimeConverter
 
 @Database(
   entities = [

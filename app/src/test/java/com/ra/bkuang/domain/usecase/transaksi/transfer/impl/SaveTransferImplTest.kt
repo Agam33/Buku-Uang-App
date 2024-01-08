@@ -9,7 +9,7 @@ import com.ra.bkuang.domain.repository.TransferRepository
 import com.ra.bkuang.domain.usecase.transaksi.transfer.SaveTransfer
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.TransferDummy
-import com.ra.bkuang.util.ResourceState
+import com.ra.bkuang.domain.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
