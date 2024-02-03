@@ -87,30 +87,7 @@ class FolderRestoreDialog: DialogFragment(),
   }
 
   private fun restoreFile() {
-    backupFile?.let {
-      lifecycleScope.launch {
-        val destFile = requireContext().getDatabasePath(DB_NAME)
 
-        viewModel.doRestore(it, File(destFile.parent!!)).collect { status ->
-          when(status) {
-            ResourceState.LOADING -> {}
-            ResourceState.SUCCESS -> {
-              Toast.makeText(requireContext(),
-                String.format(requireContext().resources.getString(R.string.msg_success_to), requireContext().resources.getString(R.string.txt_restore)),
-                Toast.LENGTH_SHORT
-              ).show()
-              requireContext().restartActivity()
-            }
-            ResourceState.FAILED -> {
-              Toast.makeText(requireContext(),
-                String.format(requireContext().resources.getString(R.string.msg_failed_to), requireContext().resources.getString(R.string.txt_restore)),
-                Toast.LENGTH_SHORT
-              ).show()
-            }
-          }
-        }
-      }
-    }
   }
 
   private fun getAllFileDirectory(src: File): List<File> {
