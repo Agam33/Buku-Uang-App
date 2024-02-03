@@ -2,27 +2,19 @@ package com.ra.bkuang.presentation.util
 
 import android.Manifest
 import android.animation.ValueAnimator
-import android.net.Uri
-import android.os.Environment
-import android.provider.DocumentsContract
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
 import java.util.Locale
-import java.util.zip.ZipEntry
-import java.util.zip.ZipInputStream
-import java.util.zip.ZipOutputStream
 
 object Constants {
 
   const val DB_NAME = "bk_uang.db"
   const val DB_BACKUP_FILE_NAME = "bk_uang"
+  const val DB_NAME_SHM = "bk_uang.db-shm"
+  const val DB_NAME_WAL = "bk_uang.db-wal"
   const val DAILY_DATE_FORMAT = "MMMM d, yyyy"
   const val MONTHLY_DATE_FORMAT = "MMMM, yyyy"
   const val FILE_USER_SETTING_PREF = "user_setting_pref.pb"
@@ -81,78 +73,5 @@ object Constants {
     valueAnimator.interpolator = DecelerateInterpolator()
     valueAnimator.duration = duration
     valueAnimator.start()
-  }
-
-
-  /**
-   * @param files The files want to zip
-   * @param dest Save file to specific directory
-   *
-   * @throws IOException
-   */
-  @Throws(IOException::class)
-  fun zipFiles(files: List<File>, dest: File) {
-    val buffer = ByteArray(1024)
-    ZipOutputStream(FileOutputStream(dest)).use { zipOutput ->
-      for(file in files) {
-        val fileInputStream = FileInputStream(file)
-        val entry = ZipEntry(file.name)
-        zipOutput.putNextEntry(entry)
-
-        var length: Int
-        while(fileInputStream.read(buffer).also { length = it } > 0) {
-          zipOutput.write(buffer, 0, length)
-        }
-
-        fileInputStream.close()
-        zipOutput.closeEntry()
-      }
-    }
-  }
-
-  /**
-   * @param zipFile The file want to unzip
-   * @param dest Extract the zip file to specific directory
-   *
-   * @throws IOException
-   */
-  @Throws(IOException::class)
-  fun unZipFile(zipFile: File, dest: File) {
-    val buffer = ByteArray(1024)
-
-    ZipInputStream(FileInputStream(zipFile)).use { zipInput ->
-      var zipEntry: ZipEntry? = zipInput.nextEntry
-      while(zipEntry != null) {
-        val entryName = zipEntry.name
-        val outFile = File(dest, entryName)
-        val outputStream = FileOutputStream(outFile)
-
-        var length: Int
-        while (zipInput.read(buffer).also { length = it } > 0) {
-          outputStream.write(buffer, 0, length)
-        }
-
-        outputStream.close()
-        zipInput.closeEntry()
-        zipEntry = zipInput.nextEntry
-      }
-    }
-  }
-
-  fun getUriPath(uri: Uri?): String? {
-    if(isDownloadsDocument(uri)) {
-      val id = DocumentsContract.getTreeDocumentId(uri)
-      if(id == "downloads") {
-        val f = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        return f.absolutePath
-      }
-      return id.split(":")[1]
-    }
-
-    return null
-  }
-
-  private fun isDownloadsDocument(uri: Uri?): Boolean {
-    return "com.android.providers.downloads.documents" == uri?.authority
   }
 }
