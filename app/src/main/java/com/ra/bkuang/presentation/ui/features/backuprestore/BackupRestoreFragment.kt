@@ -3,34 +3,26 @@ package com.ra.bkuang.presentation.ui.features.backuprestore
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.ra.bkuang.R
-import com.ra.bkuang.presentation.ui.base.BaseFragment
-import com.ra.bkuang.presentation.settings.UserSettingPref
 import com.ra.bkuang.databinding.FragmentBackupRestoreBinding
-import com.ra.bkuang.presentation.viewmodel.BackupRestoreViewModel
-import com.ra.bkuang.presentation.util.Constants.DB_BACKUP_FILE_NAME
-import com.ra.bkuang.presentation.util.Constants.DB_NAME
-import com.ra.bkuang.presentation.util.Constants.REQUEST_READ_AND_WRITE_EXTERNAL_STORAGE
-import com.ra.bkuang.presentation.util.Constants.REQUIRED_STORAGE_PERMISSION
-import com.ra.bkuang.presentation.util.Constants.getUriPath
-import com.ra.bkuang.presentation.util.Extension.requestStoragePermission
-import com.ra.bkuang.presentation.util.Extension.restartActivity
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.presentation.settings.UserSettingPref
+import com.ra.bkuang.presentation.ui.base.BaseFragment
 import com.ra.bkuang.presentation.ui.features.backuprestore.adapter.BackupRestoreAdapter
-import com.ra.bkuang.presentation.ui.features.backuprestore.dialog.FolderRestoreDialog
+import com.ra.bkuang.presentation.ui.features.backuprestore.dialog.CreateFileNameDialog
+import com.ra.bkuang.presentation.util.Constants
+import com.ra.bkuang.presentation.util.Extension.isNotExist
+import com.ra.bkuang.presentation.util.Extension.showShortToast
+import com.ra.bkuang.presentation.util.FileUtils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.File
-import java.time.LocalDate
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -38,8 +30,6 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
 
   @Inject
   lateinit var userSettingPref: UserSettingPref
-
-  private val viewModel: BackupRestoreViewModel by viewModels()
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -73,21 +63,21 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
     }
   }
 
-  private val startForChooseDirectory =
+  private fun chooseDirectory() {
+    val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+    startChooseDirectory.launch(i)
+  }
+
+  private val startChooseDirectory =
     registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
     when(result.resultCode) {
       RESULT_OK -> {
         val uri = result.data?.data
-        val path = getUriPath(uri)
-        userSettingPref.saveFileBackupDirectory(path ?: "")
+        requireContext().contentResolver.takePersistableUriPermission(uri ?: return@registerForActivityResult, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        userSettingPref.saveFileBackupDirectory(uri.toString())
       }
       RESULT_CANCELED -> {}
     }
-  }
-
-  private fun chooseDirectory() {
-    val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-    startForChooseDirectory.launch(i)
   }
 
   private fun backup() {
@@ -100,68 +90,66 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
       return
     }
 
-    if(requestStoragePermission()) {
-      lifecycleScope.launch {
-        val srcFile = requireContext().getDatabasePath(DB_NAME)
-        val destFile = File(dir, String.format(requireContext().resources.getString(R.string.txt_backup_format), DB_BACKUP_FILE_NAME, LocalDate.now()))
+    val dbPath = requireContext().getDatabasePath(Constants.DB_NAME)
+    val dbShm = File(dbPath.parent, Constants.DB_NAME_SHM)
+    val dbWal = File(dbPath.parent, Constants.DB_NAME_WAL)
 
-        viewModel.doBackup(srcFile, destFile).collect { status ->
-          when(status) {
-            ResourceState.LOADING -> {}
-            ResourceState.SUCCESS -> {
-              Toast.makeText(requireContext(),
-                String.format(requireContext().resources.getString(R.string.msg_success_to), requireContext().resources.getString(R.string.txt_backup)),
-                Toast.LENGTH_SHORT
-              ).show()
-              requireContext().restartActivity()
-            }
-            ResourceState.FAILED -> {
-              Toast.makeText(requireContext(),
-                String.format(requireContext().resources.getString(R.string.msg_failed_to), requireContext().resources.getString(R.string.txt_backup)),
-                Toast.LENGTH_SHORT
-              ).show()
-            }
+    if(dbPath.isNotExist() || dbShm.isNotExist() || dbWal.isNotExist()) return
+
+    val dbFiles: List<File> = listOf(dbPath, dbShm, dbWal)
+
+    CreateFileNameDialog.newInstance().apply {
+      onSaveListener = object : CreateFileNameDialog.OnSaveListener {
+        override fun onSaveInput(name: String) {
+          try {
+            val uriParse = Uri.parse(dir)
+            val docId = DocumentsContract.getTreeDocumentId(uriParse)
+            val dirUri = DocumentsContract.buildDocumentUriUsingTree(uriParse, docId)
+            val createDoc = DocumentsContract.createDocument(requireContext().contentResolver, dirUri, "*/*", name)
+
+            FileUtils.zipFiles(requireContext(), dbFiles, createDoc ?: return)
+
+            showShortToast(requireContext().resources.getString(R.string.msg_success))
+          } catch (e: Exception) {
+            showShortToast(requireContext().resources.getString(R.string.msg_failed))
+            Timber.tag("$TAG-backup()").d(e)
           }
         }
       }
-    } else {
-      Snackbar.make(binding?.root!!, requireContext().resources.getString(R.string.msg_allow_access_storage), Snackbar.LENGTH_LONG)
-        .setAction(
-          requireContext().resources.getString(R.string.msg_allowed)
-        ) {
-          acceptedStoragePermission()
-        }.show()
-    }
+    }.show(childFragmentManager, CreateFileNameDialog.TAG)
   }
 
   private fun restore() {
-    val dir = userSettingPref.getFileBackupDirectory()
-    if(dir?.isEmpty()!!) {
-      Toast.makeText(requireContext(),
-        requireContext().resources.getString(R.string.msg_empty_backup_file_directory),
-        Toast.LENGTH_LONG
-      ).show()
-      return
+    val i = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+       addCategory(Intent.CATEGORY_OPENABLE)
+       type = "*/*"
     }
-
-    if(requestStoragePermission()) {
-      val folderRestoreDialog = FolderRestoreDialog()
-      folderRestoreDialog.show(childFragmentManager, "restore-dialog")
-    } else {
-      Snackbar.make(binding?.root!!, requireContext().resources.getString(R.string.msg_allow_access_storage), Snackbar.LENGTH_LONG)
-        .setAction(
-          requireContext().resources.getString(R.string.msg_allowed)
-        ) {
-          acceptedStoragePermission()
-        }.show()
-    }
+    chooseRestoreFile.launch(i)
   }
 
-  private fun acceptedStoragePermission() {
-    ActivityCompat.requestPermissions(
-      requireActivity(),
-      REQUIRED_STORAGE_PERMISSION.toTypedArray(),
-      REQUEST_READ_AND_WRITE_EXTERNAL_STORAGE
-    )
+  private val chooseRestoreFile =
+    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+      when(it.resultCode) {
+        RESULT_OK -> {
+          try {
+            val uri = it.data?.data
+            requireContext().contentResolver.takePersistableUriPermission(uri ?: return@registerForActivityResult, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+            val dbPath = requireContext().getDatabasePath(Constants.DB_NAME).parent
+
+            FileUtils.unZipFile(requireContext(), uri, File(dbPath ?: return@registerForActivityResult))
+
+            showShortToast(requireContext().resources.getString(R.string.msg_success))
+          } catch (e: Exception) {
+            showShortToast(requireContext().resources.getString(R.string.msg_failed))
+            Timber.tag("$TAG-restore()").d(e)
+          }
+        }
+        RESULT_CANCELED -> {}
+      }
+  }
+
+  companion object {
+    const val TAG = "BackupRestoreFragment"
   }
 }

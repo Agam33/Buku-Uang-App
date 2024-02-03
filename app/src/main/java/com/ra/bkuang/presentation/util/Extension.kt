@@ -25,6 +25,7 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.ra.bkuang.presentation.ui.features.MainActivity
 import com.ra.bkuang.presentation.util.Constants.REQUIRED_STORAGE_PERMISSION
+import java.io.File
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -37,6 +38,8 @@ import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 object Extension {
+
+  fun File.isNotExist() = !this.exists()
 
   fun Context.setExactAndAllowWhileIdleAlarm(
     calendar: Calendar,
