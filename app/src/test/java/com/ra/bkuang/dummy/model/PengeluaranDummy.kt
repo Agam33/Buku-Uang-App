@@ -40,7 +40,7 @@ object PengeluaranDummy {
   fun getTotalPengeluaran(): Long {
     var total = 0L
     for(item in listPengeluaran) {
-      total += item.jumlah;
+      total += item.jumlah
     }
     return total
   }

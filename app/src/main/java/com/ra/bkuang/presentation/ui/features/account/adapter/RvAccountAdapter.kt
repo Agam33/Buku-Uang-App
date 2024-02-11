@@ -61,7 +61,7 @@ class RvAccountAdapter: ListAdapter<AkunModel, RvAccountAdapter.MViewHolder>(dif
       }
 
       override fun areContentsTheSame(oldItem: AkunModel, newItem: AkunModel): Boolean {
-        return oldItem.icon == newItem.icon
+        return oldItem.uuid == newItem.uuid
       }
     }
   }

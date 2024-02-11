@@ -82,10 +82,10 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
   private fun createNewAccount() {
     binding?.run {
       fabAddAccount.setOnClickListener {
-        val i = Intent(requireActivity(), com.ra.bkuang.presentation.ui.features.account.CreateNewAccountActivity::class.java).apply {
+        val i = Intent(requireActivity(), CreateNewAccountActivity::class.java).apply {
           putExtra(
-            com.ra.bkuang.presentation.ui.features.account.AccountFragment.Companion.EXTRA_TEXT,
-            com.ra.bkuang.presentation.ui.features.account.AccountFragment.Companion.CREATE_ACCOUNT
+            EXTRA_TEXT,
+            CREATE_ACCOUNT
           )
         }
         startActivity(i)
@@ -127,12 +127,12 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
         deleteDialog.show(parentFragmentManager, "Delete Dialog")
       }
       SpinnerItemOptions.EDIT -> {
-        val i = Intent(requireActivity(), com.ra.bkuang.presentation.ui.features.account.CreateNewAccountActivity::class.java).apply {
+        val i = Intent(requireActivity(), CreateNewAccountActivity::class.java).apply {
           putExtra(
-            com.ra.bkuang.presentation.ui.features.account.AccountFragment.Companion.EXTRA_TEXT,
-            com.ra.bkuang.presentation.ui.features.account.AccountFragment.Companion.EDIT_ACCOUNT
+            EXTRA_TEXT,
+            EDIT_ACCOUNT
           )
-          putExtra(com.ra.bkuang.presentation.ui.features.account.AccountFragment.Companion.ACCOUNT_MODEL, akun)
+          putExtra(ACCOUNT_MODEL, akun)
         }
         startActivity(i)
       }

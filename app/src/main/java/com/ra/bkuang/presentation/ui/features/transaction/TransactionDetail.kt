@@ -9,8 +9,6 @@ interface TransactionDetail: Parcelable {
    val transactionType: TransactionType
    val name1: String
    val name2: String
-   val icUrl1: Int
-   val icUrl2: Int
    val description: String
    val jumlah: Int
    val createdAt: LocalDateTime

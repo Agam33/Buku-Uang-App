@@ -17,8 +17,6 @@ data class DetailPengeluaranModel(
   override val transactionType: TransactionType get() = TransactionType.EXPENSE
   override val name1: String get()= kategori.nama
   override val name2: String get() = akun.nama
-  override val icUrl1: Int get() = kategori.icon
-  override val icUrl2: Int get() = akun.icon
   override val description: String get() = pengeluaran.deskripsi
   override val jumlah: Int get() = pengeluaran.jumlah
   override val createdAt: LocalDateTime get() = pengeluaran.createdAt
@@ -35,8 +33,6 @@ data class DetailPendapatanModel(
   override val transactionType: TransactionType get() = TransactionType.INCOME
   override val name1: String get() = kategori.nama
   override val name2: String get() = akun.nama
-  override val icUrl1: Int get() = kategori.icon
-  override val icUrl2: Int get() = akun.icon
   override val description: String  get() = pendapatan.deskripsi
   override val jumlah: Int  get() = pendapatan.jumlah
   override val createdAt: LocalDateTime get() = pendapatan.createdAt
@@ -53,8 +49,6 @@ data class DetailTransferModel(
   override val transactionType: TransactionType get() = TransactionType.TRANSFER
   override val name1: String get() = fromAkun.nama
   override val name2: String get() = toAkun.nama
-  override val icUrl1: Int get() = fromAkun.icon
-  override val icUrl2: Int get() = toAkun.icon
   override val description: String get() = transfer.deskripsi
   override val jumlah: Int get() = transfer.jumlah
   override val createdAt: LocalDateTime get() = transfer.createdAt

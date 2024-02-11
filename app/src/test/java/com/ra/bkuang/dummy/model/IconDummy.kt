@@ -1,7 +1,6 @@
 package com.ra.bkuang.dummy.model
 
 import com.ra.bkuang.presentation.ui.customview.dialog.icon.IconCategory
-import com.ra.bkuang.data.local.entity.IconEntity
 import java.util.UUID
 
 object IconDummy {

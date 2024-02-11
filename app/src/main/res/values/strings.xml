@@ -100,6 +100,7 @@
     <string name="txt_transaction_alarm_msg">Jangan lupa mencatat ya!!</string>
     <string name="txt_account_minus">"Uang pada akun akan minus. Apakah ingin tetap melanjutkan?"</string>
     <string name="txt_continue">Lanjutkan</string>
+    <string name="txt_file_name">Nama File</string>
 
     <string-array name="transaction_type">
         <item>Pengeluaran</item>

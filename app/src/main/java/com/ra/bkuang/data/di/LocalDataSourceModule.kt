@@ -5,7 +5,6 @@ import com.ra.bkuang.data.local.datasource.*
 import com.ra.bkuang.data.local.datasource.impl.AkunLocalDataSourceImpl
 import com.ra.bkuang.data.local.datasource.impl.BudgetLocalDataSourceImpl
 import com.ra.bkuang.data.local.datasource.impl.HutangLocalDataSourceImpl
-import com.ra.bkuang.data.local.datasource.impl.IconLocalDataSourceImpl
 import com.ra.bkuang.data.local.datasource.impl.KategoriLocalDataSourceImpl
 import com.ra.bkuang.data.local.datasource.impl.PembayaranHutangLocalDataSourceImpl
 import com.ra.bkuang.data.local.datasource.impl.PendapatanLocalDataSourceImpl
@@ -71,11 +70,4 @@ interface LocalDataSourceModule {
   fun bindTransferLocalDataSource(
     transferRepositoryImpl: TransferLocalDataSourceImpl
   ): TransferLocalDataSource
-
-
-  @Binds
-  @Singleton
-  fun bindIconLocalDataSource(
-    iconLocalDataSource: IconLocalDataSourceImpl
-  ): IconLocalDataSource
 }

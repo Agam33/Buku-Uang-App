@@ -9,8 +9,6 @@ import java.util.*
 @Parcelize
 data class KategoriModel(
   var uuid: UUID,
-  var icUrl: String = "",
-  var icon: Int,
   var nama: String,
   var tipeKategori: TipeKategori,
   var createdAt: LocalDateTime,

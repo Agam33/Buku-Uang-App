@@ -39,7 +39,7 @@ object AkunDummy {
   )
 
   fun getAllAccounts(): List<AkunEntity> {
-    return accountList;
+    return accountList
   }
 
   fun getTotalMoney(): Long {

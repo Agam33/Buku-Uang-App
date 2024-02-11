@@ -9,10 +9,8 @@ import androidx.activity.viewModels
 import com.ra.bkuang.R
 import com.ra.bkuang.databinding.ActivityCreateCategoryBinding
 import com.ra.bkuang.data.local.entity.TipeKategori
-import com.ra.bkuang.domain.model.IconModel
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.presentation.ui.base.BaseActivity
-import com.ra.bkuang.presentation.ui.features.category.adapter.RvIconCategoryAdapter
 import com.ra.bkuang.presentation.viewmodel.CategoryViewModel
 import com.ra.bkuang.presentation.util.ActionType
 import com.ra.bkuang.presentation.util.Extension.parcelable
@@ -24,11 +22,10 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @AndroidEntryPoint
-class CreateCategoryActivity : BaseActivity<ActivityCreateCategoryBinding>(R.layout.activity_create_category), RvIconCategoryAdapter.OnItemSelectedListener {
+class CreateCategoryActivity : BaseActivity<ActivityCreateCategoryBinding>(R.layout.activity_create_category) {
 
   private val viewModel: CategoryViewModel by viewModels()
 
-  private var iconId: Int = -1
   private var currentCategory = TipeKategori.PENDAPATAN
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,7 +88,6 @@ class CreateCategoryActivity : BaseActivity<ActivityCreateCategoryBinding>(R.lay
       ActionType.EDIT -> {
         val category = intent?.parcelable<KategoriModel>(EXTRA_BUNDLE_CLAZZ)
         category?.let {
-          it.icon = -1
           it.nama = name
           it.updatedAt = LocalDateTime.now()
           viewModel.updateCategory(it)
@@ -101,8 +97,6 @@ class CreateCategoryActivity : BaseActivity<ActivityCreateCategoryBinding>(R.lay
       ActionType.CREATE -> {
         val category = KategoriModel(
           uuid = UUID.randomUUID(),
-          icUrl = "",
-          icon = iconId,
           nama = name,
           tipeKategori = currentCategory,
           updatedAt = LocalDateTime.now(),
@@ -117,10 +111,6 @@ class CreateCategoryActivity : BaseActivity<ActivityCreateCategoryBinding>(R.lay
 
 
     onBackPressedDispatcher.onBackPressed()
-  }
-
-  override fun onItemSelected(position: Int, iconModel: IconModel) {
-    iconId = iconModel.icon
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {

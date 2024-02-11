@@ -45,7 +45,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     binding.navigationDrawerView.setCheckedItem(R.id.transactionFragment)
     val option = NavOptions.Builder().apply {
       setLaunchSingleTop(true)
-      setEnterAnim(R.animator.zoom_out_anim)
+//      setEnterAnim(R.animator.zoom_out_anim)
     }.build()
     binding.navigationDrawerView.setNavigationItemSelectedListener { item ->
       navController.popBackStack()

@@ -9,8 +9,6 @@ import java.util.UUID
 @Parcelize
 data class AkunModel(
   var uuid: UUID,
-  var icUrl: String = "",
-  var icon: Int,
   var nama: String,
   var total: Int,
   var createdAt: LocalDateTime,

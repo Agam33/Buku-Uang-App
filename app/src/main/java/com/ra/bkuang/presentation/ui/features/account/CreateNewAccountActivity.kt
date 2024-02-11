@@ -62,7 +62,6 @@ class CreateNewAccountActivity : BaseActivity<ActivityCreateNewAccountBinding>(R
       EDIT_ACCOUNT -> {
         val account = intent?.parcelable<AkunModel>(ACCOUNT_MODEL)
         account?.let {
-          it.icon = -1
           it.nama = accountName
           it.total = amount.toInt()
           it.updatedAt = LocalDateTime.now()
@@ -73,8 +72,6 @@ class CreateNewAccountActivity : BaseActivity<ActivityCreateNewAccountBinding>(R
       CREATE_ACCOUNT -> {
         val akun = AkunModel(
           uuid = UUID.randomUUID(),
-          icUrl = "",
-          icon = -1,
           nama = accountName,
           total = amount.toInt(),
           createdAt = LocalDateTime.now(),
@@ -103,9 +100,5 @@ class CreateNewAccountActivity : BaseActivity<ActivityCreateNewAccountBinding>(R
       }
       else -> super.onOptionsItemSelected(item)
     }
-  }
-
-  companion object {
-    private const val ICON_LIST_IN_CREATE_ACCOUNT = "ICON_LIST_IN_CREATE_ACCOUNT"
   }
 }

@@ -43,8 +43,4 @@ interface RepositoryModule {
   @Binds
   @Singleton
   fun bindTransferRepository(transferRepositoryImpl: TransferRepositoryImpl): TransferRepository
-
-  @Binds
-  @Singleton
-  fun bindIconRepository(iconRepositoryImpl: IconRepositoryImpl): IconRepository
 }

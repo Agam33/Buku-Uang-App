@@ -1,12 +1,12 @@
 package com.ra.bkuang.data.local.database
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.ra.bkuang.data.local.entity.AkunEntity
 import com.ra.bkuang.data.local.entity.BudgetEntity
 import com.ra.bkuang.data.local.entity.HutangEntity
-import com.ra.bkuang.data.local.entity.IconEntity
 import com.ra.bkuang.data.local.entity.KategoriEntity
 import com.ra.bkuang.data.local.entity.PembayaranHutangEntity
 import com.ra.bkuang.data.local.entity.PendapatanEntity
@@ -25,8 +25,7 @@ import com.ra.bkuang.data.util.DbLocalDateTimeConverter
     HutangEntity::class,
     BudgetEntity::class,
     KategoriEntity::class,
-    PembayaranHutangEntity::class,
-    IconEntity::class
+    PembayaranHutangEntity::class
   ],
   version = 1,
   exportSchema = false
@@ -41,5 +40,4 @@ abstract class AppDatabase: RoomDatabase() {
   abstract fun hutangDao(): HutangDao
   abstract fun transferDao(): TransferDao
   abstract fun pembayaranHutangDao(): PembayaranHutangDao
-  abstract fun iconDao(): IconDao
 }
