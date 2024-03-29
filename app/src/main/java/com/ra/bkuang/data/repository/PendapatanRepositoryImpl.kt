@@ -1,8 +1,8 @@
 package com.ra.bkuang.data.repository
 
 import com.ra.bkuang.data.local.datasource.PendapatanLocalDataSource
-import com.ra.bkuang.data.local.entity.DetailPendapatan
-import com.ra.bkuang.data.local.entity.PendapatanEntity
+import com.ra.bkuang.data.local.database.entity.DetailPendapatan
+import com.ra.bkuang.data.local.database.entity.PendapatanEntity
 import com.ra.bkuang.domain.repository.PendapatanRepository
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime

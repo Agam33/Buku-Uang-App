@@ -6,7 +6,7 @@ import com.ra.bkuang.domain.model.TransferModel
 import com.ra.bkuang.domain.repository.AkunRepository
 import com.ra.bkuang.domain.repository.TransferRepository
 import com.ra.bkuang.domain.usecase.transaksi.transfer.UpdateTransfer
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import javax.inject.Inject
 
 class UpdateTransferImpl @Inject constructor(

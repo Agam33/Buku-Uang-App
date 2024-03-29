@@ -5,8 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.ra.bkuang.data.local.entity.BudgetEntity
-import com.ra.bkuang.data.local.entity.DetailBudget
+import com.ra.bkuang.data.local.database.entity.BudgetEntity
+import com.ra.bkuang.data.local.database.entity.DetailBudget
 import java.time.LocalDate
 import java.util.UUID
 

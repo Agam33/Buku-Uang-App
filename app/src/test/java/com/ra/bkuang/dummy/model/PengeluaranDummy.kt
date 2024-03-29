@@ -1,6 +1,6 @@
 package com.ra.bkuang.dummy.model
 
-import com.ra.bkuang.data.local.entity.PengeluaranEntity
+import com.ra.bkuang.data.local.database.entity.PengeluaranEntity
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -40,7 +40,7 @@ object PengeluaranDummy {
   fun getTotalPengeluaran(): Long {
     var total = 0L
     for(item in listPengeluaran) {
-      total += item.jumlah;
+      total += item.jumlah
     }
     return total
   }

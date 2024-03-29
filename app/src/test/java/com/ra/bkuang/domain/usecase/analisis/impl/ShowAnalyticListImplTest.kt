@@ -2,8 +2,8 @@ package com.ra.bkuang.domain.usecase.analisis.impl
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.data.local.entity.DetailPendapatan
-import com.ra.bkuang.data.local.entity.DetailPengeluaran
+import com.ra.bkuang.data.local.database.entity.DetailPendapatan
+import com.ra.bkuang.data.local.database.entity.DetailPengeluaran
 import com.ra.bkuang.domain.model.AnalyticModel
 import com.ra.bkuang.domain.repository.PendapatanRepository
 import com.ra.bkuang.domain.repository.PengeluaranRepository
@@ -12,7 +12,7 @@ import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.KategoriDummy
 import com.ra.bkuang.dummy.model.PendapatanDummy
 import com.ra.bkuang.dummy.model.PengeluaranDummy
-import com.ra.bkuang.presentation.ui.features.transaction.TransactionType
+import com.ra.bkuang.presentation.ui.transaction.TransactionType
 import com.ra.bkuang.util.calculatePercent
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions

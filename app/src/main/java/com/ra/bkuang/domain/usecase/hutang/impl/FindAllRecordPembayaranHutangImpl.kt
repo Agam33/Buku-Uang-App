@@ -4,7 +4,7 @@ import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.model.DetailPembayaranHutangModel
 import com.ra.bkuang.domain.repository.PembayaranHutangRepository
 import com.ra.bkuang.domain.usecase.hutang.FindAllRecordPembayaranHutang
-import com.ra.bkuang.domain.util.Resource
+import com.ra.bkuang.util.Resource
 import java.util.UUID
 import javax.inject.Inject
 

@@ -5,7 +5,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.bkuang.data.local.datasource.PendapatanLocalDataSource
-import com.ra.bkuang.data.local.entity.DetailPendapatan
+import com.ra.bkuang.data.local.database.entity.DetailPendapatan
 import com.ra.bkuang.domain.repository.PendapatanRepository
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.KategoriDummy

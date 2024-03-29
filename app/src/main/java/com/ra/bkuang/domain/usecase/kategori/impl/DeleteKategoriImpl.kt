@@ -4,7 +4,7 @@ import com.ra.bkuang.domain.mapper.toEntity
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.domain.repository.KategoriRepository
 import com.ra.bkuang.domain.usecase.kategori.DeleteKategori
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

@@ -8,7 +8,7 @@ import com.ra.bkuang.domain.repository.PengeluaranRepository
 import com.ra.bkuang.domain.usecase.budget.CreateBudget
 import com.ra.bkuang.dummy.model.BudgetDummy
 import com.ra.bkuang.dummy.model.PengeluaranDummy
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*

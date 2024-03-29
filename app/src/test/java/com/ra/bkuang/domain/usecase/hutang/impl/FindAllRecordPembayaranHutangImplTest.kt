@@ -2,7 +2,7 @@ package com.ra.bkuang.domain.usecase.hutang.impl
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.data.local.entity.DetailPembayaranHutang
+import com.ra.bkuang.data.local.database.entity.DetailPembayaranHutang
 import com.ra.bkuang.domain.repository.PembayaranHutangRepository
 import com.ra.bkuang.domain.usecase.hutang.FindAllRecordPembayaranHutang
 import com.ra.bkuang.dummy.model.AkunDummy

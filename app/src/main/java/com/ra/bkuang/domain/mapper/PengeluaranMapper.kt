@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.mapper
 
-import com.ra.bkuang.data.local.entity.PengeluaranEntity
+import com.ra.bkuang.data.local.database.entity.PengeluaranEntity
 import com.ra.bkuang.domain.model.PengeluaranModel
 
 fun PengeluaranEntity.toModel(): PengeluaranModel = PengeluaranModel(

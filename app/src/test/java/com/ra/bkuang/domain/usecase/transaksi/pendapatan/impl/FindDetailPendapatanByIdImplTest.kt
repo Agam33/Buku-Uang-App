@@ -2,7 +2,7 @@ package com.ra.bkuang.domain.usecase.transaksi.pendapatan.impl
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.data.local.entity.DetailPendapatan
+import com.ra.bkuang.data.local.database.entity.DetailPendapatan
 import com.ra.bkuang.domain.repository.PendapatanRepository
 import com.ra.bkuang.domain.usecase.transaksi.pendapatan.FindDetailPendapatanById
 import com.ra.bkuang.dummy.model.AkunDummy

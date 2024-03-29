@@ -1,8 +1,8 @@
 package com.ra.bkuang.data.repository
 
 import com.ra.bkuang.data.local.datasource.PembayaranHutangLocalDataSource
-import com.ra.bkuang.data.local.entity.DetailPembayaranHutang
-import com.ra.bkuang.data.local.entity.PembayaranHutangEntity
+import com.ra.bkuang.data.local.database.entity.DetailPembayaranHutang
+import com.ra.bkuang.data.local.database.entity.PembayaranHutangEntity
 import com.ra.bkuang.domain.repository.PembayaranHutangRepository
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID

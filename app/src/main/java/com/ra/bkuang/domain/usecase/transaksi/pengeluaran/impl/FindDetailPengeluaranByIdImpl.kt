@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.usecase.transaksi.pengeluaran.impl
 
-import com.ra.bkuang.data.local.entity.DetailPengeluaran
+import com.ra.bkuang.data.local.database.entity.DetailPengeluaran
 import com.ra.bkuang.domain.repository.PengeluaranRepository
 import com.ra.bkuang.domain.usecase.transaksi.pengeluaran.FindDetailPengeluaranById
 import java.util.UUID

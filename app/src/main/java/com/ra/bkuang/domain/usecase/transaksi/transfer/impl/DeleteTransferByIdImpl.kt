@@ -5,7 +5,7 @@ import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.repository.AkunRepository
 import com.ra.bkuang.domain.repository.TransferRepository
 import com.ra.bkuang.domain.usecase.transaksi.transfer.DeleteTransferById
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import java.util.UUID
 import javax.inject.Inject
 

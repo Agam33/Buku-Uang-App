@@ -6,13 +6,13 @@
     <data>
         <variable
         name="vm"
-        type="com.ra.bkuang.presentation.viewmodel.TransactionViewModel" />
+        type="com.ra.bkuang.presentation.ui.transaction.TransactionViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.features.transaction.fragment.ExpenseFragment">
+        tools:context=".presentation.ui.transaction.fragment.ExpenseFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             app:hide="@{vm.rvExpenseState}"

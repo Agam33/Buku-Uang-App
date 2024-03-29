@@ -5,7 +5,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.bkuang.data.local.database.dao.BudgetDao
 import com.ra.bkuang.data.local.datasource.impl.BudgetLocalDataSourceImpl
-import com.ra.bkuang.data.local.entity.DetailBudget
+import com.ra.bkuang.data.local.database.entity.DetailBudget
 import com.ra.bkuang.dummy.model.BudgetDummy
 import com.ra.bkuang.dummy.model.KategoriDummy
 import kotlinx.coroutines.runBlocking

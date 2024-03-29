@@ -17,9 +17,10 @@ import com.ra.bkuang.domain.usecase.hutang.UpdatePembayaranHutang
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.HutangDummy
 import com.ra.bkuang.dummy.model.PembayaranHutangDummy
+import com.ra.bkuang.presentation.ui.debt.DetailDebtViewModel
 import com.ra.bkuang.util.MainDispatcherRule
-import com.ra.bkuang.domain.util.Resource
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.Resource
+import com.ra.bkuang.util.ResourceState
 import com.ra.bkuang.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking

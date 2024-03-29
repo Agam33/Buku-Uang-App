@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.usecase.transaksi.transfer
 
-import com.ra.bkuang.data.local.entity.DetailTransfer
+import com.ra.bkuang.data.local.database.entity.DetailTransfer
 import java.time.LocalDateTime
 
 interface GetTransferByDate {

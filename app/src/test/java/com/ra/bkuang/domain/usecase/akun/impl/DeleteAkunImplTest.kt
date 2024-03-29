@@ -6,7 +6,7 @@ import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.repository.AkunRepository
 import com.ra.bkuang.domain.usecase.akun.DeleteAkun
 import com.ra.bkuang.dummy.model.AkunDummy
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.ra.bkuang.presentation.viewmodel.TransactionViewModel" />
+            type="com.ra.bkuang.presentation.ui.transaction.TransactionViewModel" />
     </data>
 
     <FrameLayout

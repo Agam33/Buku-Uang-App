@@ -4,9 +4,9 @@ import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.repository.PendapatanRepository
 import com.ra.bkuang.domain.repository.PengeluaranRepository
 import com.ra.bkuang.domain.usecase.analisis.DetailAnalytics
-import com.ra.bkuang.domain.util.Resource
-import com.ra.bkuang.presentation.ui.features.transaction.TransactionDetail
-import com.ra.bkuang.presentation.ui.features.transaction.TransactionType
+import com.ra.bkuang.util.Resource
+import com.ra.bkuang.domain.model.TransactionDetail
+import com.ra.bkuang.presentation.ui.transaction.TransactionType
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -16,9 +16,9 @@ class DetailAnalyticsImpl @Inject constructor(
 ): DetailAnalytics {
 
   override suspend fun invoke(
-    transactionType: TransactionType,
-    fromDate: LocalDateTime,
-    toDate: LocalDateTime
+      transactionType: TransactionType,
+      fromDate: LocalDateTime,
+      toDate: LocalDateTime
   ): Resource<List<TransactionDetail>> =
     when(transactionType) {
       TransactionType.INCOME -> {

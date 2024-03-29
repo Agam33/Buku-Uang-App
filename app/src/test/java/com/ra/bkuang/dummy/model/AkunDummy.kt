@@ -1,6 +1,6 @@
 package com.ra.bkuang.dummy.model
 
-import com.ra.bkuang.data.local.entity.AkunEntity
+import com.ra.bkuang.data.local.database.entity.AkunEntity
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -39,7 +39,7 @@ object AkunDummy {
   )
 
   fun getAllAccounts(): List<AkunEntity> {
-    return accountList;
+    return accountList
   }
 
   fun getTotalMoney(): Long {

@@ -7,7 +7,7 @@ import com.ra.bkuang.domain.repository.AkunRepository
 import com.ra.bkuang.domain.repository.HutangRepository
 import com.ra.bkuang.domain.repository.PembayaranHutangRepository
 import com.ra.bkuang.domain.usecase.hutang.DeleteRecordPembayaranHutang
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

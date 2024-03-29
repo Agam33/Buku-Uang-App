@@ -5,8 +5,8 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.bkuang.data.local.database.dao.TransferDao
 import com.ra.bkuang.data.local.datasource.impl.TransferLocalDataSourceImpl
-import com.ra.bkuang.data.local.entity.DetailTransfer
-import com.ra.bkuang.data.local.entity.TransferEntity
+import com.ra.bkuang.data.local.database.entity.DetailTransfer
+import com.ra.bkuang.data.local.database.entity.TransferEntity
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.TransferDummy
 import kotlinx.coroutines.runBlocking

@@ -6,13 +6,13 @@
     <data>
         <variable
             name="vm"
-            type="com.ra.bkuang.presentation.viewmodel.DetailDebtViewModel" />
+            type="com.ra.bkuang.presentation.ui.debt.DetailDebtViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.features.debt.DetailDebtActivity">
+        tools:context=".presentation.ui.debt.DetailDebtActivity">
 
         <RelativeLayout
             android:id="@+id/top_container"

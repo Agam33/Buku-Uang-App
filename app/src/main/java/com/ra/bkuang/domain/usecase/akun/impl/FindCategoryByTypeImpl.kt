@@ -1,12 +1,12 @@
 package com.ra.bkuang.domain.usecase.akun.impl
 
-import com.ra.bkuang.data.local.entity.KategoriEntity
-import com.ra.bkuang.data.local.entity.TipeKategori
+import com.ra.bkuang.data.local.database.entity.KategoriEntity
+import com.ra.bkuang.data.local.database.entity.TipeKategori
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.model.KategoriModel
 import com.ra.bkuang.domain.repository.KategoriRepository
 import com.ra.bkuang.domain.usecase.akun.FindCategoryByType
-import com.ra.bkuang.domain.util.Resource
+import com.ra.bkuang.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.zip

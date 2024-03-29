@@ -10,7 +10,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.features.budget.fragment.MonthBudgetFragment">
+        tools:context=".presentation.ui.budget.fragment.MonthBudgetFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:background="@color/white"

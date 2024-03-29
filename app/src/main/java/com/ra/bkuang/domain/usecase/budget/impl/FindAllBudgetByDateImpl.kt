@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.usecase.budget.impl
 
-import com.ra.bkuang.data.local.entity.DetailBudget
+import com.ra.bkuang.data.local.database.entity.DetailBudget
 import com.ra.bkuang.domain.repository.BudgetRepository
 import com.ra.bkuang.domain.usecase.budget.FindAllBudgetByDate
 import java.time.LocalDate

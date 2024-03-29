@@ -7,7 +7,7 @@ import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.repository.HutangRepository
 import com.ra.bkuang.domain.usecase.hutang.DeleteHutang
 import com.ra.bkuang.dummy.model.HutangDummy
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

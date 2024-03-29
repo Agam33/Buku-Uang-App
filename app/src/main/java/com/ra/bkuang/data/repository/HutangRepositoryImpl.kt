@@ -1,7 +1,7 @@
 package com.ra.bkuang.data.repository
 
 import com.ra.bkuang.data.local.datasource.HutangLocalDataSource
-import com.ra.bkuang.data.local.entity.HutangEntity
+import com.ra.bkuang.data.local.database.entity.HutangEntity
 import com.ra.bkuang.domain.repository.HutangRepository
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
