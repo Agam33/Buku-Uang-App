@@ -4,7 +4,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.ra.bkuang.data.local.datasource.BudgetLocalDataSource
-import com.ra.bkuang.data.local.entity.DetailBudget
+import com.ra.bkuang.data.local.database.entity.DetailBudget
 import com.ra.bkuang.domain.repository.BudgetRepository
 import com.ra.bkuang.dummy.model.BudgetDummy
 import com.ra.bkuang.dummy.model.KategoriDummy

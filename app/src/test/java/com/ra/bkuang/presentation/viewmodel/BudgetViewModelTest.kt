@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.data.local.entity.DetailBudget
-import com.ra.bkuang.data.local.entity.TipeKategori
+import com.ra.bkuang.data.local.database.entity.DetailBudget
+import com.ra.bkuang.data.local.database.entity.TipeKategori
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.usecase.akun.FindCategoryByType
 import com.ra.bkuang.domain.usecase.budget.CreateBudget
@@ -15,9 +15,10 @@ import com.ra.bkuang.domain.usecase.budget.FindAllBudgetByDate
 import com.ra.bkuang.domain.usecase.budget.FindBudgetById
 import com.ra.bkuang.dummy.model.BudgetDummy
 import com.ra.bkuang.dummy.model.KategoriDummy
+import com.ra.bkuang.presentation.ui.budget.BudgetViewModel
 import com.ra.bkuang.util.MainDispatcherRule
-import com.ra.bkuang.domain.util.Resource
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.Resource
+import com.ra.bkuang.util.ResourceState
 import com.ra.bkuang.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest

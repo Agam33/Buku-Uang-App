@@ -1,8 +1,8 @@
 package com.ra.bkuang.data.repository
 
 import com.ra.bkuang.data.local.datasource.TransferLocalDataSource
-import com.ra.bkuang.data.local.entity.DetailTransfer
-import com.ra.bkuang.data.local.entity.TransferEntity
+import com.ra.bkuang.data.local.database.entity.DetailTransfer
+import com.ra.bkuang.data.local.database.entity.TransferEntity
 import com.ra.bkuang.domain.repository.TransferRepository
 import java.time.LocalDateTime
 import java.util.UUID

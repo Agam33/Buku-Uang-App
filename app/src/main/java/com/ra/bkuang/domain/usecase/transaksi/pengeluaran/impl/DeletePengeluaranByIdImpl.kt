@@ -6,7 +6,7 @@ import com.ra.bkuang.domain.repository.AkunRepository
 import com.ra.bkuang.domain.repository.BudgetRepository
 import com.ra.bkuang.domain.repository.PengeluaranRepository
 import com.ra.bkuang.domain.usecase.transaksi.pengeluaran.DeletePengeluaranById
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import java.util.UUID
 import javax.inject.Inject
 

@@ -1,20 +1,19 @@
 package com.ra.bkuang.data.local.database
 
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.ra.bkuang.data.local.entity.AkunEntity
-import com.ra.bkuang.data.local.entity.BudgetEntity
-import com.ra.bkuang.data.local.entity.HutangEntity
-import com.ra.bkuang.data.local.entity.KategoriEntity
-import com.ra.bkuang.data.local.entity.PembayaranHutangEntity
-import com.ra.bkuang.data.local.entity.PendapatanEntity
-import com.ra.bkuang.data.local.entity.PengeluaranEntity
-import com.ra.bkuang.data.local.entity.TransferEntity
+import com.ra.bkuang.data.local.database.entity.AkunEntity
+import com.ra.bkuang.data.local.database.entity.BudgetEntity
+import com.ra.bkuang.data.local.database.entity.HutangEntity
+import com.ra.bkuang.data.local.database.entity.KategoriEntity
+import com.ra.bkuang.data.local.database.entity.PembayaranHutangEntity
+import com.ra.bkuang.data.local.database.entity.PendapatanEntity
+import com.ra.bkuang.data.local.database.entity.PengeluaranEntity
+import com.ra.bkuang.data.local.database.entity.TransferEntity
 import com.ra.bkuang.data.local.database.dao.*
-import com.ra.bkuang.data.util.DbLocalDateConverter
-import com.ra.bkuang.data.util.DbLocalDateTimeConverter
+import com.ra.bkuang.data.local.database.converter.DbLocalDateConverter
+import com.ra.bkuang.data.local.database.converter.DbLocalDateTimeConverter
 
 @Database(
   entities = [

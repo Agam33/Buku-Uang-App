@@ -1,7 +1,7 @@
 package com.ra.bkuang.data.local.datasource
 
-import com.ra.bkuang.data.local.entity.DetailPembayaranHutang
-import com.ra.bkuang.data.local.entity.PembayaranHutangEntity
+import com.ra.bkuang.data.local.database.entity.DetailPembayaranHutang
+import com.ra.bkuang.data.local.database.entity.PembayaranHutangEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 

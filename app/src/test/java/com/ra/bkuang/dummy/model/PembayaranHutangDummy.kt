@@ -1,6 +1,6 @@
 package com.ra.bkuang.dummy.model
 
-import com.ra.bkuang.data.local.entity.PembayaranHutangEntity
+import com.ra.bkuang.data.local.database.entity.PembayaranHutangEntity
 import java.time.LocalDateTime
 import java.util.UUID
 

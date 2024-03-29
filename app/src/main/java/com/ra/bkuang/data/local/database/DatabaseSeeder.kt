@@ -2,9 +2,9 @@ package com.ra.bkuang.data.local.database
 
 import android.annotation.SuppressLint
 import com.ra.bkuang.data.local.database.dao.KategoriDao
-import com.ra.bkuang.data.local.entity.KategoriEntity
-import com.ra.bkuang.data.local.entity.TipeKategori.*
-import com.ra.bkuang.presentation.util.Constants.coroutineIOThread
+import com.ra.bkuang.data.local.database.entity.KategoriEntity
+import com.ra.bkuang.data.local.database.entity.TipeKategori.*
+import com.ra.bkuang.util.Utils.coroutineIOThread
 import java.time.LocalDateTime
 import java.util.UUID
 

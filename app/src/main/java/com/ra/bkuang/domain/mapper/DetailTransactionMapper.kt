@@ -1,8 +1,8 @@
 package com.ra.bkuang.domain.mapper
 
-import com.ra.bkuang.data.local.entity.DetailPendapatan
-import com.ra.bkuang.data.local.entity.DetailPengeluaran
-import com.ra.bkuang.data.local.entity.DetailTransfer
+import com.ra.bkuang.data.local.database.entity.DetailPendapatan
+import com.ra.bkuang.data.local.database.entity.DetailPengeluaran
+import com.ra.bkuang.data.local.database.entity.DetailTransfer
 import com.ra.bkuang.domain.model.DetailPendapatanModel
 import com.ra.bkuang.domain.model.DetailPengeluaranModel
 import com.ra.bkuang.domain.model.DetailTransferModel

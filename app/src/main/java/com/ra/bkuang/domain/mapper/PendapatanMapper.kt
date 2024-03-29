@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.mapper
 
-import com.ra.bkuang.data.local.entity.PendapatanEntity
+import com.ra.bkuang.data.local.database.entity.PendapatanEntity
 import com.ra.bkuang.domain.model.PendapatanModel
 
 fun PendapatanModel.toEntity(): PendapatanEntity = PendapatanEntity(

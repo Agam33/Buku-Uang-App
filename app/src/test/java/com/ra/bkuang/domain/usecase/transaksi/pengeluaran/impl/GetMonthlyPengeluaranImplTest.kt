@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.data.local.entity.DetailPengeluaran
+import com.ra.bkuang.data.local.database.entity.DetailPengeluaran
 import com.ra.bkuang.domain.repository.PengeluaranRepository
 import com.ra.bkuang.domain.usecase.transaksi.pengeluaran.GetMonthlyPengeluaran
 import com.ra.bkuang.dummy.model.AkunDummy

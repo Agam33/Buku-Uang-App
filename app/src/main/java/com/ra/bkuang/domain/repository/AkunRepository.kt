@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.repository
 
-import com.ra.bkuang.data.local.entity.AkunEntity
+import com.ra.bkuang.data.local.database.entity.AkunEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 

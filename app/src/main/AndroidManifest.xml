@@ -30,37 +30,37 @@
         android:theme="@style/Theme.BkUang"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.ui.features.debt.CreateDebtActivity"
+            android:name=".presentation.ui.debt.CreateDebtActivity"
             android:theme="@style/Theme.BkUang.M3"
-            android:parentActivityName=".presentation.ui.features.MainActivity"
+            android:parentActivityName=".presentation.ui.transaction.main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.ui.features.debt.DetailDebtActivity"
+            android:name=".presentation.ui.debt.DetailDebtActivity"
             android:theme="@style/Theme.BkUang.M3"
-            android:parentActivityName=".presentation.ui.features.MainActivity"
+            android:parentActivityName=".presentation.ui.transaction.main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.ui.features.budget.CreateBudgetActivity"
+            android:name=".presentation.ui.budget.CreateBudgetActivity"
             android:exported="false"
-            android:parentActivityName=".presentation.ui.features.MainActivity"
+            android:parentActivityName=".presentation.ui.transaction.main.MainActivity"
             android:theme="@style/Theme.BkUang.M3" />
         <activity
-            android:name=".presentation.ui.features.transaction.CreateTransactionActivity"
+            android:name=".presentation.ui.transaction.CreateTransactionActivity"
             android:exported="false"
-            android:parentActivityName=".presentation.ui.features.MainActivity"
+            android:parentActivityName=".presentation.ui.transaction.main.MainActivity"
             android:theme="@style/Theme.BkUang.M3" />
         <activity
-            android:name=".presentation.ui.features.category.CreateCategoryActivity"
+            android:name=".presentation.ui.category.CreateCategoryActivity"
             android:exported="false"
-            android:parentActivityName=".presentation.ui.features.MainActivity"
+            android:parentActivityName=".presentation.ui.transaction.main.MainActivity"
             android:theme="@style/Theme.BkUang.M3" />
         <activity
-            android:name=".presentation.ui.features.account.CreateNewAccountActivity"
+            android:name=".presentation.ui.account.CreateNewAccountActivity"
             android:exported="false"
-            android:parentActivityName=".presentation.ui.features.MainActivity"
+            android:parentActivityName=".presentation.ui.transaction.main.MainActivity"
             android:theme="@style/Theme.BkUang.M3" />
         <activity
-            android:name=".presentation.ui.features.MainActivity"
+            android:name=".presentation.ui.transaction.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.BkUang.M3">
             <intent-filter>
@@ -74,7 +74,7 @@
         </activity>
 
         <receiver
-            android:name=".presentation.util.AlarmReceiver"
+            android:name=".receiver.AlarmReceiver"
             android:enabled="true"
             android:exported="false"/>
 

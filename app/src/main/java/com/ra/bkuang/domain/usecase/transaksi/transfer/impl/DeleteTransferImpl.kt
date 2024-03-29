@@ -4,7 +4,7 @@ import com.ra.bkuang.domain.mapper.toEntity
 import com.ra.bkuang.domain.model.TransferModel
 import com.ra.bkuang.domain.repository.TransferRepository
 import com.ra.bkuang.domain.usecase.transaksi.transfer.DeleteTransfer
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import javax.inject.Inject
 
 class DeleteTransferImpl @Inject constructor(

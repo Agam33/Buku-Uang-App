@@ -7,7 +7,7 @@ import com.ra.bkuang.domain.repository.AkunRepository
 import com.ra.bkuang.domain.repository.BudgetRepository
 import com.ra.bkuang.domain.repository.PengeluaranRepository
 import com.ra.bkuang.domain.usecase.transaksi.pengeluaran.UpdatePengeluaran
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import javax.inject.Inject
 
 class UpdatePengeluaranImpl @Inject constructor(

@@ -1,6 +1,6 @@
 package com.ra.bkuang.domain.usecase.transaksi.pengeluaran
 
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import java.util.UUID
 
 interface DeletePengeluaranById {

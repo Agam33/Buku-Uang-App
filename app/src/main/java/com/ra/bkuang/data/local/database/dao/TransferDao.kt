@@ -6,8 +6,8 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.ra.bkuang.data.local.entity.DetailTransfer
-import com.ra.bkuang.data.local.entity.TransferEntity
+import com.ra.bkuang.data.local.database.entity.DetailTransfer
+import com.ra.bkuang.data.local.database.entity.TransferEntity
 import java.time.LocalDateTime
 import java.util.UUID
 

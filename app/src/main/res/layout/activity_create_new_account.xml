@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".presentation.ui.features.account.CreateNewAccountActivity">
+        tools:context=".presentation.ui.account.CreateNewAccountActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             app:menu="@menu/create_account_menu"

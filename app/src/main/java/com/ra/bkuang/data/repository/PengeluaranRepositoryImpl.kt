@@ -1,8 +1,8 @@
 package com.ra.bkuang.data.repository
 
 import com.ra.bkuang.data.local.datasource.PengeluaranLocalDataSource
-import com.ra.bkuang.data.local.entity.DetailPengeluaran
-import com.ra.bkuang.data.local.entity.PengeluaranEntity
+import com.ra.bkuang.data.local.database.entity.DetailPengeluaran
+import com.ra.bkuang.data.local.database.entity.PengeluaranEntity
 import com.ra.bkuang.domain.repository.PengeluaranRepository
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime

@@ -1,7 +1,7 @@
 package com.ra.bkuang.data.local.datasource
 
-import com.ra.bkuang.data.local.entity.DetailTransfer
-import com.ra.bkuang.data.local.entity.TransferEntity
+import com.ra.bkuang.data.local.database.entity.DetailTransfer
+import com.ra.bkuang.data.local.database.entity.TransferEntity
 import java.time.LocalDateTime
 import java.util.UUID
 

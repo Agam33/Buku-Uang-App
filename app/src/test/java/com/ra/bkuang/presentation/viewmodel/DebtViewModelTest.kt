@@ -11,9 +11,10 @@ import com.ra.bkuang.domain.usecase.hutang.FindHutangById
 import com.ra.bkuang.domain.usecase.hutang.ShowAllHutang
 import com.ra.bkuang.domain.usecase.hutang.UpdateHutang
 import com.ra.bkuang.dummy.model.HutangDummy
+import com.ra.bkuang.presentation.ui.debt.DebtViewModel
 import com.ra.bkuang.util.MainDispatcherRule
-import com.ra.bkuang.domain.util.Resource
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.Resource
+import com.ra.bkuang.util.ResourceState
 import com.ra.bkuang.util.getOrAwaitValue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest

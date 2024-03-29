@@ -2,14 +2,14 @@ package com.ra.bkuang.domain.usecase.transaksi.transfer.impl
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.ra.bkuang.data.local.entity.TransferEntity
+import com.ra.bkuang.data.local.database.entity.TransferEntity
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.repository.AkunRepository
 import com.ra.bkuang.domain.repository.TransferRepository
 import com.ra.bkuang.domain.usecase.transaksi.transfer.UpdateTransfer
 import com.ra.bkuang.dummy.model.AkunDummy
 import com.ra.bkuang.dummy.model.TransferDummy
-import com.ra.bkuang.domain.util.ResourceState
+import com.ra.bkuang.util.ResourceState
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

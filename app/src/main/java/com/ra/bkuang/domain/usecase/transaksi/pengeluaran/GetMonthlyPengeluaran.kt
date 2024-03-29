@@ -1,7 +1,7 @@
 package com.ra.bkuang.domain.usecase.transaksi.pengeluaran
 
-import com.ra.bkuang.data.local.entity.DetailPengeluaran
-import com.ra.bkuang.domain.util.Resource
+import com.ra.bkuang.data.local.database.entity.DetailPengeluaran
+import com.ra.bkuang.util.Resource
 import com.ra.bkuang.domain.model.RvGroup
 import kotlinx.coroutines.flow.Flow
 

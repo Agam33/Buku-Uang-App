@@ -5,8 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.ra.bkuang.data.local.entity.DetailPembayaranHutang
-import com.ra.bkuang.data.local.entity.PembayaranHutangEntity
+import com.ra.bkuang.data.local.database.entity.DetailPembayaranHutang
+import com.ra.bkuang.data.local.database.entity.PembayaranHutangEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
