@@ -80,7 +80,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
   private fun createNewAccount() {
     binding?.run {
-      fabAddAccount.setOnClickListener {
+      btnCreateAccount.setOnClickListener {
         val i = Intent(requireActivity(), CreateNewAccountActivity::class.java).apply {
           putExtra(
             EXTRA_TEXT,

@@ -76,7 +76,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="16dp"
-                android:textColor="@color/red_400"
+                android:textColor="@color/red_40"
                 android:text="@string/txt_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

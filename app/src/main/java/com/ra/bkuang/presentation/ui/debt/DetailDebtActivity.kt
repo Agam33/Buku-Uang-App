@@ -1,7 +1,10 @@
 package com.ra.bkuang.presentation.ui.debt
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
@@ -21,6 +24,7 @@ import com.ra.bkuang.presentation.ui.debt.DebtFragment.Companion.DEBT_EXTRA_ACTI
 import com.ra.bkuang.presentation.ui.debt.DebtFragment.Companion.DEBT_MODEL
 import com.ra.bkuang.presentation.ui.debt.adapter.DebtRecordAdapter
 import com.ra.bkuang.presentation.ui.debt.dialog.AddDebtRecordDialog
+import com.ra.bkuang.util.Extension.setupNoActionbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -35,6 +39,8 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+    setupNoActionbar(binding.toolbar, isDisplayHomeAsUpEnabled = false)
 
     debtModelId = UUID.fromString(intent?.getStringExtra(DebtFragment.DEBT_MODEL_ID))
 
@@ -103,6 +109,13 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
         tvDueDate.text = String.format(binding.root.context.getString(R.string.txt_due_date_format), it.jatuhTempo.toStringFormat(
           DATE_TIME_FORMATTER
         ))
+        binding.toolbar.menu[0].setIcon(
+          if(it.pengingatAktif) {
+            R.drawable.active_alarm_on_24
+          } else {
+           R.drawable.inactive_round_alarm_24
+          }
+        )
       }
     }
   }
@@ -112,6 +125,30 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
       viewModel.getHutangById(it)
       viewModel.getAllDebtRecord(it)
       viewModel.getSizeListPembayaranHutang(it)
+    }
+  }
+
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.menu_detail_debt, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when(item.itemId) {
+      R.id.menu_debt_alarm -> {
+        // Todo: set alarm Hutang
+        true
+      }
+      R.id.menu_debt_edit -> {
+        // Todo: edit Hutang
+        true
+      }
+      R.id.menu_debt_delete -> {
+        // Todo: delete Hutang
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
     }
   }
 

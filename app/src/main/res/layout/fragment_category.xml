@@ -28,22 +28,18 @@
                     android:layout_height="wrap_content">
                     <com.google.android.material.textview.MaterialTextView
                         android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:text="@string/txt_category"
                         android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:textStyle="bold"
-                        android:textSize="24sp"
+                        android:textSize="@dimen/headline_large"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-            <com.google.android.material.divider.MaterialDivider
-                app:tabMode="fixed"
-                android:background="@color/indigo_70"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"/>
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -51,7 +47,6 @@
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
-            style="@style/Widget.App.Global.FAB"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             android:src="@drawable/baseline_add_24"
             android:layout_width="wrap_content"

@@ -14,7 +14,20 @@
         android:layout_height="match_parent"
         tools:context=".presentation.ui.debt.DetailDebtActivity">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            app:menu="@menu/menu_detail_debt"
+            app:navigationIconTint="@color/white"
+            android:background="@color/blue_90"
+            android:id="@+id/toolbar"
+            android:elevation="4dp"
+            app:titleTextColor="@color/white"
+            app:title="@string/txt_detail_debt"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+
         <RelativeLayout
+            android:layout_below="@id/toolbar"
             android:id="@+id/top_container"
             android:layout_width="match_parent"
             android:layout_height="160dp">

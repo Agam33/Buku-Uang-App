@@ -22,14 +22,15 @@
         android:layout_height="match_parent">
 
 <!-- Start Toolbar -->
-      <com.google.android.material.appbar.MaterialToolbar
-          android:background="@color/white"
-          android:id="@+id/toolbar"
-          android:layout_width="match_parent"
-          android:layout_height="?attr/actionBarSize">
-
-
-      </com.google.android.material.appbar.MaterialToolbar>
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 <!-- End Toolbar -->
 
 <!-- Start Fragment Container -->
@@ -46,12 +47,11 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_drawer_view"
-        android:background="@color/white"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_navigation_drawer"
         app:menu="@menu/main_menu_drawer"
-        app:itemIconTint="@color/blue_30"
+        app:itemIconTint="@null"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
   </androidx.drawerlayout.widget.DrawerLayout>

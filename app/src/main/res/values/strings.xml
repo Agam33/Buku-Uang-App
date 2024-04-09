@@ -15,6 +15,7 @@
     <string name="example_income_in_rupiah">Rp81.000,00</string>
     <string name="example_expense_in_rupiah">-Rp81.000,00</string>
     <string name="title_total">Total</string>
+    <string name="title_total_account">Total Tabungan</string>
     <string name="example_total_in_rupiah">Rp81.000,00</string>
     <string name="example_month_year">Apr, 2023</string>
     <string name="txt_same_account">Tidak bisa transfer ke Akun yang sama. Periksa kembali!!</string>
@@ -81,7 +82,7 @@
     <string name="txt_zero_percent">0%</string>
     <string name="txt_budget">Budget</string>
     <string name="txt_caution_delete">Apakah anda yakin ingin menghapus?</string>
-    <string name="msg_delete_dialog">Menghapus ini dapat menyebabkan semua yang berkaitan akan terhapus semua!!.</string>
+    <string name="msg_delete_dialog">Menghapus item ini dapat menyebabkan semua yang berkaitan akan terhapus semua!!.</string>
     <string name="txt_yes">Ya</string>
     <string name="txt_cancel">Batalkan</string>
     <string name="txt_backup">Cadangkan</string>
@@ -92,6 +93,7 @@
     <string name="txt_backup_format">%s_%s.zip</string>
     <string name="txt_debt">Hutang</string>
     <string name="txt_detail">Detail</string>
+    <string name="txt_detail_debt">Detail Hutang</string>
     <string name="txt_due_date">Jatuh Tempo</string>
     <string name="total_list">Jumlah catatan :</string>
     <string name="txt_example_time">00 : 00</string>

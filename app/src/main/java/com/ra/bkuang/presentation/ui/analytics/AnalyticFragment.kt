@@ -65,7 +65,7 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
             rvTransaction.apply {
               adapter = analyticAdapter
               setHasFixedSize(true)
-              layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+              layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             }
 
           }

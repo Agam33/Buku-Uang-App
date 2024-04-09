@@ -16,67 +16,70 @@
             android:gravity="center"
             android:id="@+id/layout_income"
             android:orientation="vertical"
-            android:layout_weight="1"
+            android:layout_weight=".5"
             android:layout_width="0dp"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
                 android:text="@string/title_income"
-                android:textSize="16sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="@dimen/title_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_income"
-                android:textColor="@color/teal_700"
-                android:text="@string/txt_empty"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/txt_empty"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/green_20"
+                android:textSize="@dimen/label_medium" />
         </LinearLayout>
 
         <LinearLayout
-            android:gravity="center"
             android:id="@+id/layout_expense"
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
-                android:text="@string/title_expense"
-                android:textSize="16sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/title_expense"
+                android:textSize="@dimen/title_medium" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_expense"
-                android:text="@string/txt_empty"
-                android:textColor="@color/red_400"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_medium"
+                android:text="@string/txt_empty"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/red_40" />
         </LinearLayout>
 
         <LinearLayout
             android:gravity="center"
             android:id="@+id/layout_total"
             android:orientation="vertical"
-            android:layout_weight="1"
+            android:layout_weight=".5"
             android:layout_width="0dp"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
                 android:text="@string/title_total"
-                android:textSize="16sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="@dimen/title_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_total"
+                android:textSize="@dimen/label_medium"
                 android:textColor="@color/teal_700"
                 android:text="@string/txt_empty"
+                android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
