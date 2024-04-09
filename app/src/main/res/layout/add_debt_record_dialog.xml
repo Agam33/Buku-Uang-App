@@ -118,7 +118,7 @@
 
         <com.google.android.material.button.MaterialButton
             app:cornerRadius="4dp"
-            android:backgroundTint="@color/red_400"
+            android:backgroundTint="@color/red_40"
             android:id="@+id/btn_cancel"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"

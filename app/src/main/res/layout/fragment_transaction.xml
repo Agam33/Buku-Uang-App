@@ -24,64 +24,83 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:orientation="vertical"
+                <com.google.android.material.card.MaterialCardView
+                    app:cardElevation="4dp"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="16dp"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="140dp">
 
-                        <ImageButton
-                            android:id="@+id/btn_options"
-                            android:layout_marginEnd="8dp"
-                            android:background="@null"
-                            android:src="@drawable/baseline_view_list_24"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                        <RelativeLayout
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="32dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                        <ImageButton
-                            android:layout_marginStart="32dp"
-                            android:layout_gravity="center"
-                            android:id="@+id/img_btn_prev_date"
-                            android:background="@null"
-                            android:src="@drawable/outline_keyboard_arrow_left_24"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            <ImageButton
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginTop="8dp"
+                                android:id="@+id/img_btn_prev_date"
+                                android:background="@null"
+                                android:src="@drawable/outline_keyboard_arrow_left_24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tv_current_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:text="@string/example_month_year"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                            android:textSize="16sp" />
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_toEndOf="@id/img_btn_prev_date"
+                                android:textSize="@dimen/title_medium"
+                                android:textStyle="bold"
+                                android:id="@+id/tv_current_date"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/example_month_year"
+                                android:textAlignment="textStart"/>
 
-                        <ImageButton
-                            android:id="@+id/img_btn_next_date"
-                            android:background="@null"
-                            android:src="@drawable/baseline_keyboard_arrow_right_24"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            <ImageButton
+                                android:layout_toEndOf="@id/tv_current_date"
+                                android:layout_marginTop="8dp"
+                                android:id="@+id/img_btn_next_date"
+                                android:background="@null"
+                                android:src="@drawable/baseline_keyboard_arrow_right_24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
 
+                            <ImageButton
+                                android:id="@+id/btn_options"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="16dp"
+                                android:background="@null"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/baseline_settings_24" />
+
+                        </RelativeLayout>
+                        <include
+                            android:id="@+id/overview_income_expense_total"
+                            layout="@layout/overview_income_expense_total"/>
                     </LinearLayout>
-                    <include
-                        android:id="@+id/overview_income_expense_total"
-                        layout="@layout/overview_income_expense_total"/>
-                </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="4dp"
                 style="@style/ThemeOverlay.App.Transaction.TabLayout"
-                app:tabTextAppearance="?attr/textAppearanceBodyMedium"
+                app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
                 app:tabBackground="@color/white"
                 app:tabMode="fixed"
                 android:layout_width="match_parent"
@@ -94,14 +113,14 @@
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
-            style="@style/Widget.App.Global.FAB"
-            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             android:src="@drawable/outline_create_24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/fab_transaction_desc" />
 
         <androidx.viewpager2.widget.ViewPager2
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:id="@+id/v_pager_transaction"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"

@@ -10,7 +10,7 @@
     <com.google.android.material.card.MaterialCardView
         style="@style/Widget.App.CardElevated.Normal"
         app:cardElevation="4dp"
-        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Large"
+        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -20,7 +20,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="80dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_title_debt"
@@ -69,119 +69,15 @@
                 android:layout_width="220dp"
                 android:layout_height="wrap_content" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_percent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_alignEnd="@id/goal_progress"
-                android:layout_alignStart="@id/goal_progress"
-                android:layout_alignTop="@id/goal_progress"
-                android:layout_alignBottom="@id/goal_progress"
-                android:text="@string/txt_zero_percent"
-                android:textAlignment="center"
-                android:textSize="12sp" />
-
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/goal_progress"
-                app:indicatorSize="60dp"
-                app:trackColor="@color/indigo_100"
-                app:indicatorColor="@color/indigo_50"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp" />
-
             <ImageButton
+                android:id="@+id/imgb_detail"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="8dp"
                 android:background="@null"
-                android:id="@+id/img_close_open_layout"
-                android:src="@drawable/baseline_keyboard_double_arrow_down_24"
-                android:layout_below="@id/goal_progress"
-                android:layout_centerHorizontal="true"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/txt_empty" />
-
-            <RelativeLayout
-                android:visibility="visible"
-                android:id="@+id/layout_detail"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical"
-                android:layout_below="@id/img_close_open_layout"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:id="@+id/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="128dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="128dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/indigo_100" />
-
-                <ImageButton
-                    android:layout_below="@id/divider"
-                    android:background="@null"
-                    android:layout_toStartOf="@id/img_btn_edit"
-                    android:src="@drawable/inactive_round_alarm_24"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    android:id="@+id/img_btn_alarm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/txt_empty" />
-
-                <ImageButton
-                    android:layout_below="@id/divider"
-                    android:id="@+id/img_btn_edit"
-                    android:background="@null"
-                    android:layout_toStartOf="@id/img_btn_delete"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/edit_outline_24"
-                    android:contentDescription="@string/txt_empty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <ImageButton
-                    android:layout_below="@id/divider"
-                    android:background="@null"
-                    android:id="@+id/img_btn_delete"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginTop="4dp"
-                    android:src="@drawable/baseline_delete_24"
-                    android:contentDescription="@string/txt_empty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                    android:id="@+id/tv_due_date"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_below="@id/divider"
-                    android:text="@string/txt_empty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_marginTop="24dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginBottom="16dp"
-                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                    android:layout_below="@id/tv_due_date"
-                    android:id="@+id/tv_desc"
-                    android:text="@string/txt_empty"
-                    android:textAlignment="textStart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </RelativeLayout>
+                android:src="@drawable/baseline_arrow_next_48" />
 
         </RelativeLayout>
 

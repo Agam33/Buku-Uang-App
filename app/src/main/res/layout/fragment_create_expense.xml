@@ -172,10 +172,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.ElevatedButton"
             app:cornerRadius="8dp"
-            android:backgroundTint="@color/blue_10"
-            android:textColor="@color/white"
             android:id="@+id/btn_save"
             android:textSize="14sp"
             android:layout_marginTop="16dp"

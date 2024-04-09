@@ -13,6 +13,8 @@
         <com.google.android.material.appbar.MaterialToolbar
             app:menu="@menu/create_account_menu"
             app:navigationIconTint="@color/white"
+            android:background="@color/blue_90"
+            app:titleTextColor="@color/white"
             android:id="@+id/toolbar"
             style="@style/Widget.App.Toolbar"
             android:elevation="1dp"

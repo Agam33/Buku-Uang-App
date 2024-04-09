@@ -117,7 +117,7 @@ class DetailTransactionDialog: DialogFragment() {
       }
       TransactionType.EXPENSE -> {
         tvTransactionType.text = requireContext().getString(R.string.title_expense)
-        divider.dividerColor = requireContext().getColor(R.color.red_400)
+        divider.dividerColor = requireContext().getColor(R.color.red_40)
       }
       TransactionType.INCOME -> {
         tvTransactionType.text = requireContext().getString(R.string.title_income)

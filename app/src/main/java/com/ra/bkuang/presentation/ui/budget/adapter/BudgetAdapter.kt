@@ -56,7 +56,7 @@ class BudgetAdapter: ListAdapter<DetailBudget, BudgetAdapter.MViewHolder>(DIFF) 
 
       binding.goalProgress.setIndicatorColor(
         if(detailBudget.budget.pengeluaran.isOverBudget(detailBudget.budget.maxPengeluaran)
-      ) binding.root.context.getColor(R.color.red_400) else binding.root.context.getColor(R.color.indigo_50))
+      ) binding.root.context.getColor(R.color.red_40) else binding.root.context.getColor(R.color.indigo_50))
     }
   }
 

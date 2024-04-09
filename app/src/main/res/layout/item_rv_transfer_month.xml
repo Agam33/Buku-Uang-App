@@ -20,19 +20,14 @@
             <com.google.android.material.textview.MaterialTextView
                 android:textAlignment="center"
                 android:padding="2dp"
-                android:background="#EAE7E7"
+                android:background="@color/blue_100"
                 android:text="@string/txt_rv_title_header"
-                android:textSize="16sp"
-                app:fontFamily="@font/roboto_bold"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textStyle="bold"
+                android:textSize="@dimen/title_medium"
                 android:id="@+id/tv_title_rv_days"
                 android:layout_marginBottom="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="26dp" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="2dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginTop="4dp"

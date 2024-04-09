@@ -15,9 +15,10 @@
         <com.google.android.material.appbar.MaterialToolbar
             app:menu="@menu/create_account_menu"
             app:navigationIconTint="@color/white"
+            android:background="@color/blue_90"
             android:id="@+id/toolbar"
-            style="@style/Widget.App.Toolbar"
-            android:elevation="1dp"
+            android:elevation="4dp"
+            app:titleTextColor="@color/white"
             app:title="@string/txt_debt"
             android:layout_marginBottom="8dp"
             android:layout_width="match_parent"

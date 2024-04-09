@@ -227,10 +227,11 @@ object Extension {
   fun AppCompatActivity.setupNoActionbar(
     toolbar: androidx.appcompat.widget.Toolbar?,
     title: String = "",
+    isDisplayHomeAsUpEnabled: Boolean = true,
   ) {
     setSupportActionBar(toolbar)
     if(title.isNotEmpty()) supportActionBar?.title = title
-    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    supportActionBar?.setDisplayHomeAsUpEnabled(isDisplayHomeAsUpEnabled)
   }
 
   fun SimpleDateFormat.millisToString(timeMillis: Long): String {

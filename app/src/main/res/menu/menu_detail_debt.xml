@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_debt_alarm"
+        app:showAsAction="always"
+        android:title="Alarm"
+        android:icon="@drawable/inactive_round_alarm_24"/>
+
+    <item
+        android:id="@+id/menu_debt_edit"
+        app:showAsAction="always"
+        android:title="Alarm"
+        android:icon="@drawable/edit_outline_24"/>
+
+    <item
+        android:id="@+id/menu_debt_delete"
+        app:showAsAction="always"
+        android:title="Alarm"
+        android:icon="@drawable/baseline_dangerous_24"/>
+</menu>

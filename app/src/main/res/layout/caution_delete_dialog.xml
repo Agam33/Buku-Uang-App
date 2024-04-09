@@ -29,21 +29,19 @@
         android:id="@+id/divider"
         android:layout_below="@id/tv_title"
         android:layout_marginTop="32dp"
-        android:background="@color/red_600"
         android:layout_width="match_parent"
         android:layout_height="2dp"/>
 
     <TextView
         android:id="@+id/tv_msg_delete"
-        android:fontFamily="@font/montserrat_alternates_medium"
         android:text="@string/msg_delete_dialog"
         android:textAlignment="center"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:textStyle="italic"
         android:layout_marginTop="32dp"
         android:layout_below="@id/divider"
         android:layout_width="match_parent"
-        android:layout_height="100dp"/>
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_below="@id/tv_msg_delete"
@@ -54,11 +52,9 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.ElevatedButton"
-            android:textColor="@color/white"
+            android:layout_marginTop="8dp"
             android:id="@+id/btn_yes"
             android:textAllCaps="false"
-            android:backgroundTint="@color/red_600"
             android:text="@string/txt_yes"
             android:textSize="14sp"
             android:layout_marginEnd="8dp"
@@ -67,9 +63,8 @@
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.ElevatedButton"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/blue_10"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_marginTop="8dp"
             android:id="@+id/btn_no"
             android:textAllCaps="false"
             android:text="@string/txt_cancel"

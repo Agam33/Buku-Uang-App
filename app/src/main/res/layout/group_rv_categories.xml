@@ -19,7 +19,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_title_category"
                 android:text="@string/title_category_income"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="@dimen/title_large"
                 android:textStyle="bold"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
@@ -28,7 +28,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_group_item_categories"
-                android:layout_margin="4dp"
+                android:layout_marginBottom="8dp"
                 tools:itemCount="4"
                 tools:listitem="@layout/item_rv_categories"
                 android:layout_width="match_parent"

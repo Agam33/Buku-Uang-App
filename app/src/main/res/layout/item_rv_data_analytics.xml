@@ -8,61 +8,66 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
+        app:cardElevation="4dp"
+        android:layout_margin="8dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_title"
-                android:text="@string/txt_empty"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:ignore="RelativeOverlap" />
+                android:layout_marginTop="8dp"
+                android:text="@string/txt_empty"
+                android:textSize="@dimen/title_small"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/progress_circular"
+                app:layout_constraintStart_toStartOf="@+id/progress_circular"
+                app:layout_constraintTop_toBottomOf="@+id/progress_circular" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_current_money"
-                android:layout_below="@id/tv_title"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:textSize="14sp"
-                android:text="@string/txt_empty"
-                android:textStyle="italic"
-                android:textAppearance="@style/TextAppearance.Material3.DisplayMedium"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/txt_empty"
+                android:textAppearance="@style/TextAppearance.Material3.DisplayMedium"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="@+id/tv_title"
+                app:layout_constraintStart_toStartOf="@+id/tv_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_percent"
-                android:textSize="12sp"
-                android:text="@string/txt_zero_percent"
-                android:layout_centerVertical="true"
-                android:layout_alignEnd="@id/progress_circular"
-                android:layout_alignStart="@id/progress_circular"
-                android:textAlignment="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/progress_circular"
+                android:layout_alignEnd="@id/progress_circular"
+                android:text="@string/txt_zero_percent"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/progress_circular"
+                app:layout_constraintEnd_toEndOf="@+id/progress_circular"
+                app:layout_constraintStart_toStartOf="@+id/progress_circular"
+                app:layout_constraintTop_toTopOf="@+id/progress_circular" />
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:id="@+id/progress_circular"
-                app:indicatorSize="60dp"
-                app:trackColor="@color/indigo_100"
-                app:indicatorColor="@color/indigo_50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="24dp" />
+                android:layout_marginTop="4dp"
+                app:indicatorColor="@color/indigo_50"
+                app:indicatorSize="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:trackColor="@color/indigo_100" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 </layout>
