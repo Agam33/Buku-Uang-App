@@ -106,22 +106,24 @@
             tools:ignore="RtlSymmetry" />
 
         <com.google.android.material.button.MaterialButton
-            app:cornerRadius="4dp"
-            android:backgroundTint="@color/indigo_50"
+            android:textAllCaps="true"
             android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edt_amount"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="4dp"
             android:text="@string/txt_save"
-            android:layout_below="@id/edt_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            app:cornerRadius="4dp" />
 
         <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/md_theme_light_primary"
             app:cornerRadius="4dp"
-            android:backgroundTint="@color/red_40"
             android:id="@+id/btn_cancel"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/txt_cancel"
             android:layout_below="@id/btn_save"
             android:layout_width="match_parent"
