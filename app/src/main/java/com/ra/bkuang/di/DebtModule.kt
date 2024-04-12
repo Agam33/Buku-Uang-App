@@ -1,7 +1,7 @@
 package com.ra.bkuang.di
 
-import com.ra.bkuang.alarm.DebtAlarm
-import com.ra.bkuang.alarm.DebtAlarmManagerImpl
+import com.ra.bkuang.alarm.DebtAlarmManager
+import com.ra.bkuang.alarm.DebtAlarmManagerManagerImpl
 import com.ra.bkuang.data.local.datasource.HutangLocalDataSource
 import com.ra.bkuang.data.local.datasource.impl.HutangLocalDataSourceImpl
 import com.ra.bkuang.data.repository.PembayaranHutangRepositoryImpl
@@ -48,7 +48,7 @@ interface DebtModule {
 
   @Binds
   @Singleton
-  fun bindDebtAlarmManager(debtAlarmManagerImpl: DebtAlarmManagerImpl): DebtAlarm
+  fun bindDebtAlarmManager(debtAlarmManagerImpl: DebtAlarmManagerManagerImpl): DebtAlarmManager
 
   @Binds
   @Singleton
