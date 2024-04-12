@@ -25,19 +25,30 @@ class BudgetAdapter: ListAdapter<DetailBudget, BudgetAdapter.MViewHolder>(DIFF) 
   var onItemLongClickListener: OnItemLongClickListener? = null
 
   inner class MViewHolder(
-    private val binding: ItemRvBudgetPermonthBinding
+    private val binding: ItemRvBudgetPermonthBinding,
+    private var isExpanded: Boolean = false
   ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(detailBudget: DetailBudget) {
       val percent = detailBudget.budget.pengeluaran.toPercent(detailBudget.budget.maxPengeluaran)
 
       binding.root.setOnLongClickListener {
-        expandedWidth(binding.optionLayout, 500, 140)
+        if(isExpanded) {
+          collapsedWidth(binding.optionLayout, 500, 0)
+        } else {
+          expandedWidth(binding.optionLayout, 500, 140)
+        }
+        isExpanded = !isExpanded
         true
       }
 
       binding.root.setOnClickListener {
-        collapsedWidth(binding.optionLayout, 500, 0)
+        if(isExpanded) {
+          collapsedWidth(binding.optionLayout, 500, 0)
+        } else {
+          expandedWidth(binding.optionLayout, 500, 140)
+        }
+        isExpanded = !isExpanded
       }
 
       binding.ibDelete.setOnClickListener {
