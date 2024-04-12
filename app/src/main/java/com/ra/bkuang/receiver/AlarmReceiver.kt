@@ -4,9 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.ra.bkuang.alarm.AlarmCategory
-import com.ra.bkuang.alarm.DebtAlarm
-import com.ra.bkuang.alarm.DebtAlarmManagerImpl.Companion.DEBT_ALARM_EXTRA_ID
-import com.ra.bkuang.alarm.DebtAlarmManagerImpl.Companion.DEBT_ALARM_EXTRA_TITLE
+import com.ra.bkuang.alarm.DebtAlarmManager
+import com.ra.bkuang.alarm.DebtAlarmManagerManagerImpl.Companion.DEBT_ALARM_EXTRA_ID
+import com.ra.bkuang.alarm.DebtAlarmManagerManagerImpl.Companion.DEBT_ALARM_EXTRA_TITLE
 import com.ra.bkuang.alarm.TransactionAlarmManager
 import com.ra.bkuang.alarm.TransactionAlarmManagerManagerImpl.Companion.TRANSACTION_HOUR
 import com.ra.bkuang.alarm.TransactionAlarmManagerManagerImpl.Companion.TRANSACTION_MINUTE
@@ -24,7 +24,7 @@ class AlarmReceiver: BroadcastReceiver() {
   @Inject @IoCoroutineScopeQualifier lateinit var ioScope: CoroutineScope
   @Inject lateinit var updateHutang: UpdateHutang
   @Inject lateinit var findHutangByAlarmId: FindHutangByAlarmId
-  @Inject lateinit var debtAlarm: DebtAlarm
+  @Inject lateinit var debtAlarmManager: DebtAlarmManager
   @Inject lateinit var transactionAlarmManager: TransactionAlarmManager
 
   override fun onReceive(context: Context, intent: Intent) {
@@ -59,7 +59,7 @@ class AlarmReceiver: BroadcastReceiver() {
       updateHutang.invoke(debtModel)
     }
 
-    debtAlarm.showNotification(
+    debtAlarmManager.showNotification(
       ctx,
       debtModelId ?: "",
       alarmTitle ?: ""

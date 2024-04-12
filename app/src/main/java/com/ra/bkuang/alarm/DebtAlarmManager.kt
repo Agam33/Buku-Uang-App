@@ -4,7 +4,7 @@ import android.content.Context
 import com.ra.bkuang.domain.model.HutangModel
 import java.util.Calendar
 
-interface DebtAlarm {
+interface DebtAlarmManager {
   fun setAlarm(model: HutangModel, calendar: Calendar)
   fun cancelAlarm(model: HutangModel)
   fun showNotification(
