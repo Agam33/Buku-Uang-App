@@ -14,10 +14,6 @@ interface RepositoryModule {
 
   @Binds
   @Singleton
-  fun bindHutangRepository(pembayaranHutangRepositoryImpl: PembayaranHutangRepositoryImpl): PembayaranHutangRepository
-
-  @Binds
-  @Singleton
   fun bindBudgetRepository(budgetRepositoryImpl: BudgetRepositoryImpl): BudgetRepository
 
   @Binds

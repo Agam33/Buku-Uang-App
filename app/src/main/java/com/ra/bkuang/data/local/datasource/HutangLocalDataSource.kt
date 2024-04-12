@@ -11,5 +11,5 @@ interface HutangLocalDataSource {
   suspend fun update(hutang: HutangEntity)
   suspend fun findById(id: UUID): HutangEntity
   suspend fun findAll(): List<HutangEntity>
-  fun findByIdWithFlow(id: UUID): Flow<HutangEntity>
+  fun findByIdWithFlow(id: UUID): Flow<HutangEntity?>
 }

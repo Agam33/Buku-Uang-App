@@ -4,17 +4,16 @@ import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.domain.mapper.toModel
 import com.ra.bkuang.domain.model.HutangModel
 import com.ra.bkuang.domain.repository.HutangRepository
-import com.ra.bkuang.domain.usecase.hutang.FindHutangById
+import com.ra.bkuang.domain.usecase.hutang.FindHutangByAlarmId
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import java.util.UUID
 import javax.inject.Inject
 
-class FindHutangByIdImpl @Inject constructor(
+class FindHutangByAlarmIdImpl @Inject constructor(
   @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
   private val hutangRepository: HutangRepository
-): FindHutangById {
-  override suspend fun invoke(id: String): HutangModel = withContext(ioDispatcher) {
-    return@withContext hutangRepository.findById(UUID.fromString(id)).toModel()
+): FindHutangByAlarmId {
+  override suspend fun invoke(alarmId: Int): HutangModel = withContext(ioDispatcher) {
+    hutangRepository.findByAlarmId(alarmId).toModel()
   }
 }

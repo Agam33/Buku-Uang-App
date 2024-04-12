@@ -15,14 +15,19 @@ import android.view.View
 import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ComponentActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import com.google.android.material.snackbar.Snackbar
+import com.ra.bkuang.R
 import com.ra.bkuang.presentation.ui.transaction.main.MainActivity
 import com.ra.bkuang.receiver.TransactionDailyWorker
 import com.ra.bkuang.util.Constants.REQUIRED_STORAGE_PERMISSION
@@ -222,6 +227,15 @@ object Extension {
     valueAnimator.start()
 
     action()
+  }
+
+  inline fun AppCompatActivity.appOnBackPressed(crossinline action: () -> Unit) {
+    val callback = object: OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+        action()
+      }
+    }
+    onBackPressedDispatcher.addCallback(this, callback)
   }
 
   fun AppCompatActivity.setupNoActionbar(

@@ -3,16 +3,22 @@ package com.ra.bkuang.presentation.ui.debt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.domain.model.HutangModel
+import com.ra.bkuang.domain.usecase.hutang.CancelAlarmDebt
 import com.ra.bkuang.domain.usecase.hutang.CreateHutang
 import com.ra.bkuang.domain.usecase.hutang.DeleteHutang
 import com.ra.bkuang.domain.usecase.hutang.FindHutangById
+import com.ra.bkuang.domain.usecase.hutang.SetAlarmDebt
 import com.ra.bkuang.domain.usecase.hutang.ShowAllHutang
 import com.ra.bkuang.domain.usecase.hutang.UpdateHutang
 import com.ra.bkuang.presentation.base.BaseViewModel
 import com.ra.bkuang.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Calendar
 import java.util.UUID
 import javax.inject.Inject
 
@@ -21,8 +27,8 @@ class DebtViewModel @Inject constructor(
   private val createHutang: CreateHutang,
   private val updateHutang: UpdateHutang,
   private val showAllHutang: ShowAllHutang,
-  private val deleteHutang: DeleteHutang,
-  private val findHutangById: FindHutangById
+  private val findHutangById: FindHutangById,
+  @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher
 ): BaseViewModel() {
 
   private var _rvDebtListState = MutableLiveData<Boolean>()
@@ -49,20 +55,18 @@ class DebtViewModel @Inject constructor(
     }
   }
 
-  fun getHutangById(id: UUID) {
+  fun getHutangById(id: String) {
     viewModelScope.launch {
       val data = findHutangById.invoke(id)
       _hutangModel.postValue(data)
     }
   }
 
-  fun createHutang(hutangModel: HutangModel) =
-    createHutang.invoke(hutangModel)
+  suspend fun createHutang(hutangModel: HutangModel) = withContext(ioDispatcher) {
+    return@withContext createHutang.invoke(hutangModel)
+  }
 
-  suspend fun deleteHutang(hutang: HutangModel) =
-    deleteHutang.invoke(hutang)
-
-  fun updateHutang(hutangModel: HutangModel) =
-    updateHutang.invoke(hutangModel)
-
+  suspend fun updateHutang(hutangModel: HutangModel) = withContext(ioDispatcher) {
+      return@withContext updateHutang.invoke(hutangModel)
+  }
 }

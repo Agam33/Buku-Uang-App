@@ -5,5 +5,5 @@ import com.ra.bkuang.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 
 interface UpdateHutang {
-  fun invoke(hutangModel: HutangModel): Flow<ResourceState>
+  suspend fun invoke(hutangModel: HutangModel): Boolean
 }

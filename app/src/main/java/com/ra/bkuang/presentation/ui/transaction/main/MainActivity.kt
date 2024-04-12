@@ -3,7 +3,6 @@ package com.ra.bkuang.presentation.ui.transaction.main
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
@@ -12,9 +11,10 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
 import com.ra.bkuang.R
-import com.ra.bkuang.presentation.base.BaseActivity
 import com.ra.bkuang.data.preferences.UserSettingPref
 import com.ra.bkuang.databinding.ActivityMainBinding
+import com.ra.bkuang.presentation.base.BaseActivity
+import com.ra.bkuang.util.Extension.appOnBackPressed
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -94,19 +94,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
   }
 
   private fun setupOnBackPressedDispatcher() {
-    val callback = object: OnBackPressedCallback(true) {
-      override fun handleOnBackPressed() {
-        if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-          binding.drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-          Snackbar.make(binding.root, resources.getString(R.string.msg_to_close_app), Snackbar.LENGTH_SHORT)
-            .setAction(resources.getString(R.string.txt_yes)) {
-              finish()
-            }
-            .show()
-        }
+   appOnBackPressed {
+      if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+      } else {
+        Snackbar.make(
+          binding.root,
+          resources.getString(R.string.msg_to_close_app),
+          Snackbar.LENGTH_SHORT
+        )
+          .setAction(resources.getString(R.string.txt_yes)) {
+            finish()
+          }
+          .show()
       }
     }
-    onBackPressedDispatcher.addCallback(this, callback)
   }
 }

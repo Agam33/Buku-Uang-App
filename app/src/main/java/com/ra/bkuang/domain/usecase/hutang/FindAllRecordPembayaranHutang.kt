@@ -5,5 +5,5 @@ import com.ra.bkuang.util.Resource
 import java.util.UUID
 
 interface FindAllRecordPembayaranHutang {
-  suspend fun invoke(id: UUID): Resource<List<DetailPembayaranHutangModel>>
+  suspend fun invoke(id: String): Resource<List<DetailPembayaranHutangModel>>
 }

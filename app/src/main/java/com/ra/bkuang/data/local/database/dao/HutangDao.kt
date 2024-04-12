@@ -25,7 +25,7 @@ interface HutangDao {
   suspend fun findById(id: UUID): HutangEntity
 
   @Query("SELECT * FROM hutang_tbl AS htg WHERE htg.uuid = :id")
-  fun findByIdWithFlow(id: UUID): Flow<HutangEntity>
+  fun findByIdWithFlow(id: UUID): Flow<HutangEntity?>
 
   @Query("SELECT * FROM hutang_tbl ORDER BY updated_at DESC")
   suspend fun findAll(): List<HutangEntity>

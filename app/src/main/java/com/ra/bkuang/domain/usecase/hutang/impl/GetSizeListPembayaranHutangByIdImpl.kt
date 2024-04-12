@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetSizeListPembayaranHutangByIdImpl @Inject constructor(
   private val pembayaranHutangRepository: PembayaranHutangRepository
 ): GetSizeListPembayaranHutangById {
-  override fun invoke(id: UUID): Flow<Int?> {
-    return pembayaranHutangRepository.getSizeListPembayaranHutangById(id)
+  override fun invoke(id: String): Flow<Int?> {
+    return pembayaranHutangRepository.getSizeListPembayaranHutangById(UUID.fromString(id))
   }
 }
