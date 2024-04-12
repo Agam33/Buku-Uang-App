@@ -1,4 +1,4 @@
-package com.ra.bkuang.receiver
+package com.ra.bkuang.alarm
 
 enum class AlarmCategory {
   DEBT, TRANSACTION;
@@ -8,7 +8,7 @@ enum class AlarmCategory {
       return when(type) {
         DEBT.name -> DEBT
         TRANSACTION.name -> TRANSACTION
-        else -> throw IllegalArgumentException("Alarm Category doesn't exist!!")
+        else -> throw IllegalArgumentException("Alarm category not found!")
       }
     }
   }

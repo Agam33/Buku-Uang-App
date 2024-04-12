@@ -7,7 +7,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ra.bkuang.data.local.database.AppDatabase
 import com.ra.bkuang.data.local.database.DatabaseSeeder
 import com.ra.bkuang.data.local.database.dao.*
-import com.ra.bkuang.util.Constants.DB_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,32 +19,32 @@ import javax.inject.Singleton
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class DBName
+annotation class DBNameQualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class DBSeeder
+annotation class DBSeederQualifier
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
   @Provides
-  @DBName
+  @DBNameQualifier
   fun provideDbName(): String = "bk_uang.db"
 
   @Provides
   @Singleton
   fun provideDatabase(
     @ApplicationContext ctx: Context,
-    @DBName dbName: String,
-    @DBSeeder databaseSeeder: Provider<DatabaseSeeder>,
+    @DBNameQualifier dbNameQualifier: String,
+    @DBSeederQualifier databaseSeeder: Provider<DatabaseSeeder>,
   ): AppDatabase {
 
     return Room.databaseBuilder(
       ctx,
       AppDatabase::class.java,
-      dbName
+      dbNameQualifier
     )
       .allowMainThreadQueries()
       .addCallback(object : RoomDatabase.Callback() {
@@ -57,10 +56,10 @@ object DatabaseModule {
       .build()
   }
 
-  @DBSeeder
+  @DBSeederQualifier
   @Provides
   @Singleton fun provideDatabaseSeeder(
-    @IoCoroutineScope ioScope: CoroutineScope,
+    @IoCoroutineScopeQualifier ioScope: CoroutineScope,
     kategoriDao: KategoriDao
   ): DatabaseSeeder = DatabaseSeeder(kategoriDao, ioScope)
 

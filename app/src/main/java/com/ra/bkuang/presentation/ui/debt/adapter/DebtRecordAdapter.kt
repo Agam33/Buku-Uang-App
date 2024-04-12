@@ -24,7 +24,8 @@ class DebtRecordAdapter:
   var onItemLongClickListener: OnItemLongClickListener? = null
 
   inner class MViewHolder(
-    private val binding: ItemRvDebtRecordBinding
+    private val binding: ItemRvDebtRecordBinding,
+    private var isCollapsed: Boolean = true
   ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(model: DetailPembayaranHutangModel) {
@@ -33,12 +34,22 @@ class DebtRecordAdapter:
       binding.tvUpdatedAt.text = model.pembayaranHutangModel.updatedAt.toStringFormat(DATE_TIME_FORMATTER)
 
       binding.root.setOnLongClickListener {
-        expandedWidth(binding.optionLayout, 500, 140)
+        if(isCollapsed) {
+          expandedWidth(binding.optionLayout, 500, 140)
+        } else {
+          collapsedWidth(binding.optionLayout, 500, 0)
+        }
+        isCollapsed = !isCollapsed
         true
       }
 
       binding.root.setOnClickListener {
-        collapsedWidth(binding.optionLayout, 500, 0)
+        if(isCollapsed) {
+          expandedWidth(binding.optionLayout, 500, 140)
+        } else {
+          collapsedWidth(binding.optionLayout, 500, 0)
+        }
+        isCollapsed = !isCollapsed
       }
 
       binding.ibDelete.setOnClickListener {

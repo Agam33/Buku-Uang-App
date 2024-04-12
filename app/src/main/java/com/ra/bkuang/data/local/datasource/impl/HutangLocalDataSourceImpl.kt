@@ -8,8 +8,9 @@ import java.util.UUID
 import javax.inject.Inject
 
 class HutangLocalDataSourceImpl @Inject constructor(
-  private val hutangDao: HutangDao
+  private val hutangDao: HutangDao,
 ): HutangLocalDataSource {
+
   override suspend fun findByAlarmId(alarmId: Int): HutangEntity {
     return hutangDao.findByAlarmId(alarmId)
   }
@@ -34,7 +35,7 @@ class HutangLocalDataSourceImpl @Inject constructor(
     return hutangDao.findAll()
   }
 
-  override fun findByIdWithFlow(id: UUID): Flow<HutangEntity> {
+  override fun findByIdWithFlow(id: UUID): Flow<HutangEntity?> {
     return hutangDao.findByIdWithFlow(id)
   }
 }

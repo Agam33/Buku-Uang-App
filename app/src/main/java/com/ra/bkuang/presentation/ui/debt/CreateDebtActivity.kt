@@ -111,15 +111,8 @@ class CreateDebtActivity : BaseActivity<ActivityCreateDebtBinding>(R.layout.acti
             LocalDateTime.now()
           )
           lifecycleScope.launch {
-            sharedViewModel.createHutang(hutangModel).collect { status ->
-              when(status) {
-                ResourceState.LOADING -> {}
-                ResourceState.SUCCESS -> {
-                  showShortToast(resources.getString(R.string.msg_success))
-                }
-                ResourceState.FAILED -> {}
-              }
-            }
+            if(sharedViewModel.createHutang(hutangModel))
+                showShortToast(resources.getString(R.string.msg_success))
           }
         }
 
@@ -133,15 +126,8 @@ class CreateDebtActivity : BaseActivity<ActivityCreateDebtBinding>(R.layout.acti
             it.updatedAt = LocalDateTime.now()
 
             lifecycleScope.launch {
-              sharedViewModel.updateHutang(it).collect { status ->
-                when(status) {
-                  ResourceState.LOADING -> {}
-                  ResourceState.SUCCESS -> {
-                    showShortToast(resources.getString(R.string.msg_success))
-                  }
-                  ResourceState.FAILED -> {}
-                }
-              }
+              if(sharedViewModel.updateHutang(it))
+                  showShortToast(getStringResource(R.string.msg_success))
             }
           }
         }

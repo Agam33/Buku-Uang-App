@@ -1,7 +1,7 @@
 package com.ra.bkuang.data.repository
 
-import com.ra.bkuang.data.local.datasource.HutangLocalDataSource
 import com.ra.bkuang.data.local.database.entity.HutangEntity
+import com.ra.bkuang.data.local.datasource.HutangLocalDataSource
 import com.ra.bkuang.domain.repository.HutangRepository
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
@@ -10,6 +10,10 @@ import javax.inject.Inject
 class HutangRepositoryImpl @Inject constructor(
   private val localDataSource: HutangLocalDataSource
 ): HutangRepository {
+  override suspend fun findByAlarmId(alarmId: Int): HutangEntity {
+    return localDataSource.findByAlarmId(alarmId)
+  }
+
   override suspend fun save(hutang: HutangEntity) {
     return localDataSource.save(hutang)
   }
@@ -30,7 +34,7 @@ class HutangRepositoryImpl @Inject constructor(
     return localDataSource.findAll()
   }
 
-  override fun findByIdWithFlow(id: UUID): Flow<HutangEntity> {
+  override fun findByIdWithFlow(id: UUID): Flow<HutangEntity?> {
     return localDataSource.findByIdWithFlow(id)
   }
 }

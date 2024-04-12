@@ -9,9 +9,16 @@ import android.content.Intent
 import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
 import com.ra.bkuang.R
+import com.ra.bkuang.alarm.AlarmCategory
+import com.ra.bkuang.alarm.DebtAlarm
+import com.ra.bkuang.alarm.DebtAlarmManagerImpl.Companion.DEBT_ALARM_EXTRA_ID
+import com.ra.bkuang.alarm.DebtAlarmManagerImpl.Companion.DEBT_ALARM_EXTRA_TITLE
 import com.ra.bkuang.data.local.datasource.HutangLocalDataSource
+import com.ra.bkuang.di.IoCoroutineScopeQualifier
 import com.ra.bkuang.domain.mapper.toEntity
 import com.ra.bkuang.domain.mapper.toModel
+import com.ra.bkuang.domain.usecase.hutang.FindHutangByAlarmId
+import com.ra.bkuang.domain.usecase.hutang.UpdateHutang
 import com.ra.bkuang.presentation.ui.transaction.main.MainActivity
 import com.ra.bkuang.presentation.ui.debt.DebtFragment
 import com.ra.bkuang.presentation.ui.debt.DebtFragment.Companion.DEBT_MODEL_ID
@@ -23,14 +30,17 @@ import com.ra.bkuang.util.Constants.ALARM_TRANSACTION_NOTIFICATION_CHANNEL_ID
 import com.ra.bkuang.util.Constants.ALARM_TRANSACTION_NOTIFICATION_CHANNEL_NAME
 import com.ra.bkuang.util.Utils.coroutineIOThread
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlarmReceiver: BroadcastReceiver() {
-
-  @Inject
-  lateinit var localDataSource: HutangLocalDataSource
+  @Inject @IoCoroutineScopeQualifier lateinit var ioScope: CoroutineScope
+  @Inject lateinit var updateHutang: UpdateHutang
+  @Inject lateinit var findHutangByAlarmId: FindHutangByAlarmId
+  @Inject lateinit var debtAlarm: DebtAlarm
 
   override fun onReceive(context: Context, intent: Intent) {
     val alarmCategory = intent.getStringExtra(ALARM_CATEGORY) ?: ""
@@ -82,63 +92,24 @@ class AlarmReceiver: BroadcastReceiver() {
   }
 
   private fun onAlarmHutang(ctx: Context, intent: Intent) {
-    val alarmTitle = intent.getStringExtra(DebtFragment.DEBT_ALARM_EXTRA_TITLE)
-    val alarmId = intent.getIntExtra(DebtFragment.DEBT_ALARM_EXTRA_ID, -1)
+    val alarmTitle = intent.getStringExtra(DEBT_ALARM_EXTRA_TITLE)
+    val alarmId = intent.getIntExtra(DEBT_ALARM_EXTRA_ID, -1)
     val debtModelId = intent.getStringExtra(DEBT_MODEL_ID)
 
-    coroutineIOThread {
-      val debtModel = localDataSource.findByAlarmId(alarmId).toModel()
+    ioScope.launch {
+      val debtModel = findHutangByAlarmId.invoke(alarmId)
       debtModel.pengingatAktif = false
       debtModel.tglPengingat = ""
       debtModel.idPengingat = Int.MAX_VALUE
 
-      localDataSource.update(debtModel.toEntity())
+      updateHutang.invoke(debtModel)
     }
 
-    showHutangNotification(
+    debtAlarm.showNotification(
       ctx,
       debtModelId ?: "",
       alarmTitle ?: ""
     )
-  }
-
-  private fun showHutangNotification(
-    context: Context,
-    debtModelId: String,
-    title: String,
-  ) {
-    val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-
-    val notificationManagerCompat = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    val channel = NotificationChannel(
-      ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID,
-      ALARM_RECEIVER_NOTIFICATION_CHANNEL_NAME,
-      NotificationManager.IMPORTANCE_DEFAULT
-    )
-
-    notificationManagerCompat.createNotificationChannel(channel)
-
-    val intent = Intent(context, DetailDebtActivity::class.java).apply {
-      putExtra(DEBT_MODEL_ID, debtModelId)
-    }
-
-    val pendingIntent = PendingIntent.getActivity(
-      context, 0,
-      intent,
-      PendingIntent.FLAG_MUTABLE
-    )
-
-    val alarmNotification = NotificationCompat.Builder(context, ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID)
-      .setContentTitle(String.format(context.getString(R.string.msg_title_debt_notification), title))
-      .setSmallIcon(R.drawable.book_icon_v2)
-      .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
-      .setSound(alarmSound)
-      .setChannelId(ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID)
-      .setContentIntent(pendingIntent)
-      .build()
-
-    notificationManagerCompat.notify(ALARM_RECEIVER_NOTIFICATION_ID, alarmNotification)
   }
 
   companion object {

@@ -8,29 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.databinding.ItemRvDebtBinding
 import com.ra.bkuang.domain.model.HutangModel
 import com.ra.bkuang.util.Extension.toFormatRupiah
-import com.ra.bkuang.util.Extension.toPercent
 
 class DebtAdapter: ListAdapter<HutangModel, DebtAdapter.MViewHolder>(DIFF) {
-
-  interface OnIconDeleteListener {
-    fun setOnItemDelete(model: HutangModel, adapterPosition: Int)
-  }
-
-  interface OnIconAlarmListener {
-    fun setOnItemAlarm(model: HutangModel, adapterPosition: Int)
-  }
-
-  interface OnIconEditListener {
-    fun setOnItemEdit(model: HutangModel)
-  }
 
   interface OnItemClickListener {
     fun setOnItemClickCallback(model: HutangModel)
   }
 
-  var setIconDeleteListener: OnIconDeleteListener? = null
-  var setIconAlarmListener: OnIconAlarmListener? = null
-  var setIconEditListener: OnIconEditListener? = null
   var setItemClickListener: OnItemClickListener? = null
 
   inner class MViewHolder(

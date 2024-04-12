@@ -29,13 +29,6 @@ interface LocalDataSourceModule {
 
   @Binds
   @Singleton
-  fun bindHutangLocalDataSource(
-    hutangLocalDataSourceImpl: HutangLocalDataSourceImpl
-  ): HutangLocalDataSource
-
-
-  @Binds
-  @Singleton
   fun bindBudgetLocalDataSource(
     budgetRepositoryImpl: BudgetLocalDataSourceImpl
   ): BudgetLocalDataSource

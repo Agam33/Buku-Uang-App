@@ -1,15 +1,22 @@
 package com.ra.bkuang.presentation.ui.debt
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.core.view.get
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.ra.bkuang.R
+import com.ra.bkuang.custom.dialog.CalendarDialog
 import com.ra.bkuang.databinding.ActivityDetailDebtBinding
+import com.ra.bkuang.di.MainDispatcherQualifier
 import com.ra.bkuang.domain.model.DetailPembayaranHutangModel
+import com.ra.bkuang.domain.model.HutangModel
 import com.ra.bkuang.presentation.base.BaseActivity
 import com.ra.bkuang.util.ActionType
 import com.ra.bkuang.util.Constants.DATE_TIME_FORMATTER
@@ -24,25 +31,40 @@ import com.ra.bkuang.presentation.ui.debt.DebtFragment.Companion.DEBT_EXTRA_ACTI
 import com.ra.bkuang.presentation.ui.debt.DebtFragment.Companion.DEBT_MODEL
 import com.ra.bkuang.presentation.ui.debt.adapter.DebtRecordAdapter
 import com.ra.bkuang.presentation.ui.debt.dialog.AddDebtRecordDialog
+import com.ra.bkuang.util.Extension.appOnBackPressed
+import com.ra.bkuang.util.Extension.getStringResource
 import com.ra.bkuang.util.Extension.setupNoActionbar
+import com.ra.bkuang.util.Extension.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.util.UUID
+import kotlinx.coroutines.withContext
+import timber.log.Timber
+import java.util.Calendar
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.activity_detail_debt),
     OnItemChangedListener, DebtRecordAdapter.OnItemLongClickListener {
 
+  @Inject @MainDispatcherQualifier lateinit var mainDispatcher: CoroutineDispatcher
+
   private val viewModel: DetailDebtViewModel by viewModels()
 
-  private var debtModelId: UUID? = null
+  private var debtModelId: String? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    setupNoActionbar(binding.toolbar, isDisplayHomeAsUpEnabled = false)
+    debtModelId = intent?.getStringExtra(DebtFragment.DEBT_MODEL_ID)
 
-    debtModelId = UUID.fromString(intent?.getStringExtra(DebtFragment.DEBT_MODEL_ID))
+    setupNoActionbar(binding.toolbar, isDisplayHomeAsUpEnabled = false)
 
     binding.vm = viewModel
     binding.lifecycleOwner = this
@@ -98,57 +120,102 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
   }
 
   private fun setupDetailDebt() = with(binding) {
-    lifecycleScope.launch {
-      viewModel.getHutangByIdWithFlow(debtModelId ?: return@launch).collect {
-        val percent = it.totalPengeluaran.toPercent(it.maxCicilan)
-        tvPercent.text = percent.toPercentText()
-        goalProgress.progress = percent.toInt()
-        tvCurrentMoney.text = it.totalPengeluaran.toFormatRupiah()
-        tvGoalMoney.text = it.maxCicilan.toFormatRupiah()
-        tvDebtTitle.text = it.nama
-        tvDueDate.text = String.format(binding.root.context.getString(R.string.txt_due_date_format), it.jatuhTempo.toStringFormat(
-          DATE_TIME_FORMATTER
-        ))
-        binding.toolbar.menu[0].setIcon(
-          if(it.pengingatAktif) {
-            R.drawable.active_alarm_on_24
-          } else {
-           R.drawable.inactive_round_alarm_24
+    lifecycleScope.launch(mainDispatcher) {
+      viewModel.getHutangByIdWithFlow(debtModelId ?: "")
+        .collect {
+          it?.let {
+            val percent = it.totalPengeluaran.toPercent(it.maxCicilan)
+            tvPercent.text = percent.toPercentText()
+            goalProgress.progress = percent.toInt()
+            tvCurrentMoney.text = it.totalPengeluaran.toFormatRupiah()
+            tvGoalMoney.text = it.maxCicilan.toFormatRupiah()
+            tvDebtTitle.text = it.nama
+            tvDueDate.text = String.format(binding.root.context.getString(R.string.txt_due_date_format), it.jatuhTempo.toStringFormat(
+              DATE_TIME_FORMATTER
+            ))
           }
-        )
-      }
+          changeAlarmToolbarIcon(it?.pengingatAktif ?: return@collect)
+        }
     }
+  }
+
+  private fun changeAlarmToolbarIcon(state: Boolean) {
+    binding.toolbar.menu.findItem(R.id.menu_debt_alarm)?.setIcon(
+      if(state) R.drawable.active_alarm_on_24 else R.drawable.inactive_round_alarm_24
+    )
   }
 
   private fun observer() {
     debtModelId?.let {
-      viewModel.getHutangById(it)
       viewModel.getAllDebtRecord(it)
       viewModel.getSizeListPembayaranHutang(it)
     }
   }
 
-
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.menu_detail_debt, menu)
-    return true
-  }
-
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when(item.itemId) {
       R.id.menu_debt_alarm -> {
-        // Todo: set alarm Hutang
+        lifecycleScope.launch {
+          val model = viewModel.getHutangById(debtModelId ?: "")
+          setAlarm(model)
+        }
         true
       }
       R.id.menu_debt_edit -> {
-        // Todo: edit Hutang
+        lifecycleScope.launch {
+          val model = viewModel.getHutangById(debtModelId ?: "")
+          editDebt(model)
+        }
         true
       }
       R.id.menu_debt_delete -> {
-        // Todo: delete Hutang
+          Snackbar.make(binding.root, getStringResource(R.string.msg_delete), Snackbar.LENGTH_SHORT)
+            .setAction(getStringResource(R.string.txt_yes)) {
+              lifecycleScope.launch {
+                val model = viewModel.getHutangById(debtModelId ?: "")
+                if (viewModel.deleteHutang(model)) {
+                  finish()
+                }
+              }
+            }.show()
         true
       }
       else -> super.onOptionsItemSelected(item)
+    }
+  }
+
+  private fun editDebt(model: HutangModel) {
+    val i = Intent(this@DetailDebtActivity, CreateDebtActivity::class.java).apply {
+      putExtra(DEBT_EXTRA_ACTION, ActionType.EDIT.name)
+      putExtra(DEBT_MODEL, model)
+    }
+    startActivity(i)
+  }
+
+  private fun setAlarm(model: HutangModel) {
+    if(!model.pengingatAktif) {
+      val calendarDialog = CalendarDialog()
+      calendarDialog.onSetAlarmListener = object : CalendarDialog.OnSetAlarmListener {
+
+        override fun onSave(calendar: Calendar) {
+          lifecycleScope.launch {
+            if(viewModel.setAlarmDebt(calendar, model)) {
+              showShortToast(getStringResource(R.string.msg_success))
+            }
+            calendarDialog.dismiss()
+          }
+        }
+        override fun onCancel() {}
+      }
+      calendarDialog.show(supportFragmentManager, "set-alarm-dialog")
+    } else {
+      Snackbar.make(
+        binding.root,
+        getStringResource((R.string.msg_cancel_alarm_schedule)),
+        Snackbar.LENGTH_SHORT
+      ).setAction(getStringResource(R.string.txt_yes)) {
+          viewModel.cancelAlarmDebt(model)
+        }.show()
     }
   }
 
@@ -182,5 +249,14 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
     }
 
     createDebtRecord.show(supportFragmentManager, "create-debt-record")
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.menu_detail_debt, menu)
+    lifecycleScope.launch(mainDispatcher) {
+      val model = viewModel.getHutangById(debtModelId ?: "")
+      changeAlarmToolbarIcon(model.pengingatAktif)
+    }
+    return true
   }
 }

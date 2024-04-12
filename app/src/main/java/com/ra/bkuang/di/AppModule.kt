@@ -1,5 +1,6 @@
 package com.ra.bkuang.di
 
+import android.app.AlarmManager
 import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,7 +8,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.ra.bkuang.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,73 +22,92 @@ import javax.inject.Singleton
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class IoDispatcher
+annotation class MainDispatcherQualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class DefaultDispatcher
+annotation class IoDispatcherQualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class DefaultCoroutineScope
+annotation class DefaultDispatcherQualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class IoCoroutineScope
+annotation class DefaultCoroutineScopeQualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class DataStorePrefName
+annotation class IoCoroutineScopeQualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class SharedPreferenceName
+annotation class DataStorePrefNameQualifier
 
 @Qualifier
-@Retention
-annotation class AppNotificationManager
+@Retention(AnnotationRetention.BINARY)
+annotation class SharedPreferenceNameQualifier
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class AppNotificationManagerQualifier
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class AppAlarmManagerQualifier
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-  @AppNotificationManager
+  @AppAlarmManagerQualifier
+  @Provides
+  @Singleton
+  fun provideAppAlarmManager(@ApplicationContext ctx: Context): AlarmManager =
+    ctx.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+  @AppNotificationManagerQualifier
   @Provides
   @Singleton
   fun provideNotificationManager(
     @ApplicationContext ctx: Context
   ): NotificationManager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-  @DefaultDispatcher
+  @DefaultDispatcherQualifier
   @Singleton
   @Provides
   fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
-  @IoDispatcher
+  @MainDispatcherQualifier
+  @Singleton
+  @Provides
+  fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
+
+  @IoDispatcherQualifier
   @Singleton
   @Provides
   fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 
-  @IoCoroutineScope
+  @IoCoroutineScopeQualifier
   @Singleton
   @Provides
   fun provideIoScope(
-    @IoDispatcher ioDispatcher: CoroutineDispatcher
-  ): CoroutineScope = CoroutineScope(ioDispatcher + SupervisorJob())
+    @IoDispatcherQualifier ioDispatcherQualifier: CoroutineDispatcher
+  ): CoroutineScope = CoroutineScope(ioDispatcherQualifier + SupervisorJob())
 
-  @DefaultDispatcher
+  @DefaultDispatcherQualifier
   @Singleton
   @Provides
   fun provideDefaultScope(
-    @DefaultDispatcher defaultDispatcher: CoroutineDispatcher
-  ): CoroutineScope = CoroutineScope(defaultDispatcher + SupervisorJob())
+    @DefaultDispatcherQualifier defaultDispatcherQualifier: CoroutineDispatcher
+  ): CoroutineScope = CoroutineScope(defaultDispatcherQualifier + SupervisorJob())
 
-  @SharedPreferenceName
+  @SharedPreferenceNameQualifier
   @Singleton
   @Provides
   fun provideSharedPreferencesFileName(): String = "user_setting_pref.pb"
 
-  @DataStorePrefName
+  @DataStorePrefNameQualifier
   @Singleton
   @Provides
   fun provideDataStoreFileName(): String = "user_setting_shared_pref"
@@ -97,8 +116,8 @@ object AppModule {
   @Singleton
   fun provideDataStore(
     @ApplicationContext appContext: Context,
-    @DataStorePrefName dataStoreName: String,
-    @IoCoroutineScope ioScope: CoroutineScope
+    @DataStorePrefNameQualifier dataStoreName: String,
+    @IoCoroutineScopeQualifier ioScope: CoroutineScope
   ): DataStore<Preferences> {
     return PreferenceDataStoreFactory.create(
       scope = ioScope,
@@ -110,8 +129,8 @@ object AppModule {
   @Singleton
   fun provideSharedPreferences(
     @ApplicationContext appContext: Context,
-    @SharedPreferenceName sharedPreferenceName: String
+    @SharedPreferenceNameQualifier sharedPreferenceNameQualifier: String
   ): SharedPreferences {
-    return appContext.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE)
+    return appContext.getSharedPreferences(sharedPreferenceNameQualifier, Context.MODE_PRIVATE)
   }
 }
