@@ -17,19 +17,14 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ComponentActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
-import com.google.android.material.snackbar.Snackbar
-import com.ra.bkuang.R
 import com.ra.bkuang.presentation.ui.transaction.main.MainActivity
-import com.ra.bkuang.receiver.TransactionDailyWorker
 import com.ra.bkuang.util.Constants.REQUIRED_STORAGE_PERMISSION
 import java.io.File
 import java.text.NumberFormat
@@ -46,52 +41,6 @@ import java.util.concurrent.TimeUnit
 object Extension {
 
   fun File.isNotExist() = !this.exists()
-
-  fun Context.setExactAndAllowWhileIdleAlarm(
-    calendar: Calendar,
-    pendingIntent: PendingIntent,
-  ) {
-    val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-  }
-
-  fun Context.cancelAlarm(
-    pendingIntent: PendingIntent
-  ) {
-    val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    alarmManager.cancel(pendingIntent)
-  }
-
-  fun Context.setDailyWorker(calendar: Calendar) {
-    val future: Long = calendar.timeInMillis
-    val now: Long  = System.currentTimeMillis()
-    val initialDelay: Long = future - now
-
-    val constraints = Constraints.Builder()
-      .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
-      .build()
-
-    val periodicRequest = PeriodicWorkRequest.Builder(
-      TransactionDailyWorker::class.java,
-      1,
-      TimeUnit.DAYS
-    )
-      .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
-      .setConstraints(constraints)
-      .build()
-
-    WorkManager.getInstance(this)
-      .enqueueUniquePeriodicWork(
-          Constants.TRANSACTION_DAILY_WORKER_NAME,
-        ExistingPeriodicWorkPolicy.UPDATE,
-        periodicRequest
-      )
-  }
-
-  fun Context.cancelDailyWorker(uniqueName: String) {
-    WorkManager.getInstance(this)
-      .cancelUniqueWork(uniqueName)
-  }
 
   fun Fragment.requestStoragePermission(): Boolean {
     return REQUIRED_STORAGE_PERMISSION.all {

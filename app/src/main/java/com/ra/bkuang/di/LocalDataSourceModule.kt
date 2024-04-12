@@ -33,7 +33,6 @@ interface LocalDataSourceModule {
     budgetRepositoryImpl: BudgetLocalDataSourceImpl
   ): BudgetLocalDataSource
 
-
   @Binds
   @Singleton
   fun bindKategoriLocalDataSource(
@@ -42,25 +41,7 @@ interface LocalDataSourceModule {
 
   @Binds
   @Singleton
-  fun bindPendapatanLocalDataSource(
-    pendapatanRepositoryImpl: PendapatanLocalDataSourceImpl
-  ): PendapatanLocalDataSource
-
-  @Binds
-  @Singleton
-  fun bindPengeluaranLocalDataSource(
-    pengeluaranRepositoryImpl: PengeluaranLocalDataSourceImpl
-  ): PengeluaranLocalDataSource
-
-  @Binds
-  @Singleton
   fun bindTabunganLocalDataSource(
     tabunganRepositoryImpl: AkunLocalDataSourceImpl
   ): AkunLocalDataSource
-
-  @Binds
-  @Singleton
-  fun bindTransferLocalDataSource(
-    transferRepositoryImpl: TransferLocalDataSourceImpl
-  ): TransferLocalDataSource
 }
