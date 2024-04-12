@@ -1,7 +1,19 @@
-package com.ra.bkuang.di.usecase
+package com.ra.bkuang.di
 
+import com.ra.bkuang.alarm.TransactionAlarmManager
+import com.ra.bkuang.alarm.TransactionAlarmManagerManagerImpl
+import com.ra.bkuang.data.local.datasource.PendapatanLocalDataSource
+import com.ra.bkuang.data.local.datasource.PengeluaranLocalDataSource
+import com.ra.bkuang.data.local.datasource.TransferLocalDataSource
+import com.ra.bkuang.data.local.datasource.impl.PendapatanLocalDataSourceImpl
+import com.ra.bkuang.data.local.datasource.impl.PengeluaranLocalDataSourceImpl
+import com.ra.bkuang.data.local.datasource.impl.TransferLocalDataSourceImpl
+import com.ra.bkuang.domain.usecase.transaksi.CancelAlarmTransactionImpl
+import com.ra.bkuang.domain.usecase.transaksi.CancelTransactionAlarm
 import com.ra.bkuang.domain.usecase.transaksi.GetTotalTransactionByDate
 import com.ra.bkuang.domain.usecase.transaksi.GetTotalTransactionByDateImpl
+import com.ra.bkuang.domain.usecase.transaksi.SetTransactionAlarm
+import com.ra.bkuang.domain.usecase.transaksi.SetTransactionAlarmImpl
 import com.ra.bkuang.domain.usecase.transaksi.pendapatan.DeletePendapatanById
 import com.ra.bkuang.domain.usecase.transaksi.pendapatan.FindDetailPendapatanById
 import com.ra.bkuang.domain.usecase.transaksi.pendapatan.GetPendapatanByDate
@@ -53,13 +65,51 @@ import com.ra.bkuang.domain.usecase.transaksi.transfer.impl.UpdateTransferImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
-interface UseCaseTransaksiModule {
+@InstallIn(SingletonComponent::class)
+interface TransactionModule {
 
   @Binds
+  @Singleton
+  fun bindAlarmTransactionManager(transactionAlarmManagerImpl: TransactionAlarmManagerManagerImpl): TransactionAlarmManager
+
+  @Binds
+  @Singleton
+  fun bindTransferLocalDataSource(
+    transferRepositoryImpl: TransferLocalDataSourceImpl
+  ): TransferLocalDataSource
+
+  @Binds
+  @Singleton
+  fun bindPengeluaranLocalDataSource(
+    pengeluaranRepositoryImpl: PengeluaranLocalDataSourceImpl
+  ): PengeluaranLocalDataSource
+
+  @Binds
+  @Singleton
+  fun bindPendapatanLocalDataSource(
+    pendapatanRepositoryImpl: PendapatanLocalDataSourceImpl
+  ): PendapatanLocalDataSource
+}
+
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface TransactionUseCaseModule {
+
+  @Binds
+  @Singleton
+  fun bindCancelTransactionAlarm(cancelAlarmTransactionImpl: CancelAlarmTransactionImpl): CancelTransactionAlarm
+
+  @Binds
+  @Singleton
+  fun bindSetTransactionAlarm(setTransactionAlarmImpl: SetTransactionAlarmImpl): SetTransactionAlarm
+
+  @Binds
+  @Singleton
   fun bindGetPendapatanById(getPendapatanByIdImpl: GetPendapatanByIdImpl): GetPendapatanById
 
   @Binds

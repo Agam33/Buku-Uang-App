@@ -81,8 +81,8 @@ class DebtAlarmManagerImpl @Inject constructor(
     val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
     
     val channel = NotificationChannel(
-      Constants.ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID,
-      Constants.ALARM_RECEIVER_NOTIFICATION_CHANNEL_NAME,
+      ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID,
+      ALARM_RECEIVER_NOTIFICATION_CHANNEL_NAME,
       NotificationManager.IMPORTANCE_DEFAULT
     )
 
@@ -99,22 +99,25 @@ class DebtAlarmManagerImpl @Inject constructor(
     )
 
     val alarmNotification = NotificationCompat.Builder(ctx,
-      Constants.ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID
+      ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID
     )
       .setContentTitle(String.format(ctx.getString(R.string.msg_title_debt_notification), title))
       .setSmallIcon(R.drawable.book_icon_v2)
       .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
       .setSound(alarmSound)
-      .setChannelId(Constants.ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID)
+      .setChannelId(ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID)
       .setContentIntent(pendingIntent)
       .build()
 
-    notificationManager.notify(Constants.ALARM_RECEIVER_NOTIFICATION_ID, alarmNotification)
+    notificationManager.notify(ALARM_RECEIVER_NOTIFICATION_ID, alarmNotification)
   }
 
   companion object {
-    const val DEBT_MODEL_ID = "debt-model-id"
+    private const val DEBT_MODEL_ID = "debt-model-id"
     const val DEBT_ALARM_EXTRA_TITLE = "debt-alarm-extra-title"
     const val DEBT_ALARM_EXTRA_ID = "debt-alarm-extra-id"
+    private const val ALARM_RECEIVER_NOTIFICATION_ID = 202
+    private const val ALARM_RECEIVER_NOTIFICATION_CHANNEL_NAME = "alarm-receiver"
+    private const val ALARM_RECEIVER_NOTIFICATION_CHANNEL_ID = "alarm-receiver-channel-1"
   }
 }

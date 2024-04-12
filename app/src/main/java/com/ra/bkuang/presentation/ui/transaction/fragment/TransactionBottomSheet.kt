@@ -13,18 +13,17 @@ import com.google.android.material.timepicker.TimeFormat
 import com.ra.bkuang.R
 import com.ra.bkuang.data.preferences.UserSettingPref
 import com.ra.bkuang.databinding.FragmentTransactionBottomSheetBinding
+import com.ra.bkuang.domain.usecase.transaksi.CancelTransactionAlarm
+import com.ra.bkuang.domain.usecase.transaksi.SetTransactionAlarm
 import com.ra.bkuang.util.Constants
 import com.ra.bkuang.util.DateViewType
-import com.ra.bkuang.util.Extension.cancelDailyWorker
 import com.ra.bkuang.util.Extension.checkTimeFormat
 import com.ra.bkuang.util.Extension.getStringResource
-import com.ra.bkuang.util.Extension.setDailyWorker
 import com.ra.bkuang.util.getDateViewType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.Calendar
 import java.util.TimeZone
 import java.util.concurrent.TimeUnit
@@ -32,9 +31,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TransactionBottomSheet: BottomSheetDialogFragment() {
-
-  @Inject
-  lateinit var userSettingPref: UserSettingPref
+  @Inject lateinit var setTransactionAlarm: SetTransactionAlarm
+  @Inject lateinit var cancelTransactionAlarm: CancelTransactionAlarm
+  @Inject lateinit var userSettingPref: UserSettingPref
 
   private var _binding: FragmentTransactionBottomSheetBinding? = null
   private val binding get() = _binding
@@ -92,8 +91,8 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
         )
         delay(200)
         if(binding?.switchActiveAlarm?.isChecked!!) {
-          Timber.d("Set new Alarm")
-          requireContext().setDailyWorker(getAlarmCalendar(binding?.tvAlarmTime?.text?.toString() ?: "00 : 00"))
+          val alarmTimeText = binding?.tvAlarmTime?.text?.toString() ?: ""
+          setTransactionAlarm.invoke(getAlarmCalendar(alarmTimeText))
         }
       }
     }
@@ -101,11 +100,10 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
     binding?.switchActiveAlarm?.setOnCheckedChangeListener { _, isChecked ->
       viewLifecycleOwner.lifecycleScope.launch {
         if (isChecked) {
-          Timber.d("Set Alarm")
-          requireContext().setDailyWorker(getAlarmCalendar(binding?.tvAlarmTime?.text?.toString() ?: "00 : 00"))
+          val alarmTimeText = binding?.tvAlarmTime?.text?.toString() ?: ""
+          setTransactionAlarm.invoke(getAlarmCalendar(alarmTimeText))
         } else {
-          Timber.d("Cancel Alarm")
-          requireContext().cancelDailyWorker(Constants.TRANSACTION_DAILY_WORKER_NAME)
+          cancelTransactionAlarm.invoke()
         }
         userSettingPref.setAlarmTransaction(isChecked)
       }

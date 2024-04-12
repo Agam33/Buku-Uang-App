@@ -7,6 +7,7 @@ import com.ra.bkuang.databinding.ActivityCreateTransactionBinding
 import com.ra.bkuang.presentation.base.BaseActivity
 import com.ra.bkuang.presentation.ui.transaction.TransactionFragment.Companion.EXTRA_TRANSACTION_CREATE_OR_EDIT
 import com.ra.bkuang.presentation.ui.transaction.TransactionFragment.Companion.EXTRA_TRANSACTION_TYPE
+import com.ra.bkuang.presentation.ui.transaction.TransactionType.Companion.getTransactionType
 import com.ra.bkuang.presentation.ui.transaction.fragment.CreateExpenseFragment
 import com.ra.bkuang.presentation.ui.transaction.fragment.CreateIncomeFragment
 import com.ra.bkuang.presentation.ui.transaction.fragment.CreateTransferFragment

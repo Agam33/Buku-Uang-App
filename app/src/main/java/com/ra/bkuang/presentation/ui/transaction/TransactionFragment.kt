@@ -253,23 +253,11 @@ class TransactionFragment : Fragment(), OnItemChangedListener {
     refreshDate()
     setupOverallMoney()
     TRANSACTION_CURRENT_DATE = LocalDate.now()
-    Timber.tag("TransactionFragment").d("OnStart() - $TRANSACTION_CURRENT_DATE")
-  }
-
-  override fun onResume() {
-    super.onResume()
-    Timber.tag("TransactionFragment").d("OnResume() - $TRANSACTION_CURRENT_DATE")
   }
 
   override fun onDestroyView() {
-    Timber.tag("TransactionFragment").d("OnDestroyView() - $TRANSACTION_CURRENT_DATE")
     sharedViewModel.getDateViewType().removeObservers(viewLifecycleOwner)
     super.onDestroyView()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    Timber.tag("TransactionFragment").d("OnStop() - $TRANSACTION_CURRENT_DATE")
   }
 
   override fun onItemChanged() {

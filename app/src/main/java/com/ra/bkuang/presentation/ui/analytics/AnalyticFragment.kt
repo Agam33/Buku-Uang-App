@@ -25,7 +25,7 @@ import com.ra.bkuang.util.Resource
 import com.ra.bkuang.presentation.ui.analytics.adapter.AnalyticListAdapter
 import com.ra.bkuang.domain.model.TransactionDetail
 import com.ra.bkuang.presentation.ui.transaction.TransactionType
-import com.ra.bkuang.presentation.ui.transaction.getTransactionTypeID
+import com.ra.bkuang.presentation.ui.transaction.TransactionType.Companion.getTransactionTypeID
 import com.ra.bkuang.util.Extension.toMonthlyTime
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
