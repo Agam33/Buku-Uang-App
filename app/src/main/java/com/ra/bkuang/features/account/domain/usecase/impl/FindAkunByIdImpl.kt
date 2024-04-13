@@ -1,8 +1,7 @@
 package com.ra.bkuang.features.account.domain.usecase.impl
 
-import com.ra.bkuang.features.account.data.mapper.toModel
-import com.ra.bkuang.features.account.domain.model.AkunModel
 import com.ra.bkuang.features.account.domain.AkunRepository
+import com.ra.bkuang.features.account.domain.model.AkunModel
 import com.ra.bkuang.features.account.domain.usecase.FindAkunById
 import java.util.UUID
 import javax.inject.Inject
@@ -12,6 +11,6 @@ class FindAkunByIdImpl @Inject constructor(
 ): FindAkunById {
 
   override suspend fun invoke(id: UUID): AkunModel {
-      return repository.findById(id).toModel()
+      return repository.findById(id)
   }
 }
