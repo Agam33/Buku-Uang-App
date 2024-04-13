@@ -3,12 +3,12 @@ package com.ra.bkuang.features.category.di
 import com.ra.bkuang.features.account.domain.usecase.FindCategoryByType
 import com.ra.bkuang.features.account.domain.usecase.impl.FindCategoryByTypeImpl
 import com.ra.bkuang.features.category.domain.usecase.DeleteKategori
-import com.ra.bkuang.features.category.domain.usecase.FindAllKategori
+import com.ra.bkuang.features.category.domain.usecase.FindCategoryWithFlow
 import com.ra.bkuang.features.category.domain.usecase.FindKategoriById
 import com.ra.bkuang.features.category.domain.usecase.SaveKategori
 import com.ra.bkuang.features.category.domain.usecase.UpdateKategori
 import com.ra.bkuang.features.category.domain.usecase.impl.DeleteKategoriImpl
-import com.ra.bkuang.features.category.domain.usecase.impl.FindAllKategoriImpl
+import com.ra.bkuang.features.category.domain.usecase.impl.FindCategoryWithFlowImpl
 import com.ra.bkuang.features.category.domain.usecase.impl.FindKategoriByIdImpl
 import com.ra.bkuang.features.category.domain.usecase.impl.SaveKategoriImpl
 import com.ra.bkuang.features.category.domain.usecase.impl.UpdateKategoriImpl
@@ -21,6 +21,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 interface KategoriUseCaseModule {
+
+  @Binds
+  @Singleton
+  fun bindFindCategoryByFlow(findCategoryWithFlowImpl: FindCategoryWithFlowImpl): FindCategoryWithFlow
 
   @Binds
   @Singleton
@@ -37,10 +41,6 @@ interface KategoriUseCaseModule {
   @Binds
   @Singleton
   fun bindUpdateKategoriUseCase(updateKategoriImpl: UpdateKategoriImpl): UpdateKategori
-
-  @Binds
-  @Singleton
-  fun bindFindAllKategoriUseCase(findAllKategoriImpl: FindAllKategoriImpl): FindAllKategori
 
   @Binds
   @Singleton

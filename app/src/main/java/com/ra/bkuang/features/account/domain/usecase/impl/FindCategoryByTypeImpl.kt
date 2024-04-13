@@ -27,35 +27,10 @@ class FindCategoryByTypeImpl @Inject constructor(
           emit(Resource.Empty(""))
         } else {
           val categories = list.map { category ->
-            category.toModel()
+            category
           }
           emit(Resource.Success(categories))
         }
-      }
-    }.flowOn(ioDispatcher)
-  }
-
-  override fun invoke(): Flow<HashMap<TransactionType, List<KategoriModel>>> {
-    return flow {
-      val expenseFlow = repository.findByType(TransactionType.PENGELUARAN)
-      val incomeFlow = repository.findByType(TransactionType.PENDAPATAN)
-
-      val zippedFlow: Flow<Pair<List<KategoriEntity>, List<KategoriEntity>>> =
-        expenseFlow.zip(incomeFlow) { value1, value2 ->
-          value1 to value2
-      }
-
-      zippedFlow.collect { (value1, value2) ->
-        val result = HashMap<TransactionType, List<KategoriModel>>()
-        result[TransactionType.PENDAPATAN] = value2.map { category ->
-          category.toModel()
-        }
-
-        result[TransactionType.PENGELUARAN] = value1.map { category ->
-          category.toModel()
-        }
-
-        emit(result)
       }
     }.flowOn(ioDispatcher)
   }

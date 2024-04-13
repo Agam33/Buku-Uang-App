@@ -15,6 +15,6 @@ class FindHutangByIdImpl @Inject constructor(
   private val hutangRepository: HutangRepository
 ): FindHutangById {
   override suspend fun invoke(id: String): HutangModel = withContext(ioDispatcher) {
-    return@withContext hutangRepository.findById(UUID.fromString(id)).toModel()
+    return@withContext hutangRepository.findById(UUID.fromString(id))
   }
 }

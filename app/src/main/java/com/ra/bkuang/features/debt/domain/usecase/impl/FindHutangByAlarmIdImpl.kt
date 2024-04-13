@@ -13,6 +13,6 @@ class FindHutangByAlarmIdImpl @Inject constructor(
   private val hutangRepository: HutangRepository
 ): FindHutangByAlarmId {
   override suspend fun invoke(alarmId: Int) = withContext(ioDispatcher) {
-    hutangRepository.findByAlarmId(alarmId).toModel()
+    return@withContext hutangRepository.findByAlarmId(alarmId)
   }
 }

@@ -9,8 +9,8 @@ import com.ra.bkuang.features.account.domain.usecase.DeleteAkun
 import com.ra.bkuang.features.account.domain.usecase.FindAllAkun
 import com.ra.bkuang.features.account.domain.usecase.SaveAkun
 import com.ra.bkuang.features.account.domain.usecase.UpdateAkun
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatan
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaran
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanWithFlow
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranWithFlow
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.Extension.toFormatRupiah
 import com.ra.bkuang.common.util.Resource
@@ -25,8 +25,8 @@ class AccountViewModel @Inject constructor(
   private val updateAkun: UpdateAkun,
   private val findAllAkun: FindAllAkun,
   private val akunOverallMoney: AkunOverallMoney,
-  private val getTotalPengeluaran: GetTotalPengeluaran,
-  private val getTotalPendapatan: GetTotalPendapatan
+  private val getTotalPengeluaranWithFlow: GetTotalPengeluaranWithFlow,
+  private val getTotalPendapatanWithFlow: GetTotalPendapatanWithFlow
 ): BaseViewModel() {
 
   private var _rvAccountState = MutableLiveData<Boolean>()
@@ -63,13 +63,13 @@ class AccountViewModel @Inject constructor(
     }
 
     viewModelScope.launch {
-      getTotalPendapatan.invoke().collect {
+      getTotalPendapatanWithFlow.invoke().collect {
         _totalIncome.postValue(it.toFormatRupiah())
       }
     }
 
     viewModelScope.launch {
-      getTotalPengeluaran.invoke().collect {
+      getTotalPengeluaranWithFlow.invoke().collect {
         _totalExpense.postValue(it.toFormatRupiah())
       }
     }

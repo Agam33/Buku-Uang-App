@@ -1,8 +1,8 @@
-package com.ra.bkuang.features.transaction.domain.usecase
+package com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl
 
 import com.ra.bkuang.di.IoDispatcherQualifier
-import com.ra.bkuang.features.transaction.domain.PendapatanRepository
 import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranByDateWithFlow
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -11,17 +11,15 @@ import kotlinx.coroutines.flow.flowOn
 import java.time.LocalDateTime
 import javax.inject.Inject
 
-class GetTotalTransactionByDateImpl @Inject constructor(
+class GetTotalPengeluaranByDateWithFlowImpl @Inject constructor(
   @IoDispatcherQualifier private val ioDispather: CoroutineDispatcher,
-  private val pendapatanRepository: PendapatanRepository,
   private val pengeluaranRepository: PengeluaranRepository
-): GetTotalTransactionByDate {
+): GetTotalPengeluaranByDateWithFlow {
 
   override fun invoke(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long> {
     return flow {
-      val totalExpense = pengeluaranRepository.getTotalPengeluaranByDateWithFlow(fromDate, toDate).first() ?: 0
-      val totalIncome = pendapatanRepository.getTotalPendapatanByDateWithFlow(fromDate, toDate).first() ?: 0
-      emit(totalIncome - totalExpense)
+      val expense = pengeluaranRepository.getTotalPengeluaranByDateWithFlow(fromDate, toDate).first()
+      emit(expense ?: 0)
     }.flowOn(ioDispather)
   }
 }

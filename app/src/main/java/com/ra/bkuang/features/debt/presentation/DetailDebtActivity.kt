@@ -42,6 +42,7 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
   OnItemChangedListener, DebtRecordAdapter.OnItemLongClickListener {
 
   @Inject @MainDispatcherQualifier lateinit var mainDispatcher: CoroutineDispatcher
+  @Inject lateinit var debtRecordAdapter: DebtRecordAdapter
 
   private val viewModel: DetailDebtViewModel by viewModels()
 
@@ -86,16 +87,16 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
           viewModel.setState(rvState = false, emptyState =  true)
 
           val data = it.data
-          val debRecordAdapter = DebtRecordAdapter()
-          debRecordAdapter.submitList(data)
+
+          debtRecordAdapter.submitList(data)
 
           rvDebtRecord.apply {
-            adapter = debRecordAdapter
+            adapter = debtRecordAdapter
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
           }
 
-          debRecordAdapter.onItemLongClickListener = this@DetailDebtActivity
+          debtRecordAdapter.onItemLongClickListener = this@DetailDebtActivity
         }
 
         is Resource.Empty -> {

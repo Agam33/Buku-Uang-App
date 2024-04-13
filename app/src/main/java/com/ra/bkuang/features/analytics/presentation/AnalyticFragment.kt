@@ -29,6 +29,7 @@ import com.ra.bkuang.features.transaction.presentation.TransactionType.Companion
 import com.ra.bkuang.common.util.Extension.toMonthlyTime
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -36,9 +37,12 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
 
   private val viewModel: AnalyticViewModel by viewModels()
 
+  @Inject lateinit var analyticAdapter: AnalyticListAdapter
+
   private var transactionType: TransactionType = TransactionType.EXPENSE
 
   private var currentDate = LocalDate.now()
+
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -59,7 +63,6 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
           is Resource.Success -> {
             viewModel.setRvAnalyticState(false)
 
-            val analyticAdapter = AnalyticListAdapter()
             analyticAdapter.submitList(it.data)
 
             rvTransaction.apply {

@@ -16,7 +16,7 @@ class CreateHutangImpl @Inject constructor(
 ): CreateHutang {
   override suspend fun invoke(hutangModel: HutangModel): Boolean = withContext(ioDispatcher) {
     try {
-      hutangRepository.save(hutangModel.toEntity())
+      hutangRepository.save(hutangModel)
       return@withContext true
     } catch (e: Exception) {
       Timber.e(e)

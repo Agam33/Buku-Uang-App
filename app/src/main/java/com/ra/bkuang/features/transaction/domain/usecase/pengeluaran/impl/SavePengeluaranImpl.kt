@@ -1,28 +1,27 @@
 package com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl
 
-import com.ra.bkuang.features.account.data.mapper.toEntity
-import com.ra.bkuang.features.account.data.mapper.toModel
-import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
+import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.domain.AkunRepository
 import com.ra.bkuang.features.budget.domain.BudgetRepository
 import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
+import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.SavePengeluaran
-import com.ra.bkuang.common.util.ResourceState
-import com.ra.bkuang.features.budget.data.mapper.toEntity
-import com.ra.bkuang.features.budget.data.mapper.toModel
-import com.ra.bkuang.features.transaction.data.mapper.toEntity
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SavePengeluaranImpl @Inject constructor(
+  @IoDispatcherQualifier private val ioDispather: CoroutineDispatcher,
   private val pengeluaranRepository: PengeluaranRepository,
   private val akunRepository: AkunRepository,
   private val budgetRepository: BudgetRepository
 ): SavePengeluaran {
-  override suspend fun invoke(pengeluaranModel: PengeluaranModel): ResourceState {
-    return try {
+  override suspend fun invoke(pengeluaranModel: PengeluaranModel): ResourceState = withContext(ioDispather) {
+    return@withContext try {
       val account = akunRepository.findById(pengeluaranModel.idAkun)
 
-      pengeluaranRepository.save(pengeluaranModel.toEntity())
+      pengeluaranRepository.save(pengeluaranModel)
 
       account.total -= pengeluaranModel.jumlah
 
@@ -41,11 +40,11 @@ class SavePengeluaranImpl @Inject constructor(
           fromDate,
           toDate,
           katId
-        ).toModel()
+        )
 
         budgetModel.pengeluaran += pengeluaranModel.jumlah
 
-        budgetRepository.update(budgetModel.toEntity())
+        budgetRepository.update(budgetModel)
       }
 
       akunRepository.update(account)

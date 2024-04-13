@@ -1,13 +1,15 @@
 package com.ra.bkuang.features.budget.domain.usecase.impl
 
 import com.ra.bkuang.common.util.ResourceState
-import com.ra.bkuang.features.budget.data.mapper.toEntity
+import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.budget.domain.BudgetRepository
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
 import com.ra.bkuang.features.budget.domain.usecase.CreateBudget
 import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -16,6 +18,7 @@ import java.util.Calendar
 import javax.inject.Inject
 
 class CreateBudgetImpl @Inject constructor(
+  @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
   private val budgetRepository: BudgetRepository,
   private val pengeluaranRepository: PengeluaranRepository
 ): CreateBudget {
@@ -54,10 +57,10 @@ class CreateBudgetImpl @Inject constructor(
 
         budgetModel.pengeluaran += totalPengeluaran.toInt()
 
-        budgetRepository.save(budgetModel.toEntity())
+        budgetRepository.save(budgetModel)
 
         emit(ResourceState.SUCCESS)
       }
-    }
+    }.flowOn(ioDispatcher)
   }
 }

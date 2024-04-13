@@ -7,5 +7,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface FindCategoryByType {
   fun invoke(type: TransactionType): Flow<Resource<List<KategoriModel>>>
-  fun invoke(): Flow<HashMap<TransactionType, List<KategoriModel>>>
 }

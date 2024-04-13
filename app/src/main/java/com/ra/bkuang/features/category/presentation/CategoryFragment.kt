@@ -22,11 +22,12 @@ import com.ra.bkuang.features.category.presentation.adapter.RvGroupCategoryAdapt
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment_category), RvGroupCategoryAdapter.OnOptionCategoryClickCallBack {
 
-  private lateinit var groupCategoryAdapter: RvGroupCategoryAdapter
+  @Inject lateinit var groupCategoryAdapter: RvGroupCategoryAdapter
 
   private val viewModel: CategoryViewModel by viewModels()
 
@@ -59,7 +60,6 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
   }
 
   private fun setupListCategory(data :HashMap<TransactionType, List<KategoriModel>>?) {
-    groupCategoryAdapter = RvGroupCategoryAdapter()
     groupCategoryAdapter.mapCategory = data
     groupCategoryAdapter.onOptionCategoryClickCallBack = this@CategoryFragment
     binding?.run {

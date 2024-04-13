@@ -16,7 +16,7 @@ class UpdateHutangImpl @Inject constructor(
 ): UpdateHutang {
   override suspend fun invoke(hutangModel: HutangModel) = withContext(ioDispatcher) {
     try {
-      hutangRepository.update(hutangModel.toEntity())
+      hutangRepository.update(hutangModel)
       return@withContext true
     } catch (e: Exception) {
       Timber.e(e)

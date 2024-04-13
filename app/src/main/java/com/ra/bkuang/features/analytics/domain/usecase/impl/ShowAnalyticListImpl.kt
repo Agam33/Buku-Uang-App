@@ -1,30 +1,38 @@
 package com.ra.bkuang.features.analytics.domain.usecase.impl
 
 import com.ra.bkuang.features.analytics.domain.model.AnalyticModel
-import com.ra.bkuang.features.transaction.domain.PendapatanRepository
-import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
 import com.ra.bkuang.features.analytics.domain.usecase.ShowAnalyticList
-import com.ra.bkuang.common.util.Utils.calculatePercent
 import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.di.IoDispatcherQualifier
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetListDetailPendapatanByDate
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanByDate
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetListDetailPengeluaranByDate
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranByDate
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranByDateWithFlow
 import com.ra.bkuang.features.transaction.presentation.TransactionType
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
 
 class ShowAnalyticListImpl @Inject constructor(
-  private val pendapatanRepository: PendapatanRepository,
-  private val pengeluaranRepository: PengeluaranRepository,
+  @IoDispatcherQualifier private val ioDispather: CoroutineDispatcher,
+  private val getListDetailPendapatanByDate: GetListDetailPendapatanByDate,
+  private val getListDetailPengeluaranByDate: GetListDetailPengeluaranByDate,
+  private val getTotalPengeluaranByDate: GetTotalPengeluaranByDate,
+  private val getTotalPendapatanByDate: GetTotalPendapatanByDate,
 ): ShowAnalyticList {
 
   override suspend fun invoke(
     transactionType: TransactionType,
     fromDate: LocalDateTime,
     toDate: LocalDateTime
-  ): Resource<List<AnalyticModel>> {
-    return when(transactionType) {
+  ): Resource<List<AnalyticModel>> = withContext(ioDispather) {
+    return@withContext when(transactionType) {
       TransactionType.INCOME -> {
-        val incomes = pendapatanRepository.getPendapatanByDate(fromDate, toDate)
-        val totalIncome = pendapatanRepository.getTotalPendapatan(fromDate, toDate) ?: 0
+        val incomes = getListDetailPendapatanByDate.invoke(fromDate, toDate)
+        val totalIncome = getTotalPendapatanByDate.invoke(fromDate, toDate)
 
         if(incomes.isEmpty()) {
           Resource.Empty("")
@@ -50,8 +58,8 @@ class ShowAnalyticListImpl @Inject constructor(
         }
       }
       TransactionType.EXPENSE -> {
-        val expenses = pengeluaranRepository.getPengeluaranByDate(fromDate, toDate)
-        val totalExpense = pengeluaranRepository.getTotalPengeluaran(fromDate, toDate) ?: 0
+        val expenses = getListDetailPengeluaranByDate.invoke(fromDate, toDate)
+        val totalExpense = getTotalPengeluaranByDate.invoke(fromDate, toDate)
 
         if(expenses.isEmpty()) {
           Resource.Empty("")
@@ -79,4 +87,7 @@ class ShowAnalyticListImpl @Inject constructor(
       TransactionType.TRANSFER -> { Resource.Empty("") }
     }
   }
+
+  private fun calculatePercent(currValue: Int, maxValue: Long): Double =
+    ((currValue * 1.0) / (maxValue * 1.0 )) * 100.0
 }

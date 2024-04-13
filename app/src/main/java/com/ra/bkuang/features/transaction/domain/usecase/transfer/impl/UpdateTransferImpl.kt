@@ -1,25 +1,26 @@
 package com.ra.bkuang.features.transaction.domain.usecase.transfer.impl
 
-import com.ra.bkuang.features.account.data.mapper.toEntity
-import com.ra.bkuang.features.account.data.mapper.toModel
-import com.ra.bkuang.features.transaction.domain.model.TransferModel
+import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.domain.AkunRepository
 import com.ra.bkuang.features.transaction.domain.TransferRepository
+import com.ra.bkuang.features.transaction.domain.model.TransferModel
 import com.ra.bkuang.features.transaction.domain.usecase.transfer.UpdateTransfer
-import com.ra.bkuang.common.util.ResourceState
-import com.ra.bkuang.features.transaction.data.mapper.toEntity
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UpdateTransferImpl @Inject constructor(
+  @IoDispatcherQualifier private val ioDispather: CoroutineDispatcher,
   private val respository: TransferRepository,
   private val accountRepository: AkunRepository
 ): UpdateTransfer {
   override suspend fun invoke(
     newTransferModel: TransferModel,
     oldTransferModel: TransferModel
-  ): ResourceState {
-    return try {
-      respository.update(newTransferModel.toEntity())
+  ): ResourceState = withContext(ioDispather) {
+    return@withContext try {
+      respository.update(newTransferModel)
 
       val newFromAccount = accountRepository.findById(newTransferModel.idFromAkun)
       val newToAccount = accountRepository.findById(newTransferModel.idToAkun)
