@@ -1,9 +1,11 @@
 package com.ra.bkuang.features.transaction.data
 
 import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
-import com.ra.bkuang.features.transaction.data.entity.TransferEntity
 import com.ra.bkuang.features.transaction.data.local.TransferLocalDataSource
+import com.ra.bkuang.features.transaction.data.mapper.toEntity
+import com.ra.bkuang.features.transaction.data.mapper.toModel
 import com.ra.bkuang.features.transaction.domain.TransferRepository
+import com.ra.bkuang.features.transaction.domain.model.TransferModel
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
@@ -11,8 +13,8 @@ import javax.inject.Inject
 class TransferRepositoryImpl @Inject constructor(
   private val localDataSource: TransferLocalDataSource
 ): TransferRepository {
-  override suspend fun findById(uuid: UUID): TransferEntity {
-    return localDataSource.findById(uuid)
+  override suspend fun findById(uuid: UUID): TransferModel {
+    return localDataSource.findById(uuid).toModel()
   }
 
   override suspend fun findDetailById(uuid: UUID): DetailTransfer {
@@ -25,15 +27,15 @@ class TransferRepositoryImpl @Inject constructor(
     return localDataSource.getTransferByDate(fromDate, toDate)
   }
 
-  override suspend fun save(transfer: TransferEntity) {
-    return localDataSource.saveTransfer(transfer)
+  override suspend fun save(transfer: TransferModel) {
+    return localDataSource.saveTransfer(transfer.toEntity())
   }
 
-  override suspend fun delete(transfer: TransferEntity) {
-    return localDataSource.deleteTransfer(transfer)
+  override suspend fun delete(transfer: TransferModel) {
+    return localDataSource.deleteTransfer(transfer.toEntity())
   }
 
-  override suspend fun update(transfer: TransferEntity) {
-    return localDataSource.updateTransfer(transfer)
+  override suspend fun update(transfer: TransferModel) {
+    return localDataSource.updateTransfer(transfer.toEntity())
   }
 }

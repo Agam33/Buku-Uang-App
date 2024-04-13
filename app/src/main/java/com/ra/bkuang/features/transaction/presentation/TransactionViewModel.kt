@@ -14,15 +14,15 @@ import com.ra.bkuang.features.account.domain.usecase.FindAllAkun
 import com.ra.bkuang.features.account.domain.usecase.FindCategoryByType
 import com.ra.bkuang.features.transaction.domain.usecase.GetTotalTransactionByDate
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.DeletePendapatanById
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetPendapatanByDate
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetListDetailPendapatanByDate
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetPendapatanById
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanByDate
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanByDateWithFlow
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.SavePendapatan
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.UpdatePendapatan
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.DeletePengeluaranById
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetPengeluaranByDate
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetListDetailPengeluaranByDate
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetPengeluaranById
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranByDate
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranByDateWithFlow
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.SavePengeluaran
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.UpdatePengeluaran
 import com.ra.bkuang.features.transaction.domain.usecase.transfer.DeleteTransferById
@@ -57,12 +57,12 @@ class TransactionViewModel @Inject constructor(
   private val savePendapatan: SavePendapatan,
   private val findAllAkun: FindAllAkun,
   private val findKategoriByType: FindCategoryByType,
-  private val getPengeluaranByDate: GetPengeluaranByDate,
-  private val getPendapatanByDate: GetPendapatanByDate,
+  private val getListDetailPengeluaranByDate: GetListDetailPengeluaranByDate,
+  private val getListDetailPendapatanByDate: GetListDetailPendapatanByDate,
   private val getTransferByDate: GetTransferByDate,
   private val userSettingPref: UserSettingPref,
-  private val getTotalPendapatanByDate: GetTotalPendapatanByDate,
-  private val getTotalPengeluaranByDate: GetTotalPengeluaranByDate,
+  private val getTotalPendapatanByDateWithFlow: GetTotalPendapatanByDateWithFlow,
+  private val getTotalPengeluaranByDateWithFlow: GetTotalPengeluaranByDateWithFlow,
   private val getTotalTransactionByDate: GetTotalTransactionByDate,
   private val deletePengeluaranById: DeletePengeluaranById,
   private val deleteTransferById: DeleteTransferById,
@@ -215,7 +215,7 @@ class TransactionViewModel @Inject constructor(
 
   fun getTotalPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
     viewModelScope.launch {
-      getTotalPendapatanByDate.invoke(fromDate, toDate)
+      getTotalPendapatanByDateWithFlow.invoke(fromDate, toDate)
         .onEach { _textPendapatan.emit(it.toFormatRupiah()) }
         .collect()
     }
@@ -223,7 +223,7 @@ class TransactionViewModel @Inject constructor(
 
   fun getTotalPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
     viewModelScope.launch {
-      getTotalPengeluaranByDate.invoke(fromDate, toDate)
+      getTotalPengeluaranByDateWithFlow.invoke(fromDate, toDate)
         .onEach {  _textPengeluaran.emit(it.toFormatRupiah()) }
         .collect()
     }
@@ -239,7 +239,7 @@ class TransactionViewModel @Inject constructor(
 
   fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
     viewModelScope.launch {
-      val list = getPengeluaranByDate.invoke(fromDate, toDate)
+      val list = getListDetailPengeluaranByDate.invoke(fromDate, toDate)
       if(list.isEmpty()) _listPengeluaran.postValue(Resource.Empty(""))
       else _listPengeluaran.postValue(Resource.Success(list))
     }
@@ -247,7 +247,7 @@ class TransactionViewModel @Inject constructor(
 
   fun getPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime)  {
     viewModelScope.launch {
-      val list = getPendapatanByDate.invoke(fromDate, toDate)
+      val list = getListDetailPendapatanByDate.invoke(fromDate, toDate)
       if(list.isEmpty()) _incomes.postValue(Resource.Empty(""))
       else _incomes.postValue(Resource.Success(list))
     }

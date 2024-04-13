@@ -26,10 +26,13 @@ import com.ra.bkuang.features.budget.presentation.adapter.BudgetAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MonthBudgetFragment : BaseFragment<FragmentMonthBudgetBinding>(R.layout.fragment_month_budget), BudgetAdapter.OnItemLongClickListener {
   private val viewModel: BudgetViewModel by viewModels()
+
+  @Inject lateinit var budgetAdapter: BudgetAdapter
 
   private var CURRENT_DATE = LocalDate.now()
 
@@ -77,7 +80,6 @@ class MonthBudgetFragment : BaseFragment<FragmentMonthBudgetBinding>(R.layout.fr
       viewModel.findAllBudget(fromDate, toDate)
 
       viewModel.listBudget.observe(viewLifecycleOwner) {
-        val budgetAdapter = BudgetAdapter()
         budgetAdapter.submitList(it)
         budgetAdapter.onItemLongClickListener = this@MonthBudgetFragment
 

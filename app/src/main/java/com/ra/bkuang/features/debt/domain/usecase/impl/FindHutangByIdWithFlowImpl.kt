@@ -17,8 +17,6 @@ class FindHutangByIdWithFlowImpl @Inject constructor(
   private val hutangRepository: HutangRepository
 ): FindHutangByIdWithFlow {
   override fun invoke(id: String): Flow<HutangModel?> {
-    return hutangRepository.findByIdWithFlow(UUID.fromString(id)).map {
-      it?.toModel()
-    }.flowOn(ioDispatcher)
+    return hutangRepository.findByIdWithFlow(UUID.fromString(id))
   }
 }

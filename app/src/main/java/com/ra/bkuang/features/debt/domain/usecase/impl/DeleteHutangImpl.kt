@@ -16,7 +16,7 @@ class DeleteHutangImpl @Inject constructor(
 ): DeleteHutang {
   override suspend fun invoke(hutangModel: HutangModel): Boolean = withContext(ioDispatcher) {
     try {
-      hutangRepository.delete(hutangModel.toEntity())
+      hutangRepository.delete(hutangModel)
       return@withContext true
     } catch (e: Exception) {
       Timber.e(e)

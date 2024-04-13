@@ -13,11 +13,14 @@ import com.ra.bkuang.features.debt.presentation.adapter.DebtAdapter
 import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
 
   private val sharedViewModel: DebtViewModel by viewModels()
+
+  @Inject lateinit var debtAdapter: DebtAdapter
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -59,7 +62,7 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
   }
 
   private fun setupList(list: List<HutangModel>?) {
-    val debtAdapter = DebtAdapter()
+
     debtAdapter.submitList(list)
 
     debtAdapter.setItemClickListener = object : DebtAdapter.OnItemClickListener {

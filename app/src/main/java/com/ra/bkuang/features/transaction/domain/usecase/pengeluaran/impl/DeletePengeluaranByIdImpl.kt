@@ -5,20 +5,24 @@ import com.ra.bkuang.features.budget.domain.BudgetRepository
 import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.DeletePengeluaranById
 import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.data.mapper.toEntity
 import com.ra.bkuang.features.account.data.mapper.toModel
 import com.ra.bkuang.features.budget.data.mapper.toEntity
 import com.ra.bkuang.features.budget.data.mapper.toModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
 class DeletePengeluaranByIdImpl @Inject constructor(
+  @IoDispatcherQualifier private val ioDispather: CoroutineDispatcher,
   private val repository: PengeluaranRepository,
   private val accountRepository: AkunRepository,
   private val budgetRepository: BudgetRepository
 ): DeletePengeluaranById {
-  override suspend fun invoke(uuid: UUID): ResourceState {
-    return try {
+  override suspend fun invoke(uuid: UUID): ResourceState = withContext(ioDispather) {
+    return@withContext try {
       val pengeluaran = repository.findById(uuid)
 
       repository.delete(pengeluaran)
@@ -41,11 +45,11 @@ class DeletePengeluaranByIdImpl @Inject constructor(
           fromDate,
           toDate,
           katId
-        ).toModel()
+        )
 
         budgetModel.pengeluaran -= pengeluaran.jumlah
 
-        budgetRepository.update(budgetModel.toEntity())
+        budgetRepository.update(budgetModel)
       }
 
       accountRepository.update(account)

@@ -1,9 +1,11 @@
 package com.ra.bkuang.features.transaction.data
 
 import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
-import com.ra.bkuang.features.transaction.data.entity.PengeluaranEntity
 import com.ra.bkuang.features.transaction.data.local.PengeluaranLocalDataSource
+import com.ra.bkuang.features.transaction.data.mapper.toEntity
+import com.ra.bkuang.features.transaction.data.mapper.toModel
 import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
+import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import java.util.UUID
@@ -20,26 +22,26 @@ class PengeluaranRepositoryImpl @Inject constructor(
     return localDataSource.getTotalPengeluaranByDateAndKategory(fromDate, toDate, idKategori)
   }
 
-  override suspend fun getTotalPengeluaran(fromDate: LocalDateTime, toDate: LocalDateTime): Long? {
+  override suspend fun getTotalPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Long? {
     return localDataSource.getTotalPengeluaran(fromDate, toDate)
   }
 
-  override suspend fun findById(uuid: UUID): PengeluaranEntity {
-    return localDataSource.findById(uuid)
+  override suspend fun findById(uuid: UUID): PengeluaranModel {
+    return localDataSource.findById(uuid).toModel()
   }
 
   override suspend fun findDetailById(uuid: UUID): DetailPengeluaran {
     return localDataSource.findDetailById(uuid)
   }
 
-  override fun getTotalPengeluaranByDate(
+  override fun getTotalPengeluaranByDateWithFlow(
     fromDate: LocalDateTime,
     toDate: LocalDateTime
   ): Flow<Long?> {
     return localDataSource.getTotalPengeluaranByDate(fromDate, toDate)
   }
 
-  override fun getTotalPengeluaran(): Flow<Long?> {
+  override fun getTotalPengeluaranWithFlow(): Flow<Long?> {
     return localDataSource.getTotalPengeluaran()
   }
 
@@ -47,21 +49,21 @@ class PengeluaranRepositoryImpl @Inject constructor(
     return localDataSource.getMonthlyPengeluaran(startOfDay, endOfDay)
   }
 
-  override suspend fun getPengeluaranByDate(
+  override suspend fun getListDetailPengeluaranByDate(
     fromDate: LocalDateTime, toDate: LocalDateTime
   ): List<DetailPengeluaran> {
     return localDataSource.getPengeluaranByDate(fromDate, toDate)
   }
 
-  override suspend fun save(pengeluaran: PengeluaranEntity) {
-    return localDataSource.savePengeluaran(pengeluaran)
+  override suspend fun save(pengeluaran: PengeluaranModel) {
+    return localDataSource.savePengeluaran(pengeluaran.toEntity())
   }
 
-  override suspend fun delete(pengeluaran: PengeluaranEntity) {
-    return localDataSource.deletePengeluaran(pengeluaran)
+  override suspend fun delete(pengeluaran: PengeluaranModel) {
+    return localDataSource.deletePengeluaran(pengeluaran.toEntity())
   }
 
-  override suspend fun update(pengeluaran: PengeluaranEntity) {
-    return localDataSource.updatePengeluaran(pengeluaran)
+  override suspend fun update(pengeluaran: PengeluaranModel) {
+    return localDataSource.updatePengeluaran(pengeluaran.toEntity())
   }
 }

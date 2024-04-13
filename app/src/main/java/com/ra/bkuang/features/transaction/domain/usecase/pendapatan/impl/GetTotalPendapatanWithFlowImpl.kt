@@ -1,17 +1,17 @@
 package com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl
 
 import com.ra.bkuang.features.transaction.domain.PendapatanRepository
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatan
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanWithFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetTotalPendapatanImpl @Inject constructor(
+class GetTotalPendapatanWithFlowImpl @Inject constructor(
   private val pendapatanRepository: PendapatanRepository
-): GetTotalPendapatan {
+): GetTotalPendapatanWithFlow {
   override fun invoke(): Flow<Long> {
     return flow {
-      pendapatanRepository.getTotalPendapatan().collect {
+      pendapatanRepository.getTotalPendapatanWithFlow().collect {
         emit(it ?: 0)
       }
     }

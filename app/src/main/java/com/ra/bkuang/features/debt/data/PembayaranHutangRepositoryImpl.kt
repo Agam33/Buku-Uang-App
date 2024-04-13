@@ -1,9 +1,10 @@
 package com.ra.bkuang.features.debt.data
 
 import com.ra.bkuang.features.debt.data.entity.DetailPembayaranHutang
-import com.ra.bkuang.features.debt.data.entity.PembayaranHutangEntity
 import com.ra.bkuang.features.debt.data.local.PembayaranHutangLocalDataSource
+import com.ra.bkuang.features.debt.data.mapper.toEntity
 import com.ra.bkuang.features.debt.domain.PembayaranHutangRepository
+import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 import javax.inject.Inject
@@ -19,15 +20,15 @@ class PembayaranHutangRepositoryImpl @Inject constructor(
     return localDataSource.findAllRecordByHutangId(id)
   }
 
-  override suspend fun save(pembayaranHutang: PembayaranHutangEntity) {
-    localDataSource.save(pembayaranHutang)
+  override suspend fun save(pembayaranHutang: PembayaranHutangModel) {
+    localDataSource.save(pembayaranHutang.toEntity())
   }
 
-  override suspend fun delete(pembayaranHutang: PembayaranHutangEntity) {
-    localDataSource.delete(pembayaranHutang)
+  override suspend fun delete(pembayaranHutang: PembayaranHutangModel) {
+    localDataSource.delete(pembayaranHutang.toEntity())
   }
 
-  override suspend fun update(pembayaranHutang: PembayaranHutangEntity) {
-    localDataSource.update(pembayaranHutang)
+  override suspend fun update(pembayaranHutang: PembayaranHutangModel) {
+    localDataSource.update(pembayaranHutang.toEntity())
   }
 }

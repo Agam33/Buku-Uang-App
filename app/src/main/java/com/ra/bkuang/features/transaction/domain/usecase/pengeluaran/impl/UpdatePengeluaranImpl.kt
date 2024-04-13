@@ -8,19 +8,26 @@ import com.ra.bkuang.features.budget.domain.BudgetRepository
 import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.UpdatePengeluaran
 import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.budget.data.mapper.toEntity
 import com.ra.bkuang.features.budget.data.mapper.toModel
 import com.ra.bkuang.features.transaction.data.mapper.toEntity
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UpdatePengeluaranImpl @Inject constructor(
+  @IoDispatcherQualifier private val ioDispather: CoroutineDispatcher,
   private val repository: PengeluaranRepository,
   private val accountRepository: AkunRepository,
   private val budgetRepository: BudgetRepository
 ): UpdatePengeluaran {
-  override suspend fun invoke(newPengeluaranModel: PengeluaranModel, oldPengeluaranModel: PengeluaranModel): ResourceState {
-    return try {
-      repository.update(newPengeluaranModel.toEntity())
+  override suspend fun invoke(
+    newPengeluaranModel: PengeluaranModel,
+    oldPengeluaranModel: PengeluaranModel
+  ): ResourceState = withContext(ioDispather) {
+    return@withContext try {
+      repository.update(newPengeluaranModel)
 
       val newAccount = accountRepository.findById(newPengeluaranModel.idAkun)
 
@@ -47,12 +54,12 @@ class UpdatePengeluaranImpl @Inject constructor(
           fromDate,
           toDate,
           katId
-        ).toModel()
+        )
 
         budgetModel.pengeluaran -= oldPengeluaranModel.jumlah
         budgetModel.pengeluaran += newPengeluaranModel.jumlah
 
-        budgetRepository.update(budgetModel.toEntity())
+        budgetRepository.update(budgetModel)
       }
 
       accountRepository.update(oldAccount)
