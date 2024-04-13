@@ -3,12 +3,13 @@ package com.ra.bkuang.common.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.ra.bkuang.features.debt.alarm.DebtAlarm
-import com.ra.bkuang.features.debt.alarm.DebtAlarmManagerImpl.Companion.DEBT_ALARM_EXTRA_ID
-import com.ra.bkuang.features.debt.alarm.DebtAlarmManagerImpl.Companion.DEBT_ALARM_EXTRA_TITLE
-import com.ra.bkuang.features.transaction.alarm.TransactionAlarmManager
-import com.ra.bkuang.features.transaction.alarm.TransactionAlarmManagerManagerImpl.Companion.TRANSACTION_HOUR
-import com.ra.bkuang.features.transaction.alarm.TransactionAlarmManagerManagerImpl.Companion.TRANSACTION_MINUTE
+import com.ra.bkuang.alarm.AlarmCategory
+import com.ra.bkuang.alarm.DebtAlarmManager
+import com.ra.bkuang.alarm.DebtAlarmManagerManagerImpl.Companion.DEBT_ALARM_EXTRA_ID
+import com.ra.bkuang.alarm.DebtAlarmManagerManagerImpl.Companion.DEBT_ALARM_EXTRA_TITLE
+import com.ra.bkuang.alarm.TransactionAlarmManager
+import com.ra.bkuang.alarm.TransactionAlarmManagerManagerImpl.Companion.TRANSACTION_HOUR
+import com.ra.bkuang.alarm.TransactionAlarmManagerManagerImpl.Companion.TRANSACTION_MINUTE
 import com.ra.bkuang.di.IoCoroutineScopeQualifier
 import com.ra.bkuang.features.debt.domain.usecase.FindHutangByAlarmId
 import com.ra.bkuang.features.debt.domain.usecase.UpdateHutang
@@ -23,7 +24,7 @@ class AlarmReceiver: BroadcastReceiver() {
   @Inject @IoCoroutineScopeQualifier lateinit var ioScope: CoroutineScope
   @Inject lateinit var updateHutang: UpdateHutang
   @Inject lateinit var findHutangByAlarmId: FindHutangByAlarmId
-  @Inject lateinit var debtAlarm: DebtAlarm
+  @Inject lateinit var debtAlarmManager: DebtAlarmManager
   @Inject lateinit var transactionAlarmManager: TransactionAlarmManager
 
   override fun onReceive(context: Context, intent: Intent) {
@@ -58,7 +59,7 @@ class AlarmReceiver: BroadcastReceiver() {
       updateHutang.invoke(debtModel)
     }
 
-    debtAlarm.showNotification(
+    debtAlarmManager.showNotification(
       ctx,
       debtModelId ?: "",
       alarmTitle ?: ""

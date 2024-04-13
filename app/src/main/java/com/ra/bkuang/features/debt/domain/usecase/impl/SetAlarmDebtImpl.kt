@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.debt.domain.usecase.impl
 
-import com.ra.bkuang.features.debt.alarm.DebtAlarm
+import com.ra.bkuang.alarm.DebtAlarmManager
 import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.debt.domain.model.HutangModel
 import com.ra.bkuang.features.debt.domain.usecase.SetAlarmDebt
@@ -11,13 +11,13 @@ import javax.inject.Inject
 
 class SetAlarmDebtImpl @Inject constructor(
   @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
-  private val debtAlarm: DebtAlarm,
+  private val debtAlarmManager: DebtAlarmManager,
 ): SetAlarmDebt {
   override suspend fun invoke(
     calendar: Calendar,
     model: HutangModel
   ): Boolean = withContext(ioDispatcher) {
-    debtAlarm.setAlarm(model, calendar)
+    debtAlarmManager.setAlarm(model, calendar)
     return@withContext true
   }
 }

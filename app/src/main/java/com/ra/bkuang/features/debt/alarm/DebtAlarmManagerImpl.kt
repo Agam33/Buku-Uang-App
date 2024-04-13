@@ -26,13 +26,13 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import javax.inject.Inject
 
-class DebtAlarmManagerImpl @Inject constructor(
+class DebtAlarmManagerManagerImpl @Inject constructor(
   @ApplicationContext private val ctx: Context,
   @IoCoroutineScopeQualifier private val ioScope: CoroutineScope,
   @AppAlarmManagerQualifier private val alarmManager: AlarmManager,
   @AppNotificationManagerQualifier private val notificationManager: NotificationManager,
   private val updateHutang: UpdateHutang
-): DebtAlarm {
+): DebtAlarmManager {
 
   override fun setAlarm(model: HutangModel, calendar: Calendar) {
     val alarmId = model.uuid.hashCode()
