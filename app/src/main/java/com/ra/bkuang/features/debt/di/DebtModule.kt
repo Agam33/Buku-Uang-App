@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.debt.di
 
-import com.ra.bkuang.features.debt.alarm.DebtAlarm
-import com.ra.bkuang.features.debt.alarm.DebtAlarmManagerImpl
+import com.ra.bkuang.features.debt.alarm.DebtAlarmManager
+import com.ra.bkuang.features.debt.alarm.DebtAlarmManagerManagerImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,6 +14,6 @@ interface DebtModule {
 
   @Binds
   @Singleton
-  fun bindDebtAlarmManager(debtAlarmManagerImpl: DebtAlarmManagerImpl): DebtAlarm
+  fun bindDebtAlarmManager(debtAlarmManagerImpl: DebtAlarmManagerManagerImpl): DebtAlarmManager
 }
 
