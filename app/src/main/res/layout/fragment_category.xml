@@ -6,13 +6,13 @@
     <data>
         <variable
             name="vm"
-            type="com.ra.bkuang.presentation.ui.category.CategoryViewModel" />
+            type="com.ra.bkuang.features.category.presentation.CategoryViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.category.CategoryFragment">
+        tools:context=".features.category.presentation.CategoryFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

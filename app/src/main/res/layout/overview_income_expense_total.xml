@@ -4,7 +4,7 @@
     <data>
         <variable
             name="vm"
-            type="com.ra.bkuang.presentation.ui.transaction.TransactionViewModel" />
+            type="com.ra.bkuang.features.transaction.presentation.TransactionViewModel" />
     </data>
 
     <LinearLayout
