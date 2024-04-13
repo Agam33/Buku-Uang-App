@@ -17,8 +17,12 @@ import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.features.budget.data.local.DetailBudget
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.util.UUID
 import javax.inject.Inject
@@ -33,27 +37,21 @@ class BudgetViewModel @Inject constructor(
   private val findBudgetById: FindBudgetById
 ): BaseViewModel() {
 
-  private var _listBudget = MutableLiveData<List<DetailBudget>>()
-  val listBudget: LiveData<List<DetailBudget>> get() = _listBudget
+  private var _listCategoryByType = MutableStateFlow<List<KategoriModel>>(listOf())
+  val listCategoryByType: StateFlow<List<KategoriModel>> get() = _listCategoryByType
 
-  private var _listCategoryByType = MutableLiveData<List<KategoriModel>>()
-  val listCategoryByType: LiveData<List<KategoriModel>> get() = _listCategoryByType
-
-  private var _budgetModel = MutableLiveData<BudgetModel>()
-  val budgetModel: LiveData<BudgetModel> get() = _budgetModel
+  private var _budgetModel = MutableStateFlow<BudgetModel?>(null)
+  val budgetModel: StateFlow<BudgetModel?> get() = _budgetModel
 
   fun findBudgetById(id: UUID) {
     viewModelScope.launch {
       val budget = findBudgetById.invoke(id)
-      _budgetModel.postValue(budget)
+      _budgetModel.emit(budget)
     }
   }
 
-  fun findAllBudget(fromDate: LocalDate, toDate: LocalDate) {
-    viewModelScope.launch {
-      val budgets = findAllBudgetByDate.invoke(fromDate, toDate)
-      _listBudget.postValue(budgets)
-    }
+  suspend fun findAllBudget(fromDate: LocalDate, toDate: LocalDate) = withContext(Dispatchers.IO) {
+    return@withContext findAllBudgetByDate.invoke(fromDate, toDate)
   }
 
   fun setCategoryByType(transactionType: TransactionType) = viewModelScope.launch {
@@ -61,7 +59,7 @@ class BudgetViewModel @Inject constructor(
       when (it) {
         is Resource.Empty -> {}
         is Resource.Success -> {
-          _listCategoryByType.postValue(it.data ?: mutableListOf())
+          _listCategoryByType.emit(it.data ?: mutableListOf())
         }
         else -> {}
       }

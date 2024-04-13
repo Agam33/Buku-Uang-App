@@ -9,15 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
-import com.ra.bkuang.databinding.FragmentMonthBudgetBinding
-import com.ra.bkuang.features.budget.presentation.BudgetViewModel
 import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.Constants.LOCALE_ID
 import com.ra.bkuang.common.util.Constants.MONTHLY_DATE_FORMAT
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toStringFormat
 import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.databinding.FragmentMonthBudgetBinding
 import com.ra.bkuang.features.budget.data.local.DetailBudget
+import com.ra.bkuang.features.budget.presentation.BudgetViewModel
 import com.ra.bkuang.features.budget.presentation.CreateBudgetActivity
 import com.ra.bkuang.features.budget.presentation.CreateBudgetActivity.Companion.BUDGET_EXTRA_ACTION
 import com.ra.bkuang.features.budget.presentation.CreateBudgetActivity.Companion.BUDGET_EXTRA_DATE
@@ -26,13 +26,12 @@ import com.ra.bkuang.features.budget.presentation.adapter.BudgetAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class MonthBudgetFragment : BaseFragment<FragmentMonthBudgetBinding>(R.layout.fragment_month_budget), BudgetAdapter.OnItemLongClickListener {
-  private val viewModel: BudgetViewModel by viewModels()
+class MonthBudgetFragment : BaseFragment<FragmentMonthBudgetBinding>(R.layout.fragment_month_budget),
+  BudgetAdapter.OnItemLongClickListener {
 
-  @Inject lateinit var budgetAdapter: BudgetAdapter
+  private val viewModel: BudgetViewModel by viewModels()
 
   private var CURRENT_DATE = LocalDate.now()
 
@@ -77,13 +76,11 @@ class MonthBudgetFragment : BaseFragment<FragmentMonthBudgetBinding>(R.layout.fr
       val fromDate = CURRENT_DATE.withDayOfMonth(1)
       val toDate = CURRENT_DATE.withDayOfMonth(CURRENT_DATE.lengthOfMonth())
 
-      viewModel.findAllBudget(fromDate, toDate)
-
-      viewModel.listBudget.observe(viewLifecycleOwner) {
-        budgetAdapter.submitList(it)
-        budgetAdapter.onItemLongClickListener = this@MonthBudgetFragment
-
-        rvBudget.apply {
+      lifecycleScope.launch {
+        val data = viewModel.findAllBudget(fromDate, toDate)
+        val budgetAdapter = BudgetAdapter()
+        budgetAdapter.submitList(data)
+        binding?.rvBudget?.apply {
           adapter = budgetAdapter
           setHasFixedSize(true)
           layoutManager = LinearLayoutManager(requireContext())
