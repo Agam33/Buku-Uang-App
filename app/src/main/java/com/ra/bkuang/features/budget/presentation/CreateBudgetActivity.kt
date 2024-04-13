@@ -48,9 +48,12 @@ class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.
         val budgetId = intent?.getStringExtra(BUDGET_ID) as String
         viewModel.findBudgetById(UUID.fromString(budgetId))
 
-        viewModel.budgetModel.observe(this@CreateBudgetActivity) {
-          setupView(it)
-          editBudget(it)
+        lifecycleScope.launch {
+          viewModel.budgetModel.collect {
+            if(it == null) return@collect
+            setupView(it)
+            editBudget(it)
+          }
         }
       }
     }
@@ -164,7 +167,11 @@ class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.
 
   private fun observer() {
     viewModel.setCategoryByType(TransactionType.PENGELUARAN)
-    viewModel.listCategoryByType.observe(this@CreateBudgetActivity, ::setupListCategory)
+    lifecycleScope.launch {
+      viewModel.listCategoryByType.collect {
+        setupListCategory(it)
+      }
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
