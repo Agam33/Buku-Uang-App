@@ -8,36 +8,36 @@
     <fragment
         tools:layout="@layout/fragment_account"
         android:id="@+id/accountFragment"
-        android:name="com.ra.bkuang.presentation.ui.account.AccountFragment"
+        android:name="com.ra.bkuang.features.account.presentation.AccountFragment"
         android:label="AccountFragment" />
     <fragment
         tools:layout="@layout/fragment_analytic"
         android:id="@+id/analyticFragment"
-        android:name="com.ra.bkuang.presentation.ui.analytics.AnalyticFragment"
+        android:name="com.ra.bkuang.features.analytics.presentation.AnalyticFragment"
         android:label="AnalyticFragment" />
     <fragment
         tools:layout="@layout/fragment_budget"
         android:id="@+id/budgetFragment"
-        android:name="com.ra.bkuang.presentation.ui.budget.BudgetFragment"
+        android:name="com.ra.bkuang.features.budget.presentation.BudgetFragment"
         android:label="BudgetFragment" />
     <fragment
         tools:layout="@layout/fragment_category"
         android:id="@+id/categoryFragment"
-        android:name="com.ra.bkuang.presentation.ui.category.CategoryFragment"
+        android:name="com.ra.bkuang.features.category.presentation.CategoryFragment"
         android:label="CategoryFragment" />
     <fragment
         tools:layout="@layout/fragment_transaction"
         android:id="@+id/transactionFragment"
-        android:name="com.ra.bkuang.presentation.ui.transaction.TransactionFragment"
+        android:name="com.ra.bkuang.features.transaction.presentation.TransactionFragment"
         android:label="TransactionFragment" />
     <fragment
         tools:layout="@layout/fragment_backup_restore"
         android:id="@+id/backupRestoreFragment"
-        android:name="com.ra.bkuang.presentation.ui.backuprestore.BackupRestoreFragment"
+        android:name="com.ra.bkuang.features.backuprestore.presentation.BackupRestoreFragment"
         android:label="BackupRestoreFragment"/>
     <fragment
         tools:layout="@layout/fragment_debt"
         android:id="@+id/debtFragment"
-        android:name="com.ra.bkuang.presentation.ui.debt.DebtFragment"
+        android:name="com.ra.bkuang.features.debt.presentation.DebtFragment"
         android:label="DebtFragment"/>
 </navigation>

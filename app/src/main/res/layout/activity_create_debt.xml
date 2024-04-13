@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.debt.CreateDebtActivity">
+        tools:context=".features.debt.presentation.CreateDebtActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             app:menu="@menu/create_account_menu"
