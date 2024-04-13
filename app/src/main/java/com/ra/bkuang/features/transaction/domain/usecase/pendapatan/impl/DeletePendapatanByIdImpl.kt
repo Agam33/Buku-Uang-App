@@ -19,10 +19,10 @@ class DeletePendapatanByIdImpl @Inject constructor(
 
       repository.delete(pendapatan)
 
-      val account = accountRepository.findById(pendapatan.idTabungan).toModel()
+      val account = accountRepository.findById(pendapatan.idTabungan)
       account.total -= pendapatan.jumlah
 
-      accountRepository.update(account.toEntity())
+      accountRepository.update(account)
 
       ResourceState.SUCCESS
     } catch (e: Exception) {

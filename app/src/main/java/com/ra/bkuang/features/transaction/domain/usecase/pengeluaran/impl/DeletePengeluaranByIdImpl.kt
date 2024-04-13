@@ -23,7 +23,7 @@ class DeletePengeluaranByIdImpl @Inject constructor(
 
       repository.delete(pengeluaran)
 
-      val account = accountRepository.findById(pengeluaran.idAkun).toModel()
+      val account = accountRepository.findById(pengeluaran.idAkun)
       account.total += pengeluaran.jumlah
 
       val fromDate = pengeluaran.updatedAt.toLocalDate().withDayOfMonth(1)
@@ -48,7 +48,7 @@ class DeletePengeluaranByIdImpl @Inject constructor(
         budgetRepository.update(budgetModel.toEntity())
       }
 
-      accountRepository.update(account.toEntity())
+      accountRepository.update(account)
 
       ResourceState.SUCCESS
     } catch (e: Exception) {

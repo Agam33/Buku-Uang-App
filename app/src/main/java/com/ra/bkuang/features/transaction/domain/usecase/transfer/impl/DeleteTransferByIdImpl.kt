@@ -20,14 +20,14 @@ class DeleteTransferByIdImpl @Inject constructor(
 
       repository.delete(transfer)
 
-      val fromAccount = accountRepository.findById(transfer.idFromAkun).toModel()
-      val toAccount = accountRepository.findById(transfer.idToAkun).toModel()
+      val fromAccount = accountRepository.findById(transfer.idFromAkun)
+      val toAccount = accountRepository.findById(transfer.idToAkun)
 
       fromAccount.total += transfer.jumlah
       toAccount.total -= transfer.jumlah
 
-      accountRepository.update(fromAccount.toEntity())
-      accountRepository.update(toAccount.toEntity())
+      accountRepository.update(fromAccount)
+      accountRepository.update(toAccount)
 
       ResourceState.SUCCESS
     } catch (e: Exception) {

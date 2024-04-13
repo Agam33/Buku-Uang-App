@@ -1,15 +1,13 @@
 package com.ra.bkuang.features.debt.domain.usecase.impl
 
-import com.ra.bkuang.features.account.data.mapper.toEntity
-import com.ra.bkuang.features.account.data.mapper.toModel
-import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
-import com.ra.bkuang.features.account.domain.AkunRepository
-import com.ra.bkuang.features.debt.domain.HutangRepository
-import com.ra.bkuang.features.debt.domain.PembayaranHutangRepository
-import com.ra.bkuang.features.debt.domain.usecase.DeleteRecordPembayaranHutang
 import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.features.account.domain.AkunRepository
 import com.ra.bkuang.features.debt.data.mapper.toEntity
 import com.ra.bkuang.features.debt.data.mapper.toModel
+import com.ra.bkuang.features.debt.domain.HutangRepository
+import com.ra.bkuang.features.debt.domain.PembayaranHutangRepository
+import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
+import com.ra.bkuang.features.debt.domain.usecase.DeleteRecordPembayaranHutang
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -23,7 +21,7 @@ class DeleteRecordPembayaranHutangImpl @Inject constructor(
     return flow {
       emit(ResourceState.LOADING)
 
-      val accountModel = akunRepository.findById(detailPembayaranHutangModel.akunModel.uuid).toModel()
+      val accountModel = akunRepository.findById(detailPembayaranHutangModel.akunModel.uuid)
       val debtModel = hutangRepository.findById(detailPembayaranHutangModel.hutangModel.uuid).toModel()
 
       accountModel.total += detailPembayaranHutangModel.pembayaranHutangModel.jumlah
@@ -33,7 +31,7 @@ class DeleteRecordPembayaranHutangImpl @Inject constructor(
       emit(ResourceState.SUCCESS)
 
       hutangRepository.update(debtModel.toEntity())
-      akunRepository.update(accountModel.toEntity())
+      akunRepository.update(accountModel)
     }
   }
 }

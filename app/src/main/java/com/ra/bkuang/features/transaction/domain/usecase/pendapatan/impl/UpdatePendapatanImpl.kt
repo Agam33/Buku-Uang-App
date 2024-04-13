@@ -18,17 +18,17 @@ class UpdatePendapatanImpl @Inject constructor(
     return try {
       repository.update(newPendapatanModel.toEntity())
 
-      val newAccount = accountRepository.findById(newPendapatanModel.idAkun).toModel()
+      val newAccount = accountRepository.findById(newPendapatanModel.idAkun)
 
       newAccount.total += newPendapatanModel.jumlah
 
-      accountRepository.update(newAccount.toEntity())
+      accountRepository.update(newAccount)
 
-      val oldAccount = accountRepository.findById(oldPendapatanModel.idAkun).toModel()
+      val oldAccount = accountRepository.findById(oldPendapatanModel.idAkun)
 
       oldAccount.total -= oldPendapatanModel.jumlah
 
-      accountRepository.update(oldAccount.toEntity())
+      accountRepository.update(oldAccount)
 
       ResourceState.SUCCESS
     } catch (e: Exception) {

@@ -25,7 +25,7 @@ class UpdatePembayaranHutangImpl @Inject constructor(
   ): Flow<ResourceState> {
     return flow {
       emit(ResourceState.LOADING)
-      val accountModel = akunRepository.findById(oldModel.idAkun).toModel()
+      val accountModel = akunRepository.findById(oldModel.idAkun)
       val debtModel = hutangRepository.findById(oldModel.idHutang).toModel()
 
       pembayaranHutangRepository.update(newModel.toEntity())
@@ -37,7 +37,7 @@ class UpdatePembayaranHutangImpl @Inject constructor(
       accountModel.total -= newModel.jumlah
       debtModel.totalPengeluaran += newModel.jumlah
 
-      akunRepository.update(accountModel.toEntity())
+      akunRepository.update(accountModel)
       hutangRepository.update(debtModel.toEntity())
     }
   }

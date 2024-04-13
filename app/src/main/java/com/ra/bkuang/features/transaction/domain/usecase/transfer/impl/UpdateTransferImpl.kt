@@ -21,23 +21,23 @@ class UpdateTransferImpl @Inject constructor(
     return try {
       respository.update(newTransferModel.toEntity())
 
-      val newFromAccount = accountRepository.findById(newTransferModel.idFromAkun).toModel()
-      val newToAccount = accountRepository.findById(newTransferModel.idToAkun).toModel()
+      val newFromAccount = accountRepository.findById(newTransferModel.idFromAkun)
+      val newToAccount = accountRepository.findById(newTransferModel.idToAkun)
 
       newFromAccount.total -= newTransferModel.jumlah
       newToAccount.total += newTransferModel.jumlah
 
-      accountRepository.update(newFromAccount.toEntity())
-      accountRepository.update(newToAccount.toEntity())
+      accountRepository.update(newFromAccount)
+      accountRepository.update(newToAccount)
 
-      val fromAccount = accountRepository.findById(oldTransferModel.idFromAkun).toModel()
-      val toAccount = accountRepository.findById(oldTransferModel.idToAkun).toModel()
+      val fromAccount = accountRepository.findById(oldTransferModel.idFromAkun)
+      val toAccount = accountRepository.findById(oldTransferModel.idToAkun)
 
       fromAccount.total += oldTransferModel.jumlah
       toAccount.total -= oldTransferModel.jumlah
 
-      accountRepository.update(fromAccount.toEntity())
-      accountRepository.update(toAccount.toEntity())
+      accountRepository.update(fromAccount)
+      accountRepository.update(toAccount)
 
       ResourceState.SUCCESS
     } catch (e: Exception) {
