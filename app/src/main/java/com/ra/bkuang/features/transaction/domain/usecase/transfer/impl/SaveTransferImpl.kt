@@ -17,16 +17,16 @@ class SaveTransferImpl @Inject constructor(
 
   override suspend fun invoke(transferModel: TransferModel): ResourceState {
     return try {
-      val toAccount = akunRepository.findById(transferModel.idToAkun).toModel()
-      val fromAccount = akunRepository.findById(transferModel.idFromAkun).toModel()
+      val toAccount = akunRepository.findById(transferModel.idToAkun)
+      val fromAccount = akunRepository.findById(transferModel.idFromAkun)
 
       toAccount.total += transferModel.jumlah
       fromAccount.total -= transferModel.jumlah
 
       transferRepository.save(transferModel.toEntity())
 
-      akunRepository.update(toAccount.toEntity())
-      akunRepository.update(fromAccount.toEntity())
+      akunRepository.update(toAccount)
+      akunRepository.update(fromAccount)
 
       ResourceState.SUCCESS
     } catch (e: Exception) {

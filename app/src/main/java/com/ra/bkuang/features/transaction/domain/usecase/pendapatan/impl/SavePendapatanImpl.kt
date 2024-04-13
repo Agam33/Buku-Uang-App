@@ -16,11 +16,11 @@ class SavePendapatanImpl @Inject constructor(
 ): SavePendapatan {
   override suspend fun invoke(pendapatanModel: PendapatanModel): ResourceState {
     return try {
-      val account = akunRepository.findById(pendapatanModel.idAkun).toModel()
+      val account = akunRepository.findById(pendapatanModel.idAkun)
 
       account.total += pendapatanModel.jumlah
 
-      akunRepository.update(account.toEntity())
+      akunRepository.update(account)
 
       pendapatanRepository.save(pendapatanModel.toEntity())
 

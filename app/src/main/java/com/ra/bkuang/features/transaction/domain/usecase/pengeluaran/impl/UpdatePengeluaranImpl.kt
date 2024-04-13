@@ -22,13 +22,13 @@ class UpdatePengeluaranImpl @Inject constructor(
     return try {
       repository.update(newPengeluaranModel.toEntity())
 
-      val newAccount = accountRepository.findById(newPengeluaranModel.idAkun).toModel()
+      val newAccount = accountRepository.findById(newPengeluaranModel.idAkun)
 
       newAccount.total -= newPengeluaranModel.jumlah
 
-      accountRepository.update(newAccount.toEntity())
+      accountRepository.update(newAccount)
 
-      val oldAccount = accountRepository.findById(oldPengeluaranModel.idAkun).toModel()
+      val oldAccount = accountRepository.findById(oldPengeluaranModel.idAkun)
 
       oldAccount.total += oldPengeluaranModel.jumlah
 
@@ -55,7 +55,7 @@ class UpdatePengeluaranImpl @Inject constructor(
         budgetRepository.update(budgetModel.toEntity())
       }
 
-      accountRepository.update(oldAccount.toEntity())
+      accountRepository.update(oldAccount)
 
       ResourceState.SUCCESS
     } catch (e: Exception) {

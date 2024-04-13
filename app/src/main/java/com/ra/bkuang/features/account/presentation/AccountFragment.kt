@@ -18,12 +18,15 @@ import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.features.account.presentation.adapter.RvAccountAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_account),
   RvAccountAdapter.OnOptionAccountClickCallBack {
 
   private val viewModel: AccountViewModel by viewModels()
+
+  @Inject lateinit var accountAdapter: RvAccountAdapter
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -51,7 +54,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
   }
 
   private fun setupAccountAdapter(list: List<AkunModel>?) {
-    val accountAdapter = RvAccountAdapter()
+
     accountAdapter.onOptionAccountClickCallBack = this@AccountFragment
     accountAdapter.submitList(list)
 

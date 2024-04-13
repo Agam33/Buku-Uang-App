@@ -20,7 +20,7 @@ class SavePengeluaranImpl @Inject constructor(
 ): SavePengeluaran {
   override suspend fun invoke(pengeluaranModel: PengeluaranModel): ResourceState {
     return try {
-      val account = akunRepository.findById(pengeluaranModel.idAkun).toModel()
+      val account = akunRepository.findById(pengeluaranModel.idAkun)
 
       pengeluaranRepository.save(pengeluaranModel.toEntity())
 
@@ -48,7 +48,7 @@ class SavePengeluaranImpl @Inject constructor(
         budgetRepository.update(budgetModel.toEntity())
       }
 
-      akunRepository.update(account.toEntity())
+      akunRepository.update(account)
 
       ResourceState.SUCCESS
     } catch (e: Exception) {
