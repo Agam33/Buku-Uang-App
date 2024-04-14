@@ -3,33 +3,33 @@ package com.ra.bkuang.features.backuprestore.presentation
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.DocumentsContract
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
-import com.ra.bkuang.databinding.FragmentBackupRestoreBinding
-import com.ra.bkuang.core.preferences.UserSettingPref
 import com.ra.bkuang.common.base.BaseFragment
+import com.ra.bkuang.common.util.Constants
+import com.ra.bkuang.common.util.Extension.showShortToast
+import com.ra.bkuang.core.preferences.UserSettingPref
+import com.ra.bkuang.databinding.FragmentBackupRestoreBinding
 import com.ra.bkuang.features.backuprestore.presentation.adapter.BackupRestoreAdapter
 import com.ra.bkuang.features.backuprestore.presentation.dialog.CreateFileNameDialog
-import com.ra.bkuang.common.util.Constants
-import com.ra.bkuang.common.util.Extension.isNotExist
-import com.ra.bkuang.common.util.Extension.showShortToast
-import com.ra.bkuang.common.util.FileUtils
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-import java.io.File
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layout.fragment_backup_restore) {
+class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layout.fragment_backup_restore),
+  CreateFileNameDialog.OnSaveListener{
 
   @Inject
   lateinit var userSettingPref: UserSettingPref
+
+  private val backupRestoreViewModel: BackupRestoreViewModel by viewModels()
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -73,7 +73,12 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
     when(result.resultCode) {
       RESULT_OK -> {
         val uri = result.data?.data
-        requireContext().contentResolver.takePersistableUriPermission(uri ?: return@registerForActivityResult, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        requireContext()
+          .contentResolver
+          .takePersistableUriPermission(
+            uri ?: return@registerForActivityResult,
+            Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+          )
         userSettingPref.saveFileBackupDirectory(uri.toString())
       }
       RESULT_CANCELED -> {}
@@ -82,6 +87,7 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
 
   private fun backup() {
     val dir = userSettingPref.getFileBackupDirectory()
+
     if(dir?.isEmpty()!!) {
       Toast.makeText(requireContext(),
         requireContext().resources.getString(R.string.msg_empty_backup_file_directory),
@@ -90,32 +96,8 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
       return
     }
 
-    val dbPath = requireContext().getDatabasePath(Constants.DB_NAME)
-    val dbShm = File(dbPath.parent, Constants.DB_NAME_SHM)
-    val dbWal = File(dbPath.parent, Constants.DB_NAME_WAL)
-
-    if(dbPath.isNotExist() || dbShm.isNotExist() || dbWal.isNotExist()) return
-
-    val dbFiles: List<File> = listOf(dbPath, dbShm, dbWal)
-
     CreateFileNameDialog.newInstance().apply {
-      onSaveListener = object : CreateFileNameDialog.OnSaveListener {
-        override fun onSaveInput(name: String) {
-          try {
-            val uriParse = Uri.parse(dir)
-            val docId = DocumentsContract.getTreeDocumentId(uriParse)
-            val dirUri = DocumentsContract.buildDocumentUriUsingTree(uriParse, docId)
-            val createDoc = DocumentsContract.createDocument(requireContext().contentResolver, dirUri, "*/*", name)
-
-            FileUtils.zipFiles(requireContext(), dbFiles, createDoc ?: return)
-
-            showShortToast(requireContext().resources.getString(R.string.msg_success))
-          } catch (e: Exception) {
-            showShortToast(requireContext().resources.getString(R.string.msg_failed))
-            Timber.tag("$TAG-backup()").d(e)
-          }
-        }
-      }
+      onSaveListener = this@BackupRestoreFragment
     }.show(childFragmentManager, CreateFileNameDialog.TAG)
   }
 
@@ -131,18 +113,15 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
     registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
       when(it.resultCode) {
         RESULT_OK -> {
-          try {
+          lifecycleScope.launch {
             val uri = it.data?.data
-            requireContext().contentResolver.takePersistableUriPermission(uri ?: return@registerForActivityResult, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
+            requireContext().contentResolver.takePersistableUriPermission(uri ?: return@launch, Intent.FLAG_GRANT_READ_URI_PERMISSION)
             val dbPath = requireContext().getDatabasePath(Constants.DB_NAME).parent
-
-            FileUtils.unZipFile(requireContext(), uri, File(dbPath ?: return@registerForActivityResult))
-
-            showShortToast(requireContext().resources.getString(R.string.msg_success))
-          } catch (e: Exception) {
-            showShortToast(requireContext().resources.getString(R.string.msg_failed))
-            Timber.tag("$TAG-restore()").d(e)
+            if(backupRestoreViewModel.getLocalBackup(uri, dbPath ?: return@launch)) {
+              showShortToast(requireContext().resources.getString(R.string.msg_success))
+            } else {
+              showShortToast(requireContext().resources.getString(R.string.msg_failed))
+            }
           }
         }
         RESULT_CANCELED -> {}
@@ -151,5 +130,17 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
 
   companion object {
     const val TAG = "BackupRestoreFragment"
+  }
+
+  override fun onSaveInput(name: String) {
+    lifecycleScope.launch{
+      val dir = userSettingPref.getFileBackupDirectory() ?: return@launch
+      val state = backupRestoreViewModel.createLocalBackup(name, dir)
+      if (state) {
+        showShortToast(getString(R.string.msg_success))
+      } else {
+        showShortToast(getString(R.string.msg_failed))
+      }
+    }
   }
 }
