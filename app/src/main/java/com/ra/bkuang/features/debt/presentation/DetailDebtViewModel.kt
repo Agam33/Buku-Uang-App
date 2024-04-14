@@ -20,7 +20,7 @@ import com.ra.bkuang.features.debt.domain.usecase.SavePembayaranHutang
 import com.ra.bkuang.features.debt.domain.usecase.SetAlarmDebt
 import com.ra.bkuang.features.debt.domain.usecase.UpdatePembayaranHutang
 import com.ra.bkuang.common.base.BaseViewModel
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -55,8 +55,8 @@ class DetailDebtViewModel @Inject constructor(
   private var _accounts = MutableLiveData<List<AkunModel>>()
   val accounts: LiveData<List<AkunModel>> = _accounts
 
-  private var _debtRecord = MutableLiveData<Resource<List<DetailPembayaranHutangModel>>>()
-  val debtRecord: LiveData<Resource<List<DetailPembayaranHutangModel>>> = _debtRecord
+  private var _debtRecord = MutableLiveData<ResultState<List<DetailPembayaranHutangModel>>>()
+  val debtRecord: LiveData<ResultState<List<DetailPembayaranHutangModel>>> = _debtRecord
 
   private var _debtModel = MutableLiveData<HutangModel>()
   val debtModel: LiveData<HutangModel> get() = _debtModel

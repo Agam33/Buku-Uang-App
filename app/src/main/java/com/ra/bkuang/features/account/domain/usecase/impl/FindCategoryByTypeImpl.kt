@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.account.domain.usecase.impl
 
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.domain.usecase.FindCategoryByType
 import com.ra.bkuang.features.category.domain.KategoriRepository
@@ -17,16 +17,16 @@ class FindCategoryByTypeImpl @Inject constructor(
   private val repository: KategoriRepository
 ): FindCategoryByType {
 
-  override fun invoke(type: TransactionType): Flow<Resource<List<KategoriModel>>> {
-    return flow<Resource<List<KategoriModel>>> {
+  override fun invoke(type: TransactionType): Flow<ResultState<List<KategoriModel>>> {
+    return flow<ResultState<List<KategoriModel>>> {
       repository.findByType(type).collect { list ->
         if(list.isEmpty()) {
-          emit(Resource.Empty(""))
+          emit(ResultState.Empty)
         } else {
           val categories = list.map { category ->
             category
           }
-          emit(Resource.Success(categories))
+          emit(ResultState.Success(categories))
         }
       }
     }.flowOn(ioDispatcher)

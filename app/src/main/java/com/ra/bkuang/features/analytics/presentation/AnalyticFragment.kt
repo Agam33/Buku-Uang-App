@@ -21,7 +21,7 @@ import com.ra.bkuang.databinding.FragmentAnalyticBinding
 import com.ra.bkuang.common.util.Constants.LOCALE_ID
 import com.ra.bkuang.common.util.Constants.MONTHLY_DATE_FORMAT
 import com.ra.bkuang.common.util.Extension.toStringFormat
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.features.analytics.presentation.adapter.AnalyticListAdapter
 import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
 import com.ra.bkuang.features.transaction.presentation.TransactionType
@@ -60,7 +60,7 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
 
       viewModel.analyticList.observe(viewLifecycleOwner) {
         when(it) {
-          is Resource.Success -> {
+          is ResultState.Success -> {
             viewModel.setRvAnalyticState(false)
 
             analyticAdapter.submitList(it.data)
@@ -72,21 +72,23 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
             }
 
           }
-          is Resource.Empty -> {
+          is ResultState.Empty -> {
             viewModel.setRvAnalyticState(true)
           }
-          is Resource.Loading -> {}
+          is ResultState.Error -> {}
+          is ResultState.Loading -> {}
         }
       }
 
       viewModel.detailTransactions.observe(viewLifecycleOwner) {
         when(it) {
-          is Resource.Loading -> {}
-          is Resource.Empty -> {
+          is ResultState.Loading -> {}
+          is ResultState.Empty -> {
             binding?.pieChart?.clear()
             binding?.pieChart?.invalidate()
           }
-          is Resource.Success -> {
+          is ResultState.Error -> {}
+          is ResultState.Success -> {
             setPieChartData(it.data ?: ArrayList())
           }
         }

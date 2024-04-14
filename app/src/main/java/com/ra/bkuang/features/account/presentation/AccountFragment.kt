@@ -13,7 +13,7 @@ import com.ra.bkuang.common.view.spinner.SpinnerItemOptions
 import com.ra.bkuang.databinding.FragmentAccountBinding
 import com.ra.bkuang.features.account.domain.model.AkunModel
 import com.ra.bkuang.common.util.Extension.showShortToast
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.features.account.presentation.adapter.RvAccountAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,16 +39,17 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
   private fun setupAccountList() {
     viewModel.accounts.observe(viewLifecycleOwner) {
       when(it) {
-        is Resource.Success -> {
+        is ResultState.Success -> {
           viewModel.setRvState(false)
           viewModel.setEmptyLayoutState(true)
           setupAccountAdapter(it.data)
         }
-        is Resource.Empty -> {
+        is ResultState.Empty -> {
           viewModel.setRvState(true)
           viewModel.setEmptyLayoutState(false)
         }
-        is Resource.Loading -> {}
+        is ResultState.Error -> {}
+        is ResultState.Loading -> {}
       }
     }
   }

@@ -12,7 +12,7 @@ import com.ra.bkuang.features.transaction.presentation.TransactionViewModel
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.OnDeleteItemListener
 import com.ra.bkuang.common.util.OnItemChangedListener
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
 import com.ra.bkuang.features.transaction.domain.model.TransactionGroup
@@ -44,17 +44,16 @@ class TransferFragment : BaseFragment<FragmentTransferBinding>(R.layout.fragment
 
     sharedViewModel.listTransfer.observe(viewLifecycleOwner) {
       when (it) {
-        is Resource.Success -> {
-          updateAdapter(it)
+        is ResultState.Success -> {
+          updateAdapter(it.data ?: return@observe)
         }
-
-        is Resource.Empty -> {
+        is ResultState.Empty -> {
           sharedViewModel.setStateTransferListUi(rvState = true, emptyState = false)
         }
-
-        is Resource.Loading -> {
+        is ResultState.Loading -> {
           sharedViewModel.setStateTransferListUi(rvState = true, emptyState = false)
         }
+        is ResultState.Error -> {}
       }
     }
 
@@ -63,14 +62,14 @@ class TransferFragment : BaseFragment<FragmentTransferBinding>(R.layout.fragment
     }
   }
 
-  private fun updateAdapter(it: Resource<List<DetailTransfer>>) {
+  private fun updateAdapter(items: List<DetailTransfer>) {
     sharedViewModel.setStateTransferListUi(rvState = false, emptyState = true)
 
     val monthly = TransactionGroup<String, ArrayList<DetailTransfer>>()
-    for (data in it.data ?: ArrayList()) {
-      val updatedAt = data.transfer.updatedAt
+    for (item in items) {
+      val updatedAt = item.transfer.updatedAt
       val key = updatedAt.toLocalDate().toString()
-      monthly.addIf(key, ArrayList())?.add(data)
+      monthly.addIf(key, ArrayList())?.add(item)
     }
     val adp = TransferRvAdapter(monthly)
     adp.onDayItemClickListener = this@TransferFragment

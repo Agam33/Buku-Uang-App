@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl
 
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
 import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
@@ -21,8 +21,8 @@ class GetMonthlyPengeluaranImpl @Inject constructor(
   private val repository: PengeluaranRepository
 ): GetMonthlyPengeluaran {
 
-  override fun invoke(month: Int, year: Int): Flow<Resource<TransactionGroup<String, ArrayList<DetailPengeluaran>>>>  {
-    return flow<Resource<TransactionGroup<String, ArrayList<DetailPengeluaran>>>> {
+  override fun invoke(month: Int, year: Int): Flow<ResultState<TransactionGroup<String, ArrayList<DetailPengeluaran>>>>  {
+    return flow<ResultState<TransactionGroup<String, ArrayList<DetailPengeluaran>>>> {
       val calendar = Calendar.getInstance()
       calendar.set(Calendar.YEAR, year)
       calendar.set(Calendar.MONTH, month - 1)
@@ -33,7 +33,7 @@ class GetMonthlyPengeluaranImpl @Inject constructor(
         localDateTime.with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59)
       ).collect {
         if (it.isEmpty()) {
-          emit(Resource.Empty(""))
+          emit(ResultState.Empty)
         } else {
           val monthly = TransactionGroup<String, ArrayList<DetailPengeluaran>>()
           for (data in it) {
@@ -41,7 +41,7 @@ class GetMonthlyPengeluaranImpl @Inject constructor(
             val key = updatedAt.toLocalDate().toString()
             monthly.addIf(key, ArrayList())?.add(data)
           }
-          emit(Resource.Success(monthly))
+          emit(ResultState.Success(monthly))
         }
       }
     }.flowOn(ioDispather)

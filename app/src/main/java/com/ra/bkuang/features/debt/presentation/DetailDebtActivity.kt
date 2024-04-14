@@ -22,7 +22,7 @@ import com.ra.bkuang.common.util.Extension.toPercent
 import com.ra.bkuang.common.util.Extension.toPercentText
 import com.ra.bkuang.common.util.Extension.toStringFormat
 import com.ra.bkuang.common.util.OnItemChangedListener
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_EXTRA_ACTION
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_MODEL
@@ -83,7 +83,7 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
   private fun setupListExpense() = with(binding) {
     viewModel.debtRecord.observe(this@DetailDebtActivity) {
       when(it) {
-        is Resource.Success -> {
+        is ResultState.Success -> {
           viewModel.setState(rvState = false, emptyState =  true)
 
           val data = it.data
@@ -98,12 +98,11 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
 
           debtRecordAdapter.onItemLongClickListener = this@DetailDebtActivity
         }
-
-        is Resource.Empty -> {
+        is ResultState.Empty -> {
           viewModel.setState(rvState = true, emptyState =  false)
         }
-
-        is Resource.Loading -> {}
+        is ResultState.Loading -> {}
+        is ResultState.Error -> {}
       }
     }
   }

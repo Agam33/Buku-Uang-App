@@ -10,7 +10,7 @@ import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.OnDeleteItemListener
 import com.ra.bkuang.common.util.OnItemChangedListener
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.databinding.FragmentExpenseBinding
 import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
@@ -44,15 +44,14 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>(R.layout.fragment_e
 
     sharedViewModel.listPengeluaran.observe(viewLifecycleOwner) {
       when (it) {
-        is Resource.Success -> {
-          updateAdapter(it)
+        is ResultState.Success -> {
+          updateAdapter(it.data ?: return@observe)
         }
-
-        is Resource.Empty -> {
+        is ResultState.Empty -> {
           sharedViewModel.setStateExpenseListUi(rvState = true, emptyState = false)
         }
-
-        is Resource.Loading -> {}
+        is ResultState.Loading -> {}
+        is ResultState.Error -> {}
       }
     }
 
@@ -61,14 +60,14 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>(R.layout.fragment_e
     }
   }
 
-  private fun updateAdapter(it: Resource<List<DetailPengeluaran>>) {
+  private fun updateAdapter(items: List<DetailPengeluaran>) {
     sharedViewModel.setStateExpenseListUi(rvState = false, emptyState = true)
 
     val monthly = TransactionGroup<String, ArrayList<DetailPengeluaran>>()
-    for (data in it.data ?: ArrayList()) {
-      val updatedAt = data.pengeluaran.updatedAt
+    for (item in items) {
+      val updatedAt = item.pengeluaran.updatedAt
       val key = updatedAt.toLocalDate().toString()
-      monthly.addIf(key, ArrayList())?.add(data)
+      monthly.addIf(key, ArrayList())?.add(item)
     }
     val adp = ExpenseRvAdapter(monthly)
     adp.onDayItemClickListener = this@ExpenseFragment
