@@ -1,23 +1,21 @@
 package com.ra.bkuang.features.budget.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ra.bkuang.features.budget.domain.model.BudgetModel
-import com.ra.bkuang.features.category.domain.model.KategoriModel
+import com.ra.bkuang.common.base.BaseViewModel
+import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.domain.usecase.FindCategoryByType
+import com.ra.bkuang.features.budget.domain.model.BudgetModel
 import com.ra.bkuang.features.budget.domain.usecase.CreateBudget
 import com.ra.bkuang.features.budget.domain.usecase.DeleteBudgetById
 import com.ra.bkuang.features.budget.domain.usecase.EditBudget
 import com.ra.bkuang.features.budget.domain.usecase.FindAllBudgetByDate
 import com.ra.bkuang.features.budget.domain.usecase.FindBudgetById
-import com.ra.bkuang.common.base.BaseViewModel
-import com.ra.bkuang.common.util.Resource
-import com.ra.bkuang.common.util.ResourceState
-import com.ra.bkuang.features.budget.data.local.DetailBudget
+import com.ra.bkuang.features.category.domain.model.KategoriModel
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,7 +32,8 @@ class BudgetViewModel @Inject constructor(
   private val deleteBudgetById: DeleteBudgetById,
   private val createBudget: CreateBudget,
   private val findKategoriByType: FindCategoryByType,
-  private val findBudgetById: FindBudgetById
+  private val findBudgetById: FindBudgetById,
+  @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher
 ): BaseViewModel() {
 
   private var _listCategoryByType = MutableStateFlow<List<KategoriModel>>(listOf())
@@ -50,7 +49,7 @@ class BudgetViewModel @Inject constructor(
     }
   }
 
-  suspend fun findAllBudget(fromDate: LocalDate, toDate: LocalDate) = withContext(Dispatchers.IO) {
+  suspend fun findAllBudget(fromDate: LocalDate, toDate: LocalDate) = withContext(ioDispatcher) {
     return@withContext findAllBudgetByDate.invoke(fromDate, toDate)
   }
 
