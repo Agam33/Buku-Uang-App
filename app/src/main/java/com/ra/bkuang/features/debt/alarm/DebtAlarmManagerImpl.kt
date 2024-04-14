@@ -10,15 +10,14 @@ import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
 import com.ra.bkuang.R
 import com.ra.bkuang.common.receiver.AlarmCategory
+import com.ra.bkuang.common.receiver.AlarmReceiver
+import com.ra.bkuang.common.util.Constants
 import com.ra.bkuang.di.AppAlarmManagerQualifier
 import com.ra.bkuang.di.AppNotificationManagerQualifier
 import com.ra.bkuang.di.IoCoroutineScopeQualifier
 import com.ra.bkuang.features.debt.domain.model.HutangModel
-import com.ra.bkuang.features.debt.domain.usecase.UpdateHutang
 import com.ra.bkuang.features.debt.presentation.DebtFragment
 import com.ra.bkuang.features.debt.presentation.DetailDebtActivity
-import com.ra.bkuang.common.receiver.AlarmReceiver
-import com.ra.bkuang.common.util.Constants
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -31,10 +30,9 @@ class DebtAlarmManagerManagerImpl @Inject constructor(
   @IoCoroutineScopeQualifier private val ioScope: CoroutineScope,
   @AppAlarmManagerQualifier private val alarmManager: AlarmManager,
   @AppNotificationManagerQualifier private val notificationManager: NotificationManager,
-  private val updateHutang: UpdateHutang
 ): DebtAlarmManager {
 
-  override fun setAlarm(model: HutangModel, calendar: Calendar) {
+  override fun setAlarm(model: HutangModel, calendar: Calendar, callback: (HutangModel) -> Unit) {
     val alarmId = model.uuid.hashCode()
     val sdf = SimpleDateFormat(Constants.DATE_PATTERN, Constants.LOCALE_ID)
     model.idPengingat = alarmId
@@ -46,13 +44,10 @@ class DebtAlarmManagerManagerImpl @Inject constructor(
       calendar.timeInMillis,
       createPendingIntent(alarmId, model)
     )
-
-    ioScope.launch {
-      updateHutang.invoke(model)
-    }
+    callback(model)
   }
 
-  override fun cancelAlarm(model: HutangModel) {
+  override fun cancelAlarm(model: HutangModel, callback: (HutangModel) -> Unit) {
     alarmManager.cancel(createPendingIntent(model.idPengingat, model))
 
     ioScope.launch {
@@ -60,7 +55,7 @@ class DebtAlarmManagerManagerImpl @Inject constructor(
       model.tglPengingat = ""
       model.pengingatAktif = false
 
-      updateHutang.invoke(model)
+      callback.invoke(model)
     }
   }
 
@@ -77,7 +72,7 @@ class DebtAlarmManagerManagerImpl @Inject constructor(
   override fun showNotification(
     context: Context,
     debtModelId: String,
-    title: String
+    title: String,
   ) {
     val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
     

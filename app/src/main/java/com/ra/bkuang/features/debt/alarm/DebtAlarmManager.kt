@@ -5,11 +5,11 @@ import com.ra.bkuang.features.debt.domain.model.HutangModel
 import java.util.Calendar
 
 interface DebtAlarmManager {
-  fun setAlarm(model: HutangModel, calendar: Calendar)
-  fun cancelAlarm(model: HutangModel)
+  fun setAlarm(model: HutangModel, calendar: Calendar, callback: (HutangModel) -> Unit)
+  fun cancelAlarm(model: HutangModel, callback: (HutangModel) -> Unit)
   fun showNotification(
     context: Context,
     debtModelId: String,
-    title: String
+    title: String,
   )
 }
