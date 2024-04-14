@@ -1,7 +1,6 @@
 package com.ra.bkuang.features.transaction.domain
 
 import com.ra.bkuang.features.transaction.data.entity.DetailPendapatan
-import com.ra.bkuang.features.transaction.data.entity.PendapatanEntity
 import com.ra.bkuang.features.transaction.domain.model.PendapatanModel
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime

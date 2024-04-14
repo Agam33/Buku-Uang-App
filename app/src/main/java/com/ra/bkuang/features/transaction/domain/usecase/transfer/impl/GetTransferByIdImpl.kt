@@ -1,7 +1,6 @@
 package com.ra.bkuang.features.transaction.domain.usecase.transfer.impl
 
 import com.ra.bkuang.di.IoDispatcherQualifier
-import com.ra.bkuang.features.transaction.data.mapper.toModel
 import com.ra.bkuang.features.transaction.domain.TransferRepository
 import com.ra.bkuang.features.transaction.domain.model.TransferModel
 import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferById

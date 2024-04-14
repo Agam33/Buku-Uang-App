@@ -1,7 +1,6 @@
 package com.ra.bkuang.features.debt.domain.usecase.impl
 
 import com.ra.bkuang.di.IoDispatcherQualifier
-import com.ra.bkuang.features.debt.data.mapper.toEntity
 import com.ra.bkuang.features.debt.domain.PembayaranHutangRepository
 import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
 import com.ra.bkuang.features.debt.domain.usecase.CreatePembayaranHutang

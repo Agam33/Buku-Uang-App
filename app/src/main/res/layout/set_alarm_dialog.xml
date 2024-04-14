@@ -80,7 +80,6 @@
     <com.google.android.material.divider.MaterialDivider
         android:layout_marginBottom="4dp"
         android:layout_below="@id/layout_cancel_or_done"
-        android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 

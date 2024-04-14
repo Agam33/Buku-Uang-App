@@ -1,7 +1,6 @@
 package com.ra.bkuang.features.budget.domain.usecase.impl
 
 import com.ra.bkuang.di.IoDispatcherQualifier
-import com.ra.bkuang.features.budget.data.mapper.toModel
 import com.ra.bkuang.features.budget.domain.BudgetRepository
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
 import com.ra.bkuang.features.budget.domain.usecase.FindBudgetById

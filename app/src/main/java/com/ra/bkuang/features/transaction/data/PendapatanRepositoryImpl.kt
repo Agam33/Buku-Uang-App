@@ -1,7 +1,6 @@
 package com.ra.bkuang.features.transaction.data
 
 import com.ra.bkuang.features.transaction.data.entity.DetailPendapatan
-import com.ra.bkuang.features.transaction.data.entity.PendapatanEntity
 import com.ra.bkuang.features.transaction.data.local.PendapatanLocalDataSource
 import com.ra.bkuang.features.transaction.data.mapper.toEntity
 import com.ra.bkuang.features.transaction.data.mapper.toModel

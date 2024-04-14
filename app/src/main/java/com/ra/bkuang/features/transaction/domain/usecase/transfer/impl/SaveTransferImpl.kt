@@ -1,14 +1,11 @@
 package com.ra.bkuang.features.transaction.domain.usecase.transfer.impl
 
-import com.ra.bkuang.features.account.data.mapper.toEntity
-import com.ra.bkuang.features.account.data.mapper.toModel
-import com.ra.bkuang.features.transaction.domain.model.TransferModel
-import com.ra.bkuang.features.account.domain.AkunRepository
-import com.ra.bkuang.features.transaction.domain.TransferRepository
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.SaveTransfer
 import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.di.IoDispatcherQualifier
-import com.ra.bkuang.features.transaction.data.mapper.toEntity
+import com.ra.bkuang.features.account.domain.AkunRepository
+import com.ra.bkuang.features.transaction.domain.TransferRepository
+import com.ra.bkuang.features.transaction.domain.model.TransferModel
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.SaveTransfer
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

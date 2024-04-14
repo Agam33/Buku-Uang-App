@@ -3,8 +3,6 @@ package com.ra.bkuang.features.account.domain.usecase.impl
 import com.ra.bkuang.common.util.Resource
 import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.domain.usecase.FindCategoryByType
-import com.ra.bkuang.features.category.data.entity.KategoriEntity
-import com.ra.bkuang.features.category.data.mapper.toModel
 import com.ra.bkuang.features.category.domain.KategoriRepository
 import com.ra.bkuang.features.category.domain.model.KategoriModel
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
@@ -12,7 +10,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
 
 class FindCategoryByTypeImpl @Inject constructor(

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/main_item"
-        android:title="">
+    <item android:title="">
         <menu>
             <item
                 android:icon="@drawable/outline_transaction_24"
@@ -27,9 +25,7 @@
         </menu>
     </item>
 
-    <item
-        android:id="@+id/account"
-        android:title="">
+    <item android:title="">
         <menu>
             <item
                 android:checkable="true"
