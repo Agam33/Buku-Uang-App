@@ -18,7 +18,7 @@
     <fragment
         tools:layout="@layout/fragment_budget"
         android:id="@+id/budgetFragment"
-        android:name="com.ra.bkuang.features.budget.presentation.BudgetFragment"
+        android:name="com.ra.bkuang.features.budget.presentation.fragment.BudgetFragment"
         android:label="BudgetFragment" />
     <fragment
         tools:layout="@layout/fragment_category"

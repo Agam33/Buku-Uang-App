@@ -10,88 +10,91 @@ import com.google.android.material.snackbar.Snackbar
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.common.util.ActionType
-import com.ra.bkuang.common.util.Constants.LOCALE_ID
-import com.ra.bkuang.common.util.Constants.MONTHLY_DATE_FORMAT
+import com.ra.bkuang.common.util.Constants
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toStringFormat
 import com.ra.bkuang.common.util.ResourceState
-import com.ra.bkuang.databinding.FragmentMonthBudgetBinding
+import com.ra.bkuang.databinding.FragmentBudgetBinding
+import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.budget.data.local.DetailBudget
 import com.ra.bkuang.features.budget.presentation.BudgetViewModel
 import com.ra.bkuang.features.budget.presentation.CreateBudgetActivity
-import com.ra.bkuang.features.budget.presentation.CreateBudgetActivity.Companion.BUDGET_EXTRA_ACTION
-import com.ra.bkuang.features.budget.presentation.CreateBudgetActivity.Companion.BUDGET_EXTRA_DATE
-import com.ra.bkuang.features.budget.presentation.CreateBudgetActivity.Companion.BUDGET_ID
 import com.ra.bkuang.features.budget.presentation.adapter.BudgetAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MonthBudgetFragment : BaseFragment<FragmentMonthBudgetBinding>(R.layout.fragment_month_budget),
+class BudgetFragment : BaseFragment<FragmentBudgetBinding>(R.layout.fragment_budget),
   BudgetAdapter.OnItemLongClickListener {
 
   private val viewModel: BudgetViewModel by viewModels()
 
-  private var CURRENT_DATE = LocalDate.now()
+  private var currentDate = LocalDate.now()
+
+  @Inject lateinit var budgetAdapter: BudgetAdapter
+  @Inject @IoDispatcherQualifier lateinit var ioDispatcher: CoroutineDispatcher
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setupDate()
     createBudget()
+    setupListBudget()
+  }
+
+  private fun setupListBudget() {
+    binding?.rvBudget?.apply {
+      adapter = budgetAdapter
+      setHasFixedSize(true)
+      layoutManager = LinearLayoutManager(requireContext())
+    }
+    budgetAdapter.onItemLongClickListener = this@BudgetFragment
   }
 
   private fun createBudget() {
-    binding?.run {
-      btnCreate.setOnClickListener {
-        val i = Intent(requireContext(), CreateBudgetActivity::class.java).apply {
-          putExtra(BUDGET_EXTRA_ACTION, ActionType.CREATE.name)
-          putExtra(BUDGET_EXTRA_DATE, CURRENT_DATE.toString())
-        }
-        startActivity(i)
+    binding?.btnCreate?.setOnClickListener {
+      val i = Intent(requireContext(), CreateBudgetActivity::class.java).apply {
+        putExtra(CreateBudgetActivity.BUDGET_EXTRA_ACTION, ActionType.CREATE.name)
+        putExtra(CreateBudgetActivity.BUDGET_EXTRA_DATE, currentDate.toString())
       }
+      startActivity(i)
     }
   }
 
   private fun setupDate() {
-    binding?.run {
+    refreshDate()
+
+    binding?.imgBtnNextDate?.setOnClickListener {
+      currentDate = currentDate.plusMonths(1)
       refreshDate()
+    }
 
-      imgBtnNextDate.setOnClickListener {
-        CURRENT_DATE = CURRENT_DATE.plusMonths(1)
-        refreshDate()
-      }
-
-      imgBtnPrevDate.setOnClickListener {
-        CURRENT_DATE = CURRENT_DATE.minusMonths(1)
-        refreshDate()
-      }
+    binding?.imgBtnPrevDate?.setOnClickListener {
+      currentDate = currentDate.minusMonths(1)
+      refreshDate()
     }
   }
 
   private fun refreshDate() {
-    binding?.run {
-      tvCurrentDate.text = CURRENT_DATE.toStringFormat(MONTHLY_DATE_FORMAT, LOCALE_ID)
+    binding?.tvCurrentDate?.text = currentDate.toStringFormat(
+      Constants.MONTHLY_DATE_FORMAT,
+      Constants.LOCALE_ID
+    )
 
-      val fromDate = CURRENT_DATE.withDayOfMonth(1)
-      val toDate = CURRENT_DATE.withDayOfMonth(CURRENT_DATE.lengthOfMonth())
+    val fromDate = currentDate.withDayOfMonth(1)
+    val toDate = currentDate.withDayOfMonth(currentDate.lengthOfMonth())
 
-      lifecycleScope.launch {
-        val data = viewModel.findAllBudget(fromDate, toDate)
-        val budgetAdapter = BudgetAdapter()
-        budgetAdapter.submitList(data)
-        binding?.rvBudget?.apply {
-          adapter = budgetAdapter
-          setHasFixedSize(true)
-          layoutManager = LinearLayoutManager(requireContext())
-        }
-      }
+    lifecycleScope.launch(ioDispatcher) {// set to Dispatcher.IO, because data doesn't show if Dispatcher set as Main or Default.
+      val data = viewModel.findAllBudget(fromDate, toDate)
+      budgetAdapter.submitList(data) // will be computed on a background thread.
     }
   }
 
   override fun onStart() {
     super.onStart()
-    CURRENT_DATE = LocalDate.now()
+    currentDate = LocalDate.now()
     refreshDate()
   }
 
@@ -122,9 +125,9 @@ class MonthBudgetFragment : BaseFragment<FragmentMonthBudgetBinding>(R.layout.fr
 
   override fun onItemUpdate(detailBudget: DetailBudget) {
     val i = Intent(requireContext(), CreateBudgetActivity::class.java).apply {
-      putExtra(BUDGET_EXTRA_DATE, CURRENT_DATE.toString())
-      putExtra(BUDGET_EXTRA_ACTION, ActionType.EDIT.name)
-      putExtra(BUDGET_ID, detailBudget.budget.uuid.toString())
+      putExtra(CreateBudgetActivity.BUDGET_EXTRA_DATE, currentDate.toString())
+      putExtra(CreateBudgetActivity.BUDGET_EXTRA_ACTION, ActionType.EDIT.name)
+      putExtra(CreateBudgetActivity.BUDGET_ID, detailBudget.budget.uuid.toString())
     }
     startActivity(i)
   }
