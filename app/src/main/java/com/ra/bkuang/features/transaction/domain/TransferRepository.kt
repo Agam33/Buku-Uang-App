@@ -1,7 +1,6 @@
 package com.ra.bkuang.features.transaction.domain
 
 import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
-import com.ra.bkuang.features.transaction.data.entity.TransferEntity
 import com.ra.bkuang.features.transaction.domain.model.TransferModel
 import java.time.LocalDateTime
 import java.util.UUID

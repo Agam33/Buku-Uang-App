@@ -3,8 +3,6 @@ package com.ra.bkuang.features.debt.domain.usecase.impl
 import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.domain.AkunRepository
-import com.ra.bkuang.features.debt.data.mapper.toEntity
-import com.ra.bkuang.features.debt.data.mapper.toModel
 import com.ra.bkuang.features.debt.domain.HutangRepository
 import com.ra.bkuang.features.debt.domain.PembayaranHutangRepository
 import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel

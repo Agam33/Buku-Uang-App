@@ -2,7 +2,6 @@ package com.ra.bkuang.features.budget.domain.usecase.impl
 
 import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.di.IoDispatcherQualifier
-import com.ra.bkuang.features.budget.data.mapper.toEntity
 import com.ra.bkuang.features.budget.domain.BudgetRepository
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
 import com.ra.bkuang.features.budget.domain.usecase.EditBudget

@@ -1,7 +1,6 @@
 package com.ra.bkuang.features.debt.domain
 
 import com.ra.bkuang.features.debt.data.entity.DetailPembayaranHutang
-import com.ra.bkuang.features.debt.data.entity.PembayaranHutangEntity
 import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID

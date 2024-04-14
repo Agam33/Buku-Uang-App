@@ -16,9 +16,7 @@ class DbDateTypeConverter {
 
   @TypeConverter
   fun toTimeStamp(date: Date?): Long? {
-    return date?.let {
-      it.time
-    }
+    return date?.time
   }
 
   @TypeConverter
