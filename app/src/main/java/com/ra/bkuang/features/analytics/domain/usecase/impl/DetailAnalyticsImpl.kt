@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.analytics.domain.usecase.impl
 
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.analytics.domain.usecase.DetailAnalytics
 import com.ra.bkuang.features.transaction.data.mapper.toModel
@@ -23,15 +23,15 @@ class DetailAnalyticsImpl @Inject constructor(
     transactionType: TransactionType,
     fromDate: LocalDateTime,
     toDate: LocalDateTime
-  ): Resource<List<TransactionDetail>> = withContext(ioDispather) {
+  ): ResultState<List<TransactionDetail>> = withContext(ioDispather) {
     when (transactionType) {
       TransactionType.INCOME -> {
         val incomes = getListDetailPendapatanByDate.invoke(fromDate, toDate).map { it.toModel() }
 
         if (incomes.isEmpty()) {
-          return@withContext Resource.Empty("")
+          return@withContext ResultState.Empty
         } else {
-          return@withContext Resource.Success(incomes)
+          return@withContext ResultState.Success(incomes)
         }
       }
 
@@ -39,13 +39,13 @@ class DetailAnalyticsImpl @Inject constructor(
         val expenseList = getListDetailPengeluaranByDate.invoke(fromDate, toDate).map { it.toModel() }
 
         if (expenseList.isEmpty()) {
-          return@withContext Resource.Empty("")
+          return@withContext ResultState.Empty
         } else {
-          return@withContext Resource.Success(expenseList)
+          return@withContext ResultState.Success(expenseList)
         }
       }
 
-      TransactionType.TRANSFER -> return@withContext Resource.Empty("")
+      TransactionType.TRANSFER -> return@withContext ResultState.Empty
     }
   }
 }

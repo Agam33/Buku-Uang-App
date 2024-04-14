@@ -5,7 +5,7 @@ import com.ra.bkuang.features.account.data.mapper.toModel
 import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
 import com.ra.bkuang.features.debt.domain.PembayaranHutangRepository
 import com.ra.bkuang.features.debt.domain.usecase.FindAllRecordPembayaranHutang
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.features.debt.data.mapper.toModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -16,7 +16,7 @@ class FindAllRecordPembayaranHutangImpl @Inject constructor(
   @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
   private val pembayaranHutangRepository: PembayaranHutangRepository
 ): FindAllRecordPembayaranHutang {
-  override suspend fun invoke(id: String): Resource<List<DetailPembayaranHutangModel>> = withContext(ioDispatcher) {
+  override suspend fun invoke(id: String): ResultState<List<DetailPembayaranHutangModel>> = withContext(ioDispatcher) {
     val data = mutableListOf<DetailPembayaranHutangModel>()
 
     for(pembayaranModel in pembayaranHutangRepository.findAllRecordByHutangId(UUID.fromString(id))) {
@@ -29,8 +29,8 @@ class FindAllRecordPembayaranHutangImpl @Inject constructor(
     }
 
     if(data.isEmpty()) {
-      return@withContext Resource.Empty("")
+      return@withContext ResultState.Empty
     }
-    return@withContext Resource.Success(data)
+    return@withContext ResultState.Success(data)
   }
 }

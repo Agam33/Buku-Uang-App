@@ -10,7 +10,7 @@ import com.ra.bkuang.features.debt.domain.usecase.FindHutangById
 import com.ra.bkuang.features.debt.domain.usecase.ShowAllHutang
 import com.ra.bkuang.features.debt.domain.usecase.UpdateHutang
 import com.ra.bkuang.common.base.BaseViewModel
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -32,8 +32,8 @@ class DebtViewModel @Inject constructor(
   private var _emptyListState = MutableLiveData<Boolean>()
   val emptyListState: LiveData<Boolean> = _emptyListState
 
-  private var _hutangList = MutableLiveData<Resource<List<HutangModel>>>()
-  val hutangList: LiveData<Resource<List<HutangModel>>> get() = _hutangList
+  private var _hutangList = MutableLiveData<ResultState<List<HutangModel>>>()
+  val hutangList: LiveData<ResultState<List<HutangModel>>> get() = _hutangList
 
   private var _hutangModel = MutableLiveData<HutangModel>()
   val hutangModel: LiveData<HutangModel> get() = _hutangModel

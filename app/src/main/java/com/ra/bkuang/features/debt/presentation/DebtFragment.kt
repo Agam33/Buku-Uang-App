@@ -11,7 +11,7 @@ import com.ra.bkuang.features.debt.domain.model.HutangModel
 import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.features.debt.presentation.adapter.DebtAdapter
 import com.ra.bkuang.common.util.ActionType
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -43,16 +43,15 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
     refresh()
     sharedViewModel.hutangList.observe(viewLifecycleOwner) {
       when(it) {
-        is Resource.Empty -> {
+        is ResultState.Empty -> {
           sharedViewModel.setState(rvState = true, emptyState = false)
         }
-
-        is Resource.Success -> {
+        is ResultState.Success -> {
           sharedViewModel.setState(rvState = false, emptyState = true)
           setupList(it.data)
         }
-
-        is Resource.Loading -> {}
+        is ResultState.Loading -> {}
+        is ResultState.Error -> {}
       }
     }
   }

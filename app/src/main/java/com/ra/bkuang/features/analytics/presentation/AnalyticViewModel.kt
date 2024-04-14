@@ -7,7 +7,7 @@ import com.ra.bkuang.features.analytics.domain.model.AnalyticModel
 import com.ra.bkuang.features.analytics.domain.usecase.DetailAnalytics
 import com.ra.bkuang.features.analytics.domain.usecase.ShowAnalyticList
 import com.ra.bkuang.common.base.BaseViewModel
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
 import com.ra.bkuang.features.transaction.presentation.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,11 +21,11 @@ class AnalyticViewModel @Inject constructor(
   private val detailAnalytics: DetailAnalytics
 ): BaseViewModel() {
 
-  private var _analyticList = MutableLiveData<Resource<List<AnalyticModel>>>()
-  val analyticList: LiveData<Resource<List<AnalyticModel>>> get() = _analyticList
+  private var _analyticList = MutableLiveData<ResultState<List<AnalyticModel>>>()
+  val analyticList: LiveData<ResultState<List<AnalyticModel>>> get() = _analyticList
 
-  private var _detailTransactions = MutableLiveData<Resource<List<TransactionDetail>>>()
-  val detailTransactions: LiveData<Resource<List<TransactionDetail>>> get() = _detailTransactions
+  private var _detailTransactions = MutableLiveData<ResultState<List<TransactionDetail>>>()
+  val detailTransactions: LiveData<ResultState<List<TransactionDetail>>> get() = _detailTransactions
 
   private var _rvAnalyticState = MutableLiveData<Boolean>()
   val rvAnalyticState: LiveData<Boolean> = _rvAnalyticState

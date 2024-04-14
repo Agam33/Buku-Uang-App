@@ -30,7 +30,7 @@ import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferByD
 import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferById
 import com.ra.bkuang.features.transaction.domain.usecase.transfer.SaveTransfer
 import com.ra.bkuang.features.transaction.domain.usecase.transfer.UpdateTransfer
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.core.preferences.UserSettingPref
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
@@ -94,8 +94,8 @@ class TransactionViewModel @Inject constructor(
   private var _listCategoryByType = MutableLiveData<List<KategoriModel>>()
   val listCategoryByType: LiveData<List<KategoriModel>> get() = _listCategoryByType
 
-  private var _listPengeluaran = MutableLiveData<Resource<List<DetailPengeluaran>>>()
-  val listPengeluaran: LiveData<Resource<List<DetailPengeluaran>>> get() = _listPengeluaran
+  private var _listPengeluaran = MutableLiveData<ResultState<List<DetailPengeluaran>>>()
+  val listPengeluaran: LiveData<ResultState<List<DetailPengeluaran>>> get() = _listPengeluaran
 
   private val _rvIncomeState = MutableLiveData<Boolean>()
   val rvIncomeState: LiveData<Boolean> get() = _rvIncomeState
@@ -109,8 +109,8 @@ class TransactionViewModel @Inject constructor(
   private val _rvTransferState = MutableLiveData<Boolean>()
   val rvTransferState: LiveData<Boolean> get() = _rvTransferState
 
-  private var _listTransfer = MutableLiveData<Resource<List<DetailTransfer>>>()
-  val listTransfer: LiveData<Resource<List<DetailTransfer>>> get() = _listTransfer
+  private var _listTransfer = MutableLiveData<ResultState<List<DetailTransfer>>>()
+  val listTransfer: LiveData<ResultState<List<DetailTransfer>>> get() = _listTransfer
 
   private val _rvExpenseState = MutableLiveData<Boolean>()
   val rvExpenseState: LiveData<Boolean> get() = _rvExpenseState
@@ -130,8 +130,8 @@ class TransactionViewModel @Inject constructor(
   private var _currentDate = MutableLiveData<Pair<LocalDateTime, LocalDateTime>>()
   val currentDate: LiveData<Pair<LocalDateTime, LocalDateTime>> get() = _currentDate
 
-  private var _incomes = MutableLiveData<Resource<List<DetailPendapatan>>>()
-  val incomes: LiveData<Resource<List<DetailPendapatan>>> = _incomes
+  private var _incomes = MutableLiveData<ResultState<List<DetailPendapatan>>>()
+  val incomes: LiveData<ResultState<List<DetailPendapatan>>> = _incomes
 
   private var _detailTransaction = MutableLiveData<TransactionDetail>()
   val detailTransaction: LiveData<TransactionDetail> = _detailTransaction
@@ -240,25 +240,25 @@ class TransactionViewModel @Inject constructor(
   fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
     viewModelScope.launch {
       val list = getListDetailPengeluaranByDate.invoke(fromDate, toDate)
-      if(list.isEmpty()) _listPengeluaran.postValue(Resource.Empty(""))
-      else _listPengeluaran.postValue(Resource.Success(list))
+      if(list.isEmpty()) _listPengeluaran.postValue(ResultState.Empty)
+      else _listPengeluaran.postValue(ResultState.Success(list))
     }
   }
 
   fun getPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime)  {
     viewModelScope.launch {
       val list = getListDetailPendapatanByDate.invoke(fromDate, toDate)
-      if(list.isEmpty()) _incomes.postValue(Resource.Empty(""))
-      else _incomes.postValue(Resource.Success(list))
+      if(list.isEmpty()) _incomes.postValue(ResultState.Empty)
+      else _incomes.postValue(ResultState.Success(list))
     }
   }
 
   fun getTransferByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
     viewModelScope.launch {
       val list = getTransferByDate.invoke(fromDate, toDate)
-      _listTransfer.postValue(Resource.Loading())
-      if(list.isEmpty()) _listTransfer.postValue(Resource.Empty(""))
-      else _listTransfer.postValue(Resource.Success(list))
+      _listTransfer.postValue(ResultState.Loading)
+      if(list.isEmpty()) _listTransfer.postValue(ResultState.Empty)
+      else _listTransfer.postValue(ResultState.Success(list))
     }
   }
 
@@ -269,8 +269,8 @@ class TransactionViewModel @Inject constructor(
   fun setCategoryByType(tipeKategori: TransactionType) = viewModelScope.launch {
     findKategoriByType.invoke(tipeKategori).collect {
       when (it) {
-        is Resource.Empty -> {}
-        is Resource.Success -> {
+        is ResultState.Empty -> {}
+        is ResultState.Success -> {
           _listCategoryByType.postValue(it.data ?: mutableListOf())
         }
         else -> {}

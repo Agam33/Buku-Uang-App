@@ -2,7 +2,7 @@ package com.ra.bkuang.features.budget.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.common.base.BaseViewModel
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.domain.usecase.FindCategoryByType
@@ -56,8 +56,8 @@ class BudgetViewModel @Inject constructor(
   fun setCategoryByType(transactionType: TransactionType) = viewModelScope.launch {
     findKategoriByType.invoke(transactionType).collect {
       when (it) {
-        is Resource.Empty -> {}
-        is Resource.Success -> {
+        is ResultState.Empty -> {}
+        is ResultState.Success -> {
           _listCategoryByType.emit(it.data ?: mutableListOf())
         }
         else -> {}

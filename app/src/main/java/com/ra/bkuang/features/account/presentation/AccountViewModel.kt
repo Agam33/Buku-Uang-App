@@ -13,7 +13,7 @@ import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPend
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranWithFlow
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.Extension.toFormatRupiah
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,8 +35,8 @@ class AccountViewModel @Inject constructor(
   private var _emptyMessageState = MutableLiveData<Boolean>()
   val emptyMessageState: LiveData<Boolean> = _emptyMessageState
 
-  private var _accounts = MutableLiveData<Resource<List<AkunModel>>>()
-  val accounts: LiveData<Resource<List<AkunModel>>> = _accounts
+  private var _accounts = MutableLiveData<ResultState<List<AkunModel>>>()
+  val accounts: LiveData<ResultState<List<AkunModel>>> = _accounts
 
   private var _totalExpense = MutableLiveData<String>()
   val totalExpense: LiveData<String> = _totalExpense
@@ -78,11 +78,11 @@ class AccountViewModel @Inject constructor(
   fun getAllAccount() {
     viewModelScope.launch {
       val list = findAllAkun.invoke()
-      _accounts.postValue(Resource.Loading())
+      _accounts.postValue(ResultState.Loading)
       if(list.isEmpty()) {
-        _accounts.postValue(Resource.Empty(""))
+        _accounts.postValue(ResultState.Empty)
       } else {
-        _accounts.postValue(Resource.Success(list))
+        _accounts.postValue(ResultState.Success(list))
       }
     }
   }

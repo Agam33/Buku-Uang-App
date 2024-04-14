@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.analytics.domain.usecase.impl
 
-import com.ra.bkuang.common.util.Resource
+import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.analytics.domain.model.AnalyticModel
 import com.ra.bkuang.features.analytics.domain.usecase.ShowAnalyticList
@@ -27,14 +27,14 @@ class ShowAnalyticListImpl @Inject constructor(
     transactionType: TransactionType,
     fromDate: LocalDateTime,
     toDate: LocalDateTime
-  ): Resource<List<AnalyticModel>> = withContext(ioDispather) {
+  ): ResultState<List<AnalyticModel>> = withContext(ioDispather) {
     return@withContext when(transactionType) {
       TransactionType.INCOME -> {
         val incomes = getListDetailPendapatanByDate.invoke(fromDate, toDate)
         val totalIncome = getTotalPendapatanByDate.invoke(fromDate, toDate)
 
         if(incomes.isEmpty()) {
-          Resource.Empty("")
+          ResultState.Empty
         } else {
           val mapPendapatan = HashMap<UUID, AnalyticModel>()
           for(item in incomes) {
@@ -53,7 +53,7 @@ class ShowAnalyticListImpl @Inject constructor(
 
           analyticModels.sortByDescending { it.percent }
 
-          Resource.Success(analyticModels)
+          ResultState.Success(analyticModels)
         }
       }
       TransactionType.EXPENSE -> {
@@ -61,7 +61,7 @@ class ShowAnalyticListImpl @Inject constructor(
         val totalExpense = getTotalPengeluaranByDate.invoke(fromDate, toDate)
 
         if(expenses.isEmpty()) {
-          Resource.Empty("")
+          ResultState.Empty
         } else {
           val mapPengeluaran = HashMap<UUID, AnalyticModel>()
           for(item in expenses) {
@@ -80,10 +80,10 @@ class ShowAnalyticListImpl @Inject constructor(
 
           analyticModels.sortByDescending { it.percent }
 
-          Resource.Success(analyticModels)
+          ResultState.Success(analyticModels)
         }
       }
-      TransactionType.TRANSFER -> { Resource.Empty("") }
+      TransactionType.TRANSFER -> { ResultState.Empty }
     }
   }
 
