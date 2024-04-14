@@ -4,6 +4,8 @@ import com.ra.bkuang.features.debt.data.local.HutangLocalDataSource
 import com.ra.bkuang.features.debt.data.local.HutangLocalDataSourceImpl
 import com.ra.bkuang.features.account.data.AkunRepositoryImpl
 import com.ra.bkuang.features.account.domain.AkunRepository
+import com.ra.bkuang.features.backuprestore.data.BackupRestoreRepositoryImpl
+import com.ra.bkuang.features.backuprestore.domain.BackupRestoreRepository
 import com.ra.bkuang.features.budget.data.BudgetRepositoryImpl
 import com.ra.bkuang.features.budget.domain.BudgetRepository
 import com.ra.bkuang.features.category.data.KategoriRepositoryImpl
@@ -28,6 +30,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 interface RepositoryModule {
 
+  @Binds
+  @Singleton
+  fun bindBackRestoreRepository(backupRestoreRepositoryImpl: BackupRestoreRepositoryImpl): BackupRestoreRepository
 
   @Binds
   @Singleton
