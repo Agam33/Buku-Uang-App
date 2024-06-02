@@ -1,35 +1,35 @@
 package com.ra.bkuang.features.debt.di
 
-import com.ra.bkuang.features.debt.domain.usecase.CancelAlarmDebt
-import com.ra.bkuang.features.debt.domain.usecase.CreateHutang
-import com.ra.bkuang.features.debt.domain.usecase.CreatePembayaranHutang
-import com.ra.bkuang.features.debt.domain.usecase.DeleteHutang
-import com.ra.bkuang.features.debt.domain.usecase.DeleteRecordPembayaranHutang
-import com.ra.bkuang.features.debt.domain.usecase.FindAllRecordPembayaranHutang
-import com.ra.bkuang.features.debt.domain.usecase.FindHutangByAlarmId
-import com.ra.bkuang.features.debt.domain.usecase.FindHutangById
-import com.ra.bkuang.features.debt.domain.usecase.FindHutangByIdWithFlow
-import com.ra.bkuang.features.debt.domain.usecase.GetSizeListPembayaranHutangById
-import com.ra.bkuang.features.debt.domain.usecase.SavePembayaranHutang
-import com.ra.bkuang.features.debt.domain.usecase.SetAlarmDebt
-import com.ra.bkuang.features.debt.domain.usecase.ShowAllHutang
-import com.ra.bkuang.features.debt.domain.usecase.UpdateHutang
-import com.ra.bkuang.features.debt.domain.usecase.UpdatePembayaranHutang
-import com.ra.bkuang.features.debt.domain.usecase.impl.CancelAlarmDebtImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.CreateHutangImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.CreatePembayaranHutangImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.DeleteHutangImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.DeleteRecordPembayaranHutangImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.FindAllRecordPembayaranHutangImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.FindHutangByAlarmIdImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.FindHutangByIdImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.FindHutangByIdWithFlowImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.GetSizeListPembayaranHutangByIdImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.SavePembayaranHutangImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.SetAlarmDebtImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.ShowAllHutangImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.UpdateHutangImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.UpdatePembayaranHutangImpl
+import com.ra.bkuang.features.debt.domain.usecase.CancelAlarmDebtUseCase
+import com.ra.bkuang.features.debt.domain.usecase.CreateHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.CreatePembayaranHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.DeleteHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.DeleteRecordPembayaranHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.FindAllRecordPembayaranHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.FindHutangByAlarmIdUseCase
+import com.ra.bkuang.features.debt.domain.usecase.FindHutangByIdUseCase
+import com.ra.bkuang.features.debt.domain.usecase.FindHutangByIdWithFlowUseCase
+import com.ra.bkuang.features.debt.domain.usecase.GetSizeListPembayaranHutangByIdUseCase
+import com.ra.bkuang.features.debt.domain.usecase.SavePembayaranHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.SetAlarmDebtUseCase
+import com.ra.bkuang.features.debt.domain.usecase.ShowAllHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.UpdateHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.UpdatePembayaranHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.impl.CancelAlarmDebtUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.CreateHutangUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.CreatePembayaranHutangUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.DeleteHutangUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.DeleteRecordPembayaranHutangUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.FindAllRecordPembayaranHutangUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.FindHutangByAlarmIdUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.FindHutangByIdUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.FindHutangByIdWithFlowUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.GetSizeListPembayaranHutangByIdUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.SavePembayaranHutangUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.SetAlarmDebtUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.ShowAllHutangUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.UpdateHutangUseCaseImpl
+import com.ra.bkuang.features.debt.domain.usecase.impl.UpdatePembayaranHutangUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -43,63 +43,63 @@ interface DebtUseCaseModule {
 
   @Binds
   @Singleton
-  fun bindFindHutangByAlarmId(findHutangByAlarmIdImpl: FindHutangByAlarmIdImpl): FindHutangByAlarmId
+  fun bindFindHutangByAlarmId(findHutangByAlarmIdImpl: FindHutangByAlarmIdUseCaseImpl): FindHutangByAlarmIdUseCase
 
   @Binds
   @Singleton
-  fun bindCancelAlarmDebt(cancelAlarmDebtImpl: CancelAlarmDebtImpl): CancelAlarmDebt
+  fun bindCancelAlarmDebt(cancelAlarmDebtImpl: CancelAlarmDebtUseCaseImpl): CancelAlarmDebtUseCase
 
   @Binds
   @Singleton
-  fun bindSetAlarmDebt(setAlarmDebt: SetAlarmDebtImpl): SetAlarmDebt
+  fun bindSetAlarmDebt(setAlarmDebt: SetAlarmDebtUseCaseImpl): SetAlarmDebtUseCase
 
   @Binds
   @Singleton
-  fun bindFindAllRecordPembayaranHutang(findAllRecordPembayaranHutang: FindAllRecordPembayaranHutangImpl): FindAllRecordPembayaranHutang
+  fun bindFindAllRecordPembayaranHutang(findAllRecordPembayaranHutang: FindAllRecordPembayaranHutangUseCaseImpl): FindAllRecordPembayaranHutangUseCase
 
   @Binds
   @Singleton
-  fun bindSavePembayaranHutang(savePembayaranHutangImpl: SavePembayaranHutangImpl): SavePembayaranHutang
+  fun bindSavePembayaranHutang(savePembayaranHutangImpl: SavePembayaranHutangUseCaseImpl): SavePembayaranHutangUseCase
 
   @Binds
   @Singleton
-  fun bindFindHutangByIdWithFlow(findHutangByIdWithFlowImpl: FindHutangByIdWithFlowImpl): FindHutangByIdWithFlow
-
-
-  @Binds
-  @Singleton
-  fun bindGetSizePembayaranHutangById(getSizeListPembayaranHutangByIdImpl: GetSizeListPembayaranHutangByIdImpl): GetSizeListPembayaranHutangById
-
-  @Binds
-  @Singleton
-  fun bindCreateHutang(createHutangImpl: CreateHutangImpl): CreateHutang
-
-  @Binds
-  @Singleton
-  fun bindDeleteHutang(deleteHutangImpl: DeleteHutangImpl): DeleteHutang
-
-  @Binds
-  @Singleton
-  fun bindShowAllHutang(showAllHutangImpl: ShowAllHutangImpl): ShowAllHutang
-
-  @Binds
-  @Singleton
-  fun bindUpdateHutang(updateHutangImpl: UpdateHutangImpl): UpdateHutang
-
-  @Binds
-  @Singleton
-  fun bindCreatePembayaranHutang(createPembayaranHutangImpl: CreatePembayaranHutangImpl): CreatePembayaranHutang
+  fun bindFindHutangByIdWithFlow(findHutangByIdWithFlowImpl: FindHutangByIdWithFlowUseCaseImpl): FindHutangByIdWithFlowUseCase
 
 
   @Binds
   @Singleton
-  fun bindFindHutangById(findHutangByIdImpl: FindHutangByIdImpl): FindHutangById
+  fun bindGetSizePembayaranHutangById(getSizeListPembayaranHutangByIdImpl: GetSizeListPembayaranHutangByIdUseCaseImpl): GetSizeListPembayaranHutangByIdUseCase
 
   @Binds
   @Singleton
-  fun bindDeleteRecordPembayaranHutang(deleteRecordPembayaranHutangImpl: DeleteRecordPembayaranHutangImpl): DeleteRecordPembayaranHutang
+  fun bindCreateHutang(createHutangImpl: CreateHutangUseCaseImpl): CreateHutangUseCase
 
   @Binds
   @Singleton
-  fun bindUpdatePembayaranHutang(updatePembayaranHutangImpl: UpdatePembayaranHutangImpl): UpdatePembayaranHutang
+  fun bindDeleteHutang(deleteHutangImpl: DeleteHutangUseCaseImpl): DeleteHutangUseCase
+
+  @Binds
+  @Singleton
+  fun bindShowAllHutang(showAllHutangImpl: ShowAllHutangUseCaseImpl): ShowAllHutangUseCase
+
+  @Binds
+  @Singleton
+  fun bindUpdateHutang(updateHutangImpl: UpdateHutangUseCaseImpl): UpdateHutangUseCase
+
+  @Binds
+  @Singleton
+  fun bindCreatePembayaranHutang(createPembayaranHutangImpl: CreatePembayaranHutangUseCaseImpl): CreatePembayaranHutangUseCase
+
+
+  @Binds
+  @Singleton
+  fun bindFindHutangById(findHutangByIdImpl: FindHutangByIdUseCaseImpl): FindHutangByIdUseCase
+
+  @Binds
+  @Singleton
+  fun bindDeleteRecordPembayaranHutang(deleteRecordPembayaranHutangImpl: DeleteRecordPembayaranHutangUseCaseImpl): DeleteRecordPembayaranHutangUseCase
+
+  @Binds
+  @Singleton
+  fun bindUpdatePembayaranHutang(updatePembayaranHutangImpl: UpdatePembayaranHutangUseCaseImpl): UpdatePembayaranHutangUseCase
 }

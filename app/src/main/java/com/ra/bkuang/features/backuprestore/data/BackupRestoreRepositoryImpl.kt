@@ -7,11 +7,20 @@ import javax.inject.Inject
 class BackupRestoreRepositoryImpl @Inject constructor(
   private val localBackRestoreManager: LocalBackRestoreManager
 ): BackupRestoreRepository {
-  override suspend fun createLocalBackupDb(fileName: String, destDirectory: String) {
-    localBackRestoreManager.createLocalBackup(fileName, destDirectory)
+  override suspend fun createLocalBackupDb(fileName: String, destDirectory: String): Boolean {
+    return try {
+      localBackRestoreManager.createLocalBackup(fileName, destDirectory)
+    } catch (e: Exception) {
+      false
+    }
   }
 
-  override suspend fun getLocalBackupDb(uriFile: Uri, dest: String) {
-     localBackRestoreManager.getLocalBackup(uriFile, dest)
+  override suspend fun getLocalBackupDb(uriFile: Uri, dest: String): Boolean {
+    return try {
+      localBackRestoreManager.getLocalBackup(uriFile, dest)
+      true
+    } catch (e: Exception) {
+      false
+    }
   }
 }

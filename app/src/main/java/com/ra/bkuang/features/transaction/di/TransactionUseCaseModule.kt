@@ -1,63 +1,63 @@
 package com.ra.bkuang.features.transaction.di
 
-import com.ra.bkuang.features.transaction.domain.usecase.CancelAlarmTransactionImpl
-import com.ra.bkuang.features.transaction.domain.usecase.CancelTransactionAlarm
-import com.ra.bkuang.features.transaction.domain.usecase.GetTotalTransactionByDate
-import com.ra.bkuang.features.transaction.domain.usecase.GetTotalTransactionByDateImpl
-import com.ra.bkuang.features.transaction.domain.usecase.SetTransactionAlarm
-import com.ra.bkuang.features.transaction.domain.usecase.SetTransactionAlarmImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.DeletePendapatanById
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.FindDetailPendapatanById
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetListDetailPendapatanByDate
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetPendapatanById
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanByDate
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanWithFlow
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanByDateWithFlow
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.SavePendapatan
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.UpdatePendapatan
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.DeletePendapatanByIdImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.FindDetailPendapatanByIdImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.GetListDetailPendapatanByDateImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.GetPendapatanByIdImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.GetTotalPendapatanByDateImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.GetTotalPendapatanByDateWithFlowImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.GetTotalPendapatanWithFlowImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.SavePendapatanImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.UpdatePendapatanImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.DeletePengeluaranById
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.FindDetailPengeluaranById
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetMonthlyPengeluaran
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetListDetailPengeluaranByDate
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetPengeluaranById
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranWithFlow
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranByDate
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranByDateWithFlow
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.SavePengeluaran
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.UpdatePengeluaran
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.DeletePengeluaranByIdImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.FindDetailPengeluaranByIdImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetMonthlyPengeluaranImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetListDetailPengeluaranByDateImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetPengeluaranByIdImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetTotalPengeluaranByDateImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetTotalPengeluaranByDateWithFlowImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetTotalPengeluaranWithFlowImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.SavePengeluaranImpl
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.UpdatePengeluaranImpl
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.DeleteTransfer
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.DeleteTransferById
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.FindDetailTransferById
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferByDate
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferById
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.SaveTransfer
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.UpdateTransfer
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.DeleteTransferByIdImpl
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.DeleteTransferImpl
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.FindDetailTransferByIdImpl
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.GetTransferByDateImpl
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.GetTransferByIdImpl
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.SaveTransferImpl
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.UpdateTransferImpl
+import com.ra.bkuang.features.transaction.domain.usecase.CancelUseCaseAlarmTransactionImpl
+import com.ra.bkuang.features.transaction.domain.usecase.CancelTransactionAlarmUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.GetTotalTransactionByDateUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.GetTotalTransactionByDateUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.SetTransactionAlarmUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.SetTransactionAlarmUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.DeletePendapatanByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.FindDetailPendapatanByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetListDetailPendapatanByDateUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetPendapatanByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanByDateUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanWithFlowUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanByDateWithFlowUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.SavePendapatanUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.UpdatePendapatanUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.DeletePendapatanByIdUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.FindDetailPendapatanByIdUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.GetListDetailPendapatanByDateUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.GetPendapatanByIdUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.GetTotalPendapatanByDateUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.GetTotalPendapatanByDateWithFlowUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.GetTotalPendapatanWithFlowUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.SavePendapatanUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl.UpdatePendapatanUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.DeletePengeluaranByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.FindDetailPengeluaranByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetMonthlyPengeluaranUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetListDetailPengeluaranByDateUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetPengeluaranByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranWithFlowUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranByDateUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranByDateWithFlowUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.SavePengeluaranUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.UpdatePengeluaranUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.DeletePengeluaranByIdUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.FindDetailPengeluaranByIdUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetMonthlyPengeluaranUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetListDetailPengeluaranByDateUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetPengeluaranByIdUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetTotalPengeluaranByDateUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetTotalPengeluaranByDateWithFlowUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.GetTotalPengeluaranWithFlowUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.SavePengeluaranUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl.UpdatePengeluaranUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.DeleteTransferUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.DeleteTransferByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.FindDetailTransferByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferByDateUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.SaveTransferUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.UpdateTransferUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.DeleteTransferByIdUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.DeleteTransferUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.FindDetailTransferByIdUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.GetTransferByDateUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.GetTransferByIdUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.SaveTransferUseCaseImpl
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.impl.UpdateTransferUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -71,117 +71,117 @@ interface TransactionUseCaseModule {
 
   @Binds
   @Singleton
-  fun bindGetTotalPengeluaranByDate(getTotalPengeluaranByDateImpl: GetTotalPengeluaranByDateImpl): GetTotalPengeluaranByDate
+  fun bindGetTotalPengeluaranByDate(getTotalPengeluaranByDateImpl: GetTotalPengeluaranByDateUseCaseImpl): GetTotalPengeluaranByDateUseCase
 
   @Binds
   @Singleton
-  fun bindGetTotalPendapatanByDate(getTotalPendapatanByDateImpl: GetTotalPendapatanByDateImpl): GetTotalPendapatanByDate
+  fun bindGetTotalPendapatanByDate(getTotalPendapatanByDateImpl: GetTotalPendapatanByDateUseCaseImpl): GetTotalPendapatanByDateUseCase
 
   @Binds
   @Singleton
-  fun bindCancelTransactionAlarm(cancelAlarmTransactionImpl: CancelAlarmTransactionImpl): CancelTransactionAlarm
+  fun bindCancelTransactionAlarm(cancelAlarmTransactionImpl: CancelUseCaseAlarmTransactionImpl): CancelTransactionAlarmUseCase
 
   @Binds
   @Singleton
-  fun bindSetTransactionAlarm(setTransactionAlarmImpl: SetTransactionAlarmImpl): SetTransactionAlarm
+  fun bindSetTransactionAlarm(setTransactionAlarmImpl: SetTransactionAlarmUseCaseImpl): SetTransactionAlarmUseCase
 
   @Binds
   @Singleton
-  fun bindGetPendapatanById(getPendapatanByIdImpl: GetPendapatanByIdImpl): GetPendapatanById
+  fun bindGetPendapatanById(getPendapatanByIdImpl: GetPendapatanByIdUseCaseImpl): GetPendapatanByIdUseCase
 
   @Binds
   @Singleton
-  fun bindGetPengeluyaranById(getPengeluaranByIdImpl: GetPengeluaranByIdImpl): GetPengeluaranById
+  fun bindGetPengeluyaranById(getPengeluaranByIdImpl: GetPengeluaranByIdUseCaseImpl): GetPengeluaranByIdUseCase
 
   @Binds
   @Singleton
-  fun bindGetTransferById(getTransferByIdImpl: GetTransferByIdImpl): GetTransferById
+  fun bindGetTransferById(getTransferByIdImpl: GetTransferByIdUseCaseImpl): GetTransferByIdUseCase
 
   @Binds
   @Singleton
-  fun bindDeletePendapataById(deletePendapatanByIdImpl: DeletePendapatanByIdImpl): DeletePendapatanById
+  fun bindDeletePendapataById(deletePendapatanByIdImpl: DeletePendapatanByIdUseCaseImpl): DeletePendapatanByIdUseCase
 
   @Binds
   @Singleton
-  fun bindDeletePengeluaranById(deletePengeluaranByIdImpl: DeletePengeluaranByIdImpl): DeletePengeluaranById
+  fun bindDeletePengeluaranById(deletePengeluaranByIdImpl: DeletePengeluaranByIdUseCaseImpl): DeletePengeluaranByIdUseCase
 
   @Binds
   @Singleton
-  fun bindDeleteTransferById(deleteTransferByIdImpl: DeleteTransferByIdImpl): DeleteTransferById
+  fun bindDeleteTransferById(deleteTransferByIdImpl: DeleteTransferByIdUseCaseImpl): DeleteTransferByIdUseCase
 
   @Binds
   @Singleton
-  fun bindFindPengeluaranById(findPengeluaranByIdImpl: FindDetailPengeluaranByIdImpl): FindDetailPengeluaranById
+  fun bindFindPengeluaranById(findPengeluaranByIdImpl: FindDetailPengeluaranByIdUseCaseImpl): FindDetailPengeluaranByIdUseCase
 
   @Binds
   @Singleton
-  fun bindFindPendapatanById(findPendapatanByIdImpl: FindDetailPendapatanByIdImpl): FindDetailPendapatanById
+  fun bindFindPendapatanById(findPendapatanByIdImpl: FindDetailPendapatanByIdUseCaseImpl): FindDetailPendapatanByIdUseCase
 
   @Binds
   @Singleton
-  fun bindFindTransferById(findTransferByIdImpl: FindDetailTransferByIdImpl): FindDetailTransferById
+  fun bindFindTransferById(findTransferByIdImpl: FindDetailTransferByIdUseCaseImpl): FindDetailTransferByIdUseCase
 
   @Binds
   @Singleton
-  fun bindGetTotalTransactionByDate(getTotalTransactionByDateImpl: GetTotalTransactionByDateImpl): GetTotalTransactionByDate
+  fun bindGetTotalTransactionByDate(getTotalTransactionByDateImpl: GetTotalTransactionByDateUseCaseImpl): GetTotalTransactionByDateUseCase
 
   @Binds
   @Singleton
-  fun bindGetTotaPendapatanByDate(getTotalPendapatanByDateImpl: GetTotalPendapatanByDateWithFlowImpl): GetTotalPendapatanByDateWithFlow
+  fun bindGetTotaPendapatanByDate(getTotalPendapatanByDateImpl: GetTotalPendapatanByDateWithFlowUseCaseImpl): GetTotalPendapatanByDateWithFlowUseCase
 
   @Binds
   @Singleton
-  fun bindGetTotalPengeluaranByDateWithFlow(getTotalPengeluaranByDateImpl: GetTotalPengeluaranByDateWithFlowImpl): GetTotalPengeluaranByDateWithFlow
+  fun bindGetTotalPengeluaranByDateWithFlow(getTotalPengeluaranByDateImpl: GetTotalPengeluaranByDateWithFlowUseCaseImpl): GetTotalPengeluaranByDateWithFlowUseCase
 
   @Binds
   @Singleton
-  fun bindGetTotalPendapatan(getTotalPendapatanImpl: GetTotalPendapatanWithFlowImpl): GetTotalPendapatanWithFlow
+  fun bindGetTotalPendapatan(getTotalPendapatanImpl: GetTotalPendapatanWithFlowUseCaseImpl): GetTotalPendapatanWithFlowUseCase
 
   @Binds
   @Singleton
-  fun bindGetTotalPengeluaranWithFlow(getTotalPengeluaranImpl: GetTotalPengeluaranWithFlowImpl): GetTotalPengeluaranWithFlow
+  fun bindGetTotalPengeluaranWithFlow(getTotalPengeluaranImpl: GetTotalPengeluaranWithFlowUseCaseImpl): GetTotalPengeluaranWithFlowUseCase
 
   @Binds
   @Singleton
-  fun bindGetMonthlyPengeluaran(getMonthlyPengeluaranImpl: GetMonthlyPengeluaranImpl): GetMonthlyPengeluaran
+  fun bindGetMonthlyPengeluaran(getMonthlyPengeluaranImpl: GetMonthlyPengeluaranUseCaseImpl): GetMonthlyPengeluaranUseCase
 
   @Binds
   @Singleton
-  fun bindGetPengeluaranByDate(getPengeluaranByDateImpl: GetListDetailPengeluaranByDateImpl): GetListDetailPengeluaranByDate
+  fun bindGetPengeluaranByDate(getPengeluaranByDateImpl: GetListDetailPengeluaranByDateUseCaseImpl): GetListDetailPengeluaranByDateUseCase
 
   @Binds
   @Singleton
-  fun bindGetPendapatanByDate(getPendapatanByDateImpl: GetListDetailPendapatanByDateImpl): GetListDetailPendapatanByDate
+  fun bindGetPendapatanByDate(getPendapatanByDateImpl: GetListDetailPendapatanByDateUseCaseImpl): GetListDetailPendapatanByDateUseCase
 
   @Binds
   @Singleton
-  fun bindGetTransferByDate(getTransferImpl: GetTransferByDateImpl): GetTransferByDate
+  fun bindGetTransferByDate(getTransferImpl: GetTransferByDateUseCaseImpl): GetTransferByDateUseCase
 
   @Binds
   @Singleton
-  fun bindSavePengeluaran(pengeluaranImpl: SavePengeluaranImpl): SavePengeluaran
+  fun bindSavePengeluaran(pengeluaranImpl: SavePengeluaranUseCaseImpl): SavePengeluaranUseCase
 
   @Binds
   @Singleton
-  fun bindSavePendapatan(pendapatanImpl: SavePendapatanImpl): SavePendapatan
+  fun bindSavePendapatan(pendapatanImpl: SavePendapatanUseCaseImpl): SavePendapatanUseCase
 
   @Binds
   @Singleton
-  fun bindSaveTransfer(saveTransferImpl: SaveTransferImpl): SaveTransfer
+  fun bindSaveTransfer(saveTransferImpl: SaveTransferUseCaseImpl): SaveTransferUseCase
 
   @Binds
   @Singleton
-  fun bindUpdateTransfer(updateTransferImpl: UpdateTransferImpl): UpdateTransfer
+  fun bindUpdateTransfer(updateTransferImpl: UpdateTransferUseCaseImpl): UpdateTransferUseCase
 
   @Binds
   @Singleton
-  fun bindUpdatePengeluaran(updatePengeluaranImpl: UpdatePengeluaranImpl): UpdatePengeluaran
+  fun bindUpdatePengeluaran(updatePengeluaranImpl: UpdatePengeluaranUseCaseImpl): UpdatePengeluaranUseCase
 
   @Binds
   @Singleton
-  fun bindUpdatePendapatan(updatePendapatanImpl: UpdatePendapatanImpl): UpdatePendapatan
+  fun bindUpdatePendapatan(updatePendapatanImpl: UpdatePendapatanUseCaseImpl): UpdatePendapatanUseCase
 
   @Binds
   @Singleton
-  fun bindDeleteTransfer(deleteTransferImpl: DeleteTransferImpl): DeleteTransfer
+  fun bindDeleteTransfer(deleteTransferImpl: DeleteTransferUseCaseImpl): DeleteTransferUseCase
 }

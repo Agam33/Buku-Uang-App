@@ -7,8 +7,8 @@ import com.ra.bkuang.di.IoCoroutineScopeQualifier
 import com.ra.bkuang.features.debt.alarm.DebtAlarmManager
 import com.ra.bkuang.features.debt.alarm.DebtAlarmManagerManagerImpl.Companion.DEBT_ALARM_EXTRA_ID
 import com.ra.bkuang.features.debt.alarm.DebtAlarmManagerManagerImpl.Companion.DEBT_ALARM_EXTRA_TITLE
-import com.ra.bkuang.features.debt.domain.usecase.FindHutangByAlarmId
-import com.ra.bkuang.features.debt.domain.usecase.UpdateHutang
+import com.ra.bkuang.features.debt.domain.usecase.FindHutangByAlarmIdUseCase
+import com.ra.bkuang.features.debt.domain.usecase.UpdateHutangUseCase
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_MODEL_ID
 import com.ra.bkuang.features.transaction.alarm.TransactionAlarmManager
 import com.ra.bkuang.features.transaction.alarm.TransactionAlarmManagerManagerImpl.Companion.TRANSACTION_HOUR
@@ -21,8 +21,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AlarmReceiver: BroadcastReceiver() {
   @Inject @IoCoroutineScopeQualifier lateinit var ioScope: CoroutineScope
-  @Inject lateinit var updateHutang: UpdateHutang
-  @Inject lateinit var findHutangByAlarmId: FindHutangByAlarmId
+  @Inject lateinit var updateHutangUseCase: UpdateHutangUseCase
+  @Inject lateinit var findHutangByAlarmIdUseCase: FindHutangByAlarmIdUseCase
   @Inject lateinit var debtAlarmManager: DebtAlarmManager
   @Inject lateinit var transactionAlarmManager: TransactionAlarmManager
 
@@ -50,12 +50,12 @@ class AlarmReceiver: BroadcastReceiver() {
     val debtModelId = intent.getStringExtra(DEBT_MODEL_ID)
 
     ioScope.launch {
-      val debtModel = findHutangByAlarmId.invoke(alarmId)
+      val debtModel = findHutangByAlarmIdUseCase.invoke(alarmId)
       debtModel.pengingatAktif = false
       debtModel.tglPengingat = ""
       debtModel.idPengingat = Int.MAX_VALUE
 
-      updateHutang.invoke(debtModel)
+      updateHutangUseCase.invoke(debtModel)
     }
 
     debtAlarmManager.showNotification(

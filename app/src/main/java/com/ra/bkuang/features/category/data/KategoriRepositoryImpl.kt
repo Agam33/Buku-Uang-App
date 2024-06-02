@@ -14,7 +14,7 @@ import javax.inject.Inject
 class KategoriRepositoryImpl @Inject constructor(
   private val localDataSource: KategoriLocalDataSource
 ): KategoriRepository {
-  override suspend fun findByType(type: TransactionType): Flow<List<KategoriModel>> {
+  override fun findByType(type: TransactionType): Flow<List<KategoriModel>> {
     return localDataSource.findByType(type).map { i -> i.map { it.toModel() } }
   }
 

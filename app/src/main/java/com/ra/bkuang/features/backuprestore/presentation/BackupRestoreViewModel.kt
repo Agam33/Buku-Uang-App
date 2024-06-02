@@ -2,26 +2,86 @@ package com.ra.bkuang.features.backuprestore.presentation
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import com.ra.bkuang.di.IoDispatcherQualifier
-import com.ra.bkuang.features.backuprestore.domain.usecase.CreateLocalBackup
-import com.ra.bkuang.features.backuprestore.domain.usecase.GetLocalBackup
+import androidx.lifecycle.viewModelScope
+import com.ra.bkuang.features.backuprestore.domain.usecase.CreateLocalBackupUseCase
+import com.ra.bkuang.features.backuprestore.domain.usecase.GetLocalBackupUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BackupRestoreViewModel @Inject constructor(
-  @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
-  private val createLocalBackup: CreateLocalBackup,
-  private val getLocalBackup: GetLocalBackup
+  private val createLocalBackupUseCase: CreateLocalBackupUseCase,
+  private val getLocalBackupUseCase: GetLocalBackupUseCase
 ): ViewModel() {
 
-  suspend fun createLocalBackup(fileName: String, destDirectory: String): Boolean = withContext(ioDispatcher) {
-    return@withContext createLocalBackup.invoke(fileName, destDirectory)
-  }
+  private var _backupRestoreUiState = MutableStateFlow(BackupRestoreUiState())
+  val backupRestoreUiState = _backupRestoreUiState.asStateFlow()
 
-  suspend fun getLocalBackup(uri: Uri, directoryDb: String): Boolean = withContext(ioDispatcher) {
-    return@withContext getLocalBackup.invoke(uri, directoryDb)
+   fun createLocalBackup(fileName: String, destDirectory: String) {
+      viewModelScope.launch {
+        _backupRestoreUiState.update {
+          it.copy(
+            isSuccessful = null
+          )
+        }
+
+        val isSuccess =  createLocalBackupUseCase.invoke(fileName, destDirectory)
+
+        if(isSuccess)  {
+          _backupRestoreUiState.update {
+            it.copy(
+              isSuccessful = true
+            )
+          }
+
+          _backupRestoreUiState.update {
+            it.copy(
+              isSuccessful = null
+            )
+          }
+        } else {
+          _backupRestoreUiState.update {
+            it.copy(
+              isSuccessful = false
+            )
+          }
+        }
+      }
+   }
+
+
+  fun getLocalBackup(uri: Uri, directoryDb: String) {
+    viewModelScope.launch {
+      _backupRestoreUiState.update {
+        it.copy(
+          isSuccessful = null
+        )
+      }
+
+      val isSuccess = getLocalBackupUseCase.invoke(uri, directoryDb)
+
+      if (isSuccess) {
+        _backupRestoreUiState.update {
+          it.copy(
+            isSuccessful = true
+          )
+        }
+        _backupRestoreUiState.update {
+          it.copy(
+            isSuccessful = null
+          )
+        }
+      } else {
+        _backupRestoreUiState.update {
+          it.copy(
+            isSuccessful = false
+          )
+        }
+      }
+    }
   }
 }

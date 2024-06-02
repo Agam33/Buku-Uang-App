@@ -5,13 +5,13 @@ import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.di.IoDispatcherQualifier
-import com.ra.bkuang.features.account.domain.usecase.FindCategoryByType
+import com.ra.bkuang.features.category.domain.usecase.FindCategoryByTypeUseCase
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
-import com.ra.bkuang.features.budget.domain.usecase.CreateBudget
-import com.ra.bkuang.features.budget.domain.usecase.DeleteBudgetById
-import com.ra.bkuang.features.budget.domain.usecase.EditBudget
-import com.ra.bkuang.features.budget.domain.usecase.FindAllBudgetByDate
-import com.ra.bkuang.features.budget.domain.usecase.FindBudgetById
+import com.ra.bkuang.features.budget.domain.usecase.CreateBudgetUseCase
+import com.ra.bkuang.features.budget.domain.usecase.DeleteBudgetByIdUseCase
+import com.ra.bkuang.features.budget.domain.usecase.EditBudgetUseCase
+import com.ra.bkuang.features.budget.domain.usecase.FindAllBudgetByDateUseCase
+import com.ra.bkuang.features.budget.domain.usecase.FindBudgetByIdUseCase
 import com.ra.bkuang.features.category.domain.model.KategoriModel
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,12 +27,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BudgetViewModel @Inject constructor(
-  private val findAllBudgetByDate: FindAllBudgetByDate,
-  private val editBudget: EditBudget,
-  private val deleteBudgetById: DeleteBudgetById,
-  private val createBudget: CreateBudget,
-  private val findKategoriByType: FindCategoryByType,
-  private val findBudgetById: FindBudgetById,
+  private val findAllBudgetByDateUseCase: FindAllBudgetByDateUseCase,
+  private val editBudgetUseCase: EditBudgetUseCase,
+  private val deleteBudgetByIdUseCase: DeleteBudgetByIdUseCase,
+  private val createBudgetUseCase: CreateBudgetUseCase,
+  private val findKategoriByType: FindCategoryByTypeUseCase,
+  private val findBudgetByIdUseCase: FindBudgetByIdUseCase,
   @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher
 ): BaseViewModel() {
 
@@ -44,13 +44,13 @@ class BudgetViewModel @Inject constructor(
 
   fun findBudgetById(id: UUID) {
     viewModelScope.launch {
-      val budget = findBudgetById.invoke(id)
+      val budget = findBudgetByIdUseCase.invoke(id)
       _budgetModel.emit(budget)
     }
   }
 
   suspend fun findAllBudget(fromDate: LocalDate, toDate: LocalDate) = withContext(ioDispatcher) {
-    return@withContext findAllBudgetByDate.invoke(fromDate, toDate)
+    return@withContext findAllBudgetByDateUseCase.invoke(fromDate, toDate)
   }
 
   fun setCategoryByType(transactionType: TransactionType) = viewModelScope.launch {
@@ -66,13 +66,13 @@ class BudgetViewModel @Inject constructor(
   }
 
   fun deleteBudgetById(id: UUID): Flow<ResourceState> =
-    deleteBudgetById.invoke(id)
+    deleteBudgetByIdUseCase.invoke(id)
 
   fun updateBudget(budgetModel: BudgetModel): Flow<ResourceState> =
-    editBudget.invoke(budgetModel)
+    editBudgetUseCase.invoke(budgetModel)
 
   fun createBudget(budgetModel: BudgetModel): Flow<ResourceState> =
-    createBudget.invoke(
+    createBudgetUseCase.invoke(
       budgetModel.bulanTahun,
       budgetModel.bulanTahun,
       budgetModel

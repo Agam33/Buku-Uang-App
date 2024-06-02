@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface KategoriRepository {
-  suspend fun findByType(type: TransactionType): Flow<List<KategoriModel>>
+  fun findByType(type: TransactionType): Flow<List<KategoriModel>>
   suspend fun save(kategori: KategoriModel)
   suspend fun delete(kategori: KategoriModel)
   suspend fun update(kategori: KategoriModel)
