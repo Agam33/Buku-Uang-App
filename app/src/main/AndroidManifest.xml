@@ -55,7 +55,7 @@
             android:parentActivityName=".main.MainActivity"
             android:theme="@style/Theme.BkUang.M3" />
         <activity
-            android:name=".features.account.presentation.CreateNewAccountActivity"
+            android:name=".features.account.presentation.createaccount.CreateNewAccountActivity"
             android:exported="false"
             android:parentActivityName=".main.MainActivity"
             android:theme="@style/Theme.BkUang.M3" />

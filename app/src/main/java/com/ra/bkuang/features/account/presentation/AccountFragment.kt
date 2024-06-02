@@ -8,14 +8,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
+import com.ra.bkuang.common.util.Extension.hide
+import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.view.dialog.CautionDeleteDialog
 import com.ra.bkuang.common.view.spinner.SpinnerItemOptions
 import com.ra.bkuang.databinding.FragmentAccountBinding
 import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.common.util.Extension.showShortToast
-import com.ra.bkuang.common.util.ResultState
-import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.features.account.presentation.createaccount.CreateNewAccountActivity
 import com.ra.bkuang.features.account.presentation.adapter.RvAccountAdapter
+import com.ra.bkuang.features.account.presentation.viewmodel.AccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,32 +31,35 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    init()
     createNewAccount()
-    setupAccountList()
     observer()
-    refresh()
   }
 
-  private fun setupAccountList() {
-    viewModel.accounts.observe(viewLifecycleOwner) {
-      when(it) {
-        is ResultState.Success -> {
-          viewModel.setRvState(false)
-          viewModel.setEmptyLayoutState(true)
-          setupAccountAdapter(it.data)
+  private fun observer() {
+    lifecycleScope.launch {
+      viewModel.accountUiState.collect { data ->
+        if(data.isEmptyAccount) {
+          binding?.rvAccount?.hide(true)
+          binding?.emptyLayout?.state = false
+        } else {
+          setupAccountAdapter(data.accounts)
+          binding?.rvAccount?.hide(false)
+          binding?.emptyLayout?.state = true
         }
-        is ResultState.Empty -> {
-          viewModel.setRvState(true)
-          viewModel.setEmptyLayoutState(false)
+
+        binding?.tvTotal?.text = data.totalMoney
+        binding?.tvIncome?.text = data.totalIncome
+        binding?.tvExpense?.text = data.totalExpense
+
+        if(data.isSuccessfulDelete != null && data.isSuccessfulDelete) {
+          showShortToast(requireContext().resources.getString(R.string.msg_success))
         }
-        is ResultState.Error -> {}
-        is ResultState.Loading -> {}
       }
     }
   }
 
   private fun setupAccountAdapter(list: List<AkunModel>?) {
-
     accountAdapter.onOptionAccountClickCallBack = this@AccountFragment
     accountAdapter.submitList(list)
 
@@ -68,18 +72,9 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
     }
   }
 
-  private fun refresh() {
+  private fun init() {
     viewModel.getAllAccount()
     viewModel.getOverallMoney()
-  }
-
-  private fun observer() {
-    binding?.lifecycleOwner = viewLifecycleOwner
-    binding?.vm = viewModel
-
-    viewModel.emptyMessageState.observe(viewLifecycleOwner) {
-      binding?.emptyLayout?.state = it
-    }
   }
 
   private fun createNewAccount() {
@@ -96,11 +91,6 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
     }
   }
 
-  override fun onStart() {
-    super.onStart()
-    refresh()
-  }
-
   override fun option(options: SpinnerItemOptions, akun: AkunModel) {
     when(options) {
       SpinnerItemOptions.DELETE -> {
@@ -110,17 +100,8 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
           override fun onDelete() {
             viewLifecycleOwner.lifecycleScope.launch {
-              viewModel.deleteAccount(akun).collect { status ->
-                when(status) {
-                  ResourceState.SUCCESS -> {
-                    refresh()
-                    showShortToast(requireContext().resources.getString(R.string.msg_success))
-                    deleteDialog.dismiss()
-                  }
-                  ResourceState.LOADING -> {}
-                  ResourceState.FAILED -> {}
-                }
-              }
+              viewModel.deleteAccount(akun)
+              deleteDialog.dismiss()
             }
           }
 

@@ -4,12 +4,14 @@ import com.ra.bkuang.features.account.domain.usecase.AkunOverallMoney
 import com.ra.bkuang.features.account.domain.usecase.DeleteAkun
 import com.ra.bkuang.features.account.domain.usecase.FindAkunById
 import com.ra.bkuang.features.account.domain.usecase.FindAllAkun
+import com.ra.bkuang.features.account.domain.usecase.FindAllAkunWithFlow
 import com.ra.bkuang.features.account.domain.usecase.SaveAkun
 import com.ra.bkuang.features.account.domain.usecase.UpdateAkun
 import com.ra.bkuang.features.account.domain.usecase.impl.AkunOverallMoneyImpl
 import com.ra.bkuang.features.account.domain.usecase.impl.DeleteAkunImpl
 import com.ra.bkuang.features.account.domain.usecase.impl.FindAkunByIdImpl
 import com.ra.bkuang.features.account.domain.usecase.impl.FindAllAkunImpl
+import com.ra.bkuang.features.account.domain.usecase.impl.FindAllAkunWithFlowImpl
 import com.ra.bkuang.features.account.domain.usecase.impl.SaveAkunImpl
 import com.ra.bkuang.features.account.domain.usecase.impl.UpdateAkunImpl
 import dagger.Binds
@@ -21,6 +23,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 interface AkunUseCaseModule {
+
+  @Binds
+  @Singleton
+  fun bindFindAllAkunWithFlow(findAllAkunWithFlow: FindAllAkunWithFlowImpl): FindAllAkunWithFlow
 
   @Binds
   @Singleton

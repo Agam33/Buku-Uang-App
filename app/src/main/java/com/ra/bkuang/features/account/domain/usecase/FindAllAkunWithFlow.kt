@@ -1,9 +1,9 @@
 package com.ra.bkuang.features.account.domain.usecase
 
-import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.account.domain.model.AkunModel
 import kotlinx.coroutines.flow.Flow
 
-interface SaveAkun {
-  operator fun invoke(akun: AkunModel): Flow<Result<Boolean>>
+interface FindAllAkunWithFlow {
+  operator fun invoke(): Flow<List<AkunModel>>
+
 }

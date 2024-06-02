@@ -3,12 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="vm"
-            type="com.ra.bkuang.features.account.presentation.AccountViewModel" />
-    </data>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -66,7 +60,6 @@
                     android:textSize="14sp"
                     android:layout_toEndOf="@id/tv_title_expense"
                     android:id="@+id/tv_expense"
-                    android:text="@{vm.totalExpense}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/red_40"
                     android:layout_marginStart="32dp"
@@ -92,7 +85,6 @@
                     android:layout_toEndOf="@id/tv_title_expense"
                     android:layout_below="@id/tv_title_expense"
                     android:id="@+id/tv_income"
-                    android:text="@{vm.totalIncome}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/green_40"
                     android:layout_marginStart="32dp"
@@ -118,7 +110,6 @@
                     android:layout_toEndOf="@id/tv_title_expense"
                     android:layout_below="@id/tv_income"
                     android:id="@+id/tv_total"
-                    android:text="@{vm.totalAccountMoney}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/green_40"
                     android:layout_marginStart="32dp"
@@ -137,7 +128,6 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_below="@+id/top_container"
             android:layout_marginTop="8dp"
-            app:hide="@{vm.rvAccountState}"
             android:id="@+id/rv_account"
             tools:itemCount="15"
             tools:listitem="@layout/item_rv_accounts"
