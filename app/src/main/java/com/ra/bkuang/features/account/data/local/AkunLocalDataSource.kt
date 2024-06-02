@@ -9,6 +9,7 @@ interface AkunLocalDataSource {
   suspend fun save(tabungan: AkunEntity)
   suspend fun delete(tabungan: AkunEntity)
   suspend fun update(tabungan: AkunEntity)
-  suspend fun findAll(): List<AkunEntity>
+  fun findAllWithFlow(): Flow<List<AkunEntity>>
   suspend fun findById(id: UUID): AkunEntity
+  fun findAll(): List<AkunEntity>
 }

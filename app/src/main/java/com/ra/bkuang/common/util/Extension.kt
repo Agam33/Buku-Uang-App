@@ -32,6 +32,10 @@ import java.util.Locale
 
 object Extension {
 
+  fun View.hide(isHide: Boolean) {
+    this.visibility = if(isHide) View.GONE else View.VISIBLE
+  }
+
   fun File.isNotExist() = !this.exists()
 
   fun Fragment.requestStoragePermission(): Boolean {

@@ -1,10 +1,11 @@
-package com.ra.bkuang.features.account.presentation
+package com.ra.bkuang.features.account.presentation.createaccount
 
 import android.os.Bundle
 import android.text.Editable
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.ra.bkuang.R
 import com.ra.bkuang.databinding.ActivityCreateNewAccountBinding
 import com.ra.bkuang.features.account.domain.model.AkunModel
@@ -15,14 +16,18 @@ import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.EDI
 import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.EXTRA_TEXT
 import com.ra.bkuang.common.util.Extension.parcelable
 import com.ra.bkuang.common.util.Extension.setupNoActionbar
+import com.ra.bkuang.common.util.Extension.showShortToast
+import com.ra.bkuang.features.account.presentation.createaccount.viewmodel.CreateAccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.util.UUID
 
 @AndroidEntryPoint
 class CreateNewAccountActivity : BaseActivity<ActivityCreateNewAccountBinding>(R.layout.activity_create_new_account) {
 
-  private val viewModel: AccountViewModel by viewModels()
+  private val viewModel: CreateAccountViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -31,6 +36,18 @@ class CreateNewAccountActivity : BaseActivity<ActivityCreateNewAccountBinding>(R
     }
 
     setupNoActionbar(binding.toolbar)
+
+    observer()
+  }
+
+  private fun observer() {
+    lifecycleScope.launch {
+      viewModel.createAccountUiState.collect { state ->
+        if(state.isSuccessful != null && state.isSuccessful) {
+          showShortToast(getString(R.string.msg_success))
+        }
+      }
+    }
   }
 
   private fun isAccountCreated(): Boolean = intent?.getStringExtra(EXTRA_TEXT) == EDIT_ACCOUNT
