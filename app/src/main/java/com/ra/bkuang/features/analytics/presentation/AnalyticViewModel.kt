@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.features.analytics.domain.model.AnalyticModel
-import com.ra.bkuang.features.analytics.domain.usecase.DetailAnalytics
-import com.ra.bkuang.features.analytics.domain.usecase.ShowAnalyticList
+import com.ra.bkuang.features.analytics.domain.usecase.DetailAnalyticsUseCase
+import com.ra.bkuang.features.analytics.domain.usecase.ShowAnalyticListUseCase
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
@@ -17,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AnalyticViewModel @Inject constructor(
-  private val showAnalyticList: ShowAnalyticList,
-  private val detailAnalytics: DetailAnalytics
+  private val showAnalyticListUseCase: ShowAnalyticListUseCase,
+  private val detailAnalyticsUseCase: DetailAnalyticsUseCase
 ): BaseViewModel() {
 
   private var _analyticList = MutableLiveData<ResultState<List<AnalyticModel>>>()
@@ -36,7 +36,7 @@ class AnalyticViewModel @Inject constructor(
     toDate: LocalDateTime
   ) {
     viewModelScope.launch {
-      val data = showAnalyticList.invoke(transactionType, fromDate, toDate)
+      val data = showAnalyticListUseCase.invoke(transactionType, fromDate, toDate)
       _analyticList.postValue(data)
     }
   }
@@ -47,7 +47,7 @@ class AnalyticViewModel @Inject constructor(
     toDate: LocalDateTime
   ) {
     viewModelScope.launch {
-      val data = detailAnalytics.invoke(transactionType, fromDate, toDate)
+      val data = detailAnalyticsUseCase.invoke(transactionType, fromDate, toDate)
       _detailTransactions.postValue(data)
     }
   }

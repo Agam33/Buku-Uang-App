@@ -13,8 +13,8 @@ import com.google.android.material.timepicker.TimeFormat
 import com.ra.bkuang.R
 import com.ra.bkuang.core.preferences.UserSettingPref
 import com.ra.bkuang.databinding.FragmentTransactionBottomSheetBinding
-import com.ra.bkuang.features.transaction.domain.usecase.CancelTransactionAlarm
-import com.ra.bkuang.features.transaction.domain.usecase.SetTransactionAlarm
+import com.ra.bkuang.features.transaction.domain.usecase.CancelTransactionAlarmUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.SetTransactionAlarmUseCase
 import com.ra.bkuang.common.util.Constants
 import com.ra.bkuang.common.util.DateViewType
 import com.ra.bkuang.common.util.Extension.checkTimeFormat
@@ -31,8 +31,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TransactionBottomSheet: BottomSheetDialogFragment() {
-  @Inject lateinit var setTransactionAlarm: SetTransactionAlarm
-  @Inject lateinit var cancelTransactionAlarm: CancelTransactionAlarm
+  @Inject lateinit var setTransactionAlarmUseCase: SetTransactionAlarmUseCase
+  @Inject lateinit var cancelTransactionAlarmUseCase: CancelTransactionAlarmUseCase
   @Inject lateinit var userSettingPref: UserSettingPref
 
   private var _binding: FragmentTransactionBottomSheetBinding? = null
@@ -92,7 +92,7 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
         delay(200)
         if(binding?.switchActiveAlarm?.isChecked!!) {
           val alarmTimeText = binding?.tvAlarmTime?.text?.toString() ?: ""
-          setTransactionAlarm.invoke(getAlarmCalendar(alarmTimeText))
+          setTransactionAlarmUseCase.invoke(getAlarmCalendar(alarmTimeText))
         }
       }
     }
@@ -101,9 +101,9 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
       viewLifecycleOwner.lifecycleScope.launch {
         if (isChecked) {
           val alarmTimeText = binding?.tvAlarmTime?.text?.toString() ?: ""
-          setTransactionAlarm.invoke(getAlarmCalendar(alarmTimeText))
+          setTransactionAlarmUseCase.invoke(getAlarmCalendar(alarmTimeText))
         } else {
-          cancelTransactionAlarm.invoke()
+          cancelTransactionAlarmUseCase.invoke()
         }
         userSettingPref.setAlarmTransaction(isChecked)
       }

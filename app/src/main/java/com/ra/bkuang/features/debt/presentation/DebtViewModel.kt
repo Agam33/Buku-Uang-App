@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.debt.domain.model.HutangModel
-import com.ra.bkuang.features.debt.domain.usecase.CreateHutang
-import com.ra.bkuang.features.debt.domain.usecase.FindHutangById
-import com.ra.bkuang.features.debt.domain.usecase.ShowAllHutang
-import com.ra.bkuang.features.debt.domain.usecase.UpdateHutang
+import com.ra.bkuang.features.debt.domain.usecase.CreateHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.FindHutangByIdUseCase
+import com.ra.bkuang.features.debt.domain.usecase.ShowAllHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.UpdateHutangUseCase
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,10 +19,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DebtViewModel @Inject constructor(
-  private val createHutang: CreateHutang,
-  private val updateHutang: UpdateHutang,
-  private val showAllHutang: ShowAllHutang,
-  private val findHutangById: FindHutangById,
+  private val createHutangUseCase: CreateHutangUseCase,
+  private val updateHutangUseCase: UpdateHutangUseCase,
+  private val showAllHutangUseCase: ShowAllHutangUseCase,
+  private val findHutangByIdUseCase: FindHutangByIdUseCase,
   @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher
 ): BaseViewModel() {
 
@@ -45,23 +45,23 @@ class DebtViewModel @Inject constructor(
 
   fun getHutangList() {
     viewModelScope.launch {
-      val data = showAllHutang.invoke()
+      val data = showAllHutangUseCase.invoke()
       _hutangList.postValue(data)
     }
   }
 
   fun getHutangById(id: String) {
     viewModelScope.launch {
-      val data = findHutangById.invoke(id)
+      val data = findHutangByIdUseCase.invoke(id)
       _hutangModel.postValue(data)
     }
   }
 
   suspend fun createHutang(hutangModel: HutangModel) = withContext(ioDispatcher) {
-    return@withContext createHutang.invoke(hutangModel)
+    return@withContext createHutangUseCase.invoke(hutangModel)
   }
 
   suspend fun updateHutang(hutangModel: HutangModel) = withContext(ioDispatcher) {
-      return@withContext updateHutang.invoke(hutangModel)
+      return@withContext updateHutangUseCase.invoke(hutangModel)
   }
 }

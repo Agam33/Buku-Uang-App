@@ -1,9 +1,9 @@
 package com.ra.bkuang.features.analytics.di
 
-import com.ra.bkuang.features.analytics.domain.usecase.DetailAnalytics
-import com.ra.bkuang.features.analytics.domain.usecase.ShowAnalyticList
-import com.ra.bkuang.features.analytics.domain.usecase.impl.DetailAnalyticsImpl
-import com.ra.bkuang.features.analytics.domain.usecase.impl.ShowAnalyticListImpl
+import com.ra.bkuang.features.analytics.domain.usecase.DetailAnalyticsUseCase
+import com.ra.bkuang.features.analytics.domain.usecase.ShowAnalyticListUseCase
+import com.ra.bkuang.features.analytics.domain.usecase.impl.DetailAnalyticsUseCaseImpl
+import com.ra.bkuang.features.analytics.domain.usecase.impl.ShowAnalyticListUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,9 +16,9 @@ interface AnalyticUseCaseModule {
 
   @Binds
   @Singleton
-  fun bindShowAnalyticList(showAnalyticListImpl: ShowAnalyticListImpl): ShowAnalyticList
+  fun bindShowAnalyticList(showAnalyticListImpl: ShowAnalyticListUseCaseImpl): ShowAnalyticListUseCase
 
   @Binds
   @Singleton
-  fun bindDetailAnalytics(detailAnalyticsImpl: DetailAnalyticsImpl): DetailAnalytics
+  fun bindDetailAnalytics(detailAnalyticsImpl: DetailAnalyticsUseCaseImpl): DetailAnalyticsUseCase
 }

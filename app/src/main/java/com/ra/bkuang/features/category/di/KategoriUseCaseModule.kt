@@ -1,17 +1,17 @@
 package com.ra.bkuang.features.category.di
 
-import com.ra.bkuang.features.account.domain.usecase.FindCategoryByType
-import com.ra.bkuang.features.account.domain.usecase.impl.FindCategoryByTypeImpl
-import com.ra.bkuang.features.category.domain.usecase.DeleteKategori
-import com.ra.bkuang.features.category.domain.usecase.FindCategoryWithFlow
-import com.ra.bkuang.features.category.domain.usecase.FindKategoriById
-import com.ra.bkuang.features.category.domain.usecase.SaveKategori
-import com.ra.bkuang.features.category.domain.usecase.UpdateKategori
-import com.ra.bkuang.features.category.domain.usecase.impl.DeleteKategoriImpl
-import com.ra.bkuang.features.category.domain.usecase.impl.FindCategoryWithFlowImpl
-import com.ra.bkuang.features.category.domain.usecase.impl.FindKategoriByIdImpl
-import com.ra.bkuang.features.category.domain.usecase.impl.SaveKategoriImpl
-import com.ra.bkuang.features.category.domain.usecase.impl.UpdateKategoriImpl
+import com.ra.bkuang.features.category.domain.usecase.FindCategoryByTypeUseCase
+import com.ra.bkuang.features.category.domain.usecase.impl.FindCategoryByTypeUseCaseImpl
+import com.ra.bkuang.features.category.domain.usecase.DeleteKategoriUseCase
+import com.ra.bkuang.features.category.domain.usecase.FindCategoryWithFlowUseCase
+import com.ra.bkuang.features.category.domain.usecase.FindKategoriByIdUseCase
+import com.ra.bkuang.features.category.domain.usecase.SaveKategoriUseCase
+import com.ra.bkuang.features.category.domain.usecase.UpdateKategoriUseCase
+import com.ra.bkuang.features.category.domain.usecase.impl.DeleteKategoriUseCaseImpl
+import com.ra.bkuang.features.category.domain.usecase.impl.FindCategoryWithFlowUseCaseImpl
+import com.ra.bkuang.features.category.domain.usecase.impl.FindKategoriByIdUseCaseImpl
+import com.ra.bkuang.features.category.domain.usecase.impl.SaveKategoriUseCaseImpl
+import com.ra.bkuang.features.category.domain.usecase.impl.UpdateKategoriUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -24,25 +24,25 @@ interface KategoriUseCaseModule {
 
   @Binds
   @Singleton
-  fun bindFindCategoryByFlow(findCategoryWithFlowImpl: FindCategoryWithFlowImpl): FindCategoryWithFlow
+  fun bindFindCategoryByFlow(findCategoryWithFlowImpl: FindCategoryWithFlowUseCaseImpl): FindCategoryWithFlowUseCase
 
   @Binds
   @Singleton
-  fun bindFindCategoryByType(findCategoryByTypeImpl: FindCategoryByTypeImpl): FindCategoryByType
+  fun bindFindCategoryByType(findCategoryByTypeImpl: FindCategoryByTypeUseCaseImpl): FindCategoryByTypeUseCase
 
   @Binds
   @Singleton
-  fun bindSaveKategoriUseCase(saveKategoriImpl: SaveKategoriImpl): SaveKategori
+  fun bindSaveKategoriUseCase(saveKategoriImpl: SaveKategoriUseCaseImpl): SaveKategoriUseCase
 
   @Binds
   @Singleton
-  fun bindDeleteKategoriUseCase(deleteKategoriImpl: DeleteKategoriImpl): DeleteKategori
+  fun bindDeleteKategoriUseCase(deleteKategoriImpl: DeleteKategoriUseCaseImpl): DeleteKategoriUseCase
 
   @Binds
   @Singleton
-  fun bindUpdateKategoriUseCase(updateKategoriImpl: UpdateKategoriImpl): UpdateKategori
+  fun bindUpdateKategoriUseCase(updateKategoriImpl: UpdateKategoriUseCaseImpl): UpdateKategoriUseCase
 
   @Binds
   @Singleton
-  fun bindFindKategoriByIdUseCase(findKategoriByIdImpl: FindKategoriByIdImpl): FindKategoriById
+  fun bindFindKategoriByIdUseCase(findKategoriByIdImpl: FindKategoriByIdUseCaseImpl): FindKategoriByIdUseCase
 }

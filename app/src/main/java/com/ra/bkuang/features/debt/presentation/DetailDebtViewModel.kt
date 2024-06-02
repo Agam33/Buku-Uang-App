@@ -8,17 +8,17 @@ import com.ra.bkuang.features.account.domain.model.AkunModel
 import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
 import com.ra.bkuang.features.debt.domain.model.HutangModel
 import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
-import com.ra.bkuang.features.account.domain.usecase.FindAllAkun
-import com.ra.bkuang.features.debt.domain.usecase.CancelAlarmDebt
-import com.ra.bkuang.features.debt.domain.usecase.DeleteHutang
-import com.ra.bkuang.features.debt.domain.usecase.DeleteRecordPembayaranHutang
-import com.ra.bkuang.features.debt.domain.usecase.FindAllRecordPembayaranHutang
-import com.ra.bkuang.features.debt.domain.usecase.FindHutangById
-import com.ra.bkuang.features.debt.domain.usecase.FindHutangByIdWithFlow
-import com.ra.bkuang.features.debt.domain.usecase.GetSizeListPembayaranHutangById
-import com.ra.bkuang.features.debt.domain.usecase.SavePembayaranHutang
-import com.ra.bkuang.features.debt.domain.usecase.SetAlarmDebt
-import com.ra.bkuang.features.debt.domain.usecase.UpdatePembayaranHutang
+import com.ra.bkuang.features.account.domain.usecase.FindAllAkunUseCase
+import com.ra.bkuang.features.debt.domain.usecase.CancelAlarmDebtUseCase
+import com.ra.bkuang.features.debt.domain.usecase.DeleteHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.DeleteRecordPembayaranHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.FindAllRecordPembayaranHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.FindHutangByIdUseCase
+import com.ra.bkuang.features.debt.domain.usecase.FindHutangByIdWithFlowUseCase
+import com.ra.bkuang.features.debt.domain.usecase.GetSizeListPembayaranHutangByIdUseCase
+import com.ra.bkuang.features.debt.domain.usecase.SavePembayaranHutangUseCase
+import com.ra.bkuang.features.debt.domain.usecase.SetAlarmDebtUseCase
+import com.ra.bkuang.features.debt.domain.usecase.UpdatePembayaranHutangUseCase
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,17 +33,17 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailDebtViewModel @Inject constructor(
   @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
-  private val findAllAkun: FindAllAkun,
-  private val findAllRecordPembayaranHutang: FindAllRecordPembayaranHutang,
-  private val savePembayaranHutang: SavePembayaranHutang,
-  private val findHutangByIdWithFlow: FindHutangByIdWithFlow,
-  private val findHutangById: FindHutangById,
-  private val deleteRecordPembayaranHutang: DeleteRecordPembayaranHutang,
-  private val updatePembayaranHutang: UpdatePembayaranHutang,
-  private val getSizeListPembayaranHutangById: GetSizeListPembayaranHutangById,
-  private val deleteHutang: DeleteHutang,
-  private val cancelAlarmDebt: CancelAlarmDebt,
-  private val setAlarmDebt: SetAlarmDebt,
+  private val findAllAkunUseCase: FindAllAkunUseCase,
+  private val findAllRecordPembayaranHutangUseCase: FindAllRecordPembayaranHutangUseCase,
+  private val savePembayaranHutangUseCase: SavePembayaranHutangUseCase,
+  private val findHutangByIdWithFlowUseCase: FindHutangByIdWithFlowUseCase,
+  private val findHutangByIdUseCase: FindHutangByIdUseCase,
+  private val deleteRecordPembayaranHutangUseCase: DeleteRecordPembayaranHutangUseCase,
+  private val updatePembayaranHutangUseCase: UpdatePembayaranHutangUseCase,
+  private val getSizeListPembayaranHutangByIdUseCase: GetSizeListPembayaranHutangByIdUseCase,
+  private val deleteHutangUseCase: DeleteHutangUseCase,
+  private val cancelAlarmDebtUseCase: CancelAlarmDebtUseCase,
+  private val setAlarmDebtUseCase: SetAlarmDebtUseCase,
 ): BaseViewModel() {
 
   private var _rvDebtRecordState = MutableLiveData<Boolean>()
@@ -68,16 +68,16 @@ class DetailDebtViewModel @Inject constructor(
   val detailDebt get() = _detailDebt.asStateFlow()
 
   suspend fun deleteHutang(hutang: HutangModel) = withContext(ioDispatcher) {
-    return@withContext deleteHutang.invoke(hutang)
+    return@withContext deleteHutangUseCase.invoke(hutang)
   }
 
   suspend fun setAlarmDebt(calendar: Calendar, model: HutangModel) = withContext(ioDispatcher) {
-      return@withContext setAlarmDebt.invoke(calendar, model)
+      return@withContext setAlarmDebtUseCase.invoke(calendar, model)
   }
 
   fun cancelAlarmDebt(model: HutangModel) {
     viewModelScope.launch {
-      cancelAlarmDebt.invoke(model)
+      cancelAlarmDebtUseCase.invoke(model)
     }
   }
 
@@ -88,7 +88,7 @@ class DetailDebtViewModel @Inject constructor(
 
   fun getSizeListPembayaranHutang(id: String) {
     viewModelScope.launch {
-      getSizeListPembayaranHutangById.invoke(id).collect {
+      getSizeListPembayaranHutangByIdUseCase.invoke(id).collect {
         _sizeListPembayaranHutang.postValue("${it ?: 0}")
       }
     }
@@ -96,28 +96,28 @@ class DetailDebtViewModel @Inject constructor(
 
   fun getAllAccount() {
     viewModelScope.launch {
-      _accounts.postValue(findAllAkun.invoke())
+      _accounts.postValue(findAllAkunUseCase.invoke())
     }
   }
 
   suspend fun getHutangById(id: String): HutangModel = withContext(ioDispatcher) {
-    return@withContext findHutangById.invoke(id)
+    return@withContext findHutangByIdUseCase.invoke(id)
   }
 
-  fun getHutangByIdWithFlow(id: String) = findHutangByIdWithFlow.invoke(id)
+  fun getHutangByIdWithFlow(id: String) = findHutangByIdWithFlowUseCase.invoke(id)
 
   suspend fun savePembayaranHutang(pembayaranHutangModel: PembayaranHutangModel) =
-    savePembayaranHutang.invoke(pembayaranHutangModel)
+    savePembayaranHutangUseCase.invoke(pembayaranHutangModel)
 
   suspend fun deleteRecordPembayaranHutang(detailPembayaranHutangModel: DetailPembayaranHutangModel) =
-    deleteRecordPembayaranHutang.invoke(detailPembayaranHutangModel)
+    deleteRecordPembayaranHutangUseCase.invoke(detailPembayaranHutangModel)
 
   suspend fun updatePembayaranHutang(newModel: PembayaranHutangModel, oldModel: PembayaranHutangModel) =
-    updatePembayaranHutang.invoke(newModel, oldModel)
+    updatePembayaranHutangUseCase.invoke(newModel, oldModel)
 
   fun getAllDebtRecord(id: String) {
     viewModelScope.launch {
-      _debtRecord.postValue(findAllRecordPembayaranHutang.invoke(id))
+      _debtRecord.postValue(findAllRecordPembayaranHutangUseCase.invoke(id))
     }
   }
 }

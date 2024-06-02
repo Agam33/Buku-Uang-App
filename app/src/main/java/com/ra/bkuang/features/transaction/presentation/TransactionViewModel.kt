@@ -9,27 +9,27 @@ import com.ra.bkuang.features.category.domain.model.KategoriModel
 import com.ra.bkuang.features.transaction.domain.model.PendapatanModel
 import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
 import com.ra.bkuang.features.transaction.domain.model.TransferModel
-import com.ra.bkuang.features.account.domain.usecase.FindAkunById
-import com.ra.bkuang.features.account.domain.usecase.FindAllAkun
-import com.ra.bkuang.features.account.domain.usecase.FindCategoryByType
-import com.ra.bkuang.features.transaction.domain.usecase.GetTotalTransactionByDate
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.DeletePendapatanById
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetListDetailPendapatanByDate
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetPendapatanById
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanByDateWithFlow
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.SavePendapatan
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.UpdatePendapatan
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.DeletePengeluaranById
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetListDetailPengeluaranByDate
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetPengeluaranById
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranByDateWithFlow
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.SavePengeluaran
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.UpdatePengeluaran
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.DeleteTransferById
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferByDate
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferById
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.SaveTransfer
-import com.ra.bkuang.features.transaction.domain.usecase.transfer.UpdateTransfer
+import com.ra.bkuang.features.account.domain.usecase.FindAkunByIdUseCase
+import com.ra.bkuang.features.account.domain.usecase.FindAllAkunUseCase
+import com.ra.bkuang.features.category.domain.usecase.FindCategoryByTypeUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.GetTotalTransactionByDateUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.DeletePendapatanByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetListDetailPendapatanByDateUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetPendapatanByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanByDateWithFlowUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.SavePendapatanUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.UpdatePendapatanUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.DeletePengeluaranByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetListDetailPengeluaranByDateUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetPengeluaranByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranByDateWithFlowUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.SavePengeluaranUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.UpdatePengeluaranUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.DeleteTransferByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferByDateUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferByIdUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.SaveTransferUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.transfer.UpdateTransferUseCase
 import com.ra.bkuang.common.util.ResultState
 import com.ra.bkuang.core.preferences.UserSettingPref
 import com.ra.bkuang.common.base.BaseViewModel
@@ -52,28 +52,28 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TransactionViewModel @Inject constructor(
-  private val saveTransfer: SaveTransfer,
-  private val savePengeluaran: SavePengeluaran,
-  private val savePendapatan: SavePendapatan,
-  private val findAllAkun: FindAllAkun,
-  private val findKategoriByType: FindCategoryByType,
-  private val getListDetailPengeluaranByDate: GetListDetailPengeluaranByDate,
-  private val getListDetailPendapatanByDate: GetListDetailPendapatanByDate,
-  private val getTransferByDate: GetTransferByDate,
+  private val saveTransferUseCase: SaveTransferUseCase,
+  private val savePengeluaranUseCase: SavePengeluaranUseCase,
+  private val savePendapatanUseCase: SavePendapatanUseCase,
+  private val findAllAkunUseCase: FindAllAkunUseCase,
+  private val findKategoriByType: FindCategoryByTypeUseCase,
+  private val getListDetailPengeluaranByDateUseCase: GetListDetailPengeluaranByDateUseCase,
+  private val getListDetailPendapatanByDateUseCase: GetListDetailPendapatanByDateUseCase,
+  private val getTransferByDateUseCase: GetTransferByDateUseCase,
   private val userSettingPref: UserSettingPref,
-  private val getTotalPendapatanByDateWithFlow: GetTotalPendapatanByDateWithFlow,
-  private val getTotalPengeluaranByDateWithFlow: GetTotalPengeluaranByDateWithFlow,
-  private val getTotalTransactionByDate: GetTotalTransactionByDate,
-  private val deletePengeluaranById: DeletePengeluaranById,
-  private val deleteTransferById: DeleteTransferById,
-  private val deletePendapatanById: DeletePendapatanById,
-  private val getPendapatanById: GetPendapatanById,
-  private val getPengeluaranById: GetPengeluaranById,
-  private val getTransferById: GetTransferById,
-  private val updateTransfer: UpdateTransfer,
-  private val updatePendapatan: UpdatePendapatan,
-  private val updatePengeluaran: UpdatePengeluaran,
-  private val findAkunById: FindAkunById
+  private val getTotalPendapatanByDateWithFlowUseCase: GetTotalPendapatanByDateWithFlowUseCase,
+  private val getTotalPengeluaranByDateWithFlowUseCase: GetTotalPengeluaranByDateWithFlowUseCase,
+  private val getTotalTransactionByDateUseCase: GetTotalTransactionByDateUseCase,
+  private val deletePengeluaranByIdUseCase: DeletePengeluaranByIdUseCase,
+  private val deleteTransferByIdUseCase: DeleteTransferByIdUseCase,
+  private val deletePendapatanByIdUseCase: DeletePendapatanByIdUseCase,
+  private val getPendapatanByIdUseCase: GetPendapatanByIdUseCase,
+  private val getPengeluaranByIdUseCase: GetPengeluaranByIdUseCase,
+  private val getTransferByIdUseCase: GetTransferByIdUseCase,
+  private val updateTransferUseCase: UpdateTransferUseCase,
+  private val updatePendapatanUseCase: UpdatePendapatanUseCase,
+  private val updatePengeluaranUseCase: UpdatePengeluaranUseCase,
+  private val findAkunByIdUseCase: FindAkunByIdUseCase
 ): BaseViewModel() {
 
   private var _saveTransactionState = MutableLiveData<Boolean>()
@@ -156,7 +156,7 @@ class TransactionViewModel @Inject constructor(
 
   fun checkAccountMoney(idAkun: UUID, amount: Int, action: suspend () -> Unit = {}) {
     viewModelScope.launch {
-      val account = findAkunById.invoke(idAkun)
+      val account = findAkunByIdUseCase.invoke(idAkun)
       if(account.total - amount >= 0) {
         action()
         _saveTransactionDialogStateUi.postValue(false)
@@ -168,21 +168,21 @@ class TransactionViewModel @Inject constructor(
 
   fun getPendapatanById(uuid: UUID) {
     viewModelScope.launch {
-      val data = getPendapatanById.invoke(uuid)
+      val data = getPendapatanByIdUseCase.invoke(uuid)
       _pendapatanModel.postValue(data)
     }
   }
 
   fun getPengeluaranById(uuid: UUID) {
     viewModelScope.launch {
-      val data = getPengeluaranById.invoke(uuid)
+      val data = getPengeluaranByIdUseCase.invoke(uuid)
       _pengeluaranModel.postValue(data)
     }
   }
 
   fun getTransferById(uuid: UUID) {
     viewModelScope.launch {
-      val data = getTransferById.invoke(uuid)
+      val data = getTransferByIdUseCase.invoke(uuid)
       _transferModel.postValue(data)
     }
   }
@@ -215,7 +215,7 @@ class TransactionViewModel @Inject constructor(
 
   fun getTotalPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
     viewModelScope.launch {
-      getTotalPendapatanByDateWithFlow.invoke(fromDate, toDate)
+      getTotalPendapatanByDateWithFlowUseCase.invoke(fromDate, toDate)
         .onEach { _textPendapatan.emit(it.toFormatRupiah()) }
         .collect()
     }
@@ -223,7 +223,7 @@ class TransactionViewModel @Inject constructor(
 
   fun getTotalPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
     viewModelScope.launch {
-      getTotalPengeluaranByDateWithFlow.invoke(fromDate, toDate)
+      getTotalPengeluaranByDateWithFlowUseCase.invoke(fromDate, toDate)
         .onEach {  _textPengeluaran.emit(it.toFormatRupiah()) }
         .collect()
     }
@@ -231,7 +231,7 @@ class TransactionViewModel @Inject constructor(
 
   fun getTotalByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
     viewModelScope.launch {
-      getTotalTransactionByDate.invoke(fromDate, toDate)
+      getTotalTransactionByDateUseCase.invoke(fromDate, toDate)
         .onEach {  _textTotal.emit(it.toFormatRupiah()) }
         .collect()
     }
@@ -239,7 +239,7 @@ class TransactionViewModel @Inject constructor(
 
   fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
     viewModelScope.launch {
-      val list = getListDetailPengeluaranByDate.invoke(fromDate, toDate)
+      val list = getListDetailPengeluaranByDateUseCase.invoke(fromDate, toDate)
       if(list.isEmpty()) _listPengeluaran.postValue(ResultState.Empty)
       else _listPengeluaran.postValue(ResultState.Success(list))
     }
@@ -247,7 +247,7 @@ class TransactionViewModel @Inject constructor(
 
   fun getPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime)  {
     viewModelScope.launch {
-      val list = getListDetailPendapatanByDate.invoke(fromDate, toDate)
+      val list = getListDetailPendapatanByDateUseCase.invoke(fromDate, toDate)
       if(list.isEmpty()) _incomes.postValue(ResultState.Empty)
       else _incomes.postValue(ResultState.Success(list))
     }
@@ -255,7 +255,7 @@ class TransactionViewModel @Inject constructor(
 
   fun getTransferByDate(fromDate: LocalDateTime, toDate: LocalDateTime) {
     viewModelScope.launch {
-      val list = getTransferByDate.invoke(fromDate, toDate)
+      val list = getTransferByDateUseCase.invoke(fromDate, toDate)
       _listTransfer.postValue(ResultState.Loading)
       if(list.isEmpty()) _listTransfer.postValue(ResultState.Empty)
       else _listTransfer.postValue(ResultState.Success(list))
@@ -263,7 +263,7 @@ class TransactionViewModel @Inject constructor(
   }
 
   fun getAllAccount() = viewModelScope.launch {
-    _listAccount.postValue(findAllAkun.invoke())
+    _listAccount.postValue(findAllAkunUseCase.invoke())
   }
 
   fun setCategoryByType(tipeKategori: TransactionType) = viewModelScope.launch {
@@ -279,36 +279,36 @@ class TransactionViewModel @Inject constructor(
   }
 
   suspend fun savePengeluaran(pengeluaranModel: PengeluaranModel) =
-    savePengeluaran.invoke(pengeluaranModel)
+    savePengeluaranUseCase.invoke(pengeluaranModel)
 
 
   suspend fun savePendapatan(pendapatanModel: PendapatanModel) =
-    savePendapatan.invoke(pendapatanModel)
+    savePendapatanUseCase.invoke(pendapatanModel)
 
 
   suspend fun saveTransfer(transferModel: TransferModel) =
-    saveTransfer.invoke(transferModel)
+    saveTransferUseCase.invoke(transferModel)
 
 
   suspend fun deletePendapatanById(uuid: UUID) =
-    deletePendapatanById.invoke(uuid)
+    deletePendapatanByIdUseCase.invoke(uuid)
 
 
   suspend fun deletePengeluaranById(uuid: UUID) =
-    deletePengeluaranById.invoke(uuid)
+    deletePengeluaranByIdUseCase.invoke(uuid)
 
 
   suspend fun deleteTransferById(uuid: UUID) =
-    deleteTransferById.invoke(uuid)
+    deleteTransferByIdUseCase.invoke(uuid)
 
 
   suspend fun updatePendapatan(newPendapatanModel: PendapatanModel, oldPendapatanModel: PendapatanModel) =
-    updatePendapatan.invoke(newPendapatanModel, oldPendapatanModel)
+    updatePendapatanUseCase.invoke(newPendapatanModel, oldPendapatanModel)
 
 
   suspend fun updatePengeluaran(newPengeluaranModel: PengeluaranModel, oldPengeluaranModel: PengeluaranModel) =
-    updatePengeluaran.invoke(newPengeluaranModel,oldPengeluaranModel)
+    updatePengeluaranUseCase.invoke(newPengeluaranModel,oldPengeluaranModel)
 
   suspend fun updateTransfer(newTransferModel: TransferModel, oldTransferModel: TransferModel)=
-    updateTransfer.invoke(newTransferModel, oldTransferModel)
+    updateTransferUseCase.invoke(newTransferModel, oldTransferModel)
 }

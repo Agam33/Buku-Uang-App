@@ -1,9 +1,9 @@
 package com.ra.bkuang.features.backuprestore.di
 
-import com.ra.bkuang.features.backuprestore.domain.usecase.CreateLocalBackup
-import com.ra.bkuang.features.backuprestore.domain.usecase.GetLocalBackup
-import com.ra.bkuang.features.backuprestore.domain.usecase.impl.CreateLocalBackupImpl
-import com.ra.bkuang.features.backuprestore.domain.usecase.impl.GetLocalBackupImpl
+import com.ra.bkuang.features.backuprestore.domain.usecase.CreateLocalBackupUseCase
+import com.ra.bkuang.features.backuprestore.domain.usecase.GetLocalBackupUseCase
+import com.ra.bkuang.features.backuprestore.domain.usecase.impl.CreateLocalBackupUseCaseImpl
+import com.ra.bkuang.features.backuprestore.domain.usecase.impl.GetLocalBackupUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,9 +15,9 @@ import javax.inject.Singleton
 interface BackupRestoreUseCaseModule {
   @Binds
   @Singleton
-  fun bindCreateLocalBackup(createLocalBackupImpl: CreateLocalBackupImpl): CreateLocalBackup
+  fun bindCreateLocalBackup(createLocalBackupImpl: CreateLocalBackupUseCaseImpl): CreateLocalBackupUseCase
 
   @Binds
   @Singleton
-  fun bindGetLocalRestore(getLocalRestoreImpl: GetLocalBackupImpl): GetLocalBackup
+  fun bindGetLocalRestore(getLocalRestoreImpl: GetLocalBackupUseCaseImpl): GetLocalBackupUseCase
 }

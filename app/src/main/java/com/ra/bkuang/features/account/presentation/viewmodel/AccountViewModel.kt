@@ -5,12 +5,12 @@ import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.Extension.toFormatRupiah
 import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.features.account.domain.usecase.AkunOverallMoney
-import com.ra.bkuang.features.account.domain.usecase.DeleteAkun
-import com.ra.bkuang.features.account.domain.usecase.FindAllAkunWithFlow
+import com.ra.bkuang.features.account.domain.usecase.AkunOverallMoneyUseCase
+import com.ra.bkuang.features.account.domain.usecase.DeleteAkunUseCase
+import com.ra.bkuang.features.account.domain.usecase.FindAllAkunWithFlowUseCase
 import com.ra.bkuang.features.account.presentation.AccountUiState
-import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanWithFlow
-import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranWithFlow
+import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanWithFlowUseCase
+import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranWithFlowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,11 +20,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-  private val deleteAkun: DeleteAkun,
-  private val findAllAkun: FindAllAkunWithFlow,
-  private val akunOverallMoney: AkunOverallMoney,
-  private val getTotalPengeluaranWithFlow: GetTotalPengeluaranWithFlow,
-  private val getTotalPendapatanWithFlow: GetTotalPendapatanWithFlow
+  private val deleteAkunUseCase: DeleteAkunUseCase,
+  private val findAllAkun: FindAllAkunWithFlowUseCase,
+  private val akunOverallMoneyUseCase: AkunOverallMoneyUseCase,
+  private val getTotalPengeluaranWithFlowUseCase: GetTotalPengeluaranWithFlowUseCase,
+  private val getTotalPendapatanWithFlowUseCase: GetTotalPendapatanWithFlowUseCase
 ): BaseViewModel() {
 
   private var _accountUiState = MutableStateFlow(AccountUiState())
@@ -32,7 +32,7 @@ class AccountViewModel @Inject constructor(
 
   fun getOverallMoney() {
     viewModelScope.launch {
-      akunOverallMoney().collect {
+      akunOverallMoneyUseCase().collect {
         val data = it ?: 0
         _accountUiState.update { state ->
           state.copy(
@@ -43,7 +43,7 @@ class AccountViewModel @Inject constructor(
     }
 
     viewModelScope.launch {
-      getTotalPendapatanWithFlow.invoke().collect {
+      getTotalPendapatanWithFlowUseCase.invoke().collect {
         val data = it ?: 0
         _accountUiState.update { state ->
           state.copy(
@@ -54,7 +54,7 @@ class AccountViewModel @Inject constructor(
     }
 
     viewModelScope.launch {
-      getTotalPengeluaranWithFlow.invoke().collect {
+      getTotalPengeluaranWithFlowUseCase.invoke().collect {
         val data = it ?: 0
         _accountUiState.update { state ->
           state.copy(
@@ -94,7 +94,7 @@ class AccountViewModel @Inject constructor(
           isSuccessfulDelete = null
         )
       }
-      deleteAkun.invoke(akun).collect { res ->
+      deleteAkunUseCase.invoke(akun).collect { res ->
         when(res) {
           is Result.Error -> {
             _accountUiState.update {

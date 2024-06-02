@@ -1,19 +1,19 @@
 package com.ra.bkuang.features.account.di
 
-import com.ra.bkuang.features.account.domain.usecase.AkunOverallMoney
-import com.ra.bkuang.features.account.domain.usecase.DeleteAkun
-import com.ra.bkuang.features.account.domain.usecase.FindAkunById
-import com.ra.bkuang.features.account.domain.usecase.FindAllAkun
-import com.ra.bkuang.features.account.domain.usecase.FindAllAkunWithFlow
-import com.ra.bkuang.features.account.domain.usecase.SaveAkun
-import com.ra.bkuang.features.account.domain.usecase.UpdateAkun
-import com.ra.bkuang.features.account.domain.usecase.impl.AkunOverallMoneyImpl
-import com.ra.bkuang.features.account.domain.usecase.impl.DeleteAkunImpl
-import com.ra.bkuang.features.account.domain.usecase.impl.FindAkunByIdImpl
-import com.ra.bkuang.features.account.domain.usecase.impl.FindAllAkunImpl
-import com.ra.bkuang.features.account.domain.usecase.impl.FindAllAkunWithFlowImpl
-import com.ra.bkuang.features.account.domain.usecase.impl.SaveAkunImpl
-import com.ra.bkuang.features.account.domain.usecase.impl.UpdateAkunImpl
+import com.ra.bkuang.features.account.domain.usecase.AkunOverallMoneyUseCase
+import com.ra.bkuang.features.account.domain.usecase.DeleteAkunUseCase
+import com.ra.bkuang.features.account.domain.usecase.FindAkunByIdUseCase
+import com.ra.bkuang.features.account.domain.usecase.FindAllAkunUseCase
+import com.ra.bkuang.features.account.domain.usecase.FindAllAkunWithFlowUseCase
+import com.ra.bkuang.features.account.domain.usecase.SaveAkunUseCase
+import com.ra.bkuang.features.account.domain.usecase.UpdateAkunUseCase
+import com.ra.bkuang.features.account.domain.usecase.impl.AkunOverallMoneyUseCaseImpl
+import com.ra.bkuang.features.account.domain.usecase.impl.DeleteAkunUseCaseImpl
+import com.ra.bkuang.features.account.domain.usecase.impl.FindAkunByIdUseCaseImpl
+import com.ra.bkuang.features.account.domain.usecase.impl.FindAllAkunUseCaseImpl
+import com.ra.bkuang.features.account.domain.usecase.impl.FindAllAkunWithFlowUseCaseImpl
+import com.ra.bkuang.features.account.domain.usecase.impl.SaveAkunUseCaseImpl
+import com.ra.bkuang.features.account.domain.usecase.impl.UpdateAkunUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,29 +26,29 @@ interface AkunUseCaseModule {
 
   @Binds
   @Singleton
-  fun bindFindAllAkunWithFlow(findAllAkunWithFlow: FindAllAkunWithFlowImpl): FindAllAkunWithFlow
+  fun bindFindAllAkunWithFlow(findAllAkunWithFlow: FindAllAkunWithFlowUseCaseImpl): FindAllAkunWithFlowUseCase
 
   @Binds
   @Singleton
-  fun bindGetOverallMoney(getOverallMoney: AkunOverallMoneyImpl): AkunOverallMoney
+  fun bindGetOverallMoney(getOverallMoney: AkunOverallMoneyUseCaseImpl): AkunOverallMoneyUseCase
 
   @Binds
   @Singleton
-  fun bindSaveTabunganUseCase(saveAkunImpl: SaveAkunImpl): SaveAkun
+  fun bindSaveTabunganUseCase(saveAkunImpl: SaveAkunUseCaseImpl): SaveAkunUseCase
 
   @Binds
   @Singleton
-  fun bindDeleteTabunganUseCase(deleteAkunImpl: DeleteAkunImpl): DeleteAkun
+  fun bindDeleteTabunganUseCase(deleteAkunImpl: DeleteAkunUseCaseImpl): DeleteAkunUseCase
 
   @Binds
   @Singleton
-  fun bindUpdateTabunganUseCase(updateAkunImpl: UpdateAkunImpl): UpdateAkun
+  fun bindUpdateTabunganUseCase(updateAkunImpl: UpdateAkunUseCaseImpl): UpdateAkunUseCase
 
   @Binds
   @Singleton
-  fun bindFindAllTabunganUseCase(findAllAkunImpl: FindAllAkunImpl): FindAllAkun
+  fun bindFindAllTabunganUseCase(findAllAkunImpl: FindAllAkunUseCaseImpl): FindAllAkunUseCase
 
   @Binds
   @Singleton
-  fun bindFindTabunganByIdUseCase(findAkunByIdImpl: FindAkunByIdImpl): FindAkunById
+  fun bindFindTabunganByIdUseCase(findAkunByIdImpl: FindAkunByIdUseCaseImpl): FindAkunByIdUseCase
 }

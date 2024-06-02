@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.features.category.domain.model.KategoriModel
-import com.ra.bkuang.features.category.domain.usecase.DeleteKategori
-import com.ra.bkuang.features.category.domain.usecase.SaveKategori
-import com.ra.bkuang.features.category.domain.usecase.UpdateKategori
+import com.ra.bkuang.features.category.domain.usecase.DeleteKategoriUseCase
+import com.ra.bkuang.features.category.domain.usecase.SaveKategoriUseCase
+import com.ra.bkuang.features.category.domain.usecase.UpdateKategoriUseCase
 import com.ra.bkuang.common.base.BaseViewModel
-import com.ra.bkuang.features.category.domain.usecase.FindCategoryWithFlow
+import com.ra.bkuang.features.category.domain.usecase.FindCategoryWithFlowUseCase
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,10 +16,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CategoryViewModel @Inject constructor(
-  private val deleteKategori: DeleteKategori,
-  private val updateKategori: UpdateKategori,
-  private val findCategoryWithFlow: FindCategoryWithFlow,
-  private val saveKategori: SaveKategori,
+  private val deleteKategoriUseCase: DeleteKategoriUseCase,
+  private val updateKategoriUseCase: UpdateKategoriUseCase,
+  private val findCategoryWithFlowUseCase: FindCategoryWithFlowUseCase,
+  private val saveKategoriUseCase: SaveKategoriUseCase,
 ): BaseViewModel() {
 
   private var _currCategory = MutableLiveData<TransactionType>()
@@ -33,19 +33,19 @@ class CategoryViewModel @Inject constructor(
   }
 
   fun setCategories() = viewModelScope.launch {
-    findCategoryWithFlow.invoke().collect {
+    findCategoryWithFlowUseCase.invoke().collect {
       _mapCategory.postValue(it)
     }
   }
 
   suspend fun deleteCategory(kategoriModel: KategoriModel) =
-    deleteKategori.invoke(kategoriModel)
+    deleteKategoriUseCase.invoke(kategoriModel)
 
   fun updateCategory(kategoriModel: KategoriModel) = viewModelScope.launch {
-    updateKategori.invoke(kategoriModel)
+    updateKategoriUseCase.invoke(kategoriModel)
   }
 
   fun saveKategori(kategoriModel: KategoriModel) = viewModelScope.launch {
-    saveKategori.invoke(kategoriModel)
+    saveKategoriUseCase.invoke(kategoriModel)
   }
 }

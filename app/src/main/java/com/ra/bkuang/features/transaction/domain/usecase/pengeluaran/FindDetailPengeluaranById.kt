@@ -1,8 +1,0 @@
-package com.ra.bkuang.features.transaction.domain.usecase.pengeluaran
-
-import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
-import java.util.UUID
-
-interface FindDetailPengeluaranById {
-  suspend fun invoke(id: UUID): DetailPengeluaran
-}

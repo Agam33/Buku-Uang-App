@@ -35,6 +35,21 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
     super.onViewCreated(view, savedInstanceState)
     setupRvTips()
     setupButton()
+    observer()
+  }
+
+  private fun observer() {
+    lifecycleScope.launch {
+      backupRestoreViewModel.backupRestoreUiState.collect { uiState ->
+        if(uiState.isSuccessful != null) {
+          if(uiState.isSuccessful) {
+            showShortToast(requireContext().resources.getString(R.string.msg_success))
+          } else {
+            showShortToast(requireContext().resources.getString(R.string.msg_failed))
+          }
+        }
+      }
+    }
   }
 
   private fun setupRvTips() {
@@ -113,16 +128,10 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
     registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
       when(it.resultCode) {
         RESULT_OK -> {
-          lifecycleScope.launch {
-            val uri = it.data?.data
-            requireContext().contentResolver.takePersistableUriPermission(uri ?: return@launch, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            val dbPath = requireContext().getDatabasePath(Constants.DB_NAME).parent
-            if(backupRestoreViewModel.getLocalBackup(uri, dbPath ?: return@launch)) {
-              showShortToast(requireContext().resources.getString(R.string.msg_success))
-            } else {
-              showShortToast(requireContext().resources.getString(R.string.msg_failed))
-            }
-          }
+          val uri = it.data?.data
+          requireContext().contentResolver.takePersistableUriPermission(uri ?: return@registerForActivityResult, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+          val dbPath = requireContext().getDatabasePath(Constants.DB_NAME).parent
+          backupRestoreViewModel.getLocalBackup(uri, dbPath ?: return@registerForActivityResult)
         }
         RESULT_CANCELED -> {}
       }
@@ -135,12 +144,7 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
   override fun onSaveInput(name: String) {
     lifecycleScope.launch{
       val dir = userSettingPref.getFileBackupDirectory() ?: return@launch
-      val state = backupRestoreViewModel.createLocalBackup(name, dir)
-      if (state) {
-        showShortToast(getString(R.string.msg_success))
-      } else {
-        showShortToast(getString(R.string.msg_failed))
-      }
+      backupRestoreViewModel.createLocalBackup(name, dir)
     }
   }
 }

@@ -10,7 +10,7 @@ import javax.inject.Inject
 class KategoriLocalDataSourceImpl @Inject constructor(
   private val kategoriDao: KategoriDao
 ): KategoriLocalDataSource {
-  override suspend fun findByType(type: TransactionType): Flow<List<KategoriEntity>> {
+  override fun findByType(type: TransactionType): Flow<List<KategoriEntity>> {
     return kategoriDao.findByType(type)
   }
 
@@ -30,7 +30,7 @@ class KategoriLocalDataSourceImpl @Inject constructor(
     return kategoriDao.findAll()
   }
 
-  override suspend fun findKategoriById(id: UUID): Flow<KategoriEntity> {
+  override fun findKategoriById(id: UUID): Flow<KategoriEntity> {
     return kategoriDao.findById(id)
   }
 }

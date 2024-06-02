@@ -4,9 +4,7 @@ import android.net.Uri
 import java.io.IOException
 
 interface BackupRestoreRepository {
-  @Throws(IOException::class)
-  suspend fun createLocalBackupDb(fileName: String, destDirectory: String)
+  suspend fun createLocalBackupDb(fileName: String, destDirectory: String): Boolean
 
-  @Throws(IOException::class)
-  suspend fun getLocalBackupDb(uriFile: Uri, dest: String)
+  suspend fun getLocalBackupDb(uriFile: Uri, dest: String): Boolean
 }
