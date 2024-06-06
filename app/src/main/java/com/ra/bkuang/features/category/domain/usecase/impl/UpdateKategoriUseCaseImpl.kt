@@ -8,7 +8,6 @@ import javax.inject.Inject
 class UpdateKategoriUseCaseImpl @Inject constructor(
   private val repository: KategoriRepository
 ): UpdateKategoriUseCase {
-  override suspend operator fun invoke(kategori: KategoriModel) {
-    return repository.update(kategori)
-  }
+  override operator fun invoke(kategori: KategoriModel) =
+    repository.update(kategori)
 }

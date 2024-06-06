@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.ra.bkuang.R
 import com.ra.bkuang.databinding.ActivityCreateCategoryBinding
 import com.ra.bkuang.features.category.domain.model.KategoriModel
@@ -17,6 +18,7 @@ import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -54,8 +56,22 @@ class CreateCategoryActivity : BaseActivity<ActivityCreateCategoryBinding>(R.lay
     getActionType(intent?.getStringExtra(CREATE_OR_EDIT_CATEGORY) as String) == ActionType.EDIT
 
   private fun observer() {
-    viewModel.currCategory.observe(this@CreateCategoryActivity) {
-      currentCategory = it
+    lifecycleScope.launch {
+      viewModel.categoryUiState.collect { uiState ->
+        currentCategory = uiState.currCategory
+
+        uiState.isSuccessfulSave?.let {
+          if(it) {
+            showShortToast(getString(R.string.txt_successful_save))
+          }
+        }
+
+        uiState.isSuccessfulUpdate?.let {
+          if(it) {
+            showShortToast(getString(R.string.txt_successful_update))
+          }
+        }
+      }
     }
   }
 

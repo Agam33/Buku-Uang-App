@@ -13,7 +13,7 @@ class FindCategoryWithFlowUseCaseImpl @Inject constructor(
   private val repository: KategoriRepository
 ): FindCategoryWithFlowUseCase {
 
-  override fun invoke(): Flow<HashMap<TransactionType, List<KategoriModel>>> {
+  override operator fun invoke(): Flow<HashMap<TransactionType, List<KategoriModel>>> {
     return flow {
       val expenseFlow = repository.findByType(TransactionType.PENGELUARAN)
       val incomeFlow = repository.findByType(TransactionType.PENDAPATAN)

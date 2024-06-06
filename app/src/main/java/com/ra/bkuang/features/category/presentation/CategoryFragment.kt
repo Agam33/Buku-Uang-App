@@ -8,13 +8,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
+import com.ra.bkuang.common.util.ActionType
+import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.view.dialog.CautionDeleteDialog
 import com.ra.bkuang.common.view.spinner.SpinnerItemOptions
 import com.ra.bkuang.databinding.FragmentCategoryBinding
 import com.ra.bkuang.features.category.domain.model.KategoriModel
-import com.ra.bkuang.common.util.ActionType
-import com.ra.bkuang.common.util.Extension.showShortToast
-import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.features.category.presentation.CreateCategoryActivity.Companion.CATEGORY_TYPE
 import com.ra.bkuang.features.category.presentation.CreateCategoryActivity.Companion.CREATE_OR_EDIT_CATEGORY
 import com.ra.bkuang.features.category.presentation.CreateCategoryActivity.Companion.EXTRA_BUNDLE_CLAZZ
@@ -30,6 +29,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
   @Inject lateinit var groupCategoryAdapter: RvGroupCategoryAdapter
 
   private val viewModel: CategoryViewModel by viewModels()
+
+  private val deleteDialog = CautionDeleteDialog()
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -50,8 +51,21 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
   private fun observer() {
     binding?.lifecycleOwner = viewLifecycleOwner
     binding?.vm = viewModel
-    viewModel.mapCategory.observe(viewLifecycleOwner) {
-      setupListCategory(it)
+
+    lifecycleScope.launch {
+      viewModel.categoryUiState.collect { uiState ->
+        setupListCategory(uiState.mapCategory)
+
+        uiState.isSuccessfulDelete?.let {
+          if(it) {
+            refresh()
+            showShortToast(requireContext().resources.getString(R.string.msg_success))
+            deleteDialog.dismiss()
+          } else {
+            showShortToast(getString(R.string.msg_failed_delete))
+          }
+        }
+      }
     }
   }
 
@@ -59,7 +73,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
     viewModel.setCategories()
   }
 
-  private fun setupListCategory(data :HashMap<TransactionType, List<KategoriModel>>?) {
+  private fun setupListCategory(data :Map<TransactionType, List<KategoriModel>>) {
     groupCategoryAdapter.mapCategory = data
     groupCategoryAdapter.onOptionCategoryClickCallBack = this@CategoryFragment
     binding?.run {
@@ -82,24 +96,9 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
           startActivity(i)
         }
         SpinnerItemOptions.DELETE -> {
-          val deleteDialog = CautionDeleteDialog()
 
           deleteDialog.onOptionItemClick = object : CautionDeleteDialog.OnOptionItemClick {
-            override fun onDelete() {
-              viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.deleteCategory(kategoriModel).collect { status ->
-                  when(status) {
-                    ResourceState.SUCCESS -> {
-                      refresh()
-                      showShortToast(requireContext().resources.getString(R.string.msg_success))
-                      deleteDialog.dismiss()
-                    }
-                    ResourceState.LOADING -> {}
-                    ResourceState.FAILED -> {}
-                  }
-                }
-              }
-            }
+            override fun onDelete() { viewModel.deleteCategory(kategoriModel) }
             override fun onCancel() { deleteDialog.dismiss() }
           }
 

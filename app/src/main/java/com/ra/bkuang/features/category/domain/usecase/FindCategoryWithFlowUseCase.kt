@@ -5,5 +5,5 @@ import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import kotlinx.coroutines.flow.Flow
 
 interface FindCategoryWithFlowUseCase {
-  fun invoke(): Flow<HashMap<TransactionType, List<KategoriModel>>>
+  operator fun invoke(): Flow<HashMap<TransactionType, List<KategoriModel>>>
 }
