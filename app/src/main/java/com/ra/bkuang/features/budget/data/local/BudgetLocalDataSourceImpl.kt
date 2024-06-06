@@ -1,6 +1,7 @@
 package com.ra.bkuang.features.budget.data.local
 
 import com.ra.bkuang.core.database.dao.BudgetDao
+import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import java.util.UUID
 import javax.inject.Inject
@@ -20,7 +21,7 @@ class BudgetLocalDataSourceImpl @Inject constructor(
     return budgetDao.findBudgetByDateAndKategoriId(fromDate, toDate, id)
   }
 
-  override suspend fun findAllByDate(fromDate: LocalDate, toDate: LocalDate): List<DetailBudget> {
+  override fun findAllByDate(fromDate: LocalDate, toDate: LocalDate): Flow<List<DetailBudget>> {
     return budgetDao.findAllByDate(fromDate, toDate)
   }
 

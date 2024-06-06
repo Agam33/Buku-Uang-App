@@ -15,11 +15,10 @@ import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.CRE
 import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.EDIT_ACCOUNT
 import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.EXTRA_TEXT
 import com.ra.bkuang.common.util.Extension.parcelable
-import com.ra.bkuang.common.util.Extension.setupNoActionbar
+import com.ra.bkuang.common.util.Extension.setupActionBar
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.features.account.presentation.createaccount.viewmodel.CreateAccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.util.UUID
@@ -35,7 +34,7 @@ class CreateNewAccountActivity : BaseActivity<ActivityCreateNewAccountBinding>(R
       setupDetailAccount()
     }
 
-    setupNoActionbar(binding.toolbar)
+    setupActionBar(binding.toolbar)
 
     observer()
   }

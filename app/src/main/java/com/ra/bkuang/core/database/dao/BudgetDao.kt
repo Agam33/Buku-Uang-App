@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.ra.bkuang.features.budget.data.local.BudgetEntity
 import com.ra.bkuang.features.budget.data.local.DetailBudget
+import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import java.util.UUID
 
@@ -34,5 +35,5 @@ interface BudgetDao {
   suspend fun isExistByDateAndKategoriId(fromDate: LocalDate, toDate: LocalDate, id: UUID): Boolean
 
   @Query("SELECT * FROM budget_tbl AS budget WHERE budget.bulan_tahun BETWEEN :fromDate AND :toDate")
-  suspend fun findAllByDate(fromDate: LocalDate, toDate: LocalDate): List<DetailBudget>
+  fun findAllByDate(fromDate: LocalDate, toDate: LocalDate): Flow<List<DetailBudget>>
 }

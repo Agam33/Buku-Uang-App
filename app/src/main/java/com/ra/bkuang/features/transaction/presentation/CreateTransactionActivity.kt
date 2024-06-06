@@ -13,7 +13,7 @@ import com.ra.bkuang.features.transaction.presentation.fragment.CreateIncomeFrag
 import com.ra.bkuang.features.transaction.presentation.fragment.CreateTransferFragment
 import com.ra.bkuang.features.transaction.presentation.fragment.DetailTransactionDialog.Companion.EXTRA_TRANSACTION_ID
 import com.ra.bkuang.common.util.ActionType
-import com.ra.bkuang.common.util.Extension.setupNoActionbar
+import com.ra.bkuang.common.util.Extension.setupActionBar
 import com.ra.bkuang.common.util.getActionType
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +25,7 @@ class CreateTransactionActivity : BaseActivity<ActivityCreateTransactionBinding>
 
     val type = intent.getStringExtra(EXTRA_TRANSACTION_TYPE) as String
 
-    setupNoActionbar(binding.toolbar, getTitle(type))
+    setupActionBar(binding.toolbar, getTitle(type))
     getTypeLayout(getTransactionType(type))
   }
 

@@ -13,18 +13,14 @@ import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.Constants
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toStringFormat
-import com.ra.bkuang.common.util.ResourceState
 import com.ra.bkuang.databinding.FragmentBudgetBinding
-import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.budget.data.local.DetailBudget
 import com.ra.bkuang.features.budget.presentation.BudgetViewModel
 import com.ra.bkuang.features.budget.presentation.CreateBudgetActivity
 import com.ra.bkuang.features.budget.presentation.adapter.BudgetAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class BudgetFragment : BaseFragment<FragmentBudgetBinding>(R.layout.fragment_budget),
@@ -34,22 +30,38 @@ class BudgetFragment : BaseFragment<FragmentBudgetBinding>(R.layout.fragment_bud
 
   private var currentDate = LocalDate.now()
 
-  @Inject lateinit var budgetAdapter: BudgetAdapter
-  @Inject @IoDispatcherQualifier lateinit var ioDispatcher: CoroutineDispatcher
-
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setupDate()
     createBudget()
-    setupListBudget()
+    observer()
   }
 
-  private fun setupListBudget() {
+  private fun observer() {
+    lifecycleScope.launch {
+      viewModel.budgetFragmentUiState.collect { uiState ->
+        setupListBudget(uiState.budgetList)
+
+        uiState.isSuccessfulDelete?.let {
+          if(it) {
+            showShortToast(getString(R.string.msg_success))
+          } else {
+            showShortToast(getString(R.string.msg_failed_delete))
+          }
+        }
+      }
+    }
+  }
+
+  private fun setupListBudget(budgetList: List<DetailBudget>)  {
+    val budgetAdapter = BudgetAdapter()
+    budgetAdapter.submitList(budgetList)
     binding?.rvBudget?.apply {
       adapter = budgetAdapter
       setHasFixedSize(true)
       layoutManager = LinearLayoutManager(requireContext())
     }
+
     budgetAdapter.onItemLongClickListener = this@BudgetFragment
   }
 
@@ -85,11 +97,7 @@ class BudgetFragment : BaseFragment<FragmentBudgetBinding>(R.layout.fragment_bud
 
     val fromDate = currentDate.withDayOfMonth(1)
     val toDate = currentDate.withDayOfMonth(currentDate.lengthOfMonth())
-
-    lifecycleScope.launch(ioDispatcher) {// set to Dispatcher.IO, because data doesn't show if Dispatcher set as Main or Default.
-      val data = viewModel.findAllBudget(fromDate, toDate)
-      budgetAdapter.submitList(data) // will be computed on a background thread.
-    }
+    viewModel.findAllBudget(fromDate, toDate)
   }
 
   override fun onStart() {
@@ -105,20 +113,7 @@ class BudgetFragment : BaseFragment<FragmentBudgetBinding>(R.layout.fragment_bud
         requireContext().getString(R.string.msg_delete),
         Snackbar.LENGTH_SHORT
       ).setAction("Ya") {
-        lifecycleScope.launch {
-          viewModel.deleteBudgetById(detailBudget.budget.uuid).collect { status ->
-            when(status) {
-              ResourceState.FAILED -> {
-                showShortToast(requireContext().getString(R.string.msg_delete_failed))
-              }
-              ResourceState.SUCCESS -> {
-                showShortToast(requireContext().getString(R.string.msg_success))
-                refreshDate()
-              }
-              ResourceState.LOADING -> {}
-            }
-          }
-        }
+        viewModel.deleteBudgetById(detailBudget.budget.uuid)
       }.show()
     }
   }

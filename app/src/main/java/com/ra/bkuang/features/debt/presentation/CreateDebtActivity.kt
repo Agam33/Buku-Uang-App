@@ -22,7 +22,7 @@ import com.ra.bkuang.common.util.Extension.checkTimeFormat
 import com.ra.bkuang.common.util.Extension.getStringResource
 import com.ra.bkuang.common.util.Extension.millisToString
 import com.ra.bkuang.common.util.Extension.parcelable
-import com.ra.bkuang.common.util.Extension.setupNoActionbar
+import com.ra.bkuang.common.util.Extension.setupActionBar
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toCalendar
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_EXTRA_ACTION
@@ -42,7 +42,7 @@ class CreateDebtActivity : BaseActivity<ActivityCreateDebtBinding>(R.layout.acti
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setupNoActionbar(binding.toolbar)
+    setupActionBar(binding.toolbar)
 
     val actionType = intent?.getStringExtra(DEBT_EXTRA_ACTION) as String
     when(getActionType(actionType)) {

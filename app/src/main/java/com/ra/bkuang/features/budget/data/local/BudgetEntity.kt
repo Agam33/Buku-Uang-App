@@ -33,7 +33,6 @@ data class BudgetEntity(
   @ColumnInfo(name = "updated_at") val updatedAt: LocalDateTime
 )
 
-
 data class DetailBudget(
   @Embedded val budget: BudgetEntity,
 
