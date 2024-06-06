@@ -1,16 +1,15 @@
 package com.ra.bkuang.features.analytics.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ra.bkuang.features.analytics.domain.model.AnalyticModel
+import com.ra.bkuang.common.base.BaseViewModel
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.analytics.domain.usecase.DetailAnalyticsUseCase
 import com.ra.bkuang.features.analytics.domain.usecase.ShowAnalyticListUseCase
-import com.ra.bkuang.common.base.BaseViewModel
-import com.ra.bkuang.common.util.ResultState
-import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
 import com.ra.bkuang.features.transaction.presentation.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -21,14 +20,8 @@ class AnalyticViewModel @Inject constructor(
   private val detailAnalyticsUseCase: DetailAnalyticsUseCase
 ): BaseViewModel() {
 
-  private var _analyticList = MutableLiveData<ResultState<List<AnalyticModel>>>()
-  val analyticList: LiveData<ResultState<List<AnalyticModel>>> get() = _analyticList
-
-  private var _detailTransactions = MutableLiveData<ResultState<List<TransactionDetail>>>()
-  val detailTransactions: LiveData<ResultState<List<TransactionDetail>>> get() = _detailTransactions
-
-  private var _rvAnalyticState = MutableLiveData<Boolean>()
-  val rvAnalyticState: LiveData<Boolean> = _rvAnalyticState
+  private var _analyticUiState = MutableStateFlow(AnalyticUiState())
+  val analyticUiState = _analyticUiState.asStateFlow()
 
   fun getAnalyticList(
     transactionType: TransactionType,
@@ -36,8 +29,24 @@ class AnalyticViewModel @Inject constructor(
     toDate: LocalDateTime
   ) {
     viewModelScope.launch {
-      val data = showAnalyticListUseCase.invoke(transactionType, fromDate, toDate)
-      _analyticList.postValue(data)
+      showAnalyticListUseCase(transactionType, fromDate, toDate).collect { res ->
+        when(res) {
+          is Result.Success -> {
+            _analyticUiState.update {
+              it.copy(
+                analytics = res.data ?: mutableListOf(),
+              )
+            }
+          }
+          is Result.Error -> {
+            _analyticUiState.update {
+              it.copy(
+                analytics = mutableListOf(),
+              )
+            }
+          }
+        }
+      }
     }
   }
 
@@ -47,12 +56,24 @@ class AnalyticViewModel @Inject constructor(
     toDate: LocalDateTime
   ) {
     viewModelScope.launch {
-      val data = detailAnalyticsUseCase.invoke(transactionType, fromDate, toDate)
-      _detailTransactions.postValue(data)
+      detailAnalyticsUseCase.invoke(transactionType, fromDate, toDate).collect { res ->
+        when(res) {
+          is Result.Error -> {
+            _analyticUiState.update {
+              it.copy(
+                detailAnalyticList = emptyList()
+              )
+            }
+          }
+          is Result.Success -> {
+            _analyticUiState.update {
+              it.copy(
+                detailAnalyticList = res.data ?: emptyList()
+              )
+            }
+          }
+        }
+      }
     }
-  }
-
-  fun setRvAnalyticState(state: Boolean) {
-    _rvAnalyticState.postValue(state)
   }
 }
