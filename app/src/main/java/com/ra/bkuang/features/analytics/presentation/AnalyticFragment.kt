@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
@@ -17,20 +18,21 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
-import com.ra.bkuang.databinding.FragmentAnalyticBinding
 import com.ra.bkuang.common.util.Constants.LOCALE_ID
 import com.ra.bkuang.common.util.Constants.MONTHLY_DATE_FORMAT
+import com.ra.bkuang.common.util.Extension.hide
+import com.ra.bkuang.common.util.Extension.toMonthlyTime
 import com.ra.bkuang.common.util.Extension.toStringFormat
-import com.ra.bkuang.common.util.ResultState
+import com.ra.bkuang.databinding.FragmentAnalyticBinding
+import com.ra.bkuang.features.analytics.domain.model.AnalyticModel
 import com.ra.bkuang.features.analytics.presentation.adapter.AnalyticListAdapter
 import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
 import com.ra.bkuang.features.transaction.presentation.TransactionType
 import com.ra.bkuang.features.transaction.presentation.TransactionType.Companion.getTransactionTypeID
-import com.ra.bkuang.common.util.Extension.toMonthlyTime
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment_analytic) {
@@ -43,7 +45,6 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
 
   private var currentDate = LocalDate.now()
 
-
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     observer()
@@ -54,45 +55,32 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
   }
 
   private fun observer() {
-    binding?.run {
-      vm = viewModel
-      lifecycleOwner = viewLifecycleOwner
+    lifecycleScope.launch {
+      viewModel.analyticUiState.collect { uiState ->
+        if(uiState.analytics.isEmpty()) {
+          binding?.rvTransaction?.hide(true)
+        } else {
+          binding?.rvTransaction?.hide(false)
+          setupListTransaction(uiState.analytics)
+        }
 
-      viewModel.analyticList.observe(viewLifecycleOwner) {
-        when(it) {
-          is ResultState.Success -> {
-            viewModel.setRvAnalyticState(false)
-
-            analyticAdapter.submitList(it.data)
-
-            rvTransaction.apply {
-              adapter = analyticAdapter
-              setHasFixedSize(true)
-              layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            }
-
-          }
-          is ResultState.Empty -> {
-            viewModel.setRvAnalyticState(true)
-          }
-          is ResultState.Error -> {}
-          is ResultState.Loading -> {}
+        if(uiState.detailAnalyticList.isEmpty()) {
+          binding?.pieChart?.clear()
+          binding?.pieChart?.invalidate()
+        } else {
+          setPieChartData(uiState.detailAnalyticList)
         }
       }
+    }
+  }
 
-      viewModel.detailTransactions.observe(viewLifecycleOwner) {
-        when(it) {
-          is ResultState.Loading -> {}
-          is ResultState.Empty -> {
-            binding?.pieChart?.clear()
-            binding?.pieChart?.invalidate()
-          }
-          is ResultState.Error -> {}
-          is ResultState.Success -> {
-            setPieChartData(it.data ?: ArrayList())
-          }
-        }
-      }
+  private fun setupListTransaction(listModel: List<AnalyticModel>) {
+    analyticAdapter.submitList(listModel)
+
+    binding?.rvTransaction?.apply {
+      adapter = analyticAdapter
+      setHasFixedSize(true)
+      layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
   }
 
