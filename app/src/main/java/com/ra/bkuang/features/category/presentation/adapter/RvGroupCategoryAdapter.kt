@@ -9,7 +9,7 @@ import com.ra.bkuang.features.category.domain.model.KategoriModel
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 
 class RvGroupCategoryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-  var mapCategory: HashMap<TransactionType, List<KategoriModel>>? = null
+  var mapCategory: Map<TransactionType, List<KategoriModel>>? = null
   var onOptionCategoryClickCallBack: OnOptionCategoryClickCallBack? = null
 
   interface OnOptionCategoryClickCallBack {
