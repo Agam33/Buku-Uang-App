@@ -12,7 +12,7 @@ import com.ra.bkuang.features.category.domain.model.KategoriModel
 import com.ra.bkuang.common.base.BaseActivity
 import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.Extension.parcelable
-import com.ra.bkuang.common.util.Extension.setupNoActionbar
+import com.ra.bkuang.common.util.Extension.setupActionBar
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
@@ -38,7 +38,7 @@ class CreateCategoryActivity : BaseActivity<ActivityCreateCategoryBinding>(R.lay
       viewModel.setCurrentCategory(TransactionType.PENDAPATAN)
     }
 
-    setupNoActionbar(binding.toolbar)
+    setupActionBar(binding.toolbar)
   }
 
   private fun setupUpdate() {

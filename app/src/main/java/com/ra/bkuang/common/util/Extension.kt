@@ -183,7 +183,7 @@ object Extension {
     onBackPressedDispatcher.addCallback(this, callback)
   }
 
-  fun AppCompatActivity.setupNoActionbar(
+  fun AppCompatActivity.setupActionBar(
     toolbar: androidx.appcompat.widget.Toolbar?,
     title: String = "",
     isDisplayHomeAsUpEnabled: Boolean = true,

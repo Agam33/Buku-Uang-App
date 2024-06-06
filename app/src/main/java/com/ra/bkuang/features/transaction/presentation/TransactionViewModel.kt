@@ -35,6 +35,7 @@ import com.ra.bkuang.core.preferences.UserSettingPref
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
 import com.ra.bkuang.common.util.Extension.toFormatRupiah
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.transaction.data.entity.DetailPendapatan
 import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
 import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
@@ -266,14 +267,15 @@ class TransactionViewModel @Inject constructor(
     _listAccount.postValue(findAllAkunUseCase.invoke())
   }
 
-  fun setCategoryByType(tipeKategori: TransactionType) = viewModelScope.launch {
-    findKategoriByType.invoke(tipeKategori).collect {
-      when (it) {
-        is ResultState.Empty -> {}
-        is ResultState.Success -> {
-          _listCategoryByType.postValue(it.data ?: mutableListOf())
+  fun setCategoryByType(tipeKategori: TransactionType) {
+    viewModelScope.launch {
+      findKategoriByType(tipeKategori).collect {
+        when (it) {
+          is Result.Success -> {
+            _listCategoryByType.postValue(it.data ?: mutableListOf())
+          }
+          is Result.Error -> Unit
         }
-        else -> {}
       }
     }
   }

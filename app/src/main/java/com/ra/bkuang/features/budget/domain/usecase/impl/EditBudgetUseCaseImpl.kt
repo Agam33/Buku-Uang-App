@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.budget.domain.usecase.impl
 
-import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.budget.domain.BudgetRepository
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
 import com.ra.bkuang.features.budget.domain.usecase.EditBudgetUseCase
@@ -18,34 +18,43 @@ class EditBudgetUseCaseImpl @Inject constructor(
   private val pengeluaranRepository: PengeluaranRepository
 ): EditBudgetUseCase {
 
-  override operator fun invoke(budgetModel: BudgetModel): Flow<ResourceState> {
+  override operator fun invoke(budgetModel: BudgetModel): Flow<Result<Boolean>> {
     return flow {
-      emit(ResourceState.LOADING)
+      val isExist =
+        budgetRepository.isExistByDateAndKategoriId(budgetModel.bulanTahun, budgetModel.bulanTahun, budgetModel.idKategori)
+      if (isExist) {
+        emit(Result.Error("Budget is Exist!"))
+        return@flow
+      }
 
-      val calendar = Calendar.getInstance()
-      calendar.set(Calendar.YEAR, budgetModel.bulanTahun.year)
-      calendar.set(Calendar.MONTH, budgetModel.bulanTahun.month.value - 1)
-      val localDateTime = LocalDateTime.ofInstant(calendar.toInstant(), ZoneId.systemDefault())
+      try {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, budgetModel.bulanTahun.year)
+        calendar.set(Calendar.MONTH, budgetModel.bulanTahun.month.value - 1)
+        val localDateTime = LocalDateTime.ofInstant(calendar.toInstant(), ZoneId.systemDefault())
 
-      val fromD = localDateTime.withDayOfMonth(1)
-        .withHour(0)
-        .withMinute(0)
-      val toD = localDateTime.with(TemporalAdjusters.lastDayOfMonth())
-        .withHour(23)
-        .withMinute(59)
+        val fromD = localDateTime.withDayOfMonth(1)
+          .withHour(0)
+          .withMinute(0)
+        val toD = localDateTime.with(TemporalAdjusters.lastDayOfMonth())
+          .withHour(23)
+          .withMinute(59)
 
-      val totalPengeluaran = pengeluaranRepository.getTotalPengeluaranByDateAndKategory(
-        fromD,
-        toD,
-        budgetModel.idKategori
-      ) ?: 0
+        val totalPengeluaran = pengeluaranRepository.getTotalPengeluaranByDateAndKategory(
+          fromD,
+          toD,
+          budgetModel.idKategori
+        ) ?: 0
 
-      calendar.clear()
+        calendar.clear()
 
-      budgetModel.pengeluaran = totalPengeluaran.toInt()
+        budgetModel.pengeluaran = totalPengeluaran.toInt()
 
-      budgetRepository.update(budgetModel)
-      emit(ResourceState.SUCCESS)
+        budgetRepository.update(budgetModel)
+        emit(Result.Success(true))
+      } catch (e: Exception) {
+        emit(Result.Error(e.message.toString()))
+      }
     }
   }
 }

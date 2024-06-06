@@ -1,11 +1,14 @@
 package com.ra.bkuang.features.budget.data
 
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.budget.data.local.BudgetLocalDataSource
 import com.ra.bkuang.features.budget.data.local.DetailBudget
 import com.ra.bkuang.features.budget.data.mapper.toEntity
 import com.ra.bkuang.features.budget.data.mapper.toModel
 import com.ra.bkuang.features.budget.domain.BudgetRepository
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
 import java.util.UUID
 import javax.inject.Inject
@@ -21,7 +24,7 @@ class BudgetRepositoryImpl @Inject constructor(
     return localDataSource.findBudgetByDateAndKategoriId(fromDate, toDate, id).toModel()
   }
 
-  override suspend fun findAllByDate(fromDate: LocalDate, toDate: LocalDate): List<DetailBudget> {
+  override fun findAllByDate(fromDate: LocalDate, toDate: LocalDate): Flow<List<DetailBudget>> {
     return localDataSource.findAllByDate(fromDate, toDate)
   }
 
@@ -37,8 +40,16 @@ class BudgetRepositoryImpl @Inject constructor(
     return localDataSource.saveBudget(budget.toEntity())
   }
 
-  override suspend fun delete(budget: BudgetModel) {
-    return localDataSource.deleteBudget(budget.toEntity())
+  override fun deleteById(id: UUID): Flow<Result<Boolean>> {
+    return flow {
+      try {
+        val budget = localDataSource.findById(id)
+        localDataSource.deleteBudget(budget)
+        emit(Result.Success(true))
+      } catch (e: Exception) {
+        emit(Result.Error(e.message.toString()))
+      }
+    }
   }
 
   override suspend fun update(budget: BudgetModel) {

@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.budget.domain.usecase.impl
 
-import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.budget.domain.BudgetRepository
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
 import com.ra.bkuang.features.budget.domain.usecase.CreateBudgetUseCase
@@ -23,15 +23,16 @@ class CreateBudgetUseCaseImpl @Inject constructor(
     fromDate: LocalDate,
     toDate: LocalDate,
     budgetModel: BudgetModel
-  ): Flow<ResourceState> {
+  ): Flow<Result<Boolean>> {
     return flow {
       val isExist =
         budgetRepository.isExistByDateAndKategoriId(fromDate, toDate, budgetModel.idKategori)
-      emit(ResourceState.LOADING)
       if (isExist) {
-        emit(ResourceState.FAILED)
-      } else {
+        emit(Result.Error("Budget is Exist!"))
+        return@flow
+      }
 
+      try {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, fromDate.year)
         calendar.set(Calendar.MONTH, fromDate.month.value - 1)
@@ -56,7 +57,9 @@ class CreateBudgetUseCaseImpl @Inject constructor(
 
         budgetRepository.save(budgetModel)
 
-        emit(ResourceState.SUCCESS)
+        emit(Result.Success(true))
+      } catch (e: Exception) {
+        emit(Result.Error("Error"))
       }
     }
   }

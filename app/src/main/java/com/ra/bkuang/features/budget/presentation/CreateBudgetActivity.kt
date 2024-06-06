@@ -8,18 +8,17 @@ import android.widget.AdapterView
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.ra.bkuang.R
+import com.ra.bkuang.common.base.BaseActivity
+import com.ra.bkuang.common.util.ActionType
+import com.ra.bkuang.common.util.Extension.setupActionBar
+import com.ra.bkuang.common.util.Extension.showShortToast
+import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
 import com.ra.bkuang.databinding.ActivityCreateBudgetBinding
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
 import com.ra.bkuang.features.category.domain.model.KategoriModel
-import com.ra.bkuang.common.base.BaseActivity
-import com.ra.bkuang.common.util.ActionType
-import com.ra.bkuang.common.util.Extension.showShortToast
-import com.ra.bkuang.common.util.ResourceState
-import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -39,6 +38,12 @@ class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.
     observer()
     setupCategories()
 
+    setupActionBar(
+      binding.toolbar,
+      getString(R.string.txt_budget),
+      true
+    )
+
     val actionType = intent?.getStringExtra(BUDGET_EXTRA_ACTION) as String
     when(getActionType(actionType)) {
       ActionType.CREATE -> {
@@ -47,14 +52,6 @@ class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.
       ActionType.EDIT -> {
         val budgetId = intent?.getStringExtra(BUDGET_ID) as String
         viewModel.findBudgetById(UUID.fromString(budgetId))
-
-        lifecycleScope.launch {
-          viewModel.budgetModel.collect {
-            if(it == null) return@collect
-            setupView(it)
-            editBudget(it)
-          }
-        }
       }
     }
   }
@@ -79,22 +76,7 @@ class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.
 
       budgetModel.maxPengeluaran = limit.toInt()
       budgetModel.idKategori = categoryId ?: return@setOnClickListener
-
-      lifecycleScope.launch {
-        viewModel.updateBudget(budgetModel).collect { status ->
-          when(status) {
-            ResourceState.LOADING -> {}
-            ResourceState.FAILED -> {
-              showShortToast(getString(R.string.msg_failed_update))
-            }
-            ResourceState.SUCCESS -> {
-              showShortToast(getString(R.string.msg_success))
-              delay(300)
-              onBackPressedDispatcher.onBackPressed()
-            }
-          }
-        }
-      }
+      viewModel.updateBudget(budgetModel)
     }
   }
 
@@ -126,22 +108,7 @@ class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.
         pengeluaran = 0,
         deskripsi = ""
       )
-
-      lifecycleScope.launch {
-        viewModel.createBudget(budgetModel).collect { status ->
-          when(status) {
-            ResourceState.LOADING -> {}
-            ResourceState.FAILED -> {
-              showShortToast(getString(R.string.msg_already_exist))
-            }
-            ResourceState.SUCCESS -> {
-              showShortToast(getString(R.string.msg_success))
-              delay(300)
-              onBackPressedDispatcher.onBackPressed()
-            }
-          }
-        }
-      }
+      viewModel.createBudget(budgetModel)
     }
   }
 
@@ -168,8 +135,31 @@ class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.
   private fun observer() {
     viewModel.setCategoryByType(TransactionType.PENGELUARAN)
     lifecycleScope.launch {
-      viewModel.listCategoryByType.collect {
-        setupListCategory(it)
+      viewModel.budgetFragmentUiState.collect { uiState ->
+        setupListCategory(uiState.listCategoryByType)
+
+        uiState.budgetModel?.let {
+          setupView(uiState.budgetModel)
+          editBudget(uiState.budgetModel)
+        }
+
+        uiState.isSuccessfulCreate?.let {
+          if(it) {
+            showShortToast(getString(R.string.msg_success))
+            onBackPressedDispatcher.onBackPressed()
+          } else {
+            showShortToast(getString(R.string.msg_already_exist))
+          }
+        }
+
+        uiState.isSuccessfulUpdate?.let {
+          if(it) {
+            showShortToast(getString(R.string.msg_success))
+            onBackPressedDispatcher.onBackPressed()
+          } else {
+            showShortToast(getString(R.string.msg_failed_update))
+          }
+        }
       }
     }
   }

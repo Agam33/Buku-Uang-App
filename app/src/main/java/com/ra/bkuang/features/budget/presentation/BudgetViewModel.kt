@@ -2,25 +2,20 @@ package com.ra.bkuang.features.budget.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.common.base.BaseViewModel
-import com.ra.bkuang.common.util.ResultState
-import com.ra.bkuang.common.util.ResourceState
-import com.ra.bkuang.di.IoDispatcherQualifier
-import com.ra.bkuang.features.category.domain.usecase.FindCategoryByTypeUseCase
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
 import com.ra.bkuang.features.budget.domain.usecase.CreateBudgetUseCase
 import com.ra.bkuang.features.budget.domain.usecase.DeleteBudgetByIdUseCase
 import com.ra.bkuang.features.budget.domain.usecase.EditBudgetUseCase
 import com.ra.bkuang.features.budget.domain.usecase.FindAllBudgetByDateUseCase
 import com.ra.bkuang.features.budget.domain.usecase.FindBudgetByIdUseCase
-import com.ra.bkuang.features.category.domain.model.KategoriModel
+import com.ra.bkuang.features.category.domain.usecase.FindCategoryByTypeUseCase
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.util.UUID
 import javax.inject.Inject
@@ -32,49 +27,147 @@ class BudgetViewModel @Inject constructor(
   private val deleteBudgetByIdUseCase: DeleteBudgetByIdUseCase,
   private val createBudgetUseCase: CreateBudgetUseCase,
   private val findKategoriByType: FindCategoryByTypeUseCase,
-  private val findBudgetByIdUseCase: FindBudgetByIdUseCase,
-  @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher
+  private val findBudgetByIdUseCase: FindBudgetByIdUseCase
 ): BaseViewModel() {
 
-  private var _listCategoryByType = MutableStateFlow<List<KategoriModel>>(listOf())
-  val listCategoryByType: StateFlow<List<KategoriModel>> get() = _listCategoryByType
-
-  private var _budgetModel = MutableStateFlow<BudgetModel?>(null)
-  val budgetModel: StateFlow<BudgetModel?> get() = _budgetModel
+  private var _budgetFragmentUiState = MutableStateFlow(BudgetFragmentUiState())
+  val budgetFragmentUiState = _budgetFragmentUiState.asStateFlow()
 
   fun findBudgetById(id: UUID) {
     viewModelScope.launch {
       val budget = findBudgetByIdUseCase.invoke(id)
-      _budgetModel.emit(budget)
-    }
-  }
-
-  suspend fun findAllBudget(fromDate: LocalDate, toDate: LocalDate) = withContext(ioDispatcher) {
-    return@withContext findAllBudgetByDateUseCase.invoke(fromDate, toDate)
-  }
-
-  fun setCategoryByType(transactionType: TransactionType) = viewModelScope.launch {
-    findKategoriByType.invoke(transactionType).collect {
-      when (it) {
-        is ResultState.Empty -> {}
-        is ResultState.Success -> {
-          _listCategoryByType.emit(it.data ?: mutableListOf())
-        }
-        else -> {}
+      _budgetFragmentUiState.update {
+        it.copy(
+          budgetModel = budget
+        )
       }
     }
   }
 
-  fun deleteBudgetById(id: UUID): Flow<ResourceState> =
-    deleteBudgetByIdUseCase.invoke(id)
+  fun findAllBudget(fromDate: LocalDate, toDate: LocalDate) {
+    viewModelScope.launch {
+      findAllBudgetByDateUseCase(fromDate, toDate).collect { allBudget ->
+        _budgetFragmentUiState.update {
+          it.copy(
+            budgetList = allBudget
+          )
+        }
+      }
+    }
+  }
 
-  fun updateBudget(budgetModel: BudgetModel): Flow<ResourceState> =
-    editBudgetUseCase.invoke(budgetModel)
+  fun setCategoryByType(transactionType: TransactionType) {
+    viewModelScope.launch {
+      findKategoriByType.invoke(transactionType).collect { data ->
+        when (data) {
+          is Result.Success -> {
+            _budgetFragmentUiState.update {
+              it.copy(
+                listCategoryByType = data.data ?: mutableListOf(),
+                isEmptyState = false
+              )
+            }
+          }
+          is Result.Error -> {
+            _budgetFragmentUiState.update {
+              it.copy(
+                listCategoryByType = emptyList(),
+                isEmptyState = true
+              )
+            }
+          }
+        }
+      }
+    }
+  }
 
-  fun createBudget(budgetModel: BudgetModel): Flow<ResourceState> =
-    createBudgetUseCase.invoke(
-      budgetModel.bulanTahun,
-      budgetModel.bulanTahun,
-      budgetModel
-    )
+  fun deleteBudgetById(id: UUID) {
+    viewModelScope.launch {
+      deleteBudgetByIdUseCase(id).collect { res ->
+        when(res) {
+          is Result.Success -> {
+            _budgetFragmentUiState.update {
+              it.copy(
+                isSuccessfulDelete = res.data
+              )
+            }
+          }
+          is Result.Error -> {
+            _budgetFragmentUiState.update {
+              it.copy(
+                isSuccessfulDelete = false
+              )
+            }
+          }
+        }
+
+        _budgetFragmentUiState.update {
+          it.copy(
+            isSuccessfulDelete = null
+          )
+        }
+      }
+    }
+  }
+
+  fun updateBudget(budgetModel: BudgetModel) {
+    viewModelScope.launch {
+      editBudgetUseCase(budgetModel).collect { res ->
+        when(res) {
+          is Result.Success -> {
+            _budgetFragmentUiState.update {
+              it.copy(
+                isSuccessfulUpdate = res.data,
+              )
+            }
+          }
+          is Result.Error -> {
+            _budgetFragmentUiState.update {
+              it.copy(
+                isSuccessfulUpdate = false,
+              )
+            }
+          }
+        }
+        _budgetFragmentUiState.update {
+          it.copy(
+            isSuccessfulUpdate = null,
+          )
+        }
+      }
+    }
+  }
+
+  fun createBudget(budgetModel: BudgetModel) {
+    viewModelScope.launch {
+      createBudgetUseCase(
+        budgetModel.bulanTahun,
+        budgetModel.bulanTahun,
+        budgetModel
+      ).collect { res ->
+        when(res) {
+          is Result.Success -> {
+            _budgetFragmentUiState.update {
+              it.copy(
+                isSuccessfulCreate = res.data,
+              )
+            }
+
+            _budgetFragmentUiState.update {
+              it.copy(
+                isSuccessfulCreate = null,
+              )
+            }
+          }
+          is Result.Error -> {
+            _budgetFragmentUiState.update {
+              it.copy(
+                isSuccessfulCreate = false,
+              )
+            }
+          }
+        }
+      }
+    }
+  }
 }

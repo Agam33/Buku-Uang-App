@@ -29,7 +29,7 @@ import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_MODE
 import com.ra.bkuang.features.debt.presentation.adapter.DebtRecordAdapter
 import com.ra.bkuang.features.debt.presentation.dialog.AddDebtRecordDialog
 import com.ra.bkuang.common.util.Extension.getStringResource
-import com.ra.bkuang.common.util.Extension.setupNoActionbar
+import com.ra.bkuang.common.util.Extension.setupActionBar
 import com.ra.bkuang.common.util.Extension.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
@@ -53,7 +53,7 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
 
     debtModelId = intent?.getStringExtra(DebtFragment.DEBT_MODEL_ID)
 
-    setupNoActionbar(binding.toolbar, isDisplayHomeAsUpEnabled = false)
+    setupActionBar(binding.toolbar, isDisplayHomeAsUpEnabled = false)
 
     binding.vm = viewModel
     binding.lifecycleOwner = this
