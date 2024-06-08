@@ -1,25 +1,16 @@
 package com.ra.bkuang.features.debt.domain.usecase.impl
 
-import com.ra.bkuang.di.IoDispatcherQualifier
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.debt.domain.HutangRepository
 import com.ra.bkuang.features.debt.domain.model.HutangModel
 import com.ra.bkuang.features.debt.domain.usecase.CreateHutangUseCase
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
-import timber.log.Timber
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CreateHutangUseCaseImpl @Inject constructor(
-  @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
   private val hutangRepository: HutangRepository
 ): CreateHutangUseCase {
-  override suspend fun invoke(hutangModel: HutangModel): Boolean = withContext(ioDispatcher) {
-    try {
-      hutangRepository.save(hutangModel)
-      return@withContext true
-    } catch (e: Exception) {
-      Timber.e(e)
-      return@withContext false
-    }
+  override operator fun invoke(hutangModel: HutangModel): Flow<Result<Boolean>> {
+      return hutangRepository.save(hutangModel)
   }
 }

@@ -4,15 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
+import com.ra.bkuang.common.base.BaseFragment
+import com.ra.bkuang.common.util.ActionType
+import com.ra.bkuang.common.util.Extension.hide
 import com.ra.bkuang.databinding.FragmentDebtBinding
 import com.ra.bkuang.features.debt.domain.model.HutangModel
-import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.features.debt.presentation.adapter.DebtAdapter
-import com.ra.bkuang.common.util.ActionType
-import com.ra.bkuang.common.util.ResultState
+import com.ra.bkuang.features.debt.presentation.detail.DetailDebtActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -24,10 +27,23 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    binding?.vm = sharedViewModel
-    binding?.lifecycleOwner = viewLifecycleOwner
-    setupRv()
+    observer()
     createNewDebt()
+  }
+
+  private fun observer() {
+    lifecycleScope.launch {
+      sharedViewModel.debtFragmentUiState.collect { uiState ->
+        if(uiState.debtList.isEmpty()) {
+          binding?.rvDebtList?.hide(true)
+          binding?.emptyLayout?.state = false
+        } else {
+          binding?.rvDebtList?.hide(false)
+          binding?.emptyLayout?.state = true
+          setupList(uiState.debtList)
+        }
+      }
+    }
   }
 
   private fun createNewDebt() {
@@ -36,23 +52,6 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
         putExtra(DEBT_EXTRA_ACTION, ActionType.CREATE.name)
       }
       startActivity(i)
-    }
-  }
-
-  private fun setupRv() {
-    refresh()
-    sharedViewModel.hutangList.observe(viewLifecycleOwner) {
-      when(it) {
-        is ResultState.Empty -> {
-          sharedViewModel.setState(rvState = true, emptyState = false)
-        }
-        is ResultState.Success -> {
-          sharedViewModel.setState(rvState = false, emptyState = true)
-          setupList(it.data)
-        }
-        is ResultState.Loading -> {}
-        is ResultState.Error -> {}
-      }
     }
   }
 

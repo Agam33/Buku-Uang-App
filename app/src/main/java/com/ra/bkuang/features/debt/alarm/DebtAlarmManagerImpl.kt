@@ -17,7 +17,7 @@ import com.ra.bkuang.di.AppNotificationManagerQualifier
 import com.ra.bkuang.di.IoCoroutineScopeQualifier
 import com.ra.bkuang.features.debt.domain.model.HutangModel
 import com.ra.bkuang.features.debt.presentation.DebtFragment
-import com.ra.bkuang.features.debt.presentation.DetailDebtActivity
+import com.ra.bkuang.features.debt.presentation.detail.DetailDebtActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

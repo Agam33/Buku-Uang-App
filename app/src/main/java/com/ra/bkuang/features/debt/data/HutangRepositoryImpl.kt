@@ -1,5 +1,6 @@
 package com.ra.bkuang.features.debt.data
 
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.di.IoCoroutineScopeQualifier
 import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.debt.alarm.DebtAlarmManager
@@ -11,6 +12,9 @@ import com.ra.bkuang.features.debt.domain.model.HutangModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -28,33 +32,66 @@ class HutangRepositoryImpl @Inject constructor(
     return localDataSource.findByAlarmId(alarmId).toModel()
   }
 
-  override suspend fun save(hutang: HutangModel) {
-    return localDataSource.save(hutang.toEntity())
+  override fun save(hutang: HutangModel): Flow<Result<Boolean>> {
+    return flow {
+      try {
+        localDataSource.save(hutang.toEntity())
+        emit(Result.Success(true))
+      } catch (e: Exception) {
+        emit(Result.Error(e.message.toString()))
+      }
+    }.flowOn(ioDispatcher)
   }
 
-  override suspend fun delete(hutang: HutangModel) {
-    return localDataSource.delete(hutang.toEntity())
+  override fun delete(hutang: HutangModel): Flow<Result<Boolean>> {
+    return flow {
+      try {
+       localDataSource.delete(hutang.toEntity())
+        emit(Result.Success(true))
+      } catch (e: Exception) {
+        emit(Result.Error(e.message.toString()))
+      }
+    }.flowOn(ioDispatcher)
   }
 
-  override suspend fun update(hutang: HutangModel): Boolean {
-    return try {
-      localDataSource.update(hutang.toEntity())
-      true
-    } catch (e: Exception) {
-      false
-    }
+  override fun update(hutang: HutangModel): Flow<Result<Boolean>> {
+    return flow {
+      try {
+        localDataSource.update(hutang.toEntity())
+        emit(Result.Success(true))
+      } catch (e: Exception) {
+        emit(Result.Error(e.message.toString()))
+      }
+    }.flowOn(ioDispatcher)
   }
 
   override suspend fun findById(id: UUID): HutangModel {
     return localDataSource.findById(id).toModel()
   }
 
-  override suspend fun findAll(): List<HutangModel> {
-    return localDataSource.findAll().map { it.toModel() }
+  override fun findAllWithFlow(): Flow<Result<List<HutangModel>>> {
+    return flow {
+      localDataSource.findAllWithFlow().collect { data ->
+        if(data.isEmpty()) {
+          emit(Result.Error("Empty list"))
+          return@collect
+        }
+
+        emit(Result.Success(data.map { it.toModel() }))
+      }
+    }
   }
 
-  override fun findByIdWithFlow(id: String): Flow<HutangModel?> {
-    return localDataSource.findByIdWithFlow(UUID.fromString(id)).map { it?.toModel() }
+  override fun findByIdWithFlow(id: String): Flow<Result<HutangModel?>> {
+    return flow {
+      localDataSource
+        .findByIdWithFlow(UUID.fromString(id))
+        .map {
+          it?.toModel()
+        }.collect {
+          emit(Result.Success(it))
+      }
+    }.flowOn(ioDispatcher)
   }
 
   override suspend fun setAlarmDebt(calendar: Calendar, model: HutangModel): Boolean = withContext(ioDispatcher) {

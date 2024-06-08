@@ -16,7 +16,7 @@ interface PembayaranHutangDao {
   @Query("SELECT * FROM pembayaran_hutang_tbl AS pht " +
           "WHERE pht.id_hutang = :id " +
           "ORDER BY pht.updated_at DESC")
-  suspend fun findAllRecordByHutangId(id: UUID): List<DetailPembayaranHutang>
+  fun findAllRecordByHutangId(id: UUID): Flow<List<DetailPembayaranHutang>>
 
   @Query("SELECT COUNT(*) FROM pembayaran_hutang_tbl AS pht WHERE pht.id_hutang = :id")
   fun getSizeListPembayaranHutangById(id: UUID): Flow<Int?>

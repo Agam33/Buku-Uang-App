@@ -18,10 +18,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.ra.bkuang.R
-import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
-import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
-import com.ra.bkuang.features.debt.presentation.DetailDebtViewModel
 import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.Constants.DATE_PATTERN
 import com.ra.bkuang.common.util.Constants.DATE_TIME_FORMATTER
@@ -33,10 +29,13 @@ import com.ra.bkuang.common.util.Extension.parcelable
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toCalendar
 import com.ra.bkuang.common.util.OnItemChangedListener
-import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.common.util.getActionType
+import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
+import com.ra.bkuang.features.account.domain.model.AkunModel
+import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
 import com.ra.bkuang.features.debt.presentation.DebtFragment
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_MODEL
-import com.ra.bkuang.common.util.getActionType
+import com.ra.bkuang.features.debt.presentation.detail.DetailDebtViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -69,9 +68,7 @@ class AddDebtRecordDialog: DialogFragment() {
 
     materialDialog.setView(view)
 
-    view?.let {
-      initView(it)
-    }
+    view?.let { initView(it) }
 
     setupButton()
 
@@ -104,7 +101,28 @@ class AddDebtRecordDialog: DialogFragment() {
 
   private fun observer() {
     viewModel.getAllAccount()
-    viewModel.accounts.observe(requireActivity(), ::setupListAccount)
+
+    lifecycleScope.launch {
+      viewModel.detailDebtUiState.collect { uiState ->
+        uiState.isSuccessfulUpdate?.let {
+          if(it) {
+            showShortToast(getString(R.string.txt_successful_update))
+            onItemChangedListener?.onItemChanged()
+            dismiss()
+          }
+        }
+
+        uiState.isSuccessfulCreate?.let {
+          if(it) {
+            showShortToast(getString(R.string.txt_successful_save))
+            onItemChangedListener?.onItemChanged()
+            dismiss()
+          }
+        }
+
+        setupListAccount(uiState.accounts)
+      }
+    }
   }
 
   private fun setupButton() {
@@ -148,19 +166,7 @@ class AddDebtRecordDialog: DialogFragment() {
           updatedAt = updated
           idAkun = accountId ?: idAkun
         }
-
-        requireActivity().lifecycleScope.launch {
-          viewModel.updatePembayaranHutang(detailPembayaranDebtModel, oldModel).collect { status ->
-            when(status) {
-              ResourceState.LOADING -> {}
-              ResourceState.SUCCESS -> {
-                onItemChangedListener?.onItemChanged()
-                dismiss()
-              }
-              ResourceState.FAILED -> {}
-            }
-          }
-        }
+        viewModel.updatePembayaranHutang(detailPembayaranDebtModel, oldModel)
       }
 
       ActionType.CREATE -> {
@@ -173,19 +179,7 @@ class AddDebtRecordDialog: DialogFragment() {
           createdAt = LocalDateTime.now(),
           updatedAt = updated
         )
-
-        requireActivity().lifecycleScope.launch {
-          viewModel.savePembayaranHutang(paymentDebtModel).collect { status ->
-            when(status) {
-              ResourceState.LOADING -> {}
-              ResourceState.SUCCESS -> {
-                onItemChangedListener?.onItemChanged()
-                dismiss()
-              }
-              ResourceState.FAILED -> {}
-            }
-          }
-        }
+        viewModel.savePembayaranHutang(paymentDebtModel)
       }
     }
   }
@@ -264,10 +258,5 @@ class AddDebtRecordDialog: DialogFragment() {
 
       override fun onNothingSelected(p0: AdapterView<*>?) {}
     }
-  }
-
-  override fun onDestroyView() {
-    viewModel.accounts.removeObservers(requireActivity())
-    super.onDestroyView()
   }
 }

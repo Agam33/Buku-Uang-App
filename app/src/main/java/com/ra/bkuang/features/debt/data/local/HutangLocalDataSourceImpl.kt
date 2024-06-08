@@ -30,8 +30,8 @@ class HutangLocalDataSourceImpl @Inject constructor(
     return hutangDao.findById(id)
   }
 
-  override suspend fun findAll(): List<HutangEntity> {
-    return hutangDao.findAll()
+  override fun findAllWithFlow(): Flow<List<HutangEntity>> {
+    return hutangDao.findAllWithFlow()
   }
 
   override fun findByIdWithFlow(id: UUID): Flow<HutangEntity?> {

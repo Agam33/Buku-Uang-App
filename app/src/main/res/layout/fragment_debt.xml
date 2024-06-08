@@ -3,11 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="vm"
-            type="com.ra.bkuang.features.debt.presentation.DebtViewModel" />
-    </data>
+    <data></data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -41,7 +37,6 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="22dp"
-            app:hide="@{vm.rvDebtListState}"
             tools:itemCount="15"
             tools:listitem="@layout/item_rv_debt"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
@@ -60,7 +55,6 @@
             android:contentDescription="@string/txt_empty" />
 
         <include
-            app:hide="@{vm.emptyListState}"
             android:id="@+id/empty_layout"
             layout="@layout/empty_layout"/>
 

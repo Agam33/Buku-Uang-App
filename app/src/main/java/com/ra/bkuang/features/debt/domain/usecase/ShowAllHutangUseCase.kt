@@ -1,8 +1,9 @@
 package com.ra.bkuang.features.debt.domain.usecase
 
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.debt.domain.model.HutangModel
-import com.ra.bkuang.common.util.ResultState
+import kotlinx.coroutines.flow.Flow
 
 interface ShowAllHutangUseCase {
-  suspend fun invoke(): ResultState<List<HutangModel>>
+  operator fun invoke(): Flow<Result<List<HutangModel>>>
 }

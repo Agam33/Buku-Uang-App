@@ -1,14 +1,14 @@
 package com.ra.bkuang.features.debt.domain.usecase.impl
 
-import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.account.domain.AkunRepository
 import com.ra.bkuang.features.debt.domain.HutangRepository
 import com.ra.bkuang.features.debt.domain.PembayaranHutangRepository
 import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
 import com.ra.bkuang.features.debt.domain.usecase.SavePembayaranHutangUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class SavePembayaranHutangUseCaseImpl @Inject constructor(
@@ -16,21 +16,20 @@ class SavePembayaranHutangUseCaseImpl @Inject constructor(
   private val hutangRepository: HutangRepository,
   private val akunRepository: AkunRepository
 ): SavePembayaranHutangUseCase {
-  override suspend fun invoke(pembayaranHutangModel: PembayaranHutangModel): Flow<ResourceState> {
+  override operator fun invoke(pembayaranHutangModel: PembayaranHutangModel): Flow<Result<Boolean>> {
     return flow {
-      emit(ResourceState.LOADING)
       val accountModel = akunRepository.findById(pembayaranHutangModel.idAkun)
       val debtModel = hutangRepository.findById(pembayaranHutangModel.idHutang)
 
       accountModel.total -= pembayaranHutangModel.jumlah
       debtModel.totalPengeluaran += pembayaranHutangModel.jumlah
 
-      pembayaranHutangRepository.save(pembayaranHutangModel)
+      pembayaranHutangRepository.save(pembayaranHutangModel).collect()
 
-      emit(ResourceState.SUCCESS)
+      emit(Result.Success(true))
 
-      hutangRepository.update(debtModel)
-      akunRepository.update(accountModel)
+      hutangRepository.update(debtModel).collect()
+      akunRepository.update(accountModel).collect()
     }
   }
 }
