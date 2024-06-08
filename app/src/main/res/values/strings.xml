@@ -77,7 +77,7 @@
     <string name="txt_debt">Hutang</string>
     <string name="txt_detail_debt">Detail Hutang</string>
     <string name="txt_due_date">Jatuh Tempo</string>
-    <string name="total_list">Jumlah catatan :</string>
+    <string name="total_debt_record">Jumlah catatan : %d</string>
     <string name="txt_example_time">00 : 00</string>
     <string name="txt_transaction_view">Transaksi View</string>
     <string name="txt_alarm_transaction">Alarm Transaksi</string>

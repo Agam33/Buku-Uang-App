@@ -1,27 +1,23 @@
 package com.ra.bkuang.features.debt.domain.usecase.impl
 
-import com.ra.bkuang.common.util.ResourceState
-import com.ra.bkuang.di.IoDispatcherQualifier
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.account.domain.AkunRepository
 import com.ra.bkuang.features.debt.domain.HutangRepository
 import com.ra.bkuang.features.debt.domain.PembayaranHutangRepository
 import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
 import com.ra.bkuang.features.debt.domain.usecase.DeleteRecordPembayaranHutangUseCase
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class DeleteRecordPembayaranHutangUseCaseImpl @Inject constructor(
-  @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
   private val hutangRepository: HutangRepository,
   private val akunRepository: AkunRepository,
   private val pembayaranHutangRepository: PembayaranHutangRepository
 ): DeleteRecordPembayaranHutangUseCase {
-  override suspend fun invoke(detailPembayaranHutangModel: DetailPembayaranHutangModel): Flow<ResourceState> {
+  override fun invoke(detailPembayaranHutangModel: DetailPembayaranHutangModel): Flow<Result<Boolean>> {
     return flow {
-      emit(ResourceState.LOADING)
 
       val accountModel = akunRepository.findById(detailPembayaranHutangModel.akunModel.uuid)
       val debtModel = hutangRepository.findById(detailPembayaranHutangModel.hutangModel.uuid)
@@ -29,12 +25,12 @@ class DeleteRecordPembayaranHutangUseCaseImpl @Inject constructor(
       accountModel.total += detailPembayaranHutangModel.pembayaranHutangModel.jumlah
       debtModel.totalPengeluaran -= detailPembayaranHutangModel.pembayaranHutangModel.jumlah
 
-      pembayaranHutangRepository.delete(detailPembayaranHutangModel.pembayaranHutangModel)
-      emit(ResourceState.SUCCESS)
+      pembayaranHutangRepository.delete(detailPembayaranHutangModel.pembayaranHutangModel).collect()
 
-      hutangRepository.update(debtModel)
-      akunRepository.update(accountModel)
+      emit(Result.Success(true))
+
+      hutangRepository.update(debtModel).collect()
+      akunRepository.update(accountModel).collect()
     }
-      .flowOn(ioDispatcher)
   }
 }

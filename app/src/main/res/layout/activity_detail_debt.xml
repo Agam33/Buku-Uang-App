@@ -3,16 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="vm"
-            type="com.ra.bkuang.features.debt.presentation.DetailDebtViewModel" />
-    </data>
+    <data />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".features.debt.presentation.DetailDebtActivity">
+        tools:context=".features.debt.presentation.detail.DetailDebtActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             app:menu="@menu/menu_detail_debt"
@@ -91,7 +87,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:id="@+id/total_list"
-                android:text="@string/total_list"
+                android:text="@string/total_debt_record"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -99,7 +95,6 @@
                 android:layout_below="@id/goal_progress"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="8dp"
-                android:text="@{vm.sizeListPembayaranHutang}"
                 android:layout_toEndOf="@id/total_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -113,13 +108,11 @@
             android:layout_above="@id/btm_container"
             android:layout_below="@id/top_container"
             android:layout_marginBottom="-36dp"
-            app:hide="@{vm.rvDebtRecordState}"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             tools:itemCount="10"
             tools:listitem="@layout/item_rv_debt_record" />
 
         <include
-            app:hide="@{vm.emptyListState}"
             android:id="@+id/empty_layout"
             layout="@layout/empty_layout"/>
 

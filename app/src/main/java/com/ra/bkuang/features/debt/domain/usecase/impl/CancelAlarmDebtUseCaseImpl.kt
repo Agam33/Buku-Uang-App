@@ -8,6 +8,7 @@ import com.ra.bkuang.features.debt.domain.usecase.CancelAlarmDebtUseCase
 import com.ra.bkuang.features.debt.domain.usecase.UpdateHutangUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -21,7 +22,7 @@ class CancelAlarmDebtUseCaseImpl @Inject constructor(
   override suspend fun invoke(model: HutangModel) = withContext(ioDispatcher) {
     return@withContext alarm.cancelAlarm(model) {
       ioScope.launch {
-        updateHutangUseCase.invoke(it)
+        updateHutangUseCase.invoke(it).collect()
       }
     }
   }

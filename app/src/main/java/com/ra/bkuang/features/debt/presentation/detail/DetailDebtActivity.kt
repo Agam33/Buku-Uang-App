@@ -1,4 +1,4 @@
-package com.ra.bkuang.features.debt.presentation
+package com.ra.bkuang.features.debt.presentation.detail
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,40 +9,34 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.ra.bkuang.R
-import com.ra.bkuang.common.view.dialog.CalendarDialog
-import com.ra.bkuang.databinding.ActivityDetailDebtBinding
-import com.ra.bkuang.di.MainDispatcherQualifier
-import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
-import com.ra.bkuang.features.debt.domain.model.HutangModel
 import com.ra.bkuang.common.base.BaseActivity
 import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.Constants.DATE_TIME_FORMATTER
+import com.ra.bkuang.common.util.Extension.getStringResource
+import com.ra.bkuang.common.util.Extension.hide
+import com.ra.bkuang.common.util.Extension.setupActionBar
+import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toFormatRupiah
 import com.ra.bkuang.common.util.Extension.toPercent
 import com.ra.bkuang.common.util.Extension.toPercentText
 import com.ra.bkuang.common.util.Extension.toStringFormat
-import com.ra.bkuang.common.util.OnItemChangedListener
-import com.ra.bkuang.common.util.ResultState
-import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.common.view.dialog.CalendarDialog
+import com.ra.bkuang.databinding.ActivityDetailDebtBinding
+import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
+import com.ra.bkuang.features.debt.domain.model.HutangModel
+import com.ra.bkuang.features.debt.presentation.CreateDebtActivity
+import com.ra.bkuang.features.debt.presentation.DebtFragment
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_EXTRA_ACTION
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_MODEL
 import com.ra.bkuang.features.debt.presentation.adapter.DebtRecordAdapter
 import com.ra.bkuang.features.debt.presentation.dialog.AddDebtRecordDialog
-import com.ra.bkuang.common.util.Extension.getStringResource
-import com.ra.bkuang.common.util.Extension.setupActionBar
-import com.ra.bkuang.common.util.Extension.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.util.Calendar
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.activity_detail_debt),
-  OnItemChangedListener, DebtRecordAdapter.OnItemLongClickListener {
-
-  @Inject @MainDispatcherQualifier lateinit var mainDispatcher: CoroutineDispatcher
-  @Inject lateinit var debtRecordAdapter: DebtRecordAdapter
+   DebtRecordAdapter.OnItemLongClickListener {
 
   private val viewModel: DetailDebtViewModel by viewModels()
 
@@ -53,15 +47,40 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
 
     debtModelId = intent?.getStringExtra(DebtFragment.DEBT_MODEL_ID)
 
-    setupActionBar(binding.toolbar, isDisplayHomeAsUpEnabled = false)
+    init()
 
-    binding.vm = viewModel
-    binding.lifecycleOwner = this
+    setupActionBar(
+      binding.toolbar,
+      isDisplayHomeAsUpEnabled = false
+    )
 
     observer()
-    setupDetailDebt()
-    setupListExpense()
     setupButton()
+  }
+
+  private fun observer() {
+    lifecycleScope.launch {
+      viewModel.detailDebtUiState.collect { uiState ->
+
+        setupPaidDebtList(uiState.paidDebtRecord)
+
+        uiState.isSuccessfulDeleteDetail?.let {
+          if(it) {
+            finish()
+          }
+        }
+
+        uiState.isSuccessfulDeleteRecord?.let {
+          if(it) {
+            showShortToast(getString(R.string.msg_success))
+          }
+        }
+
+        binding.totalList.text = String.format(getString(R.string.total_debt_record), uiState.sizeDebtRecord)
+
+        setupDetailDebt(uiState.detailDebt)
+      }
+    }
   }
 
   private fun setupButton() = with(binding) {
@@ -73,57 +92,9 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
 
       val createDebtRecord = AddDebtRecordDialog().apply {
         arguments = args
-        onItemChangedListener = this@DetailDebtActivity
       }
 
       createDebtRecord.show(supportFragmentManager, "create-debt-record")
-    }
-  }
-
-  private fun setupListExpense() = with(binding) {
-    viewModel.debtRecord.observe(this@DetailDebtActivity) {
-      when(it) {
-        is ResultState.Success -> {
-          viewModel.setState(rvState = false, emptyState =  true)
-
-          val data = it.data
-
-          debtRecordAdapter.submitList(data)
-
-          rvDebtRecord.apply {
-            adapter = debtRecordAdapter
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-          }
-
-          debtRecordAdapter.onItemLongClickListener = this@DetailDebtActivity
-        }
-        is ResultState.Empty -> {
-          viewModel.setState(rvState = true, emptyState =  false)
-        }
-        is ResultState.Loading -> {}
-        is ResultState.Error -> {}
-      }
-    }
-  }
-
-  private fun setupDetailDebt() = with(binding) {
-    lifecycleScope.launch(mainDispatcher) {
-      viewModel.getHutangByIdWithFlow(debtModelId ?: "")
-        .collect {
-          it?.let {
-            val percent = it.totalPengeluaran.toPercent(it.maxCicilan)
-            tvPercent.text = percent.toPercentText()
-            goalProgress.progress = percent.toInt()
-            tvCurrentMoney.text = it.totalPengeluaran.toFormatRupiah()
-            tvGoalMoney.text = it.maxCicilan.toFormatRupiah()
-            tvDebtTitle.text = it.nama
-            tvDueDate.text = String.format(binding.root.context.getString(R.string.txt_due_date_format), it.jatuhTempo.toStringFormat(
-              DATE_TIME_FORMATTER
-            ))
-          }
-          changeAlarmToolbarIcon(it?.pengingatAktif ?: return@collect)
-        }
     }
   }
 
@@ -133,11 +104,49 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
     )
   }
 
-  private fun observer() {
+  private fun init() {
     debtModelId?.let {
       viewModel.getAllDebtRecord(it)
       viewModel.getSizeListPembayaranHutang(it)
     }
+    viewModel.getHutangByIdWithFlow(debtModelId ?: "")
+  }
+
+  private fun setupPaidDebtList(paidDebtRecord: List<DetailPembayaranHutangModel>) {
+    if(paidDebtRecord.isNotEmpty()) {
+      binding.rvDebtRecord.hide(false)
+      binding.emptyLayout.state = true
+
+      val debtRecordAdapter = DebtRecordAdapter().apply {
+        onItemLongClickListener = this@DetailDebtActivity
+      }
+
+      debtRecordAdapter.submitList(paidDebtRecord)
+
+      binding.rvDebtRecord.apply {
+        adapter = debtRecordAdapter
+        layoutManager = LinearLayoutManager(this@DetailDebtActivity)
+        setHasFixedSize(true)
+      }
+
+    } else {
+      binding.rvDebtRecord.hide(true)
+      binding.emptyLayout.state = false
+    }
+  }
+
+  private fun setupDetailDebt(it: HutangModel?) {
+    if(it == null) return
+    val percent = it.totalPengeluaran.toPercent(it.maxCicilan)
+    binding.tvPercent.text = percent.toPercentText()
+    binding.goalProgress.progress = percent.toInt()
+    binding.tvCurrentMoney.text = it.totalPengeluaran.toFormatRupiah()
+    binding.tvGoalMoney.text = it.maxCicilan.toFormatRupiah()
+    binding.tvDebtTitle.text = it.nama
+    binding.tvDueDate.text = String.format(binding.root.context.getString(R.string.txt_due_date_format), it.jatuhTempo.toStringFormat(
+      DATE_TIME_FORMATTER
+    ))
+    changeAlarmToolbarIcon(it.pengingatAktif)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -161,9 +170,7 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
             .setAction(getStringResource(R.string.txt_yes)) {
               lifecycleScope.launch {
                 val model = viewModel.getHutangById(debtModelId ?: "")
-                if (viewModel.deleteHutang(model)) {
-                  finish()
-                }
+                viewModel.deleteHutang(model)
               }
             }.show()
         true
@@ -207,22 +214,8 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
     }
   }
 
-  override fun onItemChanged() {
-    observer()
-  }
-
   override fun onItemDelete(model: DetailPembayaranHutangModel) {
-    lifecycleScope.launch {
-      viewModel.deleteRecordPembayaranHutang(model).collect { status ->
-        when(status) {
-          ResourceState.LOADING -> {}
-          ResourceState.SUCCESS -> {
-            observer()
-          }
-          ResourceState.FAILED -> {}
-        }
-      }
-    }
+    viewModel.deleteRecordPembayaranHutang(model)
   }
 
   override fun onItemUpdate(model: DetailPembayaranHutangModel) {
@@ -233,7 +226,6 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
 
     val createDebtRecord = AddDebtRecordDialog().apply {
       arguments = args
-      onItemChangedListener = this@DetailDebtActivity
     }
 
     createDebtRecord.show(supportFragmentManager, "create-debt-record")
@@ -241,7 +233,7 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_detail_debt, menu)
-    lifecycleScope.launch(mainDispatcher) {
+    lifecycleScope.launch {
       val model = viewModel.getHutangById(debtModelId ?: "")
       changeAlarmToolbarIcon(model.pengingatAktif)
     }

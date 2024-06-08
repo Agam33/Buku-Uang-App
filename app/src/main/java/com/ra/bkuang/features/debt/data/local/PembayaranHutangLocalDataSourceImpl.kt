@@ -14,7 +14,7 @@ class PembayaranHutangLocalDataSourceImpl @Inject constructor(
     return pembayaranHutangDao.getSizeListPembayaranHutangById(id)
   }
 
-  override suspend fun findAllRecordByHutangId(id: UUID): List<DetailPembayaranHutang> {
+  override fun findAllRecordByHutangId(id: UUID): Flow<List<DetailPembayaranHutang>> {
     return pembayaranHutangDao.findAllRecordByHutangId(id)
   }
 

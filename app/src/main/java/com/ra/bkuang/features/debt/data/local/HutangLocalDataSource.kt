@@ -10,6 +10,6 @@ interface HutangLocalDataSource {
   suspend fun delete(hutang: HutangEntity)
   suspend fun update(hutang: HutangEntity)
   suspend fun findById(id: UUID): HutangEntity
-  suspend fun findAll(): List<HutangEntity>
+  fun findAllWithFlow(): Flow<List<HutangEntity>>
   fun findByIdWithFlow(id: UUID): Flow<HutangEntity?>
 }
