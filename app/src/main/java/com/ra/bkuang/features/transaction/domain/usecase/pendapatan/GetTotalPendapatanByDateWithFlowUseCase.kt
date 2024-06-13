@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 
 interface GetTotalPendapatanByDateWithFlowUseCase {
-  fun invoke(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long>
+  operator fun invoke(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long>
 }

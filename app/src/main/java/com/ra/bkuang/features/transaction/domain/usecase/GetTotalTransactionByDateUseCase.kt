@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 
 interface GetTotalTransactionByDateUseCase {
-  fun invoke(
+  operator fun invoke(
     fromDate: LocalDateTime,
     toDate: LocalDateTime
   ): Flow<Long>

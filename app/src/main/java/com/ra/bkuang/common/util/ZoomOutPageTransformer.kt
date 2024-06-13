@@ -2,7 +2,6 @@ package com.ra.bkuang.common.util
 
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
-import timber.log.Timber
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -12,7 +11,6 @@ class ZoomOutPageTransformer: ViewPager2.PageTransformer {
   }
 
   override fun transformPage(page: View, position: Float) {
-    Timber.tag("ZoomOutPageTransformer -> ").d("$position")
     page.apply {
 
       val pageWidth = width

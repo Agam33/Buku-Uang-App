@@ -20,7 +20,7 @@ interface PengeluaranDao {
           "WHERE " +
           "pengeluaran_tbl.updated_at BETWEEN :fromDate AND :toDate " +
           "ORDER BY pengeluaran_tbl.updated_at DESC")
-  suspend fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailPengeluaran>
+  fun getPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<List<DetailPengeluaran>>
 
   @Transaction
   @Query("SELECT * FROM pengeluaran_tbl " +

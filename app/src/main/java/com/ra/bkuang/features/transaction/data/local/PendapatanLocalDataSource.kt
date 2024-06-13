@@ -10,10 +10,10 @@ interface PendapatanLocalDataSource {
   suspend fun getTotalPendapatan(fromDate: LocalDateTime, toDate: LocalDateTime): Long?
   suspend fun findById(uuid: UUID): PendapatanEntity
   suspend fun findDetailById(uuid: UUID): DetailPendapatan
-  fun getTotalPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long?>
+  fun getTotalPendapatanByDateWithFlow(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long?>
   fun getTotalPendapatan(): Flow<Long?>
-  suspend fun getPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailPendapatan>
-  suspend fun savePendapatan(pendapatan: PendapatanEntity)
-  suspend fun deletePendapatan(pendapatan: PendapatanEntity)
-  suspend fun updatePendapatan(pendapatan: PendapatanEntity)
+  fun getPendapatanByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<List<DetailPendapatan>>
+  suspend fun save(pendapatan: PendapatanEntity)
+  suspend fun delete(pendapatan: PendapatanEntity)
+  suspend fun update(pendapatan: PendapatanEntity)
 }

@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".features.transaction.presentation.fragment.CreateExpenseFragment">
+        tools:context=".features.transaction.presentation.tab.expense.CreateExpenseFragment">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_marginTop="4dp"

@@ -46,21 +46,21 @@ class PengeluaranLocalDataSourceImpl @Inject constructor(
     return pengeluaranDao.getMonthlyPengeluaran(startOfDay, endOfDay)
   }
 
-  override suspend fun getPengeluaranByDate(
+  override fun getPengeluaranByDate(
     fromDate: LocalDateTime, toDate: LocalDateTime
-  ): List<DetailPengeluaran> {
+  ): Flow<List<DetailPengeluaran>> {
     return pengeluaranDao.getPengeluaranByDate(fromDate, toDate)
   }
 
-  override suspend fun savePengeluaran(pengeluaran: PengeluaranEntity) {
+  override suspend fun save(pengeluaran: PengeluaranEntity) {
     return pengeluaranDao.save(pengeluaran)
   }
 
-  override suspend fun deletePengeluaran(pengeluaran: PengeluaranEntity) {
+  override suspend fun delete(pengeluaran: PengeluaranEntity) {
     return pengeluaranDao.delete(pengeluaran)
   }
 
-  override suspend fun updatePengeluaran(pengeluaran: PengeluaranEntity) {
+  override suspend fun update(pengeluaran: PengeluaranEntity) {
     return pengeluaranDao.update(pengeluaran)
   }
 }

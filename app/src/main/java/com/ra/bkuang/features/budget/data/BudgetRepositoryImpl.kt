@@ -37,14 +37,14 @@ class BudgetRepositoryImpl @Inject constructor(
   }
 
   override suspend fun save(budget: BudgetModel) {
-    return localDataSource.saveBudget(budget.toEntity())
+    return localDataSource.save(budget.toEntity())
   }
 
   override fun deleteById(id: UUID): Flow<Result<Boolean>> {
     return flow {
       try {
         val budget = localDataSource.findById(id)
-        localDataSource.deleteBudget(budget)
+        localDataSource.delete(budget)
         emit(Result.Success(true))
       } catch (e: Exception) {
         emit(Result.Error(e.message.toString()))
@@ -53,6 +53,6 @@ class BudgetRepositoryImpl @Inject constructor(
   }
 
   override suspend fun update(budget: BudgetModel) {
-    return localDataSource.updateBudget(budget.toEntity())
+    return localDataSource.update(budget.toEntity())
   }
 }

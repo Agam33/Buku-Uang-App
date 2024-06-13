@@ -9,7 +9,7 @@ interface BudgetLocalDataSource {
   fun findAllByDate(fromDate: LocalDate, toDate: LocalDate): Flow<List<DetailBudget>>
   suspend fun isExistByDateAndKategoriId(fromDate: LocalDate, toDate: LocalDate, id: UUID): Boolean
   suspend fun findById(id: UUID): BudgetEntity
-  suspend fun saveBudget(budget: BudgetEntity)
-  suspend fun deleteBudget(budget: BudgetEntity)
-  suspend fun updateBudget(budget: BudgetEntity)
+  suspend fun save(budget: BudgetEntity)
+  suspend fun delete(budget: BudgetEntity)
+  suspend fun update(budget: BudgetEntity)
 }

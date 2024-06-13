@@ -1,8 +1,9 @@
 package com.ra.bkuang.features.transaction.domain.usecase.transfer
 
-import com.ra.bkuang.common.util.ResourceState
+import com.ra.bkuang.common.util.Result
+import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface DeleteTransferByIdUseCase {
-  suspend fun invoke(uuid: UUID): ResourceState
+  operator fun invoke(uuid: UUID): Flow<Result<Boolean>>
 }

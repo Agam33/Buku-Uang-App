@@ -29,15 +29,15 @@ class BudgetLocalDataSourceImpl @Inject constructor(
     return budgetDao.findById(id)
   }
 
-  override suspend fun saveBudget(budget: BudgetEntity) {
+  override suspend fun save(budget: BudgetEntity) {
     return budgetDao.save(budget)
   }
 
-  override suspend fun deleteBudget(budget: BudgetEntity) {
+  override suspend fun delete(budget: BudgetEntity) {
     return budgetDao.delete(budget)
   }
 
-  override suspend fun updateBudget(budget: BudgetEntity) {
+  override suspend fun update(budget: BudgetEntity) {
     return budgetDao.update(budget)
   }
 }

@@ -19,11 +19,11 @@ class PendapatanLocalDataSourceImpl @Inject constructor(
     return pendapatanDao.findDetailPendapatanById(uuid)
   }
 
-  override fun getTotalPendapatanByDate(
+  override fun getTotalPendapatanByDateWithFlow(
     fromDate: LocalDateTime,
     toDate: LocalDateTime
   ): Flow<Long?> {
-    return pendapatanDao.getTotalPendapatanByDate(fromDate, toDate)
+    return pendapatanDao.getTotalPendapatanByDateWithFlow(fromDate, toDate)
   }
 
   override suspend fun getTotalPendapatan(fromDate: LocalDateTime, toDate: LocalDateTime): Long? {
@@ -34,21 +34,21 @@ class PendapatanLocalDataSourceImpl @Inject constructor(
     return pendapatanDao.getTotalPendapatan()
   }
 
-  override suspend fun getPendapatanByDate(
+  override fun getPendapatanByDate(
     fromDate: LocalDateTime, toDate: LocalDateTime
-  ): List<DetailPendapatan> {
+  ): Flow<List<DetailPendapatan>> {
     return pendapatanDao.getPendapatanByDate(fromDate, toDate)
   }
 
-  override suspend fun savePendapatan(pendapatan: PendapatanEntity) {
+  override suspend fun save(pendapatan: PendapatanEntity) {
     return pendapatanDao.save(pendapatan)
   }
 
-  override suspend fun deletePendapatan(pendapatan: PendapatanEntity) {
+  override suspend fun delete(pendapatan: PendapatanEntity) {
     return pendapatanDao.delete(pendapatan)
   }
 
-  override suspend fun updatePendapatan(pendapatan: PendapatanEntity) {
+  override suspend fun update(pendapatan: PendapatanEntity) {
     return pendapatanDao.update(pendapatan)
   }
 }

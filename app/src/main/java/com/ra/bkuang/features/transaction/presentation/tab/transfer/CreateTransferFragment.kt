@@ -1,4 +1,4 @@
-package com.ra.bkuang.features.transaction.presentation.fragment
+package com.ra.bkuang.features.transaction.presentation.tab.transfer
 
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
@@ -13,11 +13,6 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
-import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
-import com.ra.bkuang.databinding.FragmentCreateTransferBinding
-import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.features.transaction.domain.model.TransferModel
-import com.ra.bkuang.features.transaction.presentation.TransactionViewModel
 import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.Constants.DATE_PATTERN
 import com.ra.bkuang.common.util.Constants.DATE_TIME_FORMATTER
@@ -26,9 +21,14 @@ import com.ra.bkuang.common.util.Extension.getStringResource
 import com.ra.bkuang.common.util.Extension.millisToString
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toCalendar
-import com.ra.bkuang.common.util.ResourceState
-import com.ra.bkuang.features.transaction.presentation.TransactionFragment
 import com.ra.bkuang.common.util.getActionType
+import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
+import com.ra.bkuang.databinding.FragmentCreateTransferBinding
+import com.ra.bkuang.features.account.domain.model.AkunModel
+import com.ra.bkuang.features.transaction.domain.model.TransferModel
+import com.ra.bkuang.features.transaction.presentation.TransactionFragment
+import com.ra.bkuang.features.transaction.presentation.component.DetailTransactionDialog
+import com.ra.bkuang.features.transaction.presentation.tab.transfer.viewmodel.CreateTransferViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -40,7 +40,7 @@ import java.util.UUID
 @AndroidEntryPoint
 class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.layout.fragment_create_transfer) {
 
-  private val viewModel: TransactionViewModel by viewModels()
+  private val viewModel: CreateTransferViewModel by viewModels()
 
   private lateinit var fromAccountSpinnerAdapter: TransactionSpinnerAdapter<AkunModel>
   private lateinit var toAccountSpinnerAdapter: TransactionSpinnerAdapter<AkunModel>
@@ -48,15 +48,20 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
   private var fromAccountId: UUID? = null
   private var toAccountId: UUID? = null
 
-  private lateinit var transferModel: TransferModel
+  private lateinit var newTransferModel: TransferModel
+  private lateinit var oldTransferModel: TransferModel
 
   private lateinit var actionType: ActionType
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    init()
     observer()
     setupAccountPicker()
 
+  }
+
+  private fun init() {
     val type = arguments?.getString(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT) as String
     actionType = getActionType(type)
     when(actionType) {
@@ -74,7 +79,6 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
         binding?.run {
           val uuid = arguments?.getString(DetailTransactionDialog.EXTRA_TRANSACTION_ID) as String
           viewModel.getTransferById(UUID.fromString(uuid))
-          setupEditTransfer()
         }
       }
     }
@@ -102,25 +106,26 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
     }
   }
 
-  private fun setupEditTransfer() {
+  private fun setupEditTransfer(model: TransferModel) {
     binding?.run {
-      viewModel.transferModel.observe(viewLifecycleOwner) { model ->
-        edtAmount.text = Editable.Factory.getInstance().newEditable(model.jumlah.toString())
-        edtNote.text = Editable.Factory.getInstance().newEditable(model.deskripsi)
+      edtAmount.text = Editable.Factory.getInstance().newEditable(model.jumlah.toString())
+      edtNote.text = Editable.Factory.getInstance().newEditable(model.deskripsi)
 
-        val calendar = model.updatedAt.toCalendar()
-        setupTimePicker(calendar)
-        setupDatePicker(calendar)
+      val calendar = model.updatedAt.toCalendar()
+      setupTimePicker(calendar)
+      setupDatePicker(calendar)
 
-        btnSave.setOnClickListener {
-          updateTransfer(model)
-        }
+      btnSave.setOnClickListener {
+        updateTransfer(model)
       }
     }
   }
 
   private fun updateTransfer(model: TransferModel) {
     binding?.run {
+
+      oldTransferModel = model
+
       val amount: String = edtAmount.text.toString()
       val note: String = edtNote.text.toString()
 
@@ -144,7 +149,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
       val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
       val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
 
-      transferModel = TransferModel(
+      newTransferModel = TransferModel(
         uuid = model.uuid,
         jumlah = amount.toInt(),
         createdAt = model.createdAt,
@@ -157,17 +162,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
       viewModel.checkAccountMoney(
         fromAccountId ?: return@run,
         amount.toInt()
-      ) {
-        resourceStateTransfer(viewModel.updateTransfer(transferModel, model))
-      }
-
-      viewModel.updateTransactionState.observe(viewLifecycleOwner) { isSave ->
-        if (isSave) {
-          lifecycleScope.launch {
-            resourceStateTransfer(viewModel.updateTransfer(transferModel, model))
-          }
-        }
-      }
+      )
     }
   }
 
@@ -196,7 +191,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
       val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
       val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
 
-      transferModel = TransferModel(
+      newTransferModel = TransferModel(
         uuid = UUID.randomUUID(),
         jumlah = amount.toInt(),
         createdAt = createdAt,
@@ -209,17 +204,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
       viewModel.checkAccountMoney(
         fromAccountId ?: return@run,
         amount.toInt()
-      ) {
-        resourceStateTransfer(viewModel.saveTransfer(transferModel))
-      }
-
-      viewModel.saveTransactionState.observe(viewLifecycleOwner) { isSave ->
-        if (isSave) {
-          lifecycleScope.launch {
-            resourceStateTransfer(viewModel.saveTransfer(transferModel))
-          }
-        }
-      }
+      )
     }
   }
 
@@ -296,39 +281,46 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
 
   private fun observer() {
     viewModel.getAllAccount()
-    viewModel.listAccount.observe(viewLifecycleOwner, ::setupSpinnerListAccount)
 
-    viewModel.setSaveTransactionState(false)
-    viewModel.setUpdateTransctionState(false)
-    viewModel.setSaveTransactionDialogStateUi(false)
+    lifecycleScope.launch {
+      viewModel.uiState.collect { uiState ->
+        setupSpinnerListAccount(uiState.accountList)
 
-    viewModel.saveTransactionDialogStateUi.observe(viewLifecycleOwner) { isShown ->
-      if(isShown) {
-        MaterialAlertDialogBuilder(requireContext())
-          .setMessage(requireContext().resources.getString(R.string.txt_account_minus))
-          .setPositiveButton(requireContext().resources.getString(R.string.txt_continue)) { _, _ ->
-            viewModel.setSaveTransactionDialogStateUi(false)
-            when(actionType) {
-              ActionType.CREATE -> viewModel.setSaveTransactionState(true)
-              ActionType.EDIT -> viewModel.setUpdateTransctionState(true)
-            }
+        uiState.transferModel?.let {
+          setupEditTransfer(it)
+        }
+
+        uiState.isSuccessful?.let {
+          if(it) {
+            showShortToast(getString(R.string.msg_success))
+          } else {
+            showShortToast(getString(R.string.msg_failed))
           }
-          .create()
-          .show()
+        }
+
+        if(uiState.isSave) {
+          when(actionType) {
+            ActionType.CREATE -> viewModel.saveTransfer(newTransferModel)
+            ActionType.EDIT -> viewModel.updateTransfer(newTransferModel, oldTransferModel)
+          }
+          activity?.finish()
+        }
+
       }
     }
   }
 
-  private fun resourceStateTransfer(r: ResourceState) {
-    when(r) {
-      ResourceState.SUCCESS -> {
-        showShortToast(getString(R.string.msg_success))
-        activity?.finish()
+  private fun showSaveAlert() {
+    MaterialAlertDialogBuilder(requireContext())
+      .setMessage(requireContext().resources.getString(R.string.txt_account_minus))
+      .setPositiveButton(requireContext().resources.getString(R.string.txt_continue)) { _, _ ->
+        viewModel.showSaveAlert(false)
+        viewModel.onSave(true)
       }
-      ResourceState.FAILED -> {
-        showShortToast(getString(R.string.msg_failed))
+      .setOnDismissListener {
+        viewModel.showSaveAlert(false)
       }
-      ResourceState.LOADING -> {}
-    }
+      .create()
+      .show()
   }
 }
