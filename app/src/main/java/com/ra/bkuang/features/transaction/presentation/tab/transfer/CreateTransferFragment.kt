@@ -58,7 +58,6 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
     init()
     observer()
     setupAccountPicker()
-
   }
 
   private fun init() {
@@ -298,6 +297,10 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
           }
         }
 
+        if(uiState.showSaveAlert) {
+          showSaveAlert()
+        }
+
         if(uiState.isSave) {
           when(actionType) {
             ActionType.CREATE -> viewModel.saveTransfer(newTransferModel)
@@ -305,7 +308,6 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
           }
           activity?.finish()
         }
-
       }
     }
   }
