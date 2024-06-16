@@ -14,6 +14,7 @@ import com.ra.bkuang.features.transaction.domain.model.PendapatanModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -53,13 +54,14 @@ class PendapatanRepositoryImpl @Inject constructor(
     fromDate: LocalDateTime, toDate: LocalDateTime
   ): Flow<Result<List<DetailPendapatan>>> {
     return flow {
-      localDataSource.getPendapatanByDate(fromDate, toDate).collect { list ->
-        if(list.isEmpty()) {
-          emit(Result.Error("Empty list."))
-          return@collect
-        }
-        emit(Result.Success(list))
+      val list = localDataSource.getPendapatanByDate(fromDate, toDate).first()
+
+      if(list.isEmpty()) {
+        emit(Result.Error("Empty list."))
+        return@flow
       }
+
+      emit(Result.Success(list))
     }
       .catch { emit(Result.Error(it.message.toString())) }
       .flowOn(ioDispatcher)

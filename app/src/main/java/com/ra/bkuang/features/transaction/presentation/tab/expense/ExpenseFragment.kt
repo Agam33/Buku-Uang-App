@@ -2,41 +2,33 @@ package com.ra.bkuang.features.transaction.presentation.tab.expense
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.common.util.Extension.hide
-import com.ra.bkuang.common.util.OnDeleteItemListener
-import com.ra.bkuang.common.util.OnItemChangedListener
 import com.ra.bkuang.databinding.FragmentExpenseBinding
 import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
 import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
 import com.ra.bkuang.features.transaction.domain.model.TransactionGroup
-import com.ra.bkuang.features.transaction.presentation.TransactionFragment
 import com.ra.bkuang.features.transaction.presentation.adapter.ExpenseRvAdapter
 import com.ra.bkuang.features.transaction.presentation.adapter.OnDayItemClickListener
 import com.ra.bkuang.features.transaction.presentation.component.DetailTransactionDialog
-import com.ra.bkuang.features.transaction.presentation.tab.expense.viewmodel.ExpenseFragmentViewModel
+import com.ra.bkuang.features.transaction.presentation.viewmodel.TransactionViewModel
+import com.ra.bkuang.features.transaction.utils.OnTransactionDeleteListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.time.LocalDateTime
 
 @AndroidEntryPoint
 class ExpenseFragment : BaseFragment<FragmentExpenseBinding>(R.layout.fragment_expense),
   OnDayItemClickListener,
-  OnDeleteItemListener<TransactionDetail>,
-  TransactionFragment.OnDateChangedListener {
+  OnTransactionDeleteListener<TransactionDetail> {
 
-  private val viewModel: ExpenseFragmentViewModel by viewModels()
-
-  var onItemChangedListener: OnItemChangedListener? = null
+  private val viewModel: TransactionViewModel by activityViewModels()
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    (requireParentFragment() as TransactionFragment).onDateChangedListener = this@ExpenseFragment
     observer()
   }
 
@@ -46,9 +38,6 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>(R.layout.fragment_e
       binding?.emptyLayout?.state = false
       return
     }
-
-    binding?.rvExpense?.hide(false)
-    binding?.emptyLayout?.state = true
 
     val monthly = TransactionGroup<String, ArrayList<DetailPengeluaran>>()
     for (item in items) {
@@ -63,24 +52,20 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>(R.layout.fragment_e
       layoutManager = LinearLayoutManager(requireContext())
       setHasFixedSize(true)
     }
+
+
+    binding?.rvExpense?.hide(false)
+    binding?.emptyLayout?.state = true
   }
 
   private fun observer() {
     lifecycleScope.launch {
       viewModel.uiState.collect { uiState ->
-        updateAdapter(uiState.expenseList)
-
-        uiState.isSuccessful?.let {
-          if(it) {
-            onItemChangedListener?.onItemChanged()
-          }
+        with(uiState.expenseUiState) {
+          updateAdapter(expenseList)
         }
       }
     }
-  }
-
-  private fun setupExpenseDate(currDate: Pair<LocalDateTime, LocalDateTime>) {
-    viewModel.getExpenseByDate(currDate.first, currDate.second)
   }
 
   override fun onDeleteItem(item: TransactionDetail) {
@@ -92,12 +77,7 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>(R.layout.fragment_e
     detailTransactionDialog.arguments = Bundle().apply {
       putParcelable(DetailTransactionDialog.EXTRA_DETAIL_TRANSACTION, dayItem)
     }
-    detailTransactionDialog.onDeleteItemListener = this@ExpenseFragment
+    detailTransactionDialog.onTransactionDeleteListener = this@ExpenseFragment
     detailTransactionDialog.show(parentFragmentManager, "expense-detail")
-  }
-
-  override fun onDateChanged(currDate: Pair<LocalDateTime, LocalDateTime>) {
-    Timber.tag("onDateChanged-Expense Fragment").d("$currDate")
-    setupExpenseDate(currDate)
   }
 }

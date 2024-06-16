@@ -292,6 +292,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
         uiState.isSuccessful?.let {
           if(it) {
             showShortToast(getString(R.string.msg_success))
+            activity?.finish()
           } else {
             showShortToast(getString(R.string.msg_failed))
           }
@@ -306,7 +307,6 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
             ActionType.CREATE -> viewModel.saveTransfer(newTransferModel)
             ActionType.EDIT -> viewModel.updateTransfer(newTransferModel, oldTransferModel)
           }
-          activity?.finish()
         }
       }
     }

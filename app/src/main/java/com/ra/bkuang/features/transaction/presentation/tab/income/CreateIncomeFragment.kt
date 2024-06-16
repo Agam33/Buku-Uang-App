@@ -52,7 +52,6 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
   private var categoryId: UUID? = null
 
   private lateinit var newIncome: PendapatanModel
-  private lateinit var oldIncome: PendapatanModel
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -95,6 +94,15 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
 
         uiState.incomeModel?.let {
           setupEditIncome(it)
+        }
+
+        uiState.isSuccessful?.let {
+          if(it) {
+            showShortToast(getString(R.string.msg_success))
+            activity?.finish()
+          } else {
+            showShortToast(getString(R.string.msg_failed))
+          }
         }
       }
     }

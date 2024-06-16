@@ -35,8 +35,26 @@ class CreateIncomeViewModel @Inject constructor(
     viewModelScope.launch {
       savePendapatanUseCase(incomeModel).collect { res ->
         when(res) {
-          is Result.Success -> {}
-          is Result.Error -> {}
+          is Result.Success -> {
+            _uiState.update {
+              it.copy(
+                isSuccessful = true
+              )
+            }
+          }
+          is Result.Error -> {
+            _uiState.update {
+              it.copy(
+                isSuccessful = false
+              )
+            }
+          }
+        }
+
+        _uiState.update {
+          it.copy(
+            isSuccessful = null
+          )
         }
       }
     }
@@ -46,8 +64,26 @@ class CreateIncomeViewModel @Inject constructor(
       viewModelScope.launch {
         updatePendapatanUseCase(newIncomeModel, oldIncomeModel).collect { res ->
           when(res) {
-            is Result.Success -> {}
-            is Result.Error -> {}
+            is Result.Success -> {
+              _uiState.update {
+                it.copy(
+                  isSuccessful = true,
+                )
+              }
+            }
+            is Result.Error -> {
+              _uiState.update {
+                it.copy(
+                  isSuccessful = false
+                )
+              }
+            }
+          }
+
+          _uiState.update {
+            it.copy(
+              isSuccessful = null
+            )
           }
         }
       }

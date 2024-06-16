@@ -106,6 +106,7 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
         uiState.isSuccessful?.let {
           if(it) {
             showShortToast(getString(R.string.msg_success))
+            activity?.finish()
           } else {
             showShortToast(getString(R.string.msg_failed))
           }
@@ -113,10 +114,9 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
 
         if(uiState.isSave) {
           when(actionType) {
-            ActionType.CREATE -> viewModel.saveExpense(expenseModel = newExpenseModel)
+            ActionType.CREATE -> viewModel.saveExpense(newExpenseModel)
             ActionType.EDIT -> viewModel.updateExpense(newExpenseModel, oldExpenseModel)
           }
-          activity?.finish()
         }
       }
     }
@@ -310,5 +310,9 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
       }
       .create()
       .show()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
   }
 }

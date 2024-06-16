@@ -28,7 +28,6 @@ import com.ra.bkuang.common.util.Extension.millisToString
 import com.ra.bkuang.common.util.Extension.parcelable
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toCalendar
-import com.ra.bkuang.common.util.OnItemChangedListener
 import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
 import com.ra.bkuang.features.account.domain.model.AkunModel
@@ -51,8 +50,6 @@ class AddDebtRecordDialog: DialogFragment() {
   private var accountId: UUID? = null
 
   private val viewModel: DetailDebtViewModel by viewModels()
-
-  var onItemChangedListener: OnItemChangedListener? = null
 
   private lateinit var spAccount: Spinner
   private lateinit var edtAmount: TextInputEditText
@@ -107,7 +104,6 @@ class AddDebtRecordDialog: DialogFragment() {
         uiState.isSuccessfulUpdate?.let {
           if(it) {
             showShortToast(getString(R.string.txt_successful_update))
-            onItemChangedListener?.onItemChanged()
             dismiss()
           }
         }
@@ -115,7 +111,6 @@ class AddDebtRecordDialog: DialogFragment() {
         uiState.isSuccessfulCreate?.let {
           if(it) {
             showShortToast(getString(R.string.txt_successful_save))
-            onItemChangedListener?.onItemChanged()
             dismiss()
           }
         }

@@ -17,6 +17,7 @@ import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -69,14 +70,14 @@ class PengeluaranRepositoryImpl @Inject constructor(
     fromDate: LocalDateTime, toDate: LocalDateTime
   ): Flow<Result<List<DetailPengeluaran>>> {
     return flow {
-      expenseLocalData.getPengeluaranByDate(fromDate, toDate).collect {
-        if(it.isEmpty()) {
-          emit(Result.Error("List is empty"))
-          return@collect
-        }
+      val it = expenseLocalData.getPengeluaranByDate(fromDate, toDate).first()
 
-        emit(Result.Success(it))
+      if(it.isEmpty()) {
+        emit(Result.Error("List is empty"))
+        return@flow
       }
+
+      emit(Result.Success(it))
     }
       .catch { emit(Result.Error(it.message.toString())) }
       .flowOn(ioDispatcher)

@@ -103,7 +103,8 @@ class CreateExpenseViewModel @Inject constructor(
           is Result.Success -> {
             _uiState.update {
               it.copy(
-                isSuccessful = true,
+                isSuccessful = res.data,
+                isSave = false
               )
             }
           }
@@ -111,6 +112,7 @@ class CreateExpenseViewModel @Inject constructor(
             _uiState.update {
               it.copy(
                 isSuccessful = false,
+                isSave = false
               )
             }
           }
@@ -118,7 +120,8 @@ class CreateExpenseViewModel @Inject constructor(
 
         _uiState.update {
           it.copy(
-            isSuccessful = null
+            isSuccessful = null,
+            isSave = false
           )
         }
       }
@@ -132,7 +135,8 @@ class CreateExpenseViewModel @Inject constructor(
           is Result.Success -> {
             _uiState.update {
               it.copy(
-                isSuccessful = true,
+                isSuccessful = res.data,
+                isSave = false
               )
             }
           }
@@ -140,6 +144,7 @@ class CreateExpenseViewModel @Inject constructor(
             _uiState.update {
               it.copy(
                 isSuccessful = false,
+                isSave = false
               )
             }
           }
@@ -147,7 +152,8 @@ class CreateExpenseViewModel @Inject constructor(
 
         _uiState.update {
           it.copy(
-            isSuccessful = null
+            isSuccessful = null,
+            isSave = false
           )
         }
       }

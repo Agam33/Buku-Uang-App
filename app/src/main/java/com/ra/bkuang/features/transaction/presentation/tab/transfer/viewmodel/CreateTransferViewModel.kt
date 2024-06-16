@@ -30,7 +30,6 @@ class CreateTransferViewModel @Inject constructor(
   private val _uiState = MutableStateFlow(CreateTransferFragmentUiState())
   val uiState = _uiState.asStateFlow()
 
-
   fun onSave(state: Boolean) {
     _uiState.update {
       it.copy(
@@ -84,8 +83,29 @@ class CreateTransferViewModel @Inject constructor(
     viewModelScope.launch {
       saveTransferUseCase.invoke(transferModel).collect { res ->
         when(res) {
-          is Result.Success -> {}
-          is Result.Error -> {}
+          is Result.Success -> {
+            _uiState.update {
+              it.copy(
+                isSuccessful = true,
+                isSave = false
+              )
+            }
+          }
+          is Result.Error -> {
+            _uiState.update {
+              it.copy(
+                isSuccessful = false,
+                isSave = false
+              )
+            }
+          }
+        }
+
+        _uiState.update {
+          it.copy(
+            isSuccessful = null,
+            isSave = false
+          )
         }
       }
     }
@@ -96,11 +116,31 @@ class CreateTransferViewModel @Inject constructor(
     viewModelScope.launch {
       updateTransferUseCase.invoke(newTransferModel, oldTransferModel).collect {res ->
         when(res) {
-          is Result.Success -> {}
-          is Result.Error -> {}
+          is Result.Success -> {
+            _uiState.update {
+              it.copy(
+                isSuccessful = true,
+                isSave = false
+              )
+            }
+          }
+          is Result.Error -> {
+            _uiState.update {
+              it.copy(
+                isSuccessful = false,
+                isSave = false
+              )
+            }
+          }
+        }
+
+        _uiState.update {
+          it.copy(
+            isSuccessful = null,
+            isSave = false
+          )
         }
       }
     }
   }
-
 }
