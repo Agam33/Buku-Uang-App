@@ -8,10 +8,10 @@ import com.ra.bkuang.common.base.BaseActivity
 import com.ra.bkuang.features.transaction.presentation.TransactionFragment.Companion.EXTRA_TRANSACTION_CREATE_OR_EDIT
 import com.ra.bkuang.features.transaction.presentation.TransactionFragment.Companion.EXTRA_TRANSACTION_TYPE
 import com.ra.bkuang.features.transaction.presentation.TransactionType.Companion.getTransactionType
-import com.ra.bkuang.features.transaction.presentation.fragment.CreateExpenseFragment
-import com.ra.bkuang.features.transaction.presentation.fragment.CreateIncomeFragment
-import com.ra.bkuang.features.transaction.presentation.fragment.CreateTransferFragment
-import com.ra.bkuang.features.transaction.presentation.fragment.DetailTransactionDialog.Companion.EXTRA_TRANSACTION_ID
+import com.ra.bkuang.features.transaction.presentation.tab.expense.CreateExpenseFragment
+import com.ra.bkuang.features.transaction.presentation.tab.income.CreateIncomeFragment
+import com.ra.bkuang.features.transaction.presentation.tab.transfer.CreateTransferFragment
+import com.ra.bkuang.features.transaction.presentation.component.DetailTransactionDialog.Companion.EXTRA_TRANSACTION_ID
 import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.Extension.setupActionBar
 import com.ra.bkuang.common.util.getActionType

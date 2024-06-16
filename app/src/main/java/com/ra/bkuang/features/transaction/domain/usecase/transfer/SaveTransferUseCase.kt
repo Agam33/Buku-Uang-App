@@ -1,8 +1,9 @@
 package com.ra.bkuang.features.transaction.domain.usecase.transfer
 
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.transaction.domain.model.TransferModel
-import com.ra.bkuang.common.util.ResourceState
+import kotlinx.coroutines.flow.Flow
 
 interface SaveTransferUseCase {
-  suspend fun invoke(transferModel: TransferModel): ResourceState
+  fun invoke(transferModel: TransferModel): Flow<Result<Boolean>>
 }

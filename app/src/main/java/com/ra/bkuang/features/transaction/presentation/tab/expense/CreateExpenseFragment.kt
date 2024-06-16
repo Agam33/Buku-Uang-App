@@ -1,4 +1,4 @@
-package com.ra.bkuang.features.transaction.presentation.fragment
+package com.ra.bkuang.features.transaction.presentation.tab.expense
 
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
@@ -8,17 +8,13 @@ import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
-import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
-import com.ra.bkuang.databinding.FragmentCreateIncomeBinding
-import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.features.category.domain.model.KategoriModel
-import com.ra.bkuang.features.transaction.domain.model.PendapatanModel
-import com.ra.bkuang.features.transaction.presentation.TransactionViewModel
 import com.ra.bkuang.common.util.ActionType
+import com.ra.bkuang.common.util.Constants
 import com.ra.bkuang.common.util.Constants.DATE_PATTERN
 import com.ra.bkuang.common.util.Constants.DATE_TIME_FORMATTER
 import com.ra.bkuang.common.util.Extension.checkTimeFormat
@@ -26,10 +22,16 @@ import com.ra.bkuang.common.util.Extension.getStringResource
 import com.ra.bkuang.common.util.Extension.millisToString
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toCalendar
-import com.ra.bkuang.common.util.ResourceState
-import com.ra.bkuang.features.transaction.presentation.TransactionFragment
 import com.ra.bkuang.common.util.getActionType
+import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
+import com.ra.bkuang.databinding.FragmentCreateExpenseBinding
+import com.ra.bkuang.features.account.domain.model.AkunModel
+import com.ra.bkuang.features.category.domain.model.KategoriModel
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
+import com.ra.bkuang.features.transaction.presentation.TransactionFragment
+import com.ra.bkuang.features.transaction.presentation.component.DetailTransactionDialog
+import com.ra.bkuang.features.transaction.presentation.tab.expense.viewmodel.CreateExpenseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -39,63 +41,103 @@ import java.util.Locale
 import java.util.UUID
 
 @AndroidEntryPoint
-class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.fragment_create_income) {
+class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layout.fragment_create_expense) {
 
-  private val viewModel: TransactionViewModel by viewModels()
+  private val viewModel: CreateExpenseViewModel by viewModels()
 
   private lateinit var listAccountAdapter: TransactionSpinnerAdapter<AkunModel>
   private lateinit var listCategoryAdapter: TransactionSpinnerAdapter<KategoriModel>
 
-
   private var accountId: UUID? = null
   private var categoryId: UUID? = null
 
+  private lateinit var actionType: ActionType
+
+  private lateinit var newExpenseModel: PengeluaranModel
+  private lateinit var oldExpenseModel: PengeluaranModel
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-
+    init()
     observer()
     setupAccountAndCategoryPicker()
+  }
 
-    val actionType = arguments?.getString(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT) as String
-    when(getActionType(actionType)) {
+  private fun init() {
+    val type = arguments?.getString(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT) as String
+    actionType = getActionType(type)
+    when(actionType) {
       ActionType.CREATE -> {
         val calendar = Calendar.getInstance()
         setupDatePicker(calendar)
         setupTimePicker(calendar)
         binding?.run {
           btnSave.setOnClickListener {
-            createIncome()
+            createExpense()
           }
         }
       }
       ActionType.EDIT -> {
         binding?.run {
           val uuid = arguments?.getString(DetailTransactionDialog.EXTRA_TRANSACTION_ID) as String
-          viewModel.getPendapatanById(UUID.fromString(uuid))
-          setupEditIncome()
+          viewModel.getExpenseById(UUID.fromString(uuid))
+        }
+      }
+    }
+
+    viewModel.getAllAccount()
+    viewModel.setCategoryByType(TransactionType.PENGELUARAN)
+  }
+
+  private fun observer() {
+    lifecycleScope.launch {
+      viewModel.uiState.collect { uiState ->
+        setupListAccount(uiState.accountList)
+        setupListCategory(uiState.categoryList)
+
+        uiState.expenseModel?.let {
+          setupEditExpense(it)
+        }
+
+        if(uiState.showSaveAlert) {
+          showSaveAlert()
+        }
+
+        uiState.isSuccessful?.let {
+          if(it) {
+            showShortToast(getString(R.string.msg_success))
+            activity?.finish()
+          } else {
+            showShortToast(getString(R.string.msg_failed))
+          }
+        }
+
+        if(uiState.isSave) {
+          when(actionType) {
+            ActionType.CREATE -> viewModel.saveExpense(newExpenseModel)
+            ActionType.EDIT -> viewModel.updateExpense(newExpenseModel, oldExpenseModel)
+          }
         }
       }
     }
   }
 
-  private fun setupEditIncome() {
-    binding?.run {
-      viewModel.pendapatanModel.observe(viewLifecycleOwner) { model ->
-        edtAmount.text = Editable.Factory.getInstance().newEditable(model.jumlah.toString())
-        edtNote.text = Editable.Factory.getInstance().newEditable(model.deskripsi)
+  private fun setupEditExpense(model: PengeluaranModel) {
+    oldExpenseModel = model
 
-        val calendar = model.updatedAt.toCalendar()
-        setupTimePicker(calendar)
-        setupDatePicker(calendar)
+    binding?.edtAmount?.text = Editable.Factory.getInstance().newEditable(model.jumlah.toString())
+    binding?.edtNote?.text = Editable.Factory.getInstance().newEditable(model.deskripsi)
 
-        btnSave.setOnClickListener {
-          updateIncome(model)
-        }
-      }
+    val calendar = model.updatedAt.toCalendar()
+    setupTimePicker(calendar)
+    setupDatePicker(calendar)
+
+    binding?.btnSave?.setOnClickListener {
+      updateExpense(model)
     }
   }
 
-  private fun updateIncome(model: PendapatanModel) {
+  private fun updateExpense(model: PengeluaranModel) {
     binding?.run {
       val amount: String = edtAmount.text.toString()
       val note: String = edtNote.text.toString()
@@ -112,8 +154,8 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
       val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
       val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
 
-      val pendapatanModel = PendapatanModel(
-        uuid = model.uuid,
+      newExpenseModel = PengeluaranModel(
+        uuid = oldExpenseModel.uuid,
         idKategori = categoryId ?: return@run,
         idAkun = accountId ?: return@run,
         deskripsi = note,
@@ -122,42 +164,10 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
         updatedAt = createdAt
       )
 
-      lifecycleScope.launch {
-        resourceStateIncome(viewModel.updatePendapatan(pendapatanModel, model))
-      }
-    }
-  }
-
-  private fun createIncome() {
-    binding?.run {
-      val amount: String = edtAmount.text.toString()
-      val note: String = edtNote.text.toString()
-
-      if(amount.isBlank()) {
-        showShortToast(getString(R.string.msg_empty))
-        return
-      }
-
-      val timeStringBuilder = StringBuilder()
-      timeStringBuilder.append(edtDate.text.trim())
-      timeStringBuilder.append(" ")
-      timeStringBuilder.append(btnTime.text.trim())
-      val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
-      val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
-
-      val pendepatanModel = PendapatanModel(
-        uuid = UUID.randomUUID(),
-        idKategori = categoryId ?: return@run,
-        idAkun = accountId ?: return@run,
-        deskripsi = note,
-        jumlah = amount.toInt(),
-        createdAt = createdAt,
-        updatedAt = createdAt
+      viewModel.checkAccountMoney(
+        accountId ?: return@run,
+        amount.toInt()
       )
-
-      lifecycleScope.launch {
-        resourceStateIncome(viewModel.savePendapatan(pendepatanModel))
-      }
     }
   }
 
@@ -211,7 +221,7 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
     }
 
     binding?.btnTime?.setOnClickListener {
-      timePicker.show(parentFragmentManager, "Time Picker")
+      timePicker.show(parentFragmentManager, Constants.TAG_TIME_PICKER_FRAGMENT)
     }
   }
 
@@ -236,9 +246,43 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
     }
   }
 
+  private fun createExpense() {
+    binding?.run {
+      val amount: String = edtAmount.text.toString()
+      val note: String = edtNote.text.toString()
+
+      if (amount.isBlank()) {
+        showShortToast(getString(R.string.msg_empty))
+        return
+      }
+
+      val timeStringBuilder = StringBuilder()
+      timeStringBuilder.append(edtDate.text.trim())
+      timeStringBuilder.append(" ")
+      timeStringBuilder.append(btnTime.text.trim())
+      val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER)
+      val createdAt = LocalDateTime.parse(timeStringBuilder.toString(), dateTimeFormatter)
+
+      newExpenseModel = PengeluaranModel(
+        uuid = UUID.randomUUID(),
+        idKategori = categoryId ?: return@run,
+        idAkun = accountId ?: return@run,
+        deskripsi = note,
+        jumlah = amount.toInt(),
+        createdAt = createdAt,
+        updatedAt = createdAt
+      )
+
+      viewModel.checkAccountMoney(
+        accountId ?: return@run,
+        amount.toInt()
+      )
+    }
+  }
+
   private fun setupListAccount(listAccount: List<AkunModel>) {
     binding?.run {
-    listAccountAdapter = TransactionSpinnerAdapter(requireContext(), 0, listAccount)
+      listAccountAdapter = TransactionSpinnerAdapter(requireContext(), 0, listAccount)
       spAccount.apply {
         adapter = listAccountAdapter
       }
@@ -254,23 +298,21 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
     }
   }
 
-  private fun observer() {
-    viewModel.getAllAccount()
-    viewModel.setCategoryByType(TransactionType.PENDAPATAN)
-    viewModel.listCategoryByType.observe(viewLifecycleOwner, ::setupListCategory)
-    viewModel.listAccount.observe(viewLifecycleOwner, ::setupListAccount)
+  private fun showSaveAlert() {
+    MaterialAlertDialogBuilder(requireContext())
+      .setMessage(requireContext().resources.getString(R.string.txt_account_minus))
+      .setPositiveButton(requireContext().resources.getString(R.string.txt_continue)) { _, _ ->
+        viewModel.showSaveAlert(false)
+        viewModel.onSave(true)
+      }
+      .setOnDismissListener {
+        viewModel.showSaveAlert(false)
+      }
+      .create()
+      .show()
   }
 
-  private fun resourceStateIncome(r: ResourceState) {
-    when(r) {
-      ResourceState.SUCCESS -> {
-        showShortToast(getString(R.string.msg_success))
-        activity?.finish()
-      }
-      ResourceState.FAILED -> {
-        showShortToast(getString(R.string.msg_failed))
-      }
-      ResourceState.LOADING -> {}
-    }
+  override fun onDestroy() {
+    super.onDestroy()
   }
 }

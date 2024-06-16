@@ -1,8 +1,10 @@
 package com.ra.bkuang.features.transaction.data.local
 
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.core.database.dao.TransferDao
 import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
 import com.ra.bkuang.features.transaction.data.entity.TransferEntity
+import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
@@ -18,21 +20,21 @@ class TransferLocalDataSourceImpl @Inject constructor(
     return transferDao.findDetailTransferById(uuid)
   }
 
-  override suspend fun getTransferByDate(
+  override fun getTransferByDate(
     fromDate: LocalDateTime, toDate: LocalDateTime
-  ): List<DetailTransfer> {
+  ): Flow<List<DetailTransfer>> {
     return transferDao.getTransferByDate(fromDate, toDate)
   }
 
-  override suspend fun saveTransfer(transfer: TransferEntity) {
+  override suspend fun save(transfer: TransferEntity) {
     return transferDao.save(transfer)
   }
 
-  override suspend fun deleteTransfer(transfer: TransferEntity) {
+  override suspend fun delete(transfer: TransferEntity) {
     return transferDao.delete(transfer)
   }
 
-  override suspend fun updateTransfer(transfer: TransferEntity) {
+  override suspend fun update(transfer: TransferEntity) {
     return transferDao.update(transfer)
   }
 }

@@ -1,4 +1,4 @@
-package com.ra.bkuang.features.transaction.presentation.fragment
+package com.ra.bkuang.features.transaction.presentation.component
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,6 +37,12 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
 
   private var _binding: FragmentTransactionBottomSheetBinding? = null
   private val binding get() = _binding
+
+  var onTransactionViewTypeListener: OnTransactionViewTypeListener? = null
+
+  interface OnTransactionViewTypeListener {
+    fun onTransactionViewType(type: DateViewType)
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -127,11 +133,13 @@ class TransactionBottomSheet: BottomSheetDialogFragment() {
         rbDaily -> {
           lifecycleScope.launch {
             userSettingPref.saveDateViewType(DateViewType.DAILY)
+            onTransactionViewTypeListener?.onTransactionViewType(DateViewType.DAILY)
           }
         }
         rbMonthly -> {
           lifecycleScope.launch {
             userSettingPref.saveDateViewType(DateViewType.MONTHLY)
+            onTransactionViewTypeListener?.onTransactionViewType(DateViewType.MONTHLY)
           }
         }
       }

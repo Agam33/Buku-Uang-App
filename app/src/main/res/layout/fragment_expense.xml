@@ -3,19 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-        name="vm"
-        type="com.ra.bkuang.features.transaction.presentation.TransactionViewModel" />
-    </data>
+    <data />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".features.transaction.presentation.fragment.ExpenseFragment">
+        tools:context=".features.transaction.presentation.tab.expense.ExpenseFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            app:hide="@{vm.rvExpenseState}"
             android:id="@+id/rv_expense"
             tools:itemCount="10"
             tools:listitem="@layout/item_rv_expense_month"

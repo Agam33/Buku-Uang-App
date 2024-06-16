@@ -1,4 +1,4 @@
-package com.ra.bkuang.features.transaction.presentation.fragment
+package com.ra.bkuang.features.transaction.presentation.component
 
 import android.app.Dialog
 import android.content.Intent
@@ -7,27 +7,26 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.divider.MaterialDivider
 import com.google.android.material.snackbar.Snackbar
 import com.ra.bkuang.R
-import com.ra.bkuang.features.transaction.presentation.CreateTransactionActivity
-import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
-import com.ra.bkuang.features.transaction.presentation.TransactionFragment
-import com.ra.bkuang.features.transaction.presentation.TransactionType
-import com.ra.bkuang.features.transaction.presentation.TransactionViewModel
 import com.ra.bkuang.common.util.ActionType
+import com.ra.bkuang.common.util.Extension.getParcel
 import com.ra.bkuang.common.util.Extension.toFormatRupiah
 import com.ra.bkuang.common.util.Extension.toStringFormat
-import com.ra.bkuang.common.util.OnDeleteItemListener
+import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
+import com.ra.bkuang.features.transaction.presentation.CreateTransactionActivity
+import com.ra.bkuang.features.transaction.presentation.TransactionFragment
+import com.ra.bkuang.features.transaction.presentation.TransactionType
+import com.ra.bkuang.features.transaction.utils.OnTransactionDeleteListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
 @AndroidEntryPoint
 class DetailTransactionDialog: DialogFragment() {
 
-  var onDeleteItemListener: OnDeleteItemListener<TransactionDetail>? = null
+  var onTransactionDeleteListener: OnTransactionDeleteListener<TransactionDetail>? = null
 
   private lateinit var tvMoney: TextView
   private lateinit var tvCurrDate: TextView
@@ -40,12 +39,12 @@ class DetailTransactionDialog: DialogFragment() {
   private lateinit var deleteButton: ImageButton
   private lateinit var editButton: ImageButton
 
-  private val sharedViewModel: TransactionViewModel by activityViewModels()
-
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
     val inflater = activity?.layoutInflater
     val materialDialog = MaterialAlertDialogBuilder(requireContext(), R.style.Widget_App_Dialog_Rounded)
     val v = inflater?.inflate(R.layout.detail_transaction_dialog, null)
+
+    val transactionDetail = arguments?.getParcel<TransactionDetail>(EXTRA_DETAIL_TRANSACTION)!!
 
     materialDialog.setView(v)
 
@@ -61,18 +60,15 @@ class DetailTransactionDialog: DialogFragment() {
       deleteButton = it.findViewById(R.id.ib_delete_dialog)
       editButton = it.findViewById(R.id.ib_edit_dialog)
 
-      sharedViewModel.detailTransaction
-        .observe(requireParentFragment().viewLifecycleOwner) { transactionDetail ->
-          setupText(transactionDetail)
-      }
+      setupText(transactionDetail)
 
-      setupButton(it)
+      setupButton(it, transactionDetail)
     }
 
     return materialDialog.create()
   }
 
-  private fun setupButton(v: View) {
+  private fun setupButton(v: View, transactionDetail: TransactionDetail) {
     closeButton.setOnClickListener {
       onDestroyView()
     }
@@ -82,31 +78,20 @@ class DetailTransactionDialog: DialogFragment() {
         requireContext().getString(R.string.msg_delete),
         Snackbar.LENGTH_SHORT
       ).setAction("Ya") {
-          sharedViewModel.detailTransaction
-            .observe(requireParentFragment().viewLifecycleOwner) { transactionDetail ->
-              onDeleteItemListener?.onDeleteItem(transactionDetail)
-            }
+          onTransactionDeleteListener?.onDeleteItem(transactionDetail)
           onDestroyView()
         }
         .show()
     }
     editButton.setOnClickListener {
-      sharedViewModel.detailTransaction
-        .observe(requireParentFragment().viewLifecycleOwner) { transactionDetail ->
-          val i = Intent(requireContext(), CreateTransactionActivity::class.java).apply {
-            putExtra(TransactionFragment.EXTRA_TRANSACTION_TYPE, transactionDetail.transactionType.name)
-            putExtra(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT, ActionType.EDIT.name)
-            putExtra(EXTRA_TRANSACTION_ID, transactionDetail.uuid.toString())
-          }
-          startActivity(i)
+      val i = Intent(requireContext(), CreateTransactionActivity::class.java).apply {
+        putExtra(TransactionFragment.EXTRA_TRANSACTION_TYPE, transactionDetail.transactionType.name)
+        putExtra(TransactionFragment.EXTRA_TRANSACTION_CREATE_OR_EDIT, ActionType.EDIT.name)
+        putExtra(EXTRA_TRANSACTION_ID, transactionDetail.uuid.toString())
       }
+      startActivity(i)
       onDestroyView()
     }
-  }
-
-  override fun onDestroyView() {
-    sharedViewModel.detailTransaction.removeObservers(requireParentFragment().viewLifecycleOwner)
-    super.onDestroyView()
   }
 
   private fun setupText(transactionDetail: TransactionDetail) {
@@ -134,5 +119,6 @@ class DetailTransactionDialog: DialogFragment() {
 
   companion object {
     const val EXTRA_TRANSACTION_ID = "transaction-id"
+    const val EXTRA_DETAIL_TRANSACTION = "detail-transaction"
   }
 }

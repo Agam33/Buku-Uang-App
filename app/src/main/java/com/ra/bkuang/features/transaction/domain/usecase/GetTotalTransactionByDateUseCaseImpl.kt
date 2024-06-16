@@ -19,8 +19,8 @@ class GetTotalTransactionByDateUseCaseImpl @Inject constructor(
 
   override fun invoke(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long> {
     return flow {
-      val totalExpense = pengeluaranRepository.getTotalPengeluaranByDateWithFlow(fromDate, toDate).first() ?: 0
-      val totalIncome = pendapatanRepository.getTotalPendapatanByDateWithFlow(fromDate, toDate).first() ?: 0
+      val totalExpense = pengeluaranRepository.getTotalPengeluaranByDateWithFlow(fromDate, toDate).first()
+      val totalIncome = pendapatanRepository.getTotalPendapatanByDateWithFlow(fromDate, toDate).first()
       emit(totalIncome - totalExpense)
     }.flowOn(ioDispather)
   }

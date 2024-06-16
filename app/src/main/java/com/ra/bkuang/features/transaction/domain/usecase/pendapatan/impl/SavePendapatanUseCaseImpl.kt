@@ -1,32 +1,16 @@
 package com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl
 
-import com.ra.bkuang.common.util.ResourceState
-import com.ra.bkuang.di.IoDispatcherQualifier
-import com.ra.bkuang.features.account.domain.AkunRepository
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.transaction.domain.PendapatanRepository
 import com.ra.bkuang.features.transaction.domain.model.PendapatanModel
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.SavePendapatanUseCase
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SavePendapatanUseCaseImpl @Inject constructor(
   private val pendapatanRepository: PendapatanRepository,
-  private val akunRepository: AkunRepository
 ): SavePendapatanUseCase {
-  override suspend fun invoke(pendapatanModel: PendapatanModel): ResourceState {
-    return try {
-      val account = akunRepository.findById(pendapatanModel.idAkun)
-
-      account.total += pendapatanModel.jumlah
-
-      akunRepository.update(account)
-
-      pendapatanRepository.save(pendapatanModel)
-
-      ResourceState.SUCCESS
-    } catch (e: Exception) {
-      ResourceState.FAILED
-    }
+  override fun invoke(incomeModel: PendapatanModel): Flow<Result<Boolean>> {
+    return pendapatanRepository.save(incomeModel)
   }
 }

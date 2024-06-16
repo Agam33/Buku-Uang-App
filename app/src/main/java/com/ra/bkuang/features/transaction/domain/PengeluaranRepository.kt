@@ -1,5 +1,6 @@
 package com.ra.bkuang.features.transaction.domain
 
+import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
 import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
 import kotlinx.coroutines.flow.Flow
@@ -17,11 +18,11 @@ interface PengeluaranRepository {
 
   suspend fun findById(uuid: UUID): PengeluaranModel
   suspend fun findDetailById(uuid: UUID): DetailPengeluaran
-  fun getTotalPengeluaranByDateWithFlow(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long?>
+  fun getTotalPengeluaranByDateWithFlow(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Long>
   fun getTotalPengeluaranWithFlow(): Flow<Long?>
   fun getMonthlyPengeluaran(startOfDay: LocalDateTime, endOfDay: LocalDateTime): Flow<List<DetailPengeluaran>>
-  suspend fun getListDetailPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): List<DetailPengeluaran>
-  suspend fun save(pengeluaran: PengeluaranModel)
-  suspend fun delete(pengeluaran: PengeluaranModel)
-  suspend fun update(pengeluaran: PengeluaranModel)
+  fun getListDetailPengeluaranByDate(fromDate: LocalDateTime, toDate: LocalDateTime): Flow<Result<List<DetailPengeluaran>>>
+  fun save(expenseModel: PengeluaranModel): Flow<Result<Boolean>>
+  fun delete(uuid: UUID): Flow<Result<Boolean>>
+  fun update(newExpenseModel: PengeluaranModel, oldExpenseModel: PengeluaranModel): Flow<Result<Boolean>>
 }
