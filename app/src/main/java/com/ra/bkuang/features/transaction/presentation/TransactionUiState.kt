@@ -23,6 +23,7 @@ data class TransactionUiState(
   val totalTransactionText: String = "",
   val currDateText: String = "",
 
+  // TAB
   val incomeUiState: IncomeFragmentUiState = IncomeFragmentUiState(),
   val expenseUiState: ExpenseFragmentUiState = ExpenseFragmentUiState(),
   val transferFragmentUiState: TransferFragmentUiState = TransferFragmentUiState()
@@ -52,5 +53,4 @@ data class TransactionUiState(
       }
     }
   }
-
 }
