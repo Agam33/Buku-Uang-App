@@ -52,12 +52,40 @@ class TransactionViewModel @Inject constructor(
   private val _uiState = MutableStateFlow(TransactionUiState())
   val uiState = _uiState.asStateFlow()
 
-  fun initDateView() {
+  fun initTransaction() {
     viewModelScope.launch {
       val viewType = userSettingPref.getDateViewType().first()
+
       _uiState.update {
         it.copy(
-          transactionCurrDate = LocalDate.now(),
+          transactionCurrDate = LocalDate.now()
+        )
+      }
+
+      _uiState.update {
+        it.copy(
+          dateViewType = viewType,
+          currDate = it.dateByViewType(
+            it.transactionCurrDate,
+            viewType
+          ),
+          currDateText = it.transactionCurrDate.toStringFormat(
+            when(getDateViewType(viewType)) {
+              DateViewType.MONTHLY -> MONTHLY_DATE_FORMAT
+              DateViewType.DAILY -> DAILY_DATE_FORMAT
+            }, LOCALE_ID
+          )
+        )
+      }
+    }
+  }
+
+  fun changeViewDate() {
+    viewModelScope.launch {
+      val viewType = userSettingPref.getDateViewType().first()
+
+      _uiState.update {
+        it.copy(
           dateViewType = viewType,
           currDate = it.dateByViewType(
             it.transactionCurrDate,
@@ -82,6 +110,11 @@ class TransactionViewModel @Inject constructor(
           _uiState.update {
             it.copy(
               transactionCurrDate = it.transactionCurrDate.minusMonths(1),
+            )
+          }
+
+          _uiState.update {
+            it.copy(
               currDate = it.dateByViewType(
                 it.transactionCurrDate,
                 viewType
@@ -94,6 +127,11 @@ class TransactionViewModel @Inject constructor(
           _uiState.update {
             it.copy(
               transactionCurrDate = it.transactionCurrDate.minusDays(1),
+            )
+          }
+
+          _uiState.update {
+            it.copy(
               currDate = it.dateByViewType(
                 it.transactionCurrDate,
                 viewType
@@ -112,8 +150,11 @@ class TransactionViewModel @Inject constructor(
       when (getDateViewType(viewType)) {
         DateViewType.MONTHLY -> {
           _uiState.update {
+            it.copy(transactionCurrDate = it.transactionCurrDate.plusMonths(1),)
+          }
+
+          _uiState.update {
             it.copy(
-              transactionCurrDate = it.transactionCurrDate.plusMonths(1),
               currDate = it.dateByViewType(
                 it.transactionCurrDate,
                 viewType
@@ -126,6 +167,11 @@ class TransactionViewModel @Inject constructor(
           _uiState.update {
             it.copy(
               transactionCurrDate = it.transactionCurrDate.plusDays(1),
+            )
+          }
+
+          _uiState.update {
+            it.copy(
               currDate = it.dateByViewType(
                 it.transactionCurrDate,
                 viewType

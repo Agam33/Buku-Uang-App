@@ -41,7 +41,7 @@ class TransactionFragment :
   }
 
   private fun observer() {
-    viewModel.initDateView()
+    viewModel.initTransaction()
 
     lifecycleScope.launch {
       viewModel.uiState.collect { uiState ->
@@ -129,11 +129,11 @@ class TransactionFragment :
 
   override fun onStart() {
     super.onStart()
-    viewModel.initDateView()
+    viewModel.initTransaction()
   }
 
   override fun onTransactionViewType(type: DateViewType) {
-    viewModel.initDateView()
+    viewModel.changeViewDate()
   }
 
   companion object {
