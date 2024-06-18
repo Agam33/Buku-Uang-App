@@ -14,6 +14,7 @@ import com.ra.bkuang.databinding.FragmentDebtBinding
 import com.ra.bkuang.features.debt.domain.model.HutangModel
 import com.ra.bkuang.features.debt.presentation.adapter.DebtAdapter
 import com.ra.bkuang.features.debt.presentation.detail.DetailDebtActivity
+import com.ra.bkuang.features.debt.presentation.viewmodel.DebtViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,7 +34,7 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
 
   private fun observer() {
     lifecycleScope.launch {
-      sharedViewModel.debtFragmentUiState.collect { uiState ->
+      sharedViewModel.uiState.collect { uiState ->
         if(uiState.debtList.isEmpty()) {
           binding?.rvDebtList?.hide(true)
           binding?.emptyLayout?.state = false

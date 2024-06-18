@@ -9,8 +9,6 @@ import com.ra.bkuang.features.account.domain.usecase.UpdateAkunUseCase
 import com.ra.bkuang.features.account.presentation.createaccount.CreateAccountUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,22 +17,19 @@ import javax.inject.Inject
 class CreateAccountViewModel @Inject constructor(
   private val saveAkunUseCase: SaveAkunUseCase,
   private val updateAkunUseCase: UpdateAkunUseCase,
-): BaseViewModel() {
-
-  private var _createAccountUiState = MutableStateFlow(CreateAccountUiState())
-  val createAccountUiState = _createAccountUiState.asStateFlow()
+): BaseViewModel<CreateAccountUiState>(CreateAccountUiState()) {
 
   fun createAccount(akun: AkunModel) {
     viewModelScope.launch {
       saveAkunUseCase(akun).collect { res ->
         when(res) {
           is Result.Success -> {
-            _createAccountUiState.update { it.copy( isSuccessful = true) }
+            _uiState.update { it.copy( isSuccessful = true) }
             delay(1000)
-            _createAccountUiState.update { it.copy( isSuccessful = null) }
+            _uiState.update { it.copy( isSuccessful = null) }
           }
           is Result.Error -> {
-            _createAccountUiState.update { it.copy( isSuccessful = true) }
+            _uiState.update { it.copy( isSuccessful = true) }
           }
         }
       }
@@ -46,12 +41,12 @@ class CreateAccountViewModel @Inject constructor(
       updateAkunUseCase.invoke(akun).collect { res ->
         when(res) {
           is Result.Success -> {
-            _createAccountUiState.update { it.copy( isSuccessful = true) }
+            _uiState.update { it.copy( isSuccessful = true) }
             delay(1000)
-            _createAccountUiState.update { it.copy( isSuccessful = null) }
+            _uiState.update { it.copy( isSuccessful = null) }
           }
           is Result.Error -> {
-            _createAccountUiState.update { it.copy( isSuccessful = false) }
+            _uiState.update { it.copy( isSuccessful = false) }
           }
         }
       }

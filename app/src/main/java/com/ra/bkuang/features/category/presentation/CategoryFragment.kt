@@ -18,6 +18,7 @@ import com.ra.bkuang.features.category.presentation.CreateCategoryActivity.Compa
 import com.ra.bkuang.features.category.presentation.CreateCategoryActivity.Companion.CREATE_OR_EDIT_CATEGORY
 import com.ra.bkuang.features.category.presentation.CreateCategoryActivity.Companion.EXTRA_BUNDLE_CLAZZ
 import com.ra.bkuang.features.category.presentation.adapter.RvGroupCategoryAdapter
+import com.ra.bkuang.features.category.presentation.viewmodel.CategoryViewModel
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -53,7 +54,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
     binding?.vm = viewModel
 
     lifecycleScope.launch {
-      viewModel.categoryUiState.collect { uiState ->
+      viewModel.uiState.collect { uiState ->
         setupListCategory(uiState.mapCategory)
 
         uiState.isSuccessfulDelete?.let {

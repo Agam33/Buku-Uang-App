@@ -28,6 +28,7 @@ import com.ra.bkuang.databinding.ActivityCreateDebtBinding
 import com.ra.bkuang.features.debt.domain.model.HutangModel
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_EXTRA_ACTION
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_MODEL
+import com.ra.bkuang.features.debt.presentation.viewmodel.DebtViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -62,7 +63,7 @@ class CreateDebtActivity : BaseActivity<ActivityCreateDebtBinding>(R.layout.acti
 
   private fun observer() {
     lifecycleScope.launch {
-      sharedViewModel.debtFragmentUiState.collect { uiState ->
+      sharedViewModel.uiState.collect { uiState ->
         uiState.isSuccessfulCreate?.let {
           if(it) {
             showShortToast(getString(R.string.txt_successful_save))

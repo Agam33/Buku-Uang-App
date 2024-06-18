@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.backuprestore.domain.usecase.impl
 
 import android.net.Uri
-import com.ra.bkuang.features.backuprestore.domain.BackupRestoreRepository
+import com.ra.bkuang.features.backuprestore.domain.repository.BackupRestoreRepository
 import com.ra.bkuang.features.backuprestore.domain.usecase.GetLocalBackupUseCase
 import javax.inject.Inject
 

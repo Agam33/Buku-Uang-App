@@ -3,11 +3,10 @@ package com.ra.bkuang.features.debt.data
 import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.data.mapper.toModel
-import com.ra.bkuang.features.debt.data.entity.DetailPembayaranHutang
 import com.ra.bkuang.features.debt.data.local.PembayaranHutangLocalDataSource
 import com.ra.bkuang.features.debt.data.mapper.toEntity
 import com.ra.bkuang.features.debt.data.mapper.toModel
-import com.ra.bkuang.features.debt.domain.PembayaranHutangRepository
+import com.ra.bkuang.features.debt.domain.repository.PembayaranHutangRepository
 import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
 import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
 import kotlinx.coroutines.CoroutineDispatcher

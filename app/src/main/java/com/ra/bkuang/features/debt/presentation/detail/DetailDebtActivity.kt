@@ -29,6 +29,7 @@ import com.ra.bkuang.features.debt.presentation.DebtFragment
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_EXTRA_ACTION
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_MODEL
 import com.ra.bkuang.features.debt.presentation.adapter.DebtRecordAdapter
+import com.ra.bkuang.features.debt.presentation.detail.viewmodel.DetailDebtViewModel
 import com.ra.bkuang.features.debt.presentation.dialog.AddDebtRecordDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -60,7 +61,7 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
 
   private fun observer() {
     lifecycleScope.launch {
-      viewModel.detailDebtUiState.collect { uiState ->
+      viewModel.uiState.collect { uiState ->
 
         setupPaidDebtList(uiState.paidDebtRecord)
 
@@ -107,9 +108,9 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
   private fun init() {
     debtModelId?.let {
       viewModel.getAllDebtRecord(it)
-      viewModel.getSizeListPembayaranHutang(it)
+      viewModel.getSizeListPaidDebt(it)
     }
-    viewModel.getHutangByIdWithFlow(debtModelId ?: "")
+    viewModel.getDebtByIdWithFlow(debtModelId ?: "")
   }
 
   private fun setupPaidDebtList(paidDebtRecord: List<DetailPembayaranHutangModel>) {
@@ -153,14 +154,14 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
     return when(item.itemId) {
       R.id.menu_debt_alarm -> {
         lifecycleScope.launch {
-          val model = viewModel.getHutangById(debtModelId ?: "")
+          val model = viewModel.getDebtById(debtModelId ?: "")
           setAlarm(model)
         }
         true
       }
       R.id.menu_debt_edit -> {
         lifecycleScope.launch {
-          val model = viewModel.getHutangById(debtModelId ?: "")
+          val model = viewModel.getDebtById(debtModelId ?: "")
           editDebt(model)
         }
         true
@@ -169,8 +170,8 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
           Snackbar.make(binding.root, getStringResource(R.string.msg_delete), Snackbar.LENGTH_SHORT)
             .setAction(getStringResource(R.string.txt_yes)) {
               lifecycleScope.launch {
-                val model = viewModel.getHutangById(debtModelId ?: "")
-                viewModel.deleteHutang(model)
+                val model = viewModel.getDebtById(debtModelId ?: "")
+                viewModel.deleteDebt(model)
               }
             }.show()
         true
@@ -215,7 +216,7 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
   }
 
   override fun onItemDelete(model: DetailPembayaranHutangModel) {
-    viewModel.deleteRecordPembayaranHutang(model)
+    viewModel.deletePaidDebtRecord(model)
   }
 
   override fun onItemUpdate(model: DetailPembayaranHutangModel) {
@@ -234,7 +235,7 @@ class DetailDebtActivity : BaseActivity<ActivityDetailDebtBinding>(R.layout.acti
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_detail_debt, menu)
     lifecycleScope.launch {
-      val model = viewModel.getHutangById(debtModelId ?: "")
+      val model = viewModel.getDebtById(debtModelId ?: "")
       changeAlarmToolbarIcon(model.pengingatAktif)
     }
     return true

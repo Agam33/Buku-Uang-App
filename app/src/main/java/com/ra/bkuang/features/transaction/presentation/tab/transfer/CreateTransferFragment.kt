@@ -77,7 +77,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
       ActionType.EDIT -> {
         binding?.run {
           val uuid = arguments?.getString(DetailTransactionDialog.EXTRA_TRANSACTION_ID) as String
-          viewModel.getTransferById(UUID.fromString(uuid))
+          viewModel.getTransferById(uuid)
         }
       }
     }

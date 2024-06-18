@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.backuprestore.data
 
 import android.net.Uri
-import com.ra.bkuang.features.backuprestore.domain.BackupRestoreRepository
+import com.ra.bkuang.features.backuprestore.domain.repository.BackupRestoreRepository
 import javax.inject.Inject
 
 class BackupRestoreRepositoryImpl @Inject constructor(

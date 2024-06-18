@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.analytics.domain.usecase.impl
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.analytics.domain.AnalyticsRepository
+import com.ra.bkuang.features.analytics.domain.repository.AnalyticsRepository
 import com.ra.bkuang.features.analytics.domain.model.AnalyticModel
 import com.ra.bkuang.features.analytics.domain.usecase.ShowAnalyticListUseCase
 import com.ra.bkuang.features.transaction.presentation.TransactionType

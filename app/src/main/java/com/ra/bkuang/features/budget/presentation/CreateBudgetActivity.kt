@@ -16,6 +16,7 @@ import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
 import com.ra.bkuang.databinding.ActivityCreateBudgetBinding
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
+import com.ra.bkuang.features.budget.presentation.viewmodel.BudgetViewModel
 import com.ra.bkuang.features.category.domain.model.KategoriModel
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
@@ -135,7 +136,7 @@ class CreateBudgetActivity : BaseActivity<ActivityCreateBudgetBinding>(R.layout.
   private fun observer() {
     viewModel.setCategoryByType(TransactionType.PENGELUARAN)
     lifecycleScope.launch {
-      viewModel.budgetFragmentUiState.collect { uiState ->
+      viewModel.uiState.collect { uiState ->
         setupListCategory(uiState.listCategoryByType)
 
         uiState.budgetModel?.let {

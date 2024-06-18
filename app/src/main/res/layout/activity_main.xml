@@ -21,7 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!-- Start Toolbar -->
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -31,17 +30,13 @@
                 android:layout_height="?attr/actionBarSize">
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
-<!-- End Toolbar -->
 
-<!-- Start Fragment Container -->
-    <fragment
+
+<!-- Fragment Container -->
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:navGraph="@navigation/main_navigation_graph"
-        app:defaultNavHost="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-<!-- End Fragment Container -->
 
     </LinearLayout>
 

@@ -9,7 +9,7 @@ import com.ra.bkuang.features.transaction.data.entity.DetailPendapatan
 import com.ra.bkuang.features.transaction.data.local.PendapatanLocalDataSource
 import com.ra.bkuang.features.transaction.data.mapper.toEntity
 import com.ra.bkuang.features.transaction.data.mapper.toModel
-import com.ra.bkuang.features.transaction.domain.PendapatanRepository
+import com.ra.bkuang.features.transaction.domain.repository.PendapatanRepository
 import com.ra.bkuang.features.transaction.domain.model.PendapatanModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

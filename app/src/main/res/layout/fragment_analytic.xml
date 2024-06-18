@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.ra.bkuang.features.analytics.presentation.AnalyticViewModel" />
+            type="com.ra.bkuang.features.analytics.presentation.viewmodel.AnalyticViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

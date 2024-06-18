@@ -13,8 +13,6 @@ import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.SavePengelu
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.UpdatePengeluaranUseCase
 import com.ra.bkuang.features.transaction.presentation.tab.expense.uistate.CreateExpenseUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -28,10 +26,7 @@ class CreateExpenseViewModel @Inject constructor(
   private val findKategoriByType: FindCategoryByTypeUseCase,
   private val findAllAkunUseCase: FindAllAkunUseCase,
   private val findAkunByIdUseCase: FindAkunByIdUseCase
-): BaseViewModel() {
-
-  private val _uiState = MutableStateFlow(CreateExpenseUiState())
-  val uiState = _uiState.asStateFlow()
+): BaseViewModel<CreateExpenseUiState>(CreateExpenseUiState()) {
 
   fun getAllAccount() {
     _uiState.update {

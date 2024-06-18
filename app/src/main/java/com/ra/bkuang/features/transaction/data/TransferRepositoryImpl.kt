@@ -9,7 +9,7 @@ import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
 import com.ra.bkuang.features.transaction.data.local.TransferLocalDataSource
 import com.ra.bkuang.features.transaction.data.mapper.toEntity
 import com.ra.bkuang.features.transaction.data.mapper.toModel
-import com.ra.bkuang.features.transaction.domain.TransferRepository
+import com.ra.bkuang.features.transaction.domain.repository.TransferRepository
 import com.ra.bkuang.features.transaction.domain.model.TransferModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

@@ -22,8 +22,6 @@ import com.ra.bkuang.features.transaction.domain.usecase.transfer.DeleteTransfer
 import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferByDateUseCase
 import com.ra.bkuang.features.transaction.presentation.TransactionUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -47,10 +45,7 @@ class TransactionViewModel @Inject constructor(
 
   private val getTransferByDateUseCase: GetTransferByDateUseCase,
   private val deleteTransferByIdUseCase: DeleteTransferByIdUseCase,
-): BaseViewModel() {
-
-  private val _uiState = MutableStateFlow(TransactionUiState())
-  val uiState = _uiState.asStateFlow()
+): BaseViewModel<TransactionUiState>(TransactionUiState()) {
 
   fun initTransaction() {
     viewModelScope.launch {

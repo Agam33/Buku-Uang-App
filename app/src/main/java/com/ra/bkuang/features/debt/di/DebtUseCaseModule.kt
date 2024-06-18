@@ -2,7 +2,6 @@ package com.ra.bkuang.features.debt.di
 
 import com.ra.bkuang.features.debt.domain.usecase.CancelAlarmDebtUseCase
 import com.ra.bkuang.features.debt.domain.usecase.CreateHutangUseCase
-import com.ra.bkuang.features.debt.domain.usecase.CreatePembayaranHutangUseCase
 import com.ra.bkuang.features.debt.domain.usecase.DeleteHutangUseCase
 import com.ra.bkuang.features.debt.domain.usecase.DeleteRecordPembayaranHutangUseCase
 import com.ra.bkuang.features.debt.domain.usecase.FindAllRecordPembayaranHutangUseCase
@@ -17,7 +16,6 @@ import com.ra.bkuang.features.debt.domain.usecase.UpdateHutangUseCase
 import com.ra.bkuang.features.debt.domain.usecase.UpdatePembayaranHutangUseCase
 import com.ra.bkuang.features.debt.domain.usecase.impl.CancelAlarmDebtUseCaseImpl
 import com.ra.bkuang.features.debt.domain.usecase.impl.CreateHutangUseCaseImpl
-import com.ra.bkuang.features.debt.domain.usecase.impl.CreatePembayaranHutangUseCaseImpl
 import com.ra.bkuang.features.debt.domain.usecase.impl.DeleteHutangUseCaseImpl
 import com.ra.bkuang.features.debt.domain.usecase.impl.DeleteRecordPembayaranHutangUseCaseImpl
 import com.ra.bkuang.features.debt.domain.usecase.impl.FindAllRecordPembayaranHutangUseCaseImpl
@@ -85,11 +83,6 @@ interface DebtUseCaseModule {
   @Binds
   @Singleton
   fun bindUpdateHutang(updateHutangImpl: UpdateHutangUseCaseImpl): UpdateHutangUseCase
-
-  @Binds
-  @Singleton
-  fun bindCreatePembayaranHutang(createPembayaranHutangImpl: CreatePembayaranHutangUseCaseImpl): CreatePembayaranHutangUseCase
-
 
   @Binds
   @Singleton

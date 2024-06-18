@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl
 
-import com.ra.bkuang.features.transaction.domain.PendapatanRepository
+import com.ra.bkuang.features.transaction.domain.repository.PendapatanRepository
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanByDateWithFlowUseCase
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime

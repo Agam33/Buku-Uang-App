@@ -11,8 +11,6 @@ import com.ra.bkuang.features.transaction.domain.usecase.transfer.SaveTransferUs
 import com.ra.bkuang.features.transaction.domain.usecase.transfer.UpdateTransferUseCase
 import com.ra.bkuang.features.transaction.presentation.tab.transfer.uistate.CreateTransferFragmentUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -25,10 +23,7 @@ class CreateTransferViewModel @Inject constructor(
   private val findAllAkunUseCase: FindAllAkunUseCase,
   private val findAkunByIdUseCase: FindAkunByIdUseCase,
   private val getTransferByIdUseCase: GetTransferByIdUseCase
-): BaseViewModel() {
-
-  private val _uiState = MutableStateFlow(CreateTransferFragmentUiState())
-  val uiState = _uiState.asStateFlow()
+): BaseViewModel<CreateTransferFragmentUiState>(CreateTransferFragmentUiState()) {
 
   fun onSave(state: Boolean) {
     _uiState.update {
@@ -57,7 +52,7 @@ class CreateTransferViewModel @Inject constructor(
     }
   }
 
-  fun getTransferById(uuid: UUID) {
+  fun getTransferById(uuid: String) {
     viewModelScope.launch {
       val data = getTransferByIdUseCase(uuid)
       _uiState.update {

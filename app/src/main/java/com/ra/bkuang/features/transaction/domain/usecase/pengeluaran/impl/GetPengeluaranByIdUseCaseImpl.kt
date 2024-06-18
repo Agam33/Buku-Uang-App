@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl
 
-import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
+import com.ra.bkuang.features.transaction.domain.repository.PengeluaranRepository
 import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetPengeluaranByIdUseCase
 import java.util.UUID
