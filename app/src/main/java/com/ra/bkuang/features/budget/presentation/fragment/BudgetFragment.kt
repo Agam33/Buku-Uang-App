@@ -11,13 +11,14 @@ import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.Constants
+import com.ra.bkuang.common.util.DrawerMenuToolbarListener
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toStringFormat
 import com.ra.bkuang.databinding.FragmentBudgetBinding
 import com.ra.bkuang.features.budget.data.local.DetailBudget
-import com.ra.bkuang.features.budget.presentation.viewmodel.BudgetViewModel
 import com.ra.bkuang.features.budget.presentation.CreateBudgetActivity
 import com.ra.bkuang.features.budget.presentation.adapter.BudgetAdapter
+import com.ra.bkuang.features.budget.presentation.viewmodel.BudgetViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -27,14 +28,29 @@ class BudgetFragment : BaseFragment<FragmentBudgetBinding>(R.layout.fragment_bud
   BudgetAdapter.OnItemLongClickListener {
 
   private val viewModel: BudgetViewModel by viewModels()
+//
+  var drawerMenuToolbarListener: DrawerMenuToolbarListener? = null
 
   private var currentDate = LocalDate.now()
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setupDate()
+    setupActionBar()
     createBudget()
     observer()
+  }
+
+  private fun setupActionBar() {
+    binding?.toolbar?.title = getString(R.string.txt_budget)
+
+    binding?.toolbar?.setNavigationOnClickListener {
+      drawerMenuToolbarListener?.onDrawerMenuClicked()
+    }
+
+    binding?.toolbar?.setOnMenuItemClickListener { menuItem ->
+      true
+    }
   }
 
   private fun observer() {

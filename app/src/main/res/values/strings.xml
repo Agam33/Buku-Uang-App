@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Buku Uang</string>
-    <string name="app_version">v1.3.0</string>
+    <string name="app_version">v1.4.0</string>
     <string name="title_menu_transaction">Transaksi</string>
     <string name="title_menu_budget">Budget</string>
     <string name="title_menu_analytics">Analisis</string>
-    <string name="title_menu_account">Akun</string>
+    <string name="title_menu_account">Akun Tabungan</string>
     <string name="title_menu_category">Kategori</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_income">Pendapatan</string>

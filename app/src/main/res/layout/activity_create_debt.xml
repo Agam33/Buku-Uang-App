@@ -15,7 +15,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             app:menu="@menu/create_account_menu"
             app:navigationIconTint="@color/white"
-            android:background="@color/blue_90"
+            android:background="@color/md_theme_light_primary"
             android:id="@+id/toolbar"
             android:elevation="4dp"
             app:titleTextColor="@color/white"

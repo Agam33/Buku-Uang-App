@@ -7,31 +7,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/headline"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/title_menu_account"
-            android:textSize="@dimen/headline_large"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_create_account"
-            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small"
-            app:icon="@drawable/baseline_add_24"
-            android:text="@string/txt_add"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:ignore="RelativeOverlap" />
+        <com.google.android.material.appbar.MaterialToolbar
+            style="@style/Widget.App.DrawerToolbar"
+            android:id="@+id/toolbar"
+            app:menu="@menu/menu_account_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_below="@id/headline"
+            android:layout_below="@id/toolbar"
             android:id="@+id/top_container"
             android:layout_margin="8dp"
             app:cardElevation="4dp"

@@ -18,27 +18,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                app:layout_scrollFlags="scroll|enterAlways"
-                android:fitsSystemWindows="true"
+            <com.google.android.material.appbar.MaterialToolbar
+                style="@style/Widget.App.DrawerToolbar"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.textview.MaterialTextView
-                        android:textAlignment="center"
-                        android:text="@string/txt_category"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/headline_large"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-
+                android:layout_height="?attr/actionBarSize"/>
 
         </com.google.android.material.appbar.AppBarLayout>
 

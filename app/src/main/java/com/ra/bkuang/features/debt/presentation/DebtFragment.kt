@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.common.util.ActionType
+import com.ra.bkuang.common.util.DrawerMenuToolbarListener
 import com.ra.bkuang.common.util.Extension.hide
 import com.ra.bkuang.databinding.FragmentDebtBinding
 import com.ra.bkuang.features.debt.domain.model.HutangModel
@@ -26,10 +27,25 @@ class DebtFragment : BaseFragment<FragmentDebtBinding>(R.layout.fragment_debt) {
 
   @Inject lateinit var debtAdapter: DebtAdapter
 
+  var drawerMenuToolbarListener: DrawerMenuToolbarListener? = null
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     observer()
+    setupActionBar()
     createNewDebt()
+  }
+
+  private fun setupActionBar() {
+    binding?.toolbar?.title = getString(R.string.txt_debt)
+
+    binding?.toolbar?.setNavigationOnClickListener {
+      drawerMenuToolbarListener?.onDrawerMenuClicked()
+    }
+
+    binding?.toolbar?.setOnMenuItemClickListener { menuItem ->
+      true
+    }
   }
 
   private fun observer() {

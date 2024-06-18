@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.common.util.ActionType
+import com.ra.bkuang.common.util.DrawerMenuToolbarListener
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.view.dialog.CautionDeleteDialog
 import com.ra.bkuang.common.view.spinner.SpinnerItemOptions
@@ -33,11 +34,26 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
 
   private val deleteDialog = CautionDeleteDialog()
 
+  var drawerMenuToolbarListener: DrawerMenuToolbarListener? = null
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     observer()
     refresh()
+    setupActionBar()
     createCategory()
+  }
+
+  private fun setupActionBar() {
+    binding?.toolbar?.title = getString(R.string.txt_category)
+
+    binding?.toolbar?.setNavigationOnClickListener {
+      drawerMenuToolbarListener?.onDrawerMenuClicked()
+    }
+
+    binding?.toolbar?.setOnMenuItemClickListener { menuItem ->
+      true
+    }
   }
 
   private fun createCategory() {

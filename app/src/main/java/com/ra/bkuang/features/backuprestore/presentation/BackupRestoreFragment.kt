@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.common.util.Constants
+import com.ra.bkuang.common.util.DrawerMenuToolbarListener
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.databinding.FragmentBackupRestoreBinding
 import com.ra.bkuang.features.backuprestore.presentation.adapter.BackupRestoreAdapter
@@ -26,11 +27,26 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
 
   private val viewModel: BackupRestoreViewModel by viewModels()
 
+  var drawerMenuToolbarListener: DrawerMenuToolbarListener? = null
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setupRvTips()
     setupButton()
+    setupActionBar()
     observer()
+  }
+
+  private fun setupActionBar() {
+    binding?.toolbar?.title = getString(R.string.txt_backup)
+
+    binding?.toolbar?.setNavigationOnClickListener {
+      drawerMenuToolbarListener?.onDrawerMenuClicked()
+    }
+
+    binding?.toolbar?.setOnMenuItemClickListener { menuItem ->
+      true
+    }
   }
 
   private fun observer() {

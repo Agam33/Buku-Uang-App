@@ -20,6 +20,7 @@ import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.common.util.Constants.LOCALE_ID
 import com.ra.bkuang.common.util.Constants.MONTHLY_DATE_FORMAT
+import com.ra.bkuang.common.util.DrawerMenuToolbarListener
 import com.ra.bkuang.common.util.Extension.hide
 import com.ra.bkuang.common.util.Extension.toMonthlyTime
 import com.ra.bkuang.common.util.Extension.toStringFormat
@@ -44,15 +45,30 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
 
   private var transactionType: TransactionType = TransactionType.EXPENSE
 
+  var drawerMenuToolbarListener: DrawerMenuToolbarListener? = null
+
   private var currentDate = LocalDate.now()
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     observer()
+    setupActionBar()
     setupDate()
     setupCategory()
     setupPieChart()
     selectedTransactionCategory()
+  }
+
+  private fun setupActionBar() {
+    binding?.toolbar?.title = getString(R.string.txt_budget)
+
+    binding?.toolbar?.setNavigationOnClickListener {
+      drawerMenuToolbarListener?.onDrawerMenuClicked()
+    }
+
+    binding?.toolbar?.setOnMenuItemClickListener { menuItem ->
+      true
+    }
   }
 
   private fun observer() {

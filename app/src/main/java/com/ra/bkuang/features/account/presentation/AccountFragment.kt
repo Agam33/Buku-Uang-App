@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
+import com.ra.bkuang.common.util.DrawerMenuToolbarListener
 import com.ra.bkuang.common.util.Extension.hide
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.view.dialog.CautionDeleteDialog
@@ -29,11 +30,39 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
   @Inject lateinit var accountAdapter: RvAccountAdapter
 
+  var drawerMenuToolbarListener: DrawerMenuToolbarListener? = null
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     init()
     createNewAccount()
     observer()
+    setupActionBar()
+  }
+
+  private fun setupActionBar() {
+    binding?.toolbar?.title = getString(R.string.title_menu_account)
+
+    binding?.toolbar?.setNavigationOnClickListener {
+      drawerMenuToolbarListener?.onDrawerMenuClicked()
+    }
+
+    binding?.toolbar?.setOnMenuItemClickListener { menuItem ->
+      when(menuItem.itemId) {
+        R.id.menu_add_account -> {
+          val i = Intent(requireActivity(), CreateNewAccountActivity::class.java).apply {
+            putExtra(
+              EXTRA_TEXT,
+              CREATE_ACCOUNT
+            )
+          }
+          startActivity(i)
+          true
+        }
+
+        else -> false
+      }
+    }
   }
 
   private fun observer() {
@@ -78,17 +107,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
   }
 
   private fun createNewAccount() {
-    binding?.run {
-      btnCreateAccount.setOnClickListener {
-        val i = Intent(requireActivity(), CreateNewAccountActivity::class.java).apply {
-          putExtra(
-            EXTRA_TEXT,
-            CREATE_ACCOUNT
-          )
-        }
-        startActivity(i)
-      }
-    }
+
   }
 
   override fun option(options: SpinnerItemOptions, akun: AkunModel) {
