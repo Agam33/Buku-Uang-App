@@ -1,4 +1,4 @@
-package com.ra.bkuang.di
+package com.ra.bkuang.common.di
 
 import android.app.AlarmManager
 import android.app.NotificationManager

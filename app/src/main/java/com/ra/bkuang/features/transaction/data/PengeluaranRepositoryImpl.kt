@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.transaction.data
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.di.IoDispatcherQualifier
+import com.ra.bkuang.common.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.data.local.AkunLocalDataSource
 import com.ra.bkuang.features.account.data.mapper.toEntity
 import com.ra.bkuang.features.account.data.mapper.toModel

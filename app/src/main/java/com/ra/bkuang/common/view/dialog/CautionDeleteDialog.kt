@@ -11,21 +11,23 @@ import com.ra.bkuang.R
 
 class CautionDeleteDialog: DialogFragment() {
 
-  interface OnOptionItemClick {
+  interface OptionListener {
     fun onDelete()
     fun onCancel()
   }
 
-  var onOptionItemClick: OnOptionItemClick? = null
+  var optionListener: OptionListener? = null
 
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-    val inflater = requireParentFragment().layoutInflater
+    val inflater = activity?.layoutInflater
     val materialDialog = MaterialAlertDialogBuilder(requireContext(), R.style.Widget_App_Dialog_Rounded)
-    val view = inflater.inflate(R.layout.caution_delete_dialog, null)
+    val view = inflater?.inflate(R.layout.caution_delete_dialog, null)
 
     materialDialog.setView(view)
 
-    setupOption(view)
+    view?.let {
+      setupOption(it)
+    }
 
     return materialDialog.create()
   }
@@ -35,14 +37,10 @@ class CautionDeleteDialog: DialogFragment() {
     val btnCancel = v.findViewById<Button>(R.id.btn_no)
     val tvMsg = v.findViewById<TextView>(R.id.tv_msg_delete)
 
-    val msg = arguments?.getString(
-      MSG_CAUTION_DIALOG,
-      requireContext().resources.getString(R.string.msg_delete_dialog))
+    tvMsg.text = requireContext().resources.getString(R.string.msg_delete_dialog)
 
-    tvMsg.text = msg
-
-    btnYes.setOnClickListener { onOptionItemClick?.onDelete() }
-    btnCancel.setOnClickListener { onOptionItemClick?.onCancel() }
+    btnYes.setOnClickListener { optionListener?.onDelete() }
+    btnCancel.setOnClickListener { optionListener?.onCancel() }
   }
 
   companion object {

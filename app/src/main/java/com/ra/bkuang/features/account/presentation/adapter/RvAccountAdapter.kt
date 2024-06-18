@@ -7,19 +7,19 @@ import android.widget.AdapterView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ra.bkuang.common.util.Extension.toFormatRupiah
 import com.ra.bkuang.common.view.spinner.SpinnerItemOptions
 import com.ra.bkuang.common.view.spinner.SpinnerOptionAdapter
 import com.ra.bkuang.databinding.ItemRvAccountsBinding
 import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.common.util.Extension.toFormatRupiah
 
 class RvAccountAdapter: ListAdapter<AkunModel, RvAccountAdapter.MViewHolder>(diff) {
 
-  interface OnOptionAccountClickCallBack {
+  interface OptionAccountClickCallBack {
     fun option(options: SpinnerItemOptions, akun: AkunModel)
   }
 
-  var onOptionAccountClickCallBack: OnOptionAccountClickCallBack? = null
+  var optionAccountClickCallBack: OptionAccountClickCallBack? = null
 
   inner class MViewHolder(
     private val binding: ItemRvAccountsBinding
@@ -34,7 +34,7 @@ class RvAccountAdapter: ListAdapter<AkunModel, RvAccountAdapter.MViewHolder>(dif
         override fun onItemSelected(adapter: AdapterView<*>?, view: View?, position: Int, id: Long) {
           if(position > 0) {
             val selectedItem = adapter?.getItemAtPosition(position) as SpinnerItemOptions
-            onOptionAccountClickCallBack?.option(selectedItem, akun)
+            optionAccountClickCallBack?.option(selectedItem, akun)
             binding.spOptionAccount.setSelection(0)
           }
         }

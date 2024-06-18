@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.transaction.domain.usecase
 
 import com.ra.bkuang.features.transaction.alarm.TransactionAlarmManager
-import com.ra.bkuang.di.IoDispatcherQualifier
+import com.ra.bkuang.common.di.IoDispatcherQualifier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.util.Calendar

@@ -16,14 +16,14 @@ import com.ra.bkuang.features.transaction.presentation.adapter.OnDayItemClickLis
 import com.ra.bkuang.features.transaction.presentation.adapter.TransferRvAdapter
 import com.ra.bkuang.features.transaction.presentation.component.DetailTransactionDialog
 import com.ra.bkuang.features.transaction.presentation.viewmodel.TransactionViewModel
-import com.ra.bkuang.features.transaction.utils.OnTransactionDeleteListener
+import com.ra.bkuang.features.transaction.utils.TransactionDeleteListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TransferFragment : BaseFragment<FragmentTransferBinding>(R.layout.fragment_transfer),
   OnDayItemClickListener,
-  OnTransactionDeleteListener<TransactionDetail> {
+  TransactionDeleteListener<TransactionDetail> {
 
   private val viewModel: TransactionViewModel by activityViewModels()
 
@@ -76,7 +76,7 @@ class TransferFragment : BaseFragment<FragmentTransferBinding>(R.layout.fragment
     detailTransactionDialog.arguments = Bundle().apply {
       putParcelable(DetailTransactionDialog.EXTRA_DETAIL_TRANSACTION, dayItem)
     }
-    detailTransactionDialog.onTransactionDeleteListener = this@TransferFragment
+    detailTransactionDialog.transactionDeleteListener = this@TransferFragment
     detailTransactionDialog.show(parentFragmentManager, "transfer-detail")
   }
 }

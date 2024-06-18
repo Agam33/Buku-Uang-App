@@ -60,7 +60,7 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
   }
 
   private fun setupActionBar() {
-    binding?.toolbar?.title = getString(R.string.txt_budget)
+    binding?.toolbar?.title = getString(R.string.title_menu_analytics)
 
     binding?.toolbar?.setNavigationOnClickListener {
       drawerMenuToolbarListener?.onDrawerMenuClicked()

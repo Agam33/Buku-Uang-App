@@ -14,9 +14,9 @@ import com.ra.bkuang.core.database.dao.PembayaranHutangDao
 import com.ra.bkuang.core.database.dao.PendapatanDao
 import com.ra.bkuang.core.database.dao.PengeluaranDao
 import com.ra.bkuang.core.database.dao.TransferDao
-import com.ra.bkuang.di.DBNameQualifier
-import com.ra.bkuang.di.DBSeederQualifier
-import com.ra.bkuang.di.IoCoroutineScopeQualifier
+import com.ra.bkuang.common.di.DBNameQualifier
+import com.ra.bkuang.common.di.DBSeederQualifier
+import com.ra.bkuang.common.di.IoCoroutineScopeQualifier
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

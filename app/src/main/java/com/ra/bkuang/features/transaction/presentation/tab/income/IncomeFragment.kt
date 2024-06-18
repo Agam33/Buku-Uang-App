@@ -16,14 +16,14 @@ import com.ra.bkuang.features.transaction.presentation.adapter.IncomeRvAdapter
 import com.ra.bkuang.features.transaction.presentation.adapter.OnDayItemClickListener
 import com.ra.bkuang.features.transaction.presentation.component.DetailTransactionDialog
 import com.ra.bkuang.features.transaction.presentation.viewmodel.TransactionViewModel
-import com.ra.bkuang.features.transaction.utils.OnTransactionDeleteListener
+import com.ra.bkuang.features.transaction.utils.TransactionDeleteListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class IncomeFragment : BaseFragment<FragmentIncomeBinding>(R.layout.fragment_income),
   OnDayItemClickListener,
-  OnTransactionDeleteListener<TransactionDetail> {
+  TransactionDeleteListener<TransactionDetail> {
 
   private val viewModel: TransactionViewModel by activityViewModels()
 
@@ -77,7 +77,7 @@ class IncomeFragment : BaseFragment<FragmentIncomeBinding>(R.layout.fragment_inc
     detailTransactionDialog.arguments = Bundle().apply {
       putParcelable(DetailTransactionDialog.EXTRA_DETAIL_TRANSACTION, dayItem)
     }
-    detailTransactionDialog.onTransactionDeleteListener = this@IncomeFragment
+    detailTransactionDialog.transactionDeleteListener = this@IncomeFragment
     detailTransactionDialog.show(parentFragmentManager, "income-detail")
   }
 }

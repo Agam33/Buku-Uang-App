@@ -1,5 +1,5 @@
 package com.ra.bkuang.features.transaction.utils
 
-interface OnTransactionDeleteListener<T> {
+interface TransactionDeleteListener<T> {
   fun onDeleteItem(item: T)
 }

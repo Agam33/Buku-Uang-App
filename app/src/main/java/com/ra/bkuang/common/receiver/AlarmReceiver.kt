@@ -3,7 +3,7 @@ package com.ra.bkuang.common.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.ra.bkuang.di.IoCoroutineScopeQualifier
+import com.ra.bkuang.common.di.IoCoroutineScopeQualifier
 import com.ra.bkuang.features.debt.alarm.DebtAlarmManager
 import com.ra.bkuang.features.debt.alarm.DebtAlarmManagerManagerImpl.Companion.DEBT_ALARM_EXTRA_ID
 import com.ra.bkuang.features.debt.alarm.DebtAlarmManagerManagerImpl.Companion.DEBT_ALARM_EXTRA_TITLE
@@ -20,7 +20,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlarmReceiver: BroadcastReceiver() {
-  @Inject @IoCoroutineScopeQualifier lateinit var ioScope: CoroutineScope
+  @Inject @IoCoroutineScopeQualifier
+  lateinit var ioScope: CoroutineScope
   @Inject lateinit var updateHutangUseCase: UpdateHutangUseCase
   @Inject lateinit var findHutangByAlarmIdUseCase: FindHutangByAlarmIdUseCase
   @Inject lateinit var debtAlarmManager: DebtAlarmManager

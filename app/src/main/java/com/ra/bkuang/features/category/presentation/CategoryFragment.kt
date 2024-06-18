@@ -114,7 +114,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
         }
         SpinnerItemOptions.DELETE -> {
 
-          deleteDialog.onOptionItemClick = object : CautionDeleteDialog.OnOptionItemClick {
+          deleteDialog.optionListener = object : CautionDeleteDialog.OptionListener {
             override fun onDelete() { viewModel.deleteCategory(kategoriModel) }
             override fun onCancel() { deleteDialog.dismiss() }
           }

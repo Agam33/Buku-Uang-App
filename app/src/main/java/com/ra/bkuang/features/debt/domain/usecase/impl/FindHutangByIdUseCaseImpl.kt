@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.debt.domain.usecase.impl
 
-import com.ra.bkuang.di.IoDispatcherQualifier
+import com.ra.bkuang.common.di.IoDispatcherQualifier
 import com.ra.bkuang.features.debt.domain.repository.HutangRepository
 import com.ra.bkuang.features.debt.domain.model.HutangModel
 import com.ra.bkuang.features.debt.domain.usecase.FindHutangByIdUseCase

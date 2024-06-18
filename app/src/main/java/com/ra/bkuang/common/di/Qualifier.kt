@@ -1,4 +1,4 @@
-package com.ra.bkuang.di
+package com.ra.bkuang.common.di
 
 import javax.inject.Qualifier
 

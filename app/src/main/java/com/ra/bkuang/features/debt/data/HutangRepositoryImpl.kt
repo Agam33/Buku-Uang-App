@@ -1,8 +1,8 @@
 package com.ra.bkuang.features.debt.data
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.di.IoCoroutineScopeQualifier
-import com.ra.bkuang.di.IoDispatcherQualifier
+import com.ra.bkuang.common.di.IoCoroutineScopeQualifier
+import com.ra.bkuang.common.di.IoDispatcherQualifier
 import com.ra.bkuang.features.debt.alarm.DebtAlarmManager
 import com.ra.bkuang.features.debt.data.local.HutangLocalDataSource
 import com.ra.bkuang.features.debt.data.mapper.toEntity
