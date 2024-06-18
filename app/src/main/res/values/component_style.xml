@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!-- FAB Custom -->
 
-    <!-- End FAB custom-->
+<!-- Toolbar for navigation Drawer -->
+
+    <style name="Widget.App.DrawerToolbar" parent="Widget.Material3.Toolbar">
+        <item name="titleTextColor">@color/white</item>
+        <item name="elevation">8dp</item>
+        <item name="titleCentered">true</item>
+        <item name="navigationIcon">@drawable/ic_menu_24</item>
+        <item name="android:background">@color/md_theme_light_primary</item>
+    </style>
 
 <!--Tab layout-->
 
@@ -10,10 +17,6 @@
         <item name="colorPrimary">@color/md_theme_light_primary</item>
     </style>
 <!-- End Tab layout-->
-
-<!-- Card Overall Income Expense Total -->
-
-    <!-- End Overall Income Expense Total -->
 
 <!-- Collapsing Toolbar  -->
     <style name="Widget.App.CollapsingToolbar" parent="Widget.Design.CollapsingToolbar">

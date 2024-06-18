@@ -15,7 +15,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             app:navigationIconTint="@color/white"
             android:background="@color/blue_90"
-            app:titleTextColor="@color/white"
+            app:titleTextColor="@color/md_theme_light_primary"
             android:id="@+id/toolbar"
             android:elevation="1dp"
             app:title="@string/txt_budget"

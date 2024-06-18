@@ -11,6 +11,7 @@ import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.DateViewType
+import com.ra.bkuang.common.util.DrawerMenuToolbarListener
 import com.ra.bkuang.common.util.ZoomOutPageTransformer
 import com.ra.bkuang.databinding.FragmentTransactionBinding
 import com.ra.bkuang.features.transaction.presentation.adapter.TransactionPagerAdapter
@@ -32,12 +33,27 @@ class TransactionFragment :
   private lateinit var transactionPagerAdapter: TransactionPagerAdapter
   private lateinit var tabLayoutMediator: TabLayoutMediator
 
+  var drawerMenuToolbarListener: DrawerMenuToolbarListener? = null
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     observer()
+    setupActionBar()
     setupViewPager()
     createTransaction()
     setupButton()
+  }
+
+  private fun setupActionBar() {
+    binding?.toolbar?.title = getString(R.string.txt_transaction)
+
+    binding?.toolbar?.setNavigationOnClickListener {
+      drawerMenuToolbarListener?.onDrawerMenuClicked()
+    }
+
+    binding?.toolbar?.setOnMenuItemClickListener { menuItem ->
+      true
+    }
   }
 
   private fun observer() {
