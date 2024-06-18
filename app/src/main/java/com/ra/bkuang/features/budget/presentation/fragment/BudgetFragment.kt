@@ -12,6 +12,7 @@ import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.Constants
 import com.ra.bkuang.common.util.DrawerMenuToolbarListener
+import com.ra.bkuang.common.util.Extension.hide
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toStringFormat
 import com.ra.bkuang.databinding.FragmentBudgetBinding
@@ -70,6 +71,15 @@ class BudgetFragment : BaseFragment<FragmentBudgetBinding>(R.layout.fragment_bud
   }
 
   private fun setupListBudget(budgetList: List<DetailBudget>)  {
+    if(budgetList.isEmpty()) {
+      binding?.rvBudget?.hide(true)
+      binding?.emptyLayout?.state = false
+      return
+    }
+
+    binding?.rvBudget?.hide(false)
+    binding?.emptyLayout?.state = true
+
     val budgetAdapter = BudgetAdapter()
     budgetAdapter.submitList(budgetList)
     binding?.rvBudget?.apply {

@@ -10,8 +10,8 @@ import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
 import com.ra.bkuang.R
 import com.ra.bkuang.common.receiver.AlarmCategory
-import com.ra.bkuang.di.AppAlarmManagerQualifier
-import com.ra.bkuang.di.AppNotificationManagerQualifier
+import com.ra.bkuang.common.di.AppAlarmManagerQualifier
+import com.ra.bkuang.common.di.AppNotificationManagerQualifier
 import com.ra.bkuang.main.MainActivity
 import com.ra.bkuang.common.receiver.AlarmReceiver
 import dagger.hilt.android.qualifiers.ApplicationContext

@@ -19,14 +19,14 @@ import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
 import com.ra.bkuang.features.transaction.presentation.CreateTransactionActivity
 import com.ra.bkuang.features.transaction.presentation.TransactionFragment
 import com.ra.bkuang.features.transaction.presentation.TransactionType
-import com.ra.bkuang.features.transaction.utils.OnTransactionDeleteListener
+import com.ra.bkuang.features.transaction.utils.TransactionDeleteListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
 @AndroidEntryPoint
 class DetailTransactionDialog: DialogFragment() {
 
-  var onTransactionDeleteListener: OnTransactionDeleteListener<TransactionDetail>? = null
+  var transactionDeleteListener: TransactionDeleteListener<TransactionDetail>? = null
 
   private lateinit var tvMoney: TextView
   private lateinit var tvCurrDate: TextView
@@ -78,7 +78,7 @@ class DetailTransactionDialog: DialogFragment() {
         requireContext().getString(R.string.msg_delete),
         Snackbar.LENGTH_SHORT
       ).setAction("Ya") {
-          onTransactionDeleteListener?.onDeleteItem(transactionDetail)
+          transactionDeleteListener?.onDeleteItem(transactionDetail)
           onDestroyView()
         }
         .show()

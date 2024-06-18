@@ -1,8 +1,8 @@
 package com.ra.bkuang.features.budget.domain.usecase.impl
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.budget.domain.repository.BudgetRepository
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
+import com.ra.bkuang.features.budget.domain.repository.BudgetRepository
 import com.ra.bkuang.features.budget.domain.usecase.EditBudgetUseCase
 import com.ra.bkuang.features.transaction.domain.repository.PengeluaranRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,13 +20,6 @@ class EditBudgetUseCaseImpl @Inject constructor(
 
   override operator fun invoke(budgetModel: BudgetModel): Flow<Result<Boolean>> {
     return flow {
-      val isExist =
-        budgetRepository.isExistByDateAndKategoriId(budgetModel.bulanTahun, budgetModel.bulanTahun, budgetModel.idKategori)
-      if (isExist) {
-        emit(Result.Error("Budget is Exist!"))
-        return@flow
-      }
-
       try {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, budgetModel.bulanTahun.year)

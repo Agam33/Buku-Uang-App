@@ -10,7 +10,7 @@ import com.ra.bkuang.R
 
 class CreateFileNameDialog: DialogFragment() {
 
-  var onSaveListener: OnSaveListener? = null
+  var saveListener: SaveListener? = null
 
   private lateinit var edtName: TextInputEditText
   private lateinit var btnSave: MaterialButton
@@ -44,16 +44,15 @@ class CreateFileNameDialog: DialogFragment() {
   private fun validateInput() {
     val fileName = edtName.text.toString()
     if(fileName.isEmpty()) return
-    onSaveListener?.onSaveInput(fileName)
+    saveListener?.onSaveInput(fileName)
     dismiss()
   }
 
-  interface OnSaveListener {
+  interface SaveListener {
     fun onSaveInput(name: String)
   }
 
   companion object {
-    fun newInstance() = CreateFileNameDialog()
     const val TAG = "CreateFileNameDialog"
   }
 }

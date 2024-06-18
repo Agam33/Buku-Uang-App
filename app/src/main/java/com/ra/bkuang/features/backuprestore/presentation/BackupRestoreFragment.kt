@@ -20,14 +20,17 @@ import com.ra.bkuang.features.backuprestore.presentation.dialog.CreateFileNameDi
 import com.ra.bkuang.features.backuprestore.presentation.viewmodel.BackupRestoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layout.fragment_backup_restore),
-  CreateFileNameDialog.OnSaveListener{
+  CreateFileNameDialog.SaveListener{
 
   private val viewModel: BackupRestoreViewModel by viewModels()
 
   var drawerMenuToolbarListener: DrawerMenuToolbarListener? = null
+
+  private val createFileNameDialog = CreateFileNameDialog().apply { saveListener = this@BackupRestoreFragment }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -61,6 +64,8 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
           }
         }
 
+        Timber.d("${ uiState.isDirExists}")
+
         uiState.isDirExists?.let {
           if(it) {
             showDialogFileName()
@@ -73,10 +78,7 @@ class BackupRestoreFragment : BaseFragment<FragmentBackupRestoreBinding>(R.layou
   }
 
   private fun showDialogFileName() {
-    CreateFileNameDialog.newInstance().apply {
-      onSaveListener = this@BackupRestoreFragment
-    }
-      .show(childFragmentManager, CreateFileNameDialog.TAG)
+    createFileNameDialog.show(childFragmentManager, CreateFileNameDialog.TAG)
   }
 
   private fun setupRvTips() {

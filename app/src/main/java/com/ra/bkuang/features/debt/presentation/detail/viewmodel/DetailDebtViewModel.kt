@@ -3,7 +3,7 @@ package com.ra.bkuang.features.debt.presentation.detail.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.di.IoDispatcherQualifier
+import com.ra.bkuang.common.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.domain.usecase.FindAllAkunUseCase
 import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
 import com.ra.bkuang.features.debt.domain.model.HutangModel

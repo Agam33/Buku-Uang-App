@@ -13,7 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="160dp">
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_title"
+            android:layout_marginStart="16dp"
+            android:text="@string/txt_file_name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <com.google.android.material.textfield.TextInputEditText
+            android:layout_below="@id/tv_title"
             android:id="@+id/edt_input_name"
             android:inputType="text"
             android:hint="@string/txt_file_name"

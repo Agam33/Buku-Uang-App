@@ -30,7 +30,7 @@ class BackupRestoreViewModel @Inject constructor(
     viewModelScope.launch {
       val dir = userSettingPref.getFileBackupDirectory().first()
 
-      if(dir.isEmpty()) {
+      if(dir.isBlank() || dir.isEmpty()) {
         _uiState.update {
           it.copy(
             isDirExists = false
@@ -43,18 +43,17 @@ class BackupRestoreViewModel @Inject constructor(
           )
         }
       }
+    }
 
-      _uiState.update {
-        it.copy(
-          isDirExists = null
-        )
-      }
+    _uiState.update {
+      it.copy(
+        isDirExists = null
+      )
     }
   }
 
    fun createLocalBackup(fileName: String) {
       viewModelScope.launch {
-
         val dir = userSettingPref.getFileBackupDirectory().first()
 
         val isSuccess =  createLocalBackupUseCase.invoke(fileName, dir)
@@ -72,15 +71,14 @@ class BackupRestoreViewModel @Inject constructor(
             )
           }
         }
-
-        _uiState.update {
-          it.copy(
-            isSuccessful = null
-          )
-        }
       }
-   }
 
+     _uiState.update {
+       it.copy(
+         isSuccessful = null
+       )
+     }
+   }
 
   fun getLocalBackup(uri: Uri, directoryDb: String) {
     viewModelScope.launch {
@@ -99,12 +97,12 @@ class BackupRestoreViewModel @Inject constructor(
           )
         }
       }
+    }
 
-      _uiState.update {
-        it.copy(
-          isSuccessful = null
-        )
-      }
+    _uiState.update {
+      it.copy(
+        isSuccessful = null
+      )
     }
   }
 }

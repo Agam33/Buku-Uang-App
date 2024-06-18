@@ -24,18 +24,19 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_account),
-  RvAccountAdapter.OnOptionAccountClickCallBack {
+  RvAccountAdapter.OptionAccountClickCallBack {
 
   private val viewModel: AccountViewModel by viewModels()
 
   @Inject lateinit var accountAdapter: RvAccountAdapter
+
+  private val deleteDialog = CautionDeleteDialog()
 
   var drawerMenuToolbarListener: DrawerMenuToolbarListener? = null
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     init()
-    createNewAccount()
     observer()
     setupActionBar()
   }
@@ -68,28 +69,33 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
   private fun observer() {
     lifecycleScope.launch {
       viewModel.uiState.collect { data ->
-        if(data.isEmptyAccount) {
-          binding?.rvAccount?.hide(true)
-          binding?.emptyLayout?.state = false
-        } else {
-          setupAccountAdapter(data.accounts)
-          binding?.rvAccount?.hide(false)
-          binding?.emptyLayout?.state = true
-        }
+        setupAccountAdapter(data.accounts)
 
         binding?.tvTotal?.text = data.totalMoney
         binding?.tvIncome?.text = data.totalIncome
         binding?.tvExpense?.text = data.totalExpense
 
-        if(data.isSuccessfulDelete != null && data.isSuccessfulDelete) {
-          showShortToast(requireContext().resources.getString(R.string.msg_success))
+        data.isSuccessfulDelete?.let {
+          if(it) {
+            showShortToast(requireContext().resources.getString(R.string.msg_success))
+            deleteDialog.dismiss()
+          }
         }
       }
     }
   }
 
-  private fun setupAccountAdapter(list: List<AkunModel>?) {
-    accountAdapter.onOptionAccountClickCallBack = this@AccountFragment
+  private fun setupAccountAdapter(list: List<AkunModel>) {
+    if(list.isEmpty()) {
+      binding?.rvAccount?.hide(true)
+      binding?.emptyLayout?.state = false
+      return
+    }
+
+    binding?.rvAccount?.hide(false)
+    binding?.emptyLayout?.state = true
+
+    accountAdapter.optionAccountClickCallBack = this@AccountFragment
     accountAdapter.submitList(list)
 
     binding?.run {
@@ -106,22 +112,13 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
     viewModel.getOverallMoney()
   }
 
-  private fun createNewAccount() {
-
-  }
-
   override fun option(options: SpinnerItemOptions, akun: AkunModel) {
     when(options) {
       SpinnerItemOptions.DELETE -> {
-        val deleteDialog = CautionDeleteDialog()
-
-        deleteDialog.onOptionItemClick = object : CautionDeleteDialog.OnOptionItemClick {
+        deleteDialog.optionListener = object : CautionDeleteDialog.OptionListener {
 
           override fun onDelete() {
-            viewLifecycleOwner.lifecycleScope.launch {
-              viewModel.deleteAccount(akun)
-              deleteDialog.dismiss()
-            }
+            viewModel.deleteAccount(akun)
           }
 
           override fun onCancel() { deleteDialog.dismiss() }

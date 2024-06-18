@@ -84,11 +84,6 @@ class AccountViewModel @Inject constructor(
 
   fun deleteAccount(akun: AkunModel) {
     viewModelScope.launch {
-      _uiState.update {
-        it.copy(
-          isSuccessfulDelete = null
-        )
-      }
       deleteAkunUseCase.invoke(akun).collect { res ->
         when(res) {
           is Result.Error -> {
