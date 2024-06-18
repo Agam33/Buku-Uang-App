@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.category.domain.usecase.impl
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.category.domain.KategoriRepository
+import com.ra.bkuang.features.category.domain.repository.KategoriRepository
 import com.ra.bkuang.features.category.domain.model.KategoriModel
 import com.ra.bkuang.features.category.domain.usecase.FindCategoryByTypeUseCase
 import com.ra.bkuang.features.transaction.data.entity.TransactionType

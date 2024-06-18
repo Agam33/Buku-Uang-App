@@ -12,11 +12,8 @@ import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.SavePendapat
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.UpdatePendapatanUseCase
 import com.ra.bkuang.features.transaction.presentation.tab.income.uistate.CreateIncomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,10 +23,7 @@ class CreateIncomeViewModel @Inject constructor(
   private val findKategoriByType: FindCategoryByTypeUseCase,
   private val getPendapatanByIdUseCase: GetPendapatanByIdUseCase,
   private val findAllAkunUseCase: FindAllAkunUseCase,
-): BaseViewModel() {
-
-  private var _uiState = MutableStateFlow(CreateIncomeUiState())
-  val uiState = _uiState.asStateFlow()
+): BaseViewModel<CreateIncomeUiState>(CreateIncomeUiState()) {
 
   fun saveIncome(incomeModel: PendapatanModel) {
     viewModelScope.launch {
@@ -97,7 +91,7 @@ class CreateIncomeViewModel @Inject constructor(
     }
   }
 
-  fun getIncomeById(uuid: UUID) {
+  fun getIncomeById(uuid: String) {
     viewModelScope.launch {
       val data = getPendapatanByIdUseCase(uuid)
       _uiState.update {

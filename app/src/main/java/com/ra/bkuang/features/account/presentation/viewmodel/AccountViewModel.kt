@@ -12,8 +12,6 @@ import com.ra.bkuang.features.account.presentation.AccountUiState
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetTotalPendapatanWithFlowUseCase
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetTotalPengeluaranWithFlowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,16 +23,13 @@ class AccountViewModel @Inject constructor(
   private val akunOverallMoneyUseCase: AkunOverallMoneyUseCase,
   private val getTotalPengeluaranWithFlowUseCase: GetTotalPengeluaranWithFlowUseCase,
   private val getTotalPendapatanWithFlowUseCase: GetTotalPendapatanWithFlowUseCase
-): BaseViewModel() {
-
-  private var _accountUiState = MutableStateFlow(AccountUiState())
-  val accountUiState = _accountUiState.asStateFlow()
+): BaseViewModel<AccountUiState>(AccountUiState()) {
 
   fun getOverallMoney() {
     viewModelScope.launch {
       akunOverallMoneyUseCase().collect {
         val data = it ?: 0
-        _accountUiState.update { state ->
+        _uiState.update { state ->
           state.copy(
             totalMoney = data.toFormatRupiah()
           )
@@ -45,7 +40,7 @@ class AccountViewModel @Inject constructor(
     viewModelScope.launch {
       getTotalPendapatanWithFlowUseCase.invoke().collect {
         val data = it ?: 0
-        _accountUiState.update { state ->
+        _uiState.update { state ->
           state.copy(
             totalIncome =  data.toFormatRupiah()
           )
@@ -56,7 +51,7 @@ class AccountViewModel @Inject constructor(
     viewModelScope.launch {
       getTotalPengeluaranWithFlowUseCase.invoke().collect {
         val data = it ?: 0
-        _accountUiState.update { state ->
+        _uiState.update { state ->
           state.copy(
             totalExpense = data.toFormatRupiah()
           )
@@ -69,14 +64,14 @@ class AccountViewModel @Inject constructor(
     viewModelScope.launch {
       findAllAkun().collect { list ->
         if (list.isEmpty()) {
-          _accountUiState.update {
+          _uiState.update {
             it.copy(
               isEmptyAccount = true,
               accounts = emptyList()
             )
           }
         } else {
-          _accountUiState.update {
+          _uiState.update {
             it.copy(
               accounts = list,
               isEmptyAccount = false
@@ -89,7 +84,7 @@ class AccountViewModel @Inject constructor(
 
   fun deleteAccount(akun: AkunModel) {
     viewModelScope.launch {
-      _accountUiState.update {
+      _uiState.update {
         it.copy(
           isSuccessfulDelete = null
         )
@@ -97,19 +92,19 @@ class AccountViewModel @Inject constructor(
       deleteAkunUseCase.invoke(akun).collect { res ->
         when(res) {
           is Result.Error -> {
-            _accountUiState.update {
+            _uiState.update {
               it.copy(
                 isSuccessfulDelete = false
               )
             }
           }
           is Result.Success -> {
-            _accountUiState.update {
+            _uiState.update {
               it.copy(
                 isSuccessfulDelete = true
               )
             }
-            _accountUiState.update {
+            _uiState.update {
               it.copy(
                 isSuccessfulDelete = null
               )

@@ -41,7 +41,7 @@ class CreateNewAccountActivity : BaseActivity<ActivityCreateNewAccountBinding>(R
 
   private fun observer() {
     lifecycleScope.launch {
-      viewModel.createAccountUiState.collect { state ->
+      viewModel.uiState.collect { state ->
         if(state.isSuccessful != null && state.isSuccessful) {
           showShortToast(getString(R.string.msg_success))
         }

@@ -16,6 +16,7 @@ import com.ra.bkuang.common.util.Extension.parcelable
 import com.ra.bkuang.common.util.Extension.setupActionBar
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.getActionType
+import com.ra.bkuang.features.category.presentation.viewmodel.CategoryViewModel
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -57,7 +58,7 @@ class CreateCategoryActivity : BaseActivity<ActivityCreateCategoryBinding>(R.lay
 
   private fun observer() {
     lifecycleScope.launch {
-      viewModel.categoryUiState.collect { uiState ->
+      viewModel.uiState.collect { uiState ->
         currentCategory = uiState.currCategory
 
         uiState.isSuccessfulSave?.let {
@@ -120,7 +121,7 @@ class CreateCategoryActivity : BaseActivity<ActivityCreateCategoryBinding>(R.lay
 
         showShortToast(getString(R.string.msg_success))
 
-        viewModel.saveKategori(category)
+        viewModel.saveCategory(category)
       }
     }
 

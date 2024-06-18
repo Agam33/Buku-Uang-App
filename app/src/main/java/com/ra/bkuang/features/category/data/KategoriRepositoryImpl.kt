@@ -4,7 +4,7 @@ import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.category.data.local.KategoriLocalDataSource
 import com.ra.bkuang.features.category.data.mapper.toEntity
 import com.ra.bkuang.features.category.data.mapper.toModel
-import com.ra.bkuang.features.category.domain.KategoriRepository
+import com.ra.bkuang.features.category.domain.repository.KategoriRepository
 import com.ra.bkuang.features.category.domain.model.KategoriModel
 import com.ra.bkuang.features.transaction.data.entity.TransactionType
 import kotlinx.coroutines.flow.Flow

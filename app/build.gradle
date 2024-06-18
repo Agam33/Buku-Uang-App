@@ -127,11 +127,6 @@ dependencies {
     def chart_version = 'v3.1.0'
     implementation "com.github.PhilJay:MPAndroidChart:$chart_version"
 
-    // navigation component
-    def version_nav = "2.2.1"
-    implementation "androidx.navigation:navigation-fragment-ktx:$version_nav"
-    implementation "androidx.navigation:navigation-ui-ktx:$version_nav"
-
     // datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 

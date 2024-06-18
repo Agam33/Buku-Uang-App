@@ -26,6 +26,7 @@ import com.ra.bkuang.common.util.Extension.toStringFormat
 import com.ra.bkuang.databinding.FragmentAnalyticBinding
 import com.ra.bkuang.features.analytics.domain.model.AnalyticModel
 import com.ra.bkuang.features.analytics.presentation.adapter.AnalyticListAdapter
+import com.ra.bkuang.features.analytics.presentation.viewmodel.AnalyticViewModel
 import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
 import com.ra.bkuang.features.transaction.presentation.TransactionType
 import com.ra.bkuang.features.transaction.presentation.TransactionType.Companion.getTransactionTypeID
@@ -56,7 +57,7 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
 
   private fun observer() {
     lifecycleScope.launch {
-      viewModel.analyticUiState.collect { uiState ->
+      viewModel.uiState.collect { uiState ->
         if(uiState.analytics.isEmpty()) {
           binding?.rvTransaction?.hide(true)
         } else {
@@ -141,7 +142,7 @@ class AnalyticFragment : BaseFragment<FragmentAnalyticBinding>(R.layout.fragment
     val dataset: PieDataSet = PieDataSet(entries, "").apply {
       setDrawIcons(false)
       sliceSpace = 3f
-      valueTextSize = 12f
+      valueTextSize = 8f
       iconsOffset = MPPointF(0F, 40F)
       selectionShift = 5f
       setDrawValues(false)

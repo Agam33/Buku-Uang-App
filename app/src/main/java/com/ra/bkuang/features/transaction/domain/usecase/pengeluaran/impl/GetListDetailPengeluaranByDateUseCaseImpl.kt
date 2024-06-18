@@ -2,7 +2,7 @@ package com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.impl
 
 import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
-import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
+import com.ra.bkuang.features.transaction.domain.repository.PengeluaranRepository
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetListDetailPengeluaranByDateUseCase
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime

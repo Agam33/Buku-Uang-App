@@ -5,7 +5,7 @@ import com.ra.bkuang.features.budget.data.local.BudgetLocalDataSource
 import com.ra.bkuang.features.budget.data.local.DetailBudget
 import com.ra.bkuang.features.budget.data.mapper.toEntity
 import com.ra.bkuang.features.budget.data.mapper.toModel
-import com.ra.bkuang.features.budget.domain.BudgetRepository
+import com.ra.bkuang.features.budget.domain.repository.BudgetRepository
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

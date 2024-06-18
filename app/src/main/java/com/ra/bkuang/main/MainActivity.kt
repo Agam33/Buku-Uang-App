@@ -5,66 +5,84 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.navigation.NavController
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
 import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseActivity
 import com.ra.bkuang.common.util.Extension.appOnBackPressed
 import com.ra.bkuang.databinding.ActivityMainBinding
+import com.ra.bkuang.features.account.presentation.AccountFragment
+import com.ra.bkuang.features.analytics.presentation.AnalyticFragment
+import com.ra.bkuang.features.backuprestore.presentation.BackupRestoreFragment
+import com.ra.bkuang.features.budget.presentation.fragment.BudgetFragment
+import com.ra.bkuang.features.category.presentation.CategoryFragment
+import com.ra.bkuang.features.debt.presentation.DebtFragment
+import com.ra.bkuang.features.transaction.presentation.TransactionFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
-  private lateinit var navController: NavController
-
   private lateinit var drawerToggle: ActionBarDrawerToggle
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    navController = Navigation.findNavController(this@MainActivity, R.id.fragment_container)
     setupActionBar()
-    setupNavigationDrawer()
+    setupDrawer()
     setupOnBackPressedDispatcher()
+
+    supportFragmentManager.beginTransaction()
+      .replace(R.id.fragment_container, TransactionFragment(), "TransactionFragment")
+      .commit()
+
+    binding.navigationDrawerView.setCheckedItem(R.id.menu_transaction)
   }
 
-  private fun setupNavigationDrawer() {
-    NavigationUI.setupWithNavController(binding.navigationDrawerView, navController)
-    drawerToggle = ActionBarDrawerToggle(this@MainActivity, binding.drawerLayout, R.string.txt_open, R.string.txt_close)
+  private fun setupDrawer() {
+    drawerToggle = ActionBarDrawerToggle(
+      this@MainActivity,
+      binding.drawerLayout,
+      R.string.txt_open, R.string.txt_close
+    )
+
     binding.drawerLayout.addDrawerListener(drawerToggle)
     drawerToggle.syncState()
 
-    binding.navigationDrawerView.setCheckedItem(R.id.transactionFragment)
-    val option = NavOptions.Builder().apply {
-      setLaunchSingleTop(true)
-//      setEnterAnim(R.animator.zoom_out_anim)
-    }.build()
     binding.navigationDrawerView.setNavigationItemSelectedListener { item ->
-      navController.popBackStack()
       when(item.itemId) {
         R.id.menu_account -> {
-          navController.navigate(R.id.accountFragment, Bundle(), option)
+          supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, AccountFragment(), "AccountFragment")
+            .commit()
         }
         R.id.menu_analytics -> {
-          navController.navigate(R.id.analyticFragment, Bundle(), option)
+          supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, AnalyticFragment(), "AnalyticFragment")
+            .commit()
         }
         R.id.menu_budget -> {
-          navController.navigate(R.id.budgetFragment, Bundle(), option)
+          supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, BudgetFragment(), "BudgetFragment")
+            .commit()
         }
         R.id.menu_category -> {
-          navController.navigate(R.id.categoryFragment, Bundle(), option)
+          supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, CategoryFragment(), "CategoryFragment")
+            .commit()
         }
         R.id.menu_transaction -> {
-          navController.navigate(R.id.transactionFragment, Bundle(), option)
+          supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, TransactionFragment(), "TransactionFragment")
+            .commit()
         }
         R.id.menu_backup_and_restore -> {
-          navController.navigate(R.id.backupRestoreFragment, Bundle(), option)
+          supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, BackupRestoreFragment(), "BackupRestoreFragment")
+            .commit()
         }
         R.id.menu_debt -> {
-          navController.navigate(R.id.debtFragment, Bundle(), option)
+          supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, DebtFragment(), "DebtFragment")
+            .commit()
         }
       }
       binding.drawerLayout.closeDrawer(GravityCompat.START)

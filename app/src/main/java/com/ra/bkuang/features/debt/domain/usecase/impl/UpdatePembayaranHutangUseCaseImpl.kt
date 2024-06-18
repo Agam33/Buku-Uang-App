@@ -1,9 +1,9 @@
 package com.ra.bkuang.features.debt.domain.usecase.impl
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.account.domain.AkunRepository
-import com.ra.bkuang.features.debt.domain.HutangRepository
-import com.ra.bkuang.features.debt.domain.PembayaranHutangRepository
+import com.ra.bkuang.features.account.domain.repository.AkunRepository
+import com.ra.bkuang.features.debt.domain.repository.HutangRepository
+import com.ra.bkuang.features.debt.domain.repository.PembayaranHutangRepository
 import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
 import com.ra.bkuang.features.debt.domain.usecase.UpdatePembayaranHutangUseCase
 import kotlinx.coroutines.flow.Flow

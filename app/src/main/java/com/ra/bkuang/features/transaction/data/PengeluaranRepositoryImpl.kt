@@ -12,7 +12,7 @@ import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
 import com.ra.bkuang.features.transaction.data.local.PengeluaranLocalDataSource
 import com.ra.bkuang.features.transaction.data.mapper.toEntity
 import com.ra.bkuang.features.transaction.data.mapper.toModel
-import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
+import com.ra.bkuang.features.transaction.domain.repository.PengeluaranRepository
 import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

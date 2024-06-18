@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.backuprestore.domain.usecase.impl
 
-import com.ra.bkuang.features.backuprestore.domain.BackupRestoreRepository
+import com.ra.bkuang.features.backuprestore.domain.repository.BackupRestoreRepository
 import com.ra.bkuang.features.backuprestore.domain.usecase.CreateLocalBackupUseCase
 import java.io.IOException
 import javax.inject.Inject

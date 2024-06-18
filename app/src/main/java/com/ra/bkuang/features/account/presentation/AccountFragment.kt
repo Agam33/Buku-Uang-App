@@ -14,8 +14,8 @@ import com.ra.bkuang.common.view.dialog.CautionDeleteDialog
 import com.ra.bkuang.common.view.spinner.SpinnerItemOptions
 import com.ra.bkuang.databinding.FragmentAccountBinding
 import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.features.account.presentation.createaccount.CreateNewAccountActivity
 import com.ra.bkuang.features.account.presentation.adapter.RvAccountAdapter
+import com.ra.bkuang.features.account.presentation.createaccount.CreateNewAccountActivity
 import com.ra.bkuang.features.account.presentation.viewmodel.AccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
   private fun observer() {
     lifecycleScope.launch {
-      viewModel.accountUiState.collect { data ->
+      viewModel.uiState.collect { data ->
         if(data.isEmptyAccount) {
           binding?.rvAccount?.hide(true)
           binding?.emptyLayout?.state = false

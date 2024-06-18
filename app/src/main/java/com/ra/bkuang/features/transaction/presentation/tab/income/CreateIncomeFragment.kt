@@ -77,7 +77,7 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
       ActionType.EDIT -> {
         binding?.run {
           val uuid = arguments?.getString(DetailTransactionDialog.EXTRA_TRANSACTION_ID) as String
-          viewModel.getIncomeById(UUID.fromString(uuid))
+          viewModel.getIncomeById(uuid)
         }
       }
     }

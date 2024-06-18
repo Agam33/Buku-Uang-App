@@ -1,15 +1,13 @@
 package com.ra.bkuang.features.category.di
 
-import com.ra.bkuang.features.category.domain.usecase.FindCategoryByTypeUseCase
-import com.ra.bkuang.features.category.domain.usecase.impl.FindCategoryByTypeUseCaseImpl
 import com.ra.bkuang.features.category.domain.usecase.DeleteKategoriUseCase
+import com.ra.bkuang.features.category.domain.usecase.FindCategoryByTypeUseCase
 import com.ra.bkuang.features.category.domain.usecase.FindCategoryWithFlowUseCase
-import com.ra.bkuang.features.category.domain.usecase.FindKategoriByIdUseCase
 import com.ra.bkuang.features.category.domain.usecase.SaveKategoriUseCase
 import com.ra.bkuang.features.category.domain.usecase.UpdateKategoriUseCase
 import com.ra.bkuang.features.category.domain.usecase.impl.DeleteKategoriUseCaseImpl
+import com.ra.bkuang.features.category.domain.usecase.impl.FindCategoryByTypeUseCaseImpl
 import com.ra.bkuang.features.category.domain.usecase.impl.FindCategoryWithFlowUseCaseImpl
-import com.ra.bkuang.features.category.domain.usecase.impl.FindKategoriByIdUseCaseImpl
 import com.ra.bkuang.features.category.domain.usecase.impl.SaveKategoriUseCaseImpl
 import com.ra.bkuang.features.category.domain.usecase.impl.UpdateKategoriUseCaseImpl
 import dagger.Binds
@@ -41,8 +39,4 @@ interface KategoriUseCaseModule {
   @Binds
   @Singleton
   fun bindUpdateKategoriUseCase(updateKategoriImpl: UpdateKategoriUseCaseImpl): UpdateKategoriUseCase
-
-  @Binds
-  @Singleton
-  fun bindFindKategoriByIdUseCase(findKategoriByIdImpl: FindKategoriByIdUseCaseImpl): FindKategoriByIdUseCase
 }

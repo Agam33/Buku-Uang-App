@@ -1,8 +1,8 @@
 package com.ra.bkuang.features.transaction.domain.usecase
 
 import com.ra.bkuang.di.IoDispatcherQualifier
-import com.ra.bkuang.features.transaction.domain.PendapatanRepository
-import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
+import com.ra.bkuang.features.transaction.domain.repository.PendapatanRepository
+import com.ra.bkuang.features.transaction.domain.repository.PengeluaranRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first

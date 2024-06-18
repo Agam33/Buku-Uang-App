@@ -1,27 +1,24 @@
 package com.ra.bkuang.core.preferences
 
-import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.ra.bkuang.common.util.DateViewType
-
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserSettingPrefImpl @Inject constructor(
- private val dataStore: DataStore<Preferences>,
- private val sharedPreferences: SharedPreferences
+  private val dataStore: DataStore<Preferences>
 ): UserSettingPref {
 
   companion object {
     private val KEY_DATE_VIEW_TYPE = stringPreferencesKey("key-date-view-type")
     private val KEY_ALARM_TRANSACTION = stringPreferencesKey("key-alarm-transaction")
-    private const val KEY_BACKUP_FILE_PATH = "backup-file-path"
     private val KEY_ACTIVE_ALARM = booleanPreferencesKey("key-active-alarm")
+    private val KEY_BACKUP_FILE_NAME = stringPreferencesKey("key-backup-file-name")
   }
 
   override fun isActiveAlarmTransaction(): Flow<Boolean> {
@@ -60,13 +57,15 @@ class UserSettingPrefImpl @Inject constructor(
     }
   }
 
-  override fun saveFileBackupDirectory(filePath: String) {
-    sharedPreferences.edit()
-      .putString(KEY_BACKUP_FILE_PATH, filePath)
-      .apply()
+  override suspend fun saveFileBackupDirectory(filePath: String) {
+    dataStore.edit { preferences ->
+      preferences[KEY_BACKUP_FILE_NAME] = filePath
+    }
   }
 
-  override fun getFileBackupDirectory(): String? {
-    return sharedPreferences.getString(KEY_BACKUP_FILE_PATH, "")
+  override fun getFileBackupDirectory(): Flow<String> {
+    return dataStore.data.map { preferences ->
+      preferences[KEY_BACKUP_FILE_NAME] ?: ""
+    }
   }
 }

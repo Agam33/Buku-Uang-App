@@ -34,7 +34,7 @@ import com.ra.bkuang.features.account.domain.model.AkunModel
 import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
 import com.ra.bkuang.features.debt.presentation.DebtFragment
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_MODEL
-import com.ra.bkuang.features.debt.presentation.detail.DetailDebtViewModel
+import com.ra.bkuang.features.debt.presentation.detail.viewmodel.DetailDebtViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -100,7 +100,7 @@ class AddDebtRecordDialog: DialogFragment() {
     viewModel.getAllAccount()
 
     lifecycleScope.launch {
-      viewModel.detailDebtUiState.collect { uiState ->
+      viewModel.uiState.collect { uiState ->
         uiState.isSuccessfulUpdate?.let {
           if(it) {
             showShortToast(getString(R.string.txt_successful_update))
@@ -161,7 +161,7 @@ class AddDebtRecordDialog: DialogFragment() {
           updatedAt = updated
           idAkun = accountId ?: idAkun
         }
-        viewModel.updatePembayaranHutang(detailPembayaranDebtModel, oldModel)
+        viewModel.updatePaidDebt(detailPembayaranDebtModel, oldModel)
       }
 
       ActionType.CREATE -> {
@@ -174,7 +174,7 @@ class AddDebtRecordDialog: DialogFragment() {
           createdAt = LocalDateTime.now(),
           updatedAt = updated
         )
-        viewModel.savePembayaranHutang(paymentDebtModel)
+        viewModel.savePaidDebt(paymentDebtModel)
       }
     }
   }

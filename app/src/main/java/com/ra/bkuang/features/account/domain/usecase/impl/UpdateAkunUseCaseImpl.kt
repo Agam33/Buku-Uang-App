@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.account.domain.usecase.impl
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.account.domain.AkunRepository
+import com.ra.bkuang.features.account.domain.repository.AkunRepository
 import com.ra.bkuang.features.account.domain.model.AkunModel
 import com.ra.bkuang.features.account.domain.usecase.UpdateAkunUseCase
 import kotlinx.coroutines.flow.Flow

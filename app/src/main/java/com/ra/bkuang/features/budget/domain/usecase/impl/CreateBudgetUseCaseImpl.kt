@@ -1,10 +1,10 @@
 package com.ra.bkuang.features.budget.domain.usecase.impl
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.budget.domain.BudgetRepository
+import com.ra.bkuang.features.budget.domain.repository.BudgetRepository
 import com.ra.bkuang.features.budget.domain.model.BudgetModel
 import com.ra.bkuang.features.budget.domain.usecase.CreateBudgetUseCase
-import com.ra.bkuang.features.transaction.domain.PengeluaranRepository
+import com.ra.bkuang.features.transaction.domain.repository.PengeluaranRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate

@@ -15,7 +15,7 @@ import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toStringFormat
 import com.ra.bkuang.databinding.FragmentBudgetBinding
 import com.ra.bkuang.features.budget.data.local.DetailBudget
-import com.ra.bkuang.features.budget.presentation.BudgetViewModel
+import com.ra.bkuang.features.budget.presentation.viewmodel.BudgetViewModel
 import com.ra.bkuang.features.budget.presentation.CreateBudgetActivity
 import com.ra.bkuang.features.budget.presentation.adapter.BudgetAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +39,7 @@ class BudgetFragment : BaseFragment<FragmentBudgetBinding>(R.layout.fragment_bud
 
   private fun observer() {
     lifecycleScope.launch {
-      viewModel.budgetFragmentUiState.collect { uiState ->
+      viewModel.uiState.collect { uiState ->
         setupListBudget(uiState.budgetList)
 
         uiState.isSuccessfulDelete?.let {
