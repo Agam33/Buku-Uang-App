@@ -1,4 +1,4 @@
-package com.ra.bkuang.common.receiver
+package com.ra.bkuang.receiver
 
 enum class AlarmCategory {
   DEBT, TRANSACTION;
