@@ -9,11 +9,11 @@ import android.content.Intent
 import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
 import com.ra.bkuang.R
-import com.ra.bkuang.common.receiver.AlarmCategory
+import com.ra.bkuang.receiver.AlarmCategory
 import com.ra.bkuang.common.di.AppAlarmManagerQualifier
 import com.ra.bkuang.common.di.AppNotificationManagerQualifier
 import com.ra.bkuang.main.MainActivity
-import com.ra.bkuang.common.receiver.AlarmReceiver
+import com.ra.bkuang.receiver.AlarmReceiver
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
 import java.util.TimeZone
