@@ -65,7 +65,6 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_limit"
-            android:drawableStart="@drawable/edit_outline_24"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"

@@ -13,7 +13,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             app:menu="@menu/create_account_menu"
             app:navigationIconTint="@color/white"
-            android:background="@color/blue_90"
+            android:background="@color/md_theme_light_primary"
             app:titleTextColor="@color/white"
             android:id="@+id/toolbar"
             style="@style/Widget.App.Toolbar"
@@ -82,7 +82,7 @@
                 android:lines="1"
                 android:maxLength="15"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"/>
+                android:layout_height="64dp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
