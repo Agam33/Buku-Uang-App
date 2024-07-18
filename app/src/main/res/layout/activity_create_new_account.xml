@@ -49,12 +49,19 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_input_name"
-                android:inputType="text"
-                android:maxLines="1"
-                android:lines="1"
-                android:maxLength="15"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:paddingStart="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_below="@id/sp_category"
+                android:layout_toStartOf="@id/iv_calculator"
+                android:layout_toEndOf="@id/tv_title_category"
+                android:background="@drawable/bg_input_layout"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"/>
+                android:layout_height="60dp"
+                android:lines="1"
+                android:inputType="text"
+                tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,12 +90,20 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_input_initial_amount"
-                android:inputType="number"
-                android:lines="1"
-                android:maxLines="1"
-                android:maxLength="9"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:paddingStart="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_below="@id/sp_category"
+                android:layout_toStartOf="@id/iv_calculator"
+                android:layout_toEndOf="@id/tv_title_category"
+                android:background="@drawable/bg_input_layout"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"/>
+                android:layout_height="60dp"
+                android:maxLength="9"
+                android:lines="1"
+                android:inputType="number"
+                tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
