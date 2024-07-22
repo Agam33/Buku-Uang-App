@@ -133,6 +133,11 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
         return
       }
 
+      if(edtAmount.isMaximumInput) {
+        showShortToast(String.format(getString(R.string.msg_max_input), edtAmount.maxInput))
+        return@run
+      }
+
       val timeStringBuilder = StringBuilder()
       timeStringBuilder.append(edtDate.text.trim())
       timeStringBuilder.append(" ")
@@ -145,7 +150,7 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
         idKategori = categoryId ?: return@run,
         idAkun = accountId ?: return@run,
         deskripsi = note,
-        jumlah = amount.toInt(),
+        jumlah = edtAmount.getIntValue(),
         createdAt = model.createdAt,
         updatedAt = createdAt
       )
@@ -164,6 +169,11 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
         return
       }
 
+      if(edtAmount.isMaximumInput) {
+        showShortToast(String.format(getString(R.string.msg_max_input), edtAmount.maxInput))
+        return@run
+      }
+
       val timeStringBuilder = StringBuilder()
       timeStringBuilder.append(edtDate.text.trim())
       timeStringBuilder.append(" ")
@@ -176,7 +186,7 @@ class CreateIncomeFragment : BaseFragment<FragmentCreateIncomeBinding>(R.layout.
         idKategori = categoryId ?: return@run,
         idAkun = accountId ?: return@run,
         deskripsi = note,
-        jumlah = amount.toInt(),
+        jumlah = edtAmount.getIntValue(),
         createdAt = createdAt,
         updatedAt = createdAt
       )

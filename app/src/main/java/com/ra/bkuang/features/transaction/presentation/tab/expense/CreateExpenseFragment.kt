@@ -147,6 +147,11 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
         return
       }
 
+      if(edtAmount.isMaximumInput) {
+        showShortToast(String.format(getString(R.string.msg_max_input), edtAmount.maxInput))
+        return@run
+      }
+
       val timeStringBuilder = StringBuilder()
       timeStringBuilder.append(edtDate.text.trim())
       timeStringBuilder.append(" ")
@@ -159,7 +164,7 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
         idKategori = categoryId ?: return@run,
         idAkun = accountId ?: return@run,
         deskripsi = note,
-        jumlah = amount.toInt(),
+        jumlah = edtAmount.getIntValue(),
         createdAt = model.createdAt,
         updatedAt = createdAt
       )
@@ -256,6 +261,11 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
         return
       }
 
+      if(edtAmount.isMaximumInput) {
+        showShortToast(String.format(getString(R.string.msg_max_input), edtAmount.maxInput))
+        return@run
+      }
+
       val timeStringBuilder = StringBuilder()
       timeStringBuilder.append(edtDate.text.trim())
       timeStringBuilder.append(" ")
@@ -268,7 +278,7 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
         idKategori = categoryId ?: return@run,
         idAkun = accountId ?: return@run,
         deskripsi = note,
-        jumlah = amount.toInt(),
+        jumlah = edtAmount.getIntValue(),
         createdAt = createdAt,
         updatedAt = createdAt
       )
@@ -310,9 +320,5 @@ class CreateExpenseFragment : BaseFragment<FragmentCreateExpenseBinding>(R.layou
       }
       .create()
       .show()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
   }
 }

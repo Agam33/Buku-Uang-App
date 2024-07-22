@@ -141,6 +141,11 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
         return@run
       }
 
+      if(edtAmount.isMaximumInput) {
+        showShortToast(String.format(getString(R.string.msg_max_input), edtAmount.maxInput))
+        return@run
+      }
+
       val timeStringBuilder = StringBuilder()
       timeStringBuilder.append(edtDate.text.trim())
       timeStringBuilder.append(" ")
@@ -150,7 +155,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
 
       newTransferModel = TransferModel(
         uuid = model.uuid,
-        jumlah = amount.toInt(),
+        jumlah = edtAmount.getIntValue(),
         createdAt = model.createdAt,
         updatedAt = createdAt,
         deskripsi = note,
@@ -183,6 +188,11 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
         return@run
       }
 
+      if(edtAmount.isMaximumInput) {
+        showShortToast(String.format(getString(R.string.msg_max_input), edtAmount.maxInput))
+        return@run
+      }
+
       val timeStringBuilder = StringBuilder()
       timeStringBuilder.append(edtDate.text.trim())
       timeStringBuilder.append(" ")
@@ -192,7 +202,7 @@ class CreateTransferFragment : BaseFragment<FragmentCreateTransferBinding>(R.lay
 
       newTransferModel = TransferModel(
         uuid = UUID.randomUUID(),
-        jumlah = amount.toInt(),
+        jumlah = edtAmount.getIntValue(),
         createdAt = createdAt,
         updatedAt = createdAt,
         deskripsi = note,
