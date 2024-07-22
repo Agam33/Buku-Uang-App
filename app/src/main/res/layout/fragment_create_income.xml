@@ -110,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.ra.bkuang.common.view.text.MoneyEdt
             android:id="@+id/edt_amount"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
@@ -122,9 +122,6 @@
             android:background="@drawable/bg_input_layout"
             android:layout_width="60dp"
             android:layout_height="50dp"
-            android:maxLength="9"
-            android:lines="1"
-            android:inputType="number"
             tools:ignore="RtlSymmetry" />
 
         <ImageView

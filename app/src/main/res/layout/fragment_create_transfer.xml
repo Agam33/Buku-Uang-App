@@ -110,22 +110,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.ra.bkuang.common.view.text.MoneyEdt
             android:id="@+id/edt_amount"
-            android:maxLength="9"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:paddingStart="8dp"
+            tools:ignore="RtlSymmetry"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_below="@id/sp_to_account"
             android:layout_toStartOf="@id/iv_calculator"
             android:layout_toEndOf="@id/tv_title_from_account"
             android:background="@drawable/bg_input_layout"
             android:layout_width="60dp"
-            android:layout_height="50dp"
-            android:lines="1"
-            android:inputType="number"
-            tools:ignore="RtlSymmetry" />
+            android:layout_height="50dp" />
 
         <ImageView
             android:layout_alignParentEnd="true"

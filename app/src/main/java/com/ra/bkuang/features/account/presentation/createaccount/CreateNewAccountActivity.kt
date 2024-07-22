@@ -7,16 +7,16 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.ra.bkuang.R
+import com.ra.bkuang.common.base.BaseActivity
+import com.ra.bkuang.common.util.Extension.parcelable
+import com.ra.bkuang.common.util.Extension.setupActionBar
+import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.databinding.ActivityCreateNewAccountBinding
 import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.common.base.BaseActivity
 import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.ACCOUNT_MODEL
 import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.CREATE_ACCOUNT
 import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.EDIT_ACCOUNT
 import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.EXTRA_TEXT
-import com.ra.bkuang.common.util.Extension.parcelable
-import com.ra.bkuang.common.util.Extension.setupActionBar
-import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.features.account.presentation.createaccount.viewmodel.CreateAccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -73,12 +73,17 @@ class CreateNewAccountActivity : BaseActivity<ActivityCreateNewAccountBinding>(R
       return
     }
 
+    if(binding.edtInputInitialAmount.isMaximumInput) {
+      binding.edtInputInitialAmount.error = String.format(getString(R.string.msg_max_input), binding.edtInputInitialAmount.maxInput)
+      return
+    }
+
     when(intent?.getStringExtra(EXTRA_TEXT)) {
       EDIT_ACCOUNT -> {
         val account = intent?.parcelable<AkunModel>(ACCOUNT_MODEL)
         account?.let {
           it.nama = accountName
-          it.total = amount.toInt()
+          it.total = binding.edtInputInitialAmount.getIntValue()
           it.updatedAt = LocalDateTime.now()
           viewModel.updateAccount(it)
         }
@@ -88,7 +93,7 @@ class CreateNewAccountActivity : BaseActivity<ActivityCreateNewAccountBinding>(R
         val akun = AkunModel(
           uuid = UUID.randomUUID(),
           nama = accountName,
-          total = amount.toInt(),
+          total = binding.edtInputInitialAmount.getIntValue(),
           createdAt = LocalDateTime.now(),
           updatedAt = LocalDateTime.now(),
         )

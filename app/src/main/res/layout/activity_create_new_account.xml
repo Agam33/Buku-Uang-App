@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.ra.bkuang.common.view.text.MoneyEdt
                 android:id="@+id/edt_input_initial_amount"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
@@ -100,9 +100,6 @@
                 android:background="@drawable/bg_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:maxLength="9"
-                android:lines="1"
-                android:inputType="number"
                 tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>

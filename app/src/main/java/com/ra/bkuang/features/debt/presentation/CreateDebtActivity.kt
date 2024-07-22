@@ -112,6 +112,11 @@ class CreateDebtActivity : BaseActivity<ActivityCreateDebtBinding>(R.layout.acti
         return
       }
 
+      if(binding.edtLimit.isMaximumInput) {
+        showShortToast(String.format(getString(R.string.msg_max_input), binding.edtLimit.maxInput))
+        return@run
+      }
+
       val timeStringBuilder = StringBuilder()
       timeStringBuilder.append(edtDate.text.trim())
       timeStringBuilder.append(" ")
@@ -126,7 +131,7 @@ class CreateDebtActivity : BaseActivity<ActivityCreateDebtBinding>(R.layout.acti
             name,
             desc,
             0,
-            maxDebt.toInt(),
+            edtLimit.getIntValue(),
             Int.MAX_VALUE,
             false,
             "",
@@ -142,7 +147,7 @@ class CreateDebtActivity : BaseActivity<ActivityCreateDebtBinding>(R.layout.acti
           hutangModel?.let {
             it.nama = name
             it.deskripsi = desc
-            it.maxCicilan = maxDebt.toInt()
+            it.maxCicilan = edtLimit.getIntValue()
             it.jatuhTempo = dueDate
             it.updatedAt = LocalDateTime.now()
 
