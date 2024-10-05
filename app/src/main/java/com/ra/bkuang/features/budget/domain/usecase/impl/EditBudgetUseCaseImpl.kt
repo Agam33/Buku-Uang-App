@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.budget.domain.usecase.impl
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.budget.domain.model.BudgetModel
+import com.ra.bkuang.features.budget.data.model.BudgetModel
 import com.ra.bkuang.features.budget.domain.repository.BudgetRepository
 import com.ra.bkuang.features.budget.domain.usecase.EditBudgetUseCase
 import com.ra.bkuang.features.transaction.domain.repository.PengeluaranRepository

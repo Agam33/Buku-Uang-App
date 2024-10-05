@@ -4,16 +4,16 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.ra.bkuang.core.database.AppDatabase
-import com.ra.bkuang.core.database.DatabaseSeeder
-import com.ra.bkuang.core.database.dao.AkunDao
-import com.ra.bkuang.core.database.dao.BudgetDao
-import com.ra.bkuang.core.database.dao.HutangDao
-import com.ra.bkuang.core.database.dao.KategoriDao
-import com.ra.bkuang.core.database.dao.PembayaranHutangDao
-import com.ra.bkuang.core.database.dao.PendapatanDao
-import com.ra.bkuang.core.database.dao.PengeluaranDao
-import com.ra.bkuang.core.database.dao.TransferDao
+import com.ra.bkuang.core.data.source.local.database.AppDatabase
+import com.ra.bkuang.core.data.source.local.database.DatabaseSeeder
+import com.ra.bkuang.core.data.source.local.database.dao.AkunDao
+import com.ra.bkuang.core.data.source.local.database.dao.BudgetDao
+import com.ra.bkuang.core.data.source.local.database.dao.HutangDao
+import com.ra.bkuang.core.data.source.local.database.dao.KategoriDao
+import com.ra.bkuang.core.data.source.local.database.dao.PembayaranHutangDao
+import com.ra.bkuang.core.data.source.local.database.dao.PendapatanDao
+import com.ra.bkuang.core.data.source.local.database.dao.PengeluaranDao
+import com.ra.bkuang.core.data.source.local.database.dao.TransferDao
 import com.ra.bkuang.common.di.DBNameQualifier
 import com.ra.bkuang.common.di.DBSeederQualifier
 import com.ra.bkuang.common.di.IoCoroutineScopeQualifier
@@ -37,9 +37,9 @@ object DatabaseModule {
   @Provides
   @Singleton
   fun provideDatabase(
-    @ApplicationContext ctx: Context,
-    @DBNameQualifier dbNameQualifier: String,
-    @DBSeederQualifier databaseSeeder: Provider<DatabaseSeeder>,
+      @ApplicationContext ctx: Context,
+      @DBNameQualifier dbNameQualifier: String,
+      @DBSeederQualifier databaseSeeder: Provider<DatabaseSeeder>,
   ): AppDatabase {
 
     return Room.databaseBuilder(

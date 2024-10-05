@@ -5,9 +5,9 @@ import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.common.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.domain.usecase.FindAllAkunUseCase
-import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
-import com.ra.bkuang.features.debt.domain.model.HutangModel
-import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
+import com.ra.bkuang.features.debt.data.model.DetailPembayaranHutangModel
+import com.ra.bkuang.features.debt.data.model.HutangModel
+import com.ra.bkuang.features.debt.data.model.PembayaranHutangModel
 import com.ra.bkuang.features.debt.domain.usecase.CancelAlarmDebtUseCase
 import com.ra.bkuang.features.debt.domain.usecase.DeleteHutangUseCase
 import com.ra.bkuang.features.debt.domain.usecase.DeleteRecordPembayaranHutangUseCase

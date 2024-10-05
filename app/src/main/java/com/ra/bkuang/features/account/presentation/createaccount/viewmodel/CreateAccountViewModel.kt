@@ -3,7 +3,7 @@ package com.ra.bkuang.features.account.presentation.createaccount.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.account.domain.model.AkunModel
+import com.ra.bkuang.features.account.data.model.AkunModel
 import com.ra.bkuang.features.account.domain.usecase.SaveAkunUseCase
 import com.ra.bkuang.features.account.domain.usecase.UpdateAkunUseCase
 import com.ra.bkuang.features.account.presentation.createaccount.CreateAccountUiState

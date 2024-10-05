@@ -15,10 +15,10 @@ import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
 import com.ra.bkuang.databinding.ActivityCreateBudgetBinding
-import com.ra.bkuang.features.budget.domain.model.BudgetModel
+import com.ra.bkuang.features.budget.data.model.BudgetModel
 import com.ra.bkuang.features.budget.presentation.viewmodel.BudgetViewModel
-import com.ra.bkuang.features.category.domain.model.KategoriModel
-import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.features.category.data.model.KategoriModel
+import com.ra.bkuang.core.data.source.local.database.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate

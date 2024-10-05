@@ -25,9 +25,9 @@ import com.ra.bkuang.common.util.Extension.toCalendar
 import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
 import com.ra.bkuang.databinding.FragmentCreateExpenseBinding
-import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.features.category.domain.model.KategoriModel
-import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.features.account.data.model.AkunModel
+import com.ra.bkuang.features.category.data.model.KategoriModel
+import com.ra.bkuang.core.data.source.local.database.entity.TransactionType
 import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
 import com.ra.bkuang.features.transaction.presentation.TransactionFragment
 import com.ra.bkuang.features.transaction.presentation.component.DetailTransactionDialog

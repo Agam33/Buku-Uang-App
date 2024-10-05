@@ -3,7 +3,7 @@ package com.ra.bkuang.features.budget.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.budget.domain.model.BudgetModel
+import com.ra.bkuang.features.budget.data.model.BudgetModel
 import com.ra.bkuang.features.budget.domain.usecase.CreateBudgetUseCase
 import com.ra.bkuang.features.budget.domain.usecase.DeleteBudgetByIdUseCase
 import com.ra.bkuang.features.budget.domain.usecase.EditBudgetUseCase
@@ -11,7 +11,7 @@ import com.ra.bkuang.features.budget.domain.usecase.FindAllBudgetByDateUseCase
 import com.ra.bkuang.features.budget.domain.usecase.FindBudgetByIdUseCase
 import com.ra.bkuang.features.budget.presentation.BudgetFragmentUiState
 import com.ra.bkuang.features.category.domain.usecase.FindCategoryByTypeUseCase
-import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.core.data.source.local.database.entity.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.databinding.ItemRvDebtBinding
-import com.ra.bkuang.features.debt.domain.model.HutangModel
+import com.ra.bkuang.features.debt.data.model.HutangModel
 import com.ra.bkuang.common.util.Extension.toFormatRupiah
 
 class DebtAdapter: ListAdapter<HutangModel, DebtAdapter.MViewHolder>(DIFF) {

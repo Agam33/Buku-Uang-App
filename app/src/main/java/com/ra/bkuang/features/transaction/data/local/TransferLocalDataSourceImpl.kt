@@ -1,9 +1,8 @@
 package com.ra.bkuang.features.transaction.data.local
 
-import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.core.database.dao.TransferDao
-import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
-import com.ra.bkuang.features.transaction.data.entity.TransferEntity
+import com.ra.bkuang.core.data.source.local.database.dao.TransferDao
+import com.ra.bkuang.core.data.source.local.database.entity.DetailTransfer
+import com.ra.bkuang.core.data.source.local.database.entity.TransferEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import java.util.UUID

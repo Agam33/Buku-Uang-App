@@ -1,8 +1,8 @@
 package com.ra.bkuang.features.budget.domain.repository
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.budget.data.local.DetailBudget
-import com.ra.bkuang.features.budget.domain.model.BudgetModel
+import com.ra.bkuang.core.data.source.local.database.entity.DetailBudget
+import com.ra.bkuang.features.budget.data.model.BudgetModel
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import java.util.UUID

@@ -12,9 +12,9 @@ import com.ra.bkuang.common.view.spinner.SpinnerItemOptions
 import com.ra.bkuang.common.view.spinner.SpinnerOptionAdapter
 import com.ra.bkuang.databinding.GroupRvCategoriesBinding
 import com.ra.bkuang.databinding.ItemRvCategoriesBinding
-import com.ra.bkuang.features.category.domain.model.KategoriModel
+import com.ra.bkuang.features.category.data.model.KategoriModel
 import com.ra.bkuang.common.util.Extension.firstCharUppercase
-import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.core.data.source.local.database.entity.TransactionType
 
 class RvCategoryViewHolder(
   private val binding: GroupRvCategoriesBinding,

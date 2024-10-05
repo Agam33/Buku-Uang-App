@@ -22,8 +22,8 @@ import com.ra.bkuang.common.util.Extension.toPercentText
 import com.ra.bkuang.common.util.Extension.toStringFormat
 import com.ra.bkuang.common.view.dialog.CalendarDialog
 import com.ra.bkuang.databinding.ActivityDetailDebtBinding
-import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
-import com.ra.bkuang.features.debt.domain.model.HutangModel
+import com.ra.bkuang.features.debt.data.model.DetailPembayaranHutangModel
+import com.ra.bkuang.features.debt.data.model.HutangModel
 import com.ra.bkuang.features.debt.presentation.CreateDebtActivity
 import com.ra.bkuang.features.debt.presentation.DebtFragment
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_EXTRA_ACTION

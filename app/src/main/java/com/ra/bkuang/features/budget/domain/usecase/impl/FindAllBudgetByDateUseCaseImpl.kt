@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.budget.domain.usecase.impl
 
-import com.ra.bkuang.features.budget.data.local.DetailBudget
+import com.ra.bkuang.core.data.source.local.database.entity.DetailBudget
 import com.ra.bkuang.features.budget.domain.repository.BudgetRepository
 import com.ra.bkuang.features.budget.domain.usecase.FindAllBudgetByDateUseCase
 import kotlinx.coroutines.flow.Flow

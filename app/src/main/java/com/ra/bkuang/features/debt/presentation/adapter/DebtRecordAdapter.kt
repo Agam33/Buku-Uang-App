@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.databinding.ItemRvDebtRecordBinding
-import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
+import com.ra.bkuang.features.debt.data.model.DetailPembayaranHutangModel
 import com.ra.bkuang.common.util.Constants.DATE_TIME_FORMATTER
 import com.ra.bkuang.common.util.Anim.collapsedWidth
 import com.ra.bkuang.common.util.Anim.expandedWidth
@@ -75,15 +75,15 @@ class DebtRecordAdapter:
   companion object {
     private val DIFF = object : DiffUtil.ItemCallback<DetailPembayaranHutangModel>() {
       override fun areItemsTheSame(
-        oldItem: DetailPembayaranHutangModel,
-        newItem: DetailPembayaranHutangModel
+          oldItem: DetailPembayaranHutangModel,
+          newItem: DetailPembayaranHutangModel
       ): Boolean {
         return oldItem == newItem
       }
 
       override fun areContentsTheSame(
-        oldItem: DetailPembayaranHutangModel,
-        newItem: DetailPembayaranHutangModel
+          oldItem: DetailPembayaranHutangModel,
+          newItem: DetailPembayaranHutangModel
       ): Boolean {
         return oldItem.hutangModel.uuid == newItem.hutangModel.uuid
       }

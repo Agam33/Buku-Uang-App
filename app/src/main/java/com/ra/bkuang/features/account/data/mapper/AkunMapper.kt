@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.account.data.mapper
 
-import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.features.account.data.entity.AkunEntity
+import com.ra.bkuang.core.data.source.local.database.entity.AkunEntity
+import com.ra.bkuang.features.account.data.model.AkunModel
 
 fun AkunEntity.toModel(): AkunModel = AkunModel(
   uuid,

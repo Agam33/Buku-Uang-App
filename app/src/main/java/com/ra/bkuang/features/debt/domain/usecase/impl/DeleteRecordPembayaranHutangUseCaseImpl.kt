@@ -4,7 +4,7 @@ import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.account.domain.repository.AkunRepository
 import com.ra.bkuang.features.debt.domain.repository.HutangRepository
 import com.ra.bkuang.features.debt.domain.repository.PembayaranHutangRepository
-import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
+import com.ra.bkuang.features.debt.data.model.DetailPembayaranHutangModel
 import com.ra.bkuang.features.debt.domain.usecase.DeleteRecordPembayaranHutangUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect

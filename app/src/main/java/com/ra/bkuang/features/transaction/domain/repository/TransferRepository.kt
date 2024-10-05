@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.transaction.domain.repository
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
+import com.ra.bkuang.core.data.source.local.database.entity.DetailTransfer
 import com.ra.bkuang.features.transaction.domain.model.TransferModel
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime

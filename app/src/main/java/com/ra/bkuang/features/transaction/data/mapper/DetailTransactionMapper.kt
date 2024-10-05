@@ -4,9 +4,9 @@ import com.ra.bkuang.features.account.data.mapper.toEntity
 import com.ra.bkuang.features.account.data.mapper.toModel
 import com.ra.bkuang.features.category.data.mapper.toEntity
 import com.ra.bkuang.features.category.data.mapper.toModel
-import com.ra.bkuang.features.transaction.data.entity.DetailPendapatan
-import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
-import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
+import com.ra.bkuang.core.data.source.local.database.entity.DetailPendapatan
+import com.ra.bkuang.core.data.source.local.database.entity.DetailPengeluaran
+import com.ra.bkuang.core.data.source.local.database.entity.DetailTransfer
 import com.ra.bkuang.features.transaction.domain.model.DetailPendapatanModel
 import com.ra.bkuang.features.transaction.domain.model.DetailPengeluaranModel
 import com.ra.bkuang.features.transaction.domain.model.DetailTransferModel

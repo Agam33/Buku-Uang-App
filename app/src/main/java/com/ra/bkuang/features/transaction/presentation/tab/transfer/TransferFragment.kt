@@ -9,7 +9,7 @@ import com.ra.bkuang.R
 import com.ra.bkuang.common.base.BaseFragment
 import com.ra.bkuang.common.util.Extension.hide
 import com.ra.bkuang.databinding.FragmentTransferBinding
-import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
+import com.ra.bkuang.core.data.source.local.database.entity.DetailTransfer
 import com.ra.bkuang.features.transaction.domain.model.TransactionDetail
 import com.ra.bkuang.features.transaction.domain.model.TransactionGroup
 import com.ra.bkuang.features.transaction.presentation.adapter.OnDayItemClickListener

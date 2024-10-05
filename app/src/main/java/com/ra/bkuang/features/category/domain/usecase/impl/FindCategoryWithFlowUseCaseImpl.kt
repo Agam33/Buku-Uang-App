@@ -1,9 +1,9 @@
 package com.ra.bkuang.features.category.domain.usecase.impl
 
 import com.ra.bkuang.features.category.domain.repository.KategoriRepository
-import com.ra.bkuang.features.category.domain.model.KategoriModel
+import com.ra.bkuang.features.category.data.model.KategoriModel
 import com.ra.bkuang.features.category.domain.usecase.FindCategoryWithFlowUseCase
-import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.core.data.source.local.database.entity.TransactionType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.zip

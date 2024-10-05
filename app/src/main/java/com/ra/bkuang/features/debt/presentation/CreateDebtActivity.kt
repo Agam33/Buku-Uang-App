@@ -25,7 +25,7 @@ import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toCalendar
 import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.databinding.ActivityCreateDebtBinding
-import com.ra.bkuang.features.debt.domain.model.HutangModel
+import com.ra.bkuang.features.debt.data.model.HutangModel
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_EXTRA_ACTION
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_MODEL
 import com.ra.bkuang.features.debt.presentation.viewmodel.DebtViewModel

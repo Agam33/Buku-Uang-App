@@ -3,13 +3,13 @@ package com.ra.bkuang.features.category.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.category.domain.model.KategoriModel
+import com.ra.bkuang.features.category.data.model.KategoriModel
 import com.ra.bkuang.features.category.domain.usecase.DeleteKategoriUseCase
 import com.ra.bkuang.features.category.domain.usecase.FindCategoryWithFlowUseCase
 import com.ra.bkuang.features.category.domain.usecase.SaveKategoriUseCase
 import com.ra.bkuang.features.category.domain.usecase.UpdateKategoriUseCase
 import com.ra.bkuang.features.category.presentation.CategoryUiState
-import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.core.data.source.local.database.entity.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

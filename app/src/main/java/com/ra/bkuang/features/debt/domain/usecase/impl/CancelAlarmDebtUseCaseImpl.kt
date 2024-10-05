@@ -3,7 +3,7 @@ package com.ra.bkuang.features.debt.domain.usecase.impl
 import com.ra.bkuang.common.di.IoCoroutineScopeQualifier
 import com.ra.bkuang.common.di.IoDispatcherQualifier
 import com.ra.bkuang.features.debt.alarm.DebtAlarmManager
-import com.ra.bkuang.features.debt.domain.model.HutangModel
+import com.ra.bkuang.features.debt.data.model.HutangModel
 import com.ra.bkuang.features.debt.domain.usecase.CancelAlarmDebtUseCase
 import com.ra.bkuang.features.debt.domain.usecase.UpdateHutangUseCase
 import kotlinx.coroutines.CoroutineDispatcher

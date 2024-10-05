@@ -6,7 +6,7 @@ import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.account.domain.usecase.FindAkunByIdUseCase
 import com.ra.bkuang.features.account.domain.usecase.FindAllAkunUseCase
 import com.ra.bkuang.features.category.domain.usecase.FindCategoryByTypeUseCase
-import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.core.data.source.local.database.entity.TransactionType
 import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.GetPengeluaranByIdUseCase
 import com.ra.bkuang.features.transaction.domain.usecase.pengeluaran.SavePengeluaranUseCase

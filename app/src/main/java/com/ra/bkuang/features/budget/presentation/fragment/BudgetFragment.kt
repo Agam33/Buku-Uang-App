@@ -16,7 +16,7 @@ import com.ra.bkuang.common.util.Extension.hide
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toStringFormat
 import com.ra.bkuang.databinding.FragmentBudgetBinding
-import com.ra.bkuang.features.budget.data.local.DetailBudget
+import com.ra.bkuang.core.data.source.local.database.entity.DetailBudget
 import com.ra.bkuang.features.budget.presentation.CreateBudgetActivity
 import com.ra.bkuang.features.budget.presentation.adapter.BudgetAdapter
 import com.ra.bkuang.features.budget.presentation.viewmodel.BudgetViewModel

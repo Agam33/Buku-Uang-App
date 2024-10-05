@@ -25,7 +25,7 @@ import com.ra.bkuang.common.util.Extension.hide
 import com.ra.bkuang.common.util.Extension.toMonthlyTime
 import com.ra.bkuang.common.util.Extension.toStringFormat
 import com.ra.bkuang.databinding.FragmentAnalyticBinding
-import com.ra.bkuang.features.analytics.domain.model.AnalyticModel
+import com.ra.bkuang.features.analytics.data.model.AnalyticModel
 import com.ra.bkuang.features.analytics.presentation.adapter.AnalyticListAdapter
 import com.ra.bkuang.features.analytics.presentation.viewmodel.AnalyticViewModel
 import com.ra.bkuang.features.transaction.domain.model.TransactionDetail

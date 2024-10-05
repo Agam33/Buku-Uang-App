@@ -11,7 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.ra.bkuang.R
-import com.ra.bkuang.core.preferences.UserSettingPref
+import com.ra.bkuang.core.data.source.local.preferences.UserSettingPref
 import com.ra.bkuang.databinding.FragmentTransactionBottomSheetBinding
 import com.ra.bkuang.features.transaction.domain.usecase.CancelTransactionAlarmUseCase
 import com.ra.bkuang.features.transaction.domain.usecase.SetTransactionAlarmUseCase

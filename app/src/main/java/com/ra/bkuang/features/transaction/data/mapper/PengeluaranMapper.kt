@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.transaction.data.mapper
 
-import com.ra.bkuang.features.transaction.data.entity.PengeluaranEntity
+import com.ra.bkuang.core.data.source.local.database.entity.PengeluaranEntity
 import com.ra.bkuang.features.transaction.domain.model.PengeluaranModel
 
 fun PengeluaranEntity.toModel(): PengeluaranModel = PengeluaranModel(

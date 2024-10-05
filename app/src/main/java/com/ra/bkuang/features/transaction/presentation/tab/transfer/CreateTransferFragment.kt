@@ -24,7 +24,7 @@ import com.ra.bkuang.common.util.Extension.toCalendar
 import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
 import com.ra.bkuang.databinding.FragmentCreateTransferBinding
-import com.ra.bkuang.features.account.domain.model.AkunModel
+import com.ra.bkuang.features.account.data.model.AkunModel
 import com.ra.bkuang.features.transaction.domain.model.TransferModel
 import com.ra.bkuang.features.transaction.presentation.TransactionFragment
 import com.ra.bkuang.features.transaction.presentation.component.DetailTransactionDialog

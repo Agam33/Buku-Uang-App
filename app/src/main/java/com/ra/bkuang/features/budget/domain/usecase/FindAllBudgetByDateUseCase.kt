@@ -1,6 +1,6 @@
 package com.ra.bkuang.features.budget.domain.usecase
 
-import com.ra.bkuang.features.budget.data.local.DetailBudget
+import com.ra.bkuang.core.data.source.local.database.entity.DetailBudget
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 

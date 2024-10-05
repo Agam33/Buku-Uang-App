@@ -1,7 +1,7 @@
 package com.ra.bkuang.core.di
 
-import com.ra.bkuang.features.debt.data.local.HutangLocalDataSource
-import com.ra.bkuang.features.debt.data.local.HutangLocalDataSourceImpl
+import com.ra.bkuang.core.data.source.local.database.data.HutangLocalDataSource
+import com.ra.bkuang.core.data.source.local.database.data.HutangLocalDataSourceImpl
 import com.ra.bkuang.features.account.data.AkunRepositoryImpl
 import com.ra.bkuang.features.account.domain.repository.AkunRepository
 import com.ra.bkuang.features.analytics.domain.repository.AnalyticsRepository

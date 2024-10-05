@@ -1,9 +1,9 @@
 package com.ra.bkuang.features.debt.data.mapper
 
-import com.ra.bkuang.features.debt.data.entity.HutangEntity
-import com.ra.bkuang.features.debt.data.entity.PembayaranHutangEntity
-import com.ra.bkuang.features.debt.domain.model.HutangModel
-import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
+import com.ra.bkuang.core.data.source.local.database.entity.HutangEntity
+import com.ra.bkuang.core.data.source.local.database.entity.PembayaranHutangEntity
+import com.ra.bkuang.features.debt.data.model.HutangModel
+import com.ra.bkuang.features.debt.data.model.PembayaranHutangModel
 
 fun HutangEntity.toModel(): HutangModel {
   return HutangModel(

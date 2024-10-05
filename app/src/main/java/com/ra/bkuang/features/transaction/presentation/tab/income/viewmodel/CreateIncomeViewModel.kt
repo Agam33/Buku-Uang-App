@@ -5,7 +5,7 @@ import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.account.domain.usecase.FindAllAkunUseCase
 import com.ra.bkuang.features.category.domain.usecase.FindCategoryByTypeUseCase
-import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.core.data.source.local.database.entity.TransactionType
 import com.ra.bkuang.features.transaction.domain.model.PendapatanModel
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetPendapatanByIdUseCase
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.SavePendapatanUseCase
