@@ -2,10 +2,10 @@ package com.ra.bkuang.features.transaction.data
 
 import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.common.di.IoDispatcherQualifier
-import com.ra.bkuang.features.account.data.local.AkunLocalDataSource
+import com.ra.bkuang.core.data.source.local.database.data.AkunLocalDataSource
 import com.ra.bkuang.features.account.data.mapper.toEntity
 import com.ra.bkuang.features.account.data.mapper.toModel
-import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
+import com.ra.bkuang.core.data.source.local.database.entity.DetailTransfer
 import com.ra.bkuang.features.transaction.data.local.TransferLocalDataSource
 import com.ra.bkuang.features.transaction.data.mapper.toEntity
 import com.ra.bkuang.features.transaction.data.mapper.toModel

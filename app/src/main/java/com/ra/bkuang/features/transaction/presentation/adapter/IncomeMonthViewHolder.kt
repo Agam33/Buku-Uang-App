@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.databinding.ItemRvIncomeDaysBinding
 import com.ra.bkuang.databinding.ItemRvIncomeMonthBinding
-import com.ra.bkuang.features.transaction.data.entity.DetailPendapatan
+import com.ra.bkuang.core.data.source.local.database.entity.DetailPendapatan
 import com.ra.bkuang.features.transaction.data.mapper.toModel
 
 class IncomeMonthViewHolder(

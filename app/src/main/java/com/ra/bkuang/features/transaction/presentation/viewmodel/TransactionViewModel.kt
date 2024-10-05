@@ -10,7 +10,7 @@ import com.ra.bkuang.common.util.Extension.toFormatRupiah
 import com.ra.bkuang.common.util.Extension.toStringFormat
 import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.common.util.getDateViewType
-import com.ra.bkuang.core.preferences.UserSettingPref
+import com.ra.bkuang.core.data.source.local.preferences.UserSettingPref
 import com.ra.bkuang.features.transaction.domain.usecase.GetTotalTransactionByDateUseCase
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.DeletePendapatanByIdUseCase
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetListDetailPendapatanByDateUseCase
@@ -32,19 +32,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TransactionViewModel @Inject constructor(
-  private val userSettingPref: UserSettingPref,
-  private val getTotalPendapatanByDateWithFlowUseCase: GetTotalPendapatanByDateWithFlowUseCase,
-  private val getTotalPengeluaranByDateWithFlowUseCase: GetTotalPengeluaranByDateWithFlowUseCase,
-  private val getTotalTransactionByDateUseCase: GetTotalTransactionByDateUseCase,
+    private val userSettingPref: UserSettingPref,
+    private val getTotalPendapatanByDateWithFlowUseCase: GetTotalPendapatanByDateWithFlowUseCase,
+    private val getTotalPengeluaranByDateWithFlowUseCase: GetTotalPengeluaranByDateWithFlowUseCase,
+    private val getTotalTransactionByDateUseCase: GetTotalTransactionByDateUseCase,
 
-  private val getListDetailPengeluaranByDateUseCase: GetListDetailPengeluaranByDateUseCase,
-  private val deletePengeluaranByIdUseCase: DeletePengeluaranByIdUseCase,
+    private val getListDetailPengeluaranByDateUseCase: GetListDetailPengeluaranByDateUseCase,
+    private val deletePengeluaranByIdUseCase: DeletePengeluaranByIdUseCase,
 
-  private val getListDetailPendapatanByDateUseCase: GetListDetailPendapatanByDateUseCase,
-  private val deletePendapatanByIdUseCase: DeletePendapatanByIdUseCase,
+    private val getListDetailPendapatanByDateUseCase: GetListDetailPendapatanByDateUseCase,
+    private val deletePendapatanByIdUseCase: DeletePendapatanByIdUseCase,
 
-  private val getTransferByDateUseCase: GetTransferByDateUseCase,
-  private val deleteTransferByIdUseCase: DeleteTransferByIdUseCase,
+    private val getTransferByDateUseCase: GetTransferByDateUseCase,
+    private val deleteTransferByIdUseCase: DeleteTransferByIdUseCase,
 ): BaseViewModel<TransactionUiState>(TransactionUiState()) {
 
   fun initTransaction() {

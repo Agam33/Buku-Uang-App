@@ -3,7 +3,7 @@ package com.ra.bkuang.features.analytics.data
 import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.common.di.IoDispatcherQualifier
 import com.ra.bkuang.features.analytics.domain.repository.AnalyticsRepository
-import com.ra.bkuang.features.analytics.domain.model.AnalyticModel
+import com.ra.bkuang.features.analytics.data.model.AnalyticModel
 import com.ra.bkuang.features.transaction.data.local.PendapatanLocalDataSource
 import com.ra.bkuang.features.transaction.data.local.PengeluaranLocalDataSource
 import com.ra.bkuang.features.transaction.data.mapper.toModel

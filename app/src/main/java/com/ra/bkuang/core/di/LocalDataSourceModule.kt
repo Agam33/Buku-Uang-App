@@ -1,19 +1,19 @@
 package com.ra.bkuang.core.di
 
-import com.ra.bkuang.features.account.data.local.AkunLocalDataSourceImpl
-import com.ra.bkuang.features.budget.data.local.BudgetLocalDataSourceImpl
-import com.ra.bkuang.features.category.data.local.KategoriLocalDataSourceImpl
-import com.ra.bkuang.features.debt.data.local.PembayaranHutangLocalDataSourceImpl
+import com.ra.bkuang.core.data.source.local.database.data.AkunLocalDataSourceImpl
+import com.ra.bkuang.core.data.source.local.database.data.BudgetLocalDataSourceImpl
+import com.ra.bkuang.core.data.source.local.database.data.KategoriLocalDataSourceImpl
+import com.ra.bkuang.core.data.source.local.database.data.PembayaranHutangLocalDataSourceImpl
 import com.ra.bkuang.features.transaction.data.local.PendapatanLocalDataSourceImpl
 import com.ra.bkuang.features.transaction.data.local.PengeluaranLocalDataSourceImpl
 import com.ra.bkuang.features.transaction.data.local.TransferLocalDataSourceImpl
-import com.ra.bkuang.features.account.data.local.AkunLocalDataSource
-import com.ra.bkuang.features.budget.data.local.BudgetLocalDataSource
+import com.ra.bkuang.core.data.source.local.database.data.AkunLocalDataSource
+import com.ra.bkuang.core.data.source.local.database.data.BudgetLocalDataSource
 import com.ra.bkuang.features.transaction.data.local.PendapatanLocalDataSource
 import com.ra.bkuang.features.transaction.data.local.PengeluaranLocalDataSource
 import com.ra.bkuang.features.transaction.data.local.TransferLocalDataSource
-import com.ra.bkuang.features.category.data.local.KategoriLocalDataSource
-import com.ra.bkuang.features.debt.data.local.PembayaranHutangLocalDataSource
+import com.ra.bkuang.core.data.source.local.database.data.KategoriLocalDataSource
+import com.ra.bkuang.core.data.source.local.database.data.PembayaranHutangLocalDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -1,7 +1,7 @@
 package com.ra.bkuang.core.di
 
-import com.ra.bkuang.core.preferences.UserSettingPref
-import com.ra.bkuang.core.preferences.UserSettingPrefImpl
+import com.ra.bkuang.core.data.source.local.preferences.UserSettingPref
+import com.ra.bkuang.core.data.source.local.preferences.UserSettingPrefImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

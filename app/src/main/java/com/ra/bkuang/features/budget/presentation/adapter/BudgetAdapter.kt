@@ -13,7 +13,7 @@ import com.ra.bkuang.common.util.Extension.toFormatRupiah
 import com.ra.bkuang.common.util.Extension.toPercent
 import com.ra.bkuang.common.util.Extension.toPercentText
 import com.ra.bkuang.databinding.ItemRvBudgetPermonthBinding
-import com.ra.bkuang.features.budget.data.local.DetailBudget
+import com.ra.bkuang.core.data.source.local.database.entity.DetailBudget
 
 class BudgetAdapter: ListAdapter<DetailBudget, BudgetAdapter.MViewHolder>(DIFF) {
 

@@ -3,7 +3,7 @@ package com.ra.bkuang.features.debt.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.debt.domain.model.HutangModel
+import com.ra.bkuang.features.debt.data.model.HutangModel
 import com.ra.bkuang.features.debt.domain.usecase.CreateHutangUseCase
 import com.ra.bkuang.features.debt.domain.usecase.ShowAllHutangUseCase
 import com.ra.bkuang.features.debt.domain.usecase.UpdateHutangUseCase

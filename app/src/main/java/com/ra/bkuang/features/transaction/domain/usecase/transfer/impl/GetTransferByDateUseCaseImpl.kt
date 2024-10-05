@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.transaction.domain.usecase.transfer.impl
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
+import com.ra.bkuang.core.data.source.local.database.entity.DetailTransfer
 import com.ra.bkuang.features.transaction.domain.repository.TransferRepository
 import com.ra.bkuang.features.transaction.domain.usecase.transfer.GetTransferByDateUseCase
 import kotlinx.coroutines.flow.Flow

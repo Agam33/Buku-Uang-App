@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.databinding.ItemRvDataAnalyticsBinding
-import com.ra.bkuang.features.analytics.domain.model.AnalyticModel
+import com.ra.bkuang.features.analytics.data.model.AnalyticModel
 import com.ra.bkuang.common.util.Extension.toFormatRupiah
 import com.ra.bkuang.common.util.Extension.toPercentText
 

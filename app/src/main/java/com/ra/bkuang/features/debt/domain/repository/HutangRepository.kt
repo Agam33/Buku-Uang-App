@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.debt.domain.repository
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.debt.domain.model.HutangModel
+import com.ra.bkuang.features.debt.data.model.HutangModel
 import kotlinx.coroutines.flow.Flow
 import java.util.Calendar
 import java.util.UUID

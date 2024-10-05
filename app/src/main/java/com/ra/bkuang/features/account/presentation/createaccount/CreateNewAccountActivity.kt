@@ -12,7 +12,7 @@ import com.ra.bkuang.common.util.Extension.parcelable
 import com.ra.bkuang.common.util.Extension.setupActionBar
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.databinding.ActivityCreateNewAccountBinding
-import com.ra.bkuang.features.account.domain.model.AkunModel
+import com.ra.bkuang.features.account.data.model.AkunModel
 import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.ACCOUNT_MODEL
 import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.CREATE_ACCOUNT
 import com.ra.bkuang.features.account.presentation.AccountFragment.Companion.EDIT_ACCOUNT

@@ -3,12 +3,12 @@ package com.ra.bkuang.features.debt.data
 import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.common.di.IoDispatcherQualifier
 import com.ra.bkuang.features.account.data.mapper.toModel
-import com.ra.bkuang.features.debt.data.local.PembayaranHutangLocalDataSource
+import com.ra.bkuang.core.data.source.local.database.data.PembayaranHutangLocalDataSource
 import com.ra.bkuang.features.debt.data.mapper.toEntity
 import com.ra.bkuang.features.debt.data.mapper.toModel
 import com.ra.bkuang.features.debt.domain.repository.PembayaranHutangRepository
-import com.ra.bkuang.features.debt.domain.model.DetailPembayaranHutangModel
-import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
+import com.ra.bkuang.features.debt.data.model.DetailPembayaranHutangModel
+import com.ra.bkuang.features.debt.data.model.PembayaranHutangModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,8 +17,8 @@ import java.util.UUID
 import javax.inject.Inject
 
 class PembayaranHutangRepositoryImpl @Inject constructor(
-  private val localDataSource: PembayaranHutangLocalDataSource,
-  @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
+    private val localDataSource: PembayaranHutangLocalDataSource,
+    @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
 ): PembayaranHutangRepository {
   override fun getSizeListPembayaranHutangById(id: UUID): Flow<Int?> {
     return localDataSource.getSizeListPembayaranHutangById(id)

@@ -14,13 +14,13 @@ import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.view.dialog.CautionDeleteDialog
 import com.ra.bkuang.common.view.spinner.SpinnerItemOptions
 import com.ra.bkuang.databinding.FragmentCategoryBinding
-import com.ra.bkuang.features.category.domain.model.KategoriModel
+import com.ra.bkuang.features.category.data.model.KategoriModel
 import com.ra.bkuang.features.category.presentation.CreateCategoryActivity.Companion.CATEGORY_TYPE
 import com.ra.bkuang.features.category.presentation.CreateCategoryActivity.Companion.CREATE_OR_EDIT_CATEGORY
 import com.ra.bkuang.features.category.presentation.CreateCategoryActivity.Companion.EXTRA_BUNDLE_CLAZZ
 import com.ra.bkuang.features.category.presentation.adapter.RvGroupCategoryAdapter
 import com.ra.bkuang.features.category.presentation.viewmodel.CategoryViewModel
-import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.core.data.source.local.database.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject

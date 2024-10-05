@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.ra.bkuang.R
 import com.ra.bkuang.databinding.ActivityCreateCategoryBinding
-import com.ra.bkuang.features.category.domain.model.KategoriModel
+import com.ra.bkuang.features.category.data.model.KategoriModel
 import com.ra.bkuang.common.base.BaseActivity
 import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.Extension.parcelable
@@ -17,7 +17,7 @@ import com.ra.bkuang.common.util.Extension.setupActionBar
 import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.features.category.presentation.viewmodel.CategoryViewModel
-import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.core.data.source.local.database.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime

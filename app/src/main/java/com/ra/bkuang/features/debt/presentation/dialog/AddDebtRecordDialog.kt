@@ -30,8 +30,8 @@ import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.util.Extension.toCalendar
 import com.ra.bkuang.common.util.getActionType
 import com.ra.bkuang.common.view.spinner.TransactionSpinnerAdapter
-import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
+import com.ra.bkuang.features.account.data.model.AkunModel
+import com.ra.bkuang.features.debt.data.model.PembayaranHutangModel
 import com.ra.bkuang.features.debt.presentation.DebtFragment
 import com.ra.bkuang.features.debt.presentation.DebtFragment.Companion.DEBT_MODEL
 import com.ra.bkuang.features.debt.presentation.detail.viewmodel.DetailDebtViewModel

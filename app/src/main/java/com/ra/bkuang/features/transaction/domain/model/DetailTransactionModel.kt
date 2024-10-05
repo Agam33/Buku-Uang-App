@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.transaction.domain.model
 
-import com.ra.bkuang.features.account.domain.model.AkunModel
-import com.ra.bkuang.features.category.domain.model.KategoriModel
+import com.ra.bkuang.features.account.data.model.AkunModel
+import com.ra.bkuang.features.category.data.model.KategoriModel
 import com.ra.bkuang.features.transaction.presentation.TransactionType
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
@@ -9,9 +9,9 @@ import java.util.UUID
 
 @Parcelize
 data class DetailPengeluaranModel(
-  val pengeluaran: PengeluaranModel,
-  val kategori: KategoriModel,
-  val akun: AkunModel,
+    val pengeluaran: PengeluaranModel,
+    val kategori: KategoriModel,
+    val akun: AkunModel,
 ): TransactionDetail {
   override val uuid: UUID get() = pengeluaran.uuid
   override val transactionType: TransactionType get() = TransactionType.EXPENSE
@@ -25,9 +25,9 @@ data class DetailPengeluaranModel(
 
 @Parcelize
 data class DetailPendapatanModel(
-  val pendapatan: PendapatanModel,
-  val kategori: KategoriModel,
-  val akun: AkunModel,
+    val pendapatan: PendapatanModel,
+    val kategori: KategoriModel,
+    val akun: AkunModel,
 ): TransactionDetail {
   override val uuid: UUID get() = pendapatan.uuid
   override val transactionType: TransactionType get() = TransactionType.INCOME
@@ -41,9 +41,9 @@ data class DetailPendapatanModel(
 
 @Parcelize
 data class DetailTransferModel(
-  val transfer: TransferModel,
-  val fromAkun: AkunModel,
-  val toAkun: AkunModel,
+    val transfer: TransferModel,
+    val fromAkun: AkunModel,
+    val toAkun: AkunModel,
 ): TransactionDetail {
   override val uuid: UUID get() = transfer.uuid
   override val transactionType: TransactionType get() = TransactionType.TRANSFER

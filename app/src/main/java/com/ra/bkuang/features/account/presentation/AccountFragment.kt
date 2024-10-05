@@ -14,7 +14,7 @@ import com.ra.bkuang.common.util.Extension.showShortToast
 import com.ra.bkuang.common.view.dialog.CautionDeleteDialog
 import com.ra.bkuang.common.view.spinner.SpinnerItemOptions
 import com.ra.bkuang.databinding.FragmentAccountBinding
-import com.ra.bkuang.features.account.domain.model.AkunModel
+import com.ra.bkuang.features.account.data.model.AkunModel
 import com.ra.bkuang.features.account.presentation.adapter.RvAccountAdapter
 import com.ra.bkuang.features.account.presentation.createaccount.CreateNewAccountActivity
 import com.ra.bkuang.features.account.presentation.viewmodel.AccountViewModel

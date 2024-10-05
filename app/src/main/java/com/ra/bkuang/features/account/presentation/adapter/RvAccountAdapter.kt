@@ -11,7 +11,7 @@ import com.ra.bkuang.common.util.Extension.toFormatRupiah
 import com.ra.bkuang.common.view.spinner.SpinnerItemOptions
 import com.ra.bkuang.common.view.spinner.SpinnerOptionAdapter
 import com.ra.bkuang.databinding.ItemRvAccountsBinding
-import com.ra.bkuang.features.account.domain.model.AkunModel
+import com.ra.bkuang.features.account.data.model.AkunModel
 
 class RvAccountAdapter: ListAdapter<AkunModel, RvAccountAdapter.MViewHolder>(diff) {
 

@@ -5,9 +5,9 @@ import com.ra.bkuang.databinding.ItemRvExpenseDaysBinding
 import com.ra.bkuang.databinding.ItemRvIncomeDaysBinding
 import com.ra.bkuang.databinding.ItemRvTransferDaysBinding
 import com.ra.bkuang.common.util.Extension.toFormatRupiah
-import com.ra.bkuang.features.transaction.data.entity.DetailPendapatan
-import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
-import com.ra.bkuang.features.transaction.data.entity.DetailTransfer
+import com.ra.bkuang.core.data.source.local.database.entity.DetailPendapatan
+import com.ra.bkuang.core.data.source.local.database.entity.DetailPengeluaran
+import com.ra.bkuang.core.data.source.local.database.entity.DetailTransfer
 
 /*
     Expense DayViewHolder

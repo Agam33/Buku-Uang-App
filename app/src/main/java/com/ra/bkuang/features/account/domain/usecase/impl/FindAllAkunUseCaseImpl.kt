@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.account.domain.usecase.impl
 
 import com.ra.bkuang.features.account.domain.repository.AkunRepository
-import com.ra.bkuang.features.account.domain.model.AkunModel
+import com.ra.bkuang.features.account.data.model.AkunModel
 import com.ra.bkuang.features.account.domain.usecase.FindAllAkunUseCase
 import javax.inject.Inject
 

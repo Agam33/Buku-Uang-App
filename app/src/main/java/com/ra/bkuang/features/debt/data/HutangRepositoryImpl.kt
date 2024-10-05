@@ -4,11 +4,11 @@ import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.common.di.IoCoroutineScopeQualifier
 import com.ra.bkuang.common.di.IoDispatcherQualifier
 import com.ra.bkuang.features.debt.alarm.DebtAlarmManager
-import com.ra.bkuang.features.debt.data.local.HutangLocalDataSource
+import com.ra.bkuang.core.data.source.local.database.data.HutangLocalDataSource
 import com.ra.bkuang.features.debt.data.mapper.toEntity
 import com.ra.bkuang.features.debt.data.mapper.toModel
 import com.ra.bkuang.features.debt.domain.repository.HutangRepository
-import com.ra.bkuang.features.debt.domain.model.HutangModel
+import com.ra.bkuang.features.debt.data.model.HutangModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -22,10 +22,10 @@ import java.util.UUID
 import javax.inject.Inject
 
 class HutangRepositoryImpl @Inject constructor(
-  private val localDataSource: HutangLocalDataSource,
-  private val debtAlarmManager: DebtAlarmManager,
-  @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
-  @IoCoroutineScopeQualifier private val ioScope: CoroutineScope,
+    private val localDataSource: HutangLocalDataSource,
+    private val debtAlarmManager: DebtAlarmManager,
+    @IoDispatcherQualifier private val ioDispatcher: CoroutineDispatcher,
+    @IoCoroutineScopeQualifier private val ioScope: CoroutineScope,
 ): HutangRepository {
   override suspend fun findByAlarmId(alarmId: Int): HutangModel {
     return localDataSource.findByAlarmId(alarmId).toModel()

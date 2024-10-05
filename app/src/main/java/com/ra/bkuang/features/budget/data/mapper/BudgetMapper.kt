@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.budget.data.mapper
 
-import com.ra.bkuang.features.budget.data.local.BudgetEntity
-import com.ra.bkuang.features.budget.domain.model.BudgetModel
+import com.ra.bkuang.core.data.source.local.database.entity.BudgetEntity
+import com.ra.bkuang.features.budget.data.model.BudgetModel
 
 fun BudgetModel.toEntity(
 ): BudgetEntity = BudgetEntity(

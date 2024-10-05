@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.category.domain.usecase.impl
 
 import com.ra.bkuang.features.category.domain.repository.KategoriRepository
-import com.ra.bkuang.features.category.domain.model.KategoriModel
+import com.ra.bkuang.features.category.data.model.KategoriModel
 import com.ra.bkuang.features.category.domain.usecase.UpdateKategoriUseCase
 import javax.inject.Inject
 

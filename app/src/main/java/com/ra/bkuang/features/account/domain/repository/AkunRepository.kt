@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.account.domain.repository
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.account.domain.model.AkunModel
+import com.ra.bkuang.features.account.data.model.AkunModel
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 

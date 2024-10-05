@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.transaction.domain.usecase.pendapatan.impl
 
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.transaction.data.entity.DetailPendapatan
+import com.ra.bkuang.core.data.source.local.database.entity.DetailPendapatan
 import com.ra.bkuang.features.transaction.domain.repository.PendapatanRepository
 import com.ra.bkuang.features.transaction.domain.usecase.pendapatan.GetListDetailPendapatanByDateUseCase
 import kotlinx.coroutines.flow.Flow

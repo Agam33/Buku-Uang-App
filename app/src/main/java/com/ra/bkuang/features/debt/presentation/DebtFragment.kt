@@ -12,7 +12,7 @@ import com.ra.bkuang.common.util.ActionType
 import com.ra.bkuang.common.util.DrawerMenuToolbarListener
 import com.ra.bkuang.common.util.Extension.hide
 import com.ra.bkuang.databinding.FragmentDebtBinding
-import com.ra.bkuang.features.debt.domain.model.HutangModel
+import com.ra.bkuang.features.debt.data.model.HutangModel
 import com.ra.bkuang.features.debt.presentation.adapter.DebtAdapter
 import com.ra.bkuang.features.debt.presentation.detail.DetailDebtActivity
 import com.ra.bkuang.features.debt.presentation.viewmodel.DebtViewModel

@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.transaction.data.local
 
-import com.ra.bkuang.features.transaction.data.entity.DetailPengeluaran
-import com.ra.bkuang.features.transaction.data.entity.PengeluaranEntity
+import com.ra.bkuang.core.data.source.local.database.entity.DetailPengeluaran
+import com.ra.bkuang.core.data.source.local.database.entity.PengeluaranEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import java.util.UUID

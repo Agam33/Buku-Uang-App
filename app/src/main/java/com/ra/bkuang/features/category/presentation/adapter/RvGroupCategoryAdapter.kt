@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ra.bkuang.common.view.spinner.SpinnerItemOptions
 import com.ra.bkuang.databinding.GroupRvCategoriesBinding
-import com.ra.bkuang.features.category.domain.model.KategoriModel
-import com.ra.bkuang.features.transaction.data.entity.TransactionType
+import com.ra.bkuang.features.category.data.model.KategoriModel
+import com.ra.bkuang.core.data.source.local.database.entity.TransactionType
 
 class RvGroupCategoryAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
   var mapCategory: Map<TransactionType, List<KategoriModel>>? = null

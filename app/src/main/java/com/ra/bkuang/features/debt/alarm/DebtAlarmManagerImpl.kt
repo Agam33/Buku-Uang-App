@@ -13,7 +13,7 @@ import com.ra.bkuang.common.di.AppAlarmManagerQualifier
 import com.ra.bkuang.common.di.AppNotificationManagerQualifier
 import com.ra.bkuang.common.di.IoCoroutineScopeQualifier
 import com.ra.bkuang.common.util.Constants
-import com.ra.bkuang.features.debt.domain.model.HutangModel
+import com.ra.bkuang.features.debt.data.model.HutangModel
 import com.ra.bkuang.features.debt.presentation.DebtFragment
 import com.ra.bkuang.features.debt.presentation.detail.DetailDebtActivity
 import com.ra.bkuang.receiver.AlarmCategory

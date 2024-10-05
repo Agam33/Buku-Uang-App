@@ -3,7 +3,7 @@ package com.ra.bkuang.features.backuprestore.presentation.viewmodel
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.common.base.BaseViewModel
-import com.ra.bkuang.core.preferences.UserSettingPref
+import com.ra.bkuang.core.data.source.local.preferences.UserSettingPref
 import com.ra.bkuang.features.backuprestore.domain.usecase.CreateLocalBackupUseCase
 import com.ra.bkuang.features.backuprestore.domain.usecase.GetLocalBackupUseCase
 import com.ra.bkuang.features.backuprestore.presentation.BackupRestoreUiState

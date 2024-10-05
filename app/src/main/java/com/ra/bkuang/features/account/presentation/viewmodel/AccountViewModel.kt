@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.ra.bkuang.common.base.BaseViewModel
 import com.ra.bkuang.common.util.Extension.toFormatRupiah
 import com.ra.bkuang.common.util.Result
-import com.ra.bkuang.features.account.domain.model.AkunModel
+import com.ra.bkuang.features.account.data.model.AkunModel
 import com.ra.bkuang.features.account.domain.usecase.AkunOverallMoneyUseCase
 import com.ra.bkuang.features.account.domain.usecase.DeleteAkunUseCase
 import com.ra.bkuang.features.account.domain.usecase.FindAllAkunWithFlowUseCase

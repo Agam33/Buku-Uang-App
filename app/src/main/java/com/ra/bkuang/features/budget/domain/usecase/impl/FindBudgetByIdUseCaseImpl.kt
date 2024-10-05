@@ -1,7 +1,7 @@
 package com.ra.bkuang.features.budget.domain.usecase.impl
 
 import com.ra.bkuang.features.budget.domain.repository.BudgetRepository
-import com.ra.bkuang.features.budget.domain.model.BudgetModel
+import com.ra.bkuang.features.budget.data.model.BudgetModel
 import com.ra.bkuang.features.budget.domain.usecase.FindBudgetByIdUseCase
 import java.util.UUID
 import javax.inject.Inject

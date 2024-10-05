@@ -4,7 +4,7 @@ import com.ra.bkuang.common.util.Result
 import com.ra.bkuang.features.account.domain.repository.AkunRepository
 import com.ra.bkuang.features.debt.domain.repository.HutangRepository
 import com.ra.bkuang.features.debt.domain.repository.PembayaranHutangRepository
-import com.ra.bkuang.features.debt.domain.model.PembayaranHutangModel
+import com.ra.bkuang.features.debt.data.model.PembayaranHutangModel
 import com.ra.bkuang.features.debt.domain.usecase.UpdatePembayaranHutangUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -18,8 +18,8 @@ class UpdatePembayaranHutangUseCaseImpl @Inject constructor(
 ): UpdatePembayaranHutangUseCase {
 
   override fun invoke(
-    newModel: PembayaranHutangModel,
-    oldModel: PembayaranHutangModel
+      newModel: PembayaranHutangModel,
+      oldModel: PembayaranHutangModel
   ): Flow<Result<Boolean>> {
     return flow {
       try {

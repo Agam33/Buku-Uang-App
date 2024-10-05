@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.ra.bkuang.R;
-import com.ra.bkuang.features.account.domain.model.AkunModel;
-import com.ra.bkuang.features.category.domain.model.KategoriModel;
+import com.ra.bkuang.features.account.data.model.AkunModel;
+import com.ra.bkuang.features.category.data.model.KategoriModel;
 
 import java.util.List;
 import java.util.Objects;
